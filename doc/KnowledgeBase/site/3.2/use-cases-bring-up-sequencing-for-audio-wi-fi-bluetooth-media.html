@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use Cases — Bring-Up Sequencing for Audio / Wi-Fi / Bluetooth / Media — 3.2 Linux Services, Daemons, and Boot-Time Application Startup &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li class="current"><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a> &raquo; Use Cases — Bring-Up Sequencing for Audio / Wi-Fi / Bluetooth / Media</div>
+</header>
+<div class="kb-toolbar"><a href="/3.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>3.2 Linux Services, Daemons, and Boot-Time Application Startup</h1><h2>Use Cases — Bring-Up Sequencing for Audio / Wi-Fi / Bluetooth / Media</h2><p><img alt="Linux boot to application services flow" src="/diagrams/linux-boot-to-services.svg" /></p>
+<ul>
+<li><strong>Wi-Fi</strong>: kernel driver (built into the Yocto kernel recipe) → <code>wpa_supplicant.service</code> (handles WPA association) → <code>connman.service</code> or <code>NetworkManager.service</code> (higher-level connection management) → application-level Wi-Fi UI/API.</li>
+<li><strong>Bluetooth</strong>: kernel HCI driver → <code>bluetooth.service</code> (BlueZ <code>bluetoothd</code>) → profile-specific daemons (e.g. <code>obexd</code> for file transfer, A2DP for audio streaming) — A2DP audio sink/source ties Bluetooth into the audio stack.</li>
+<li><strong>Audio</strong>: ALSA kernel drivers (per-codec) → user-space sound server (<code>pulseaudio.service</code> or increasingly <code>pipewire.service</code>) → application audio clients (media player, voice assistant, Bluetooth A2DP bridge) — ordering matters: the sound server must be up before any client tries to connect.</li>
+<li><strong>Media access</strong> (e.g. USB stick, SD card for media playback): kernel USB/storage drivers → <code>udisks2.service</code> (or a custom udev rule + automount unit) for auto-mount → media indexing/player service consuming the mounted path.</li>
+<li>Common pattern: a <strong>custom Yocto-built service</strong> (the "necessary service" the JD-adjacent question references) is layered on top to <strong>orchestrate</strong> these — e.g. a "system-readiness" service that <code>Wants=</code> all the above and only declares the system ready for the HMI once they've all reported healthy, often via D-Bus signals.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 3.2 Linux Services, Daemons, and Boot-Time Application Startup:</strong><ul><li><a href="/3.2/concept-introduction.html">Concept Introduction</a></li><li><a href="/3.2/scope-systemd-concepts-a-tech-lead-should-know.html">Scope — systemd Concepts a Tech Lead Should Know</a></li><li class="current"><a href="/3.2/use-cases-bring-up-sequencing-for-audio-wi-fi-bluetooth-media.html">Use Cases — Bring-Up Sequencing for Audio / Wi-Fi / Bluetooth / Media</a></li><li><a href="/3.2/sample-a-minimal-systemd-service-unit.html">Sample — A Minimal systemd Service Unit</a></li><li><a href="/3.2/q-a.html">Q&A</a></li><li><a href="/3.2/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/3.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

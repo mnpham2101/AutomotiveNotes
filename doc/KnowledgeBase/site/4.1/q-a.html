@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q&A — 4.1 Worked Example — A Proposed MCAL Application &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li class="current"><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/4.1/index.html">4.1 Worked Example — A Proposed MCAL Application</a> &raquo; Q&A</div>
+</header>
+<div class="kb-toolbar"><a href="/4.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>4.1 Worked Example — A Proposed MCAL Application</h1><h2>Q&A</h2><ul>
+<li><strong>Q: Why no RTE in this example if it's "AUTOSAR Classic"?</strong>
+  A: To keep the worked example minimal and focused purely on MCAL usage. A production AUTOSAR Classic project would wrap <code>AppSensor_*</code> logic in an RTE-generated SW-C and route ADC/Dio/Can access through ECU Abstraction — but the MCAL calls at the bottom look exactly like this.</li>
+<li><strong>Q: How would you estimate effort to add a second CAN channel?</strong>
+  A: If the second channel uses already-supported hardware peripherals and the existing <code>Can</code> MCAL module instance model, it's mostly <strong>configuration effort</strong> (new <code>Can_Config</code> controller/HOH entries, regenerate) plus app-layer wiring — typically low effort. If it requires a peripheral not covered by the RTD module (e.g. a CAN-FD feature absent from the installed RTD version), it becomes a <strong>feasibility risk</strong> needing a vendor RTD upgrade or a CDD — this distinction is exactly the kind of feasibility analysis in JD 3.3.</li>
+<li><strong>Q: Where would unit tests live for this kind of code?</strong>
+  A: Application logic (<code>AppSensor_Update</code>, scaling/fault-check) is unit-testable on a host PC with a mocked MCAL (stub <code>Adc_ReadGroup</code>/<code>Dio_ReadChannel</code>), often using <strong>Unity/CMock</strong> or <strong>Google Test with C wrappers</strong> — MCAL/RTD code itself is usually vendor-validated and tested via hardware-in-the-loop instead.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 4.1 Worked Example — A Proposed MCAL Application:</strong><ul><li><a href="/4.1/concept-introduction.html">Concept Introduction</a></li><li><a href="/4.1/scope.html">Scope</a></li><li><a href="/4.1/requirements-main-functionality.html">Requirements / Main Functionality</a></li><li><a href="/4.1/architecture-diagram.html">Architecture Diagram</a></li><li><a href="/4.1/programming-language-dependencies.html">Programming Language & Dependencies</a></li><li><a href="/4.1/build-configuration-tech-stack-toolchain.html">Build Configuration / Tech Stack / Toolchain</a></li><li><a href="/4.1/sample-application-main-loop.html">Sample — Application Main Loop</a></li><li class="current"><a href="/4.1/q-a.html">Q&A</a></li><li><a href="/4.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/4.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

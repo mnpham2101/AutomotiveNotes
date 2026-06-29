@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.1 AUTOSAR Architecture — Classic vs Adaptive &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li class="current"><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/2.1/index.html">2.1 AUTOSAR Architecture — Classic vs Adaptive</a></div>
+</header>
+<div class="kb-toolbar"><a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>2.1 AUTOSAR Architecture — Classic vs Adaptive</h1><p><a href="/0.0/index.html">← Home</a></p><nav class="kb-page-toc"><strong>Sections on this page:</strong><ul><li><a href="#concept-introduction">Concept Introduction</a> &middot; <a href="/2.1/concept-introduction.html">(own page)</a></li><li><a href="#scope-design-philosophy-goals-classic-vs-adaptive">Scope — Design Philosophy & Goals: Classic vs Adaptive</a> &middot; <a href="/2.1/scope-design-philosophy-goals-classic-vs-adaptive.html">(own page)</a></li><li><a href="#scope-classic-platform-layers">Scope — Classic Platform Layers</a> &middot; <a href="/2.1/scope-classic-platform-layers.html">(own page)</a></li><li><a href="#scope-adaptive-platform-architecture">Scope — Adaptive Platform Architecture</a> &middot; <a href="/2.1/scope-adaptive-platform-architecture.html">(own page)</a></li><li><a href="#sample-adaptive-platform-ara-com-event-subscription">Sample — Adaptive Platform: `ara::com` Event Subscription</a> &middot; <a href="/2.1/sample-adaptive-platform-ara-com-event-subscription.html">(own page)</a></li><li><a href="#sample-v2x-domain-controller-splitting-classic-and-adaptive-across-two-chips">Sample — V2X Domain Controller: Splitting Classic and Adaptive Across Two Chips</a> &middot; <a href="/2.1/sample-v2x-domain-controller-splitting-classic-and-adaptive-across-two-chips.html">(own page)</a></li><li><a href="#q-a">Q&A</a> &middot; <a href="/2.1/q-a.html">(own page)</a></li><li><a href="#references">References</a> &middot; <a href="/2.1/references.html">(own page)</a></li></ul></nav><section id="concept-introduction"><h2>Concept Introduction</h2><ul>
+<li><strong>AUTOSAR</strong> (AUTomotive Open System ARchitecture) is a worldwide partnership standardizing automotive E/E (electrical/electronic) software architecture so OEMs and suppliers can exchange and reuse software components across ECUs and vendors.</li>
+<li>AUTOSAR publishes <strong>two platforms</strong> with different target hardware and use cases:</li>
+<li><strong>Classic Platform (CP)</strong> — for resource-constrained microcontrollers (MCUs), statically configured, no dynamic memory, runs without an OS-level process model beyond a minimal RTOS (OSEK/VDX-derived AUTOSAR OS). Distinguishes, on the highest abstraction level, three software layers running on the microcontroller: <strong>Application, RTE, and Basic Software (BSW)</strong> — source [1][3].</li>
+<li><strong>Adaptive Platform (AP)</strong> — for high-performance microprocessors (MPUs) running a POSIX-compliant OS (typically Linux), implementing <strong>ARA (AUTOSAR Runtime for Adaptive Applications)</strong>, with service-oriented communication (<code>ara::com</code>, SOME/IP), used for ADAS, HPC (high-performance compute), infotainment domain controllers — source [2].</li>
+</ul></section><section id="scope-design-philosophy-goals-classic-vs-adaptive"><h2>Scope — Design Philosophy & Goals: Classic vs Adaptive</h2><p>Both platforms standardize automotive E/E software, but optimize for opposite engineering tradeoffs:</p>
+<ul>
+<li><strong>Classic Platform — determinism and hardware independence.</strong> A layered architecture decouples hardware-independent application software from hardware-oriented Basic Software (BSW) via the RTE, so SW-Cs can be developed and relocated across ECUs without touching application code. Static, build-time configuration and a minimal RTOS (no dynamic memory) keep worst-case timing analyzable — the property safety-relevant control loops need. Standardized methodology and exchange formats let OEMs/suppliers integrate modules from different sources and scale the same software across car lines and variants [1].</li>
+<li><strong>Adaptive Platform — service-oriented flexibility and agile development.</strong> Services and clients bind <strong>dynamically at runtime</strong> (instead of Classic's build-time RTE generation) through a service-oriented architecture (ARA) organized into functional clusters that don't constrain the underlying implementation. This trades away Classic's static analyzability for distributed, independent, and agile development — services can be deployed and updated across the in-vehicle network [2].</li>
+<li><strong>The tradeoff in one line</strong>: Classic optimizes for <em>predictability and certifiability</em> on resource-constrained MCUs; Adaptive optimizes for <em>flexibility and reuse of compute-heavy services</em> on high-performance MPUs.</li>
+</ul></section><section id="scope-classic-platform-layers"><h2>Scope — Classic Platform Layers</h2><p>Per the official Classic Platform layer breakdown [3], two views of the stack — enough to see where Adaptive's MCAL-less, service-oriented stack diverges (see <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a> for the full per-component breakdown, the Virtual Functional Bus, and a worked MCAL call-chain):</p>
+<p><strong>Top view</strong> — the three highest-level layers:</p>
+<p><img alt="AUTOSAR layered architecture - top view" src="/images/autosar_layered_architecture.png" /></p>
+<ul>
+<li><strong>Application Layer</strong> — Software Components (SW-Cs) implementing customer/OEM application logic; mostly hardware-independent, communicate only via <strong>ports</strong> (no direct hardware access).</li>
+<li><strong>RTE (Runtime Environment)</strong> — generated, ECU- and application-specific glue code providing communication services to SW-Cs; above the RTE the architecture style changes from "layered" to "component style." Task: make SW-Cs independent of their mapping to a specific ECU.</li>
+<li><strong>Basic Software (BSW)</strong> — everything below the RTE, itself layered (see next view).</li>
+</ul>
+<p><strong>Coarse view</strong> — BSW split into its sub-layers:</p>
+<p><img alt="AUTOSAR layered architecture - coarse view" src="/images/autosar_layered_architecture_detail.png" /></p>
+<ul>
+<li><strong>Services Layer</strong> — the highest BSW sub-layer.</li>
+<li><strong>ECU Abstraction Layer</strong> — interfaces the Microcontroller Abstraction Layer's drivers plus drivers for <em>external</em> devices; offers a peripheral/device API independent of µC-internal-vs-external location.</li>
+<li><strong>Microcontroller Abstraction Layer (MCAL)</strong> — the lowest BSW layer; <em>internal</em> drivers with direct register-level access to the µC and its on-chip peripherals, fully chip-specific — this is the layer Adaptive Platform has none of (see below).</li>
+<li><strong>Complex Drivers</strong> — a layer that spans from the hardware directly to the RTE, bypassing the standard layering, for: devices not specified within AUTOSAR, very high timing constraints, or migration of legacy/pre-AUTOSAR code (a.k.a. Complex Device Drivers, CDD).</li>
+<li><strong>Microcontroller</strong> — the physical MCU (e.g., NXP S32K).</li>
+</ul></section><section id="scope-adaptive-platform-architecture"><h2>Scope — Adaptive Platform Architecture</h2><p>Per the official Adaptive Platform overview [2]:</p>
+<ul>
+<li>AP implements <strong>ARA</strong>; applications interact through two interface types — <strong>services</strong> and <strong>APIs</strong>.</li>
+<li>The platform is built from <strong>functional clusters</strong>, grouped into <strong>Adaptive Services</strong> and the <strong>AUTOSAR Adaptive Platform Basis</strong> (Communication, Storage, Security, Safety, Configuration, Diagnostics, Cryptography, Runtime), all sitting on a <strong>POSIX OS</strong> / <strong>(virtual) machine</strong>, with one or more <strong>Adaptive Applications</strong> above. Functional clusters in the Platform Basis need ≥1 instance per (virtual) machine; services may be distributed across the in-car network.</li>
+<li><strong>MCAL is Classic-only</strong> — MCAL (Microcontroller Abstraction Layer) is a Classic Platform concept; the Adaptive Platform has no MCAL at all, since AP runs on an MPU under a POSIX OS and never accesses microcontroller peripheral registers directly — that register-level access is exactly what MCAL exists for in Classic. AP's nearest equivalents are the OS/hypervisor's own device drivers, sitting below the POSIX OS layer, outside the AUTOSAR-standardized stack.</li>
+</ul>
+<h3 id="classic-vs-adaptive-key-contrasts-see-12-for-full-detail">Classic vs Adaptive — Key Contrasts (see [1][2] for full detail)</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Classic Platform</th>
+<th>Adaptive Platform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target HW</td>
+<td>Resource-constrained MCU</td>
+<td>High-performance MPU</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Minimal RTOS (OSEK/VDX-derived)</td>
+<td>POSIX-compliant (typically Linux)</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td>Static, build-time</td>
+<td>Supports dynamic deployment/update</td>
+</tr>
+<tr>
+<td>Comm. style</td>
+<td>Signal-based, statically scheduled (Com/PduR)</td>
+<td>Service-oriented (<code>ara::com</code>, SOME/IP), dynamic service discovery</td>
+</tr>
+<tr>
+<td>App-to-infra link</td>
+<td>RTE generated/bound at build time</td>
+<td>RTE binds services/clients dynamically at runtime</td>
+</tr>
+</tbody>
+</table></section><section id="sample-adaptive-platform-ara-com-event-subscription"><h2>Sample — Adaptive Platform: `ara::com` Event Subscription</h2><p>Unlike Classic's static RTE binding, an AP client discovers a service instance at runtime and subscribes to one of its events. Reduced from the official worked example (<code>AUTOSAR_AP_EXP_ARAComAPI</code>, R25-11, Listings 5.5 and 5.13) [4]:</p>
+<pre><code class="language-cpp">/* --- Server side (provider), per Listing 5.13 --- */
+RadarServiceImpl myRadarService(InstanceIdentifier(instanceIdStr));
+myRadarService.init();
+myRadarService.OfferService();          /* makes the instance discoverable */
+
+/* --- Client side (consumer), per Listing 5.5 --- */
+auto handles = proxy::RadarServiceProxy::FindService(instspec);
+myRadarProxy = std::make_unique&lt;proxy::RadarServiceProxy&gt;(handles[0]);
+
+myRadarProxy-&gt;BrakeEvent.Subscribe(10);  /* keep up to 10 buffered samples */
+myRadarProxy-&gt;BrakeEvent.GetNewSamples(
+    [](SamplePtr&lt;proxy::events::BrakeEvent::SampleType&gt; samplePtr) {
+        if (samplePtr-&gt;active) { /* ... handle the sample ... */ }
+    });
+</code></pre>
+<p><code>RadarServiceProxy</code>, <code>OfferService</code>, <code>FindService</code>, <code>Subscribe</code>, and <code>GetNewSamples</code> are the actual <code>ara::com</code> Proxy/Skeleton API names defined in the spec — not invented for this knowledge base.</p></section><section id="sample-v2x-domain-controller-splitting-classic-and-adaptive-across-two-chips"><h2>Sample — V2X Domain Controller: Splitting Classic and Adaptive Across Two Chips</h2><p>A V2X (vehicle-to-everything) unit is a good concrete case for the "mix Classic and Adaptive" answer in the Q&amp;A below, because the split isn't arbitrary — it follows directly from which side of the chip needs determinism and which side needs a rich communication stack.</p>
+<p><img alt="V2X system with dedicated GPS routed to the Classic-Platform MCU" src="/diagrams/v2x_system_with_dedicated_gps_to_mcore.svg" /></p>
+<p><strong>The two chips and what runs where:</strong></p>
+<ul>
+<li><strong>Cortex-A MPU — Adaptive Platform + GUI.</strong> Runs Linux, hosts AP functional clusters and any HMI/GUI process. This is the chip with a full network stack, a filesystem, and the horsepower to do TLS/security processing and protocol handling for off-board communication.</li>
+<li><strong>Cortex-M MCU — Classic AUTOSAR.</strong> Runs the AUTOSAR OS (OSEK/VDX-derived) with statically configured tasks, BSW, and MCAL drivers talking directly to on-chip peripherals (SPI, CAN-FD controllers, GNSS UART/timer inputs).</li>
+<li><strong>Inter-chip link — Automotive Ethernet, with SOME/IP as the IPC payload.</strong> This is the same VFB realization principle detailed in <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a>: from the Adaptive side, a port is just a <code>SOME/IP</code> service call; from the Classic side, the same connection arrives through Com/PduR like any other inter-ECU signal. Neither side needs to know the other runs a different AUTOSAR platform — Ethernet + SOME/IP is the shared wire format.</li>
+<li><strong>Other devices in the diagram:</strong></li>
+<li><strong>Quectel 5G NR / C-V2X PC5 modem</strong> — attached to the <strong>Cortex-A</strong> side over USB3/PCIe, control-plane via QMI. Carries both <code>5G-Uu</code> (network/cloud V2X) and <code>PC5</code> (direct device-to-device V2X) radio paths.</li>
+<li><strong>Sensor (radar/lidar)</strong> — attached to the <strong>Cortex-M</strong> side over CAN-FD/SPI.</li>
+<li><strong>GPS receiver (GNSS)</strong> — attached to the <strong>Cortex-M</strong> side, one-way, including a <strong>1PPS</strong> timing pulse alongside the GNSS data.</li>
+</ul>
+<p><strong>Why the Quectel modem sits on Cortex-A, not Cortex-M:</strong></p>
+<ul>
+<li>It needs a heavyweight, constantly-evolving protocol stack (5G NR modem firmware, C-V2X PC5 stack, IP/TLS, QMI control-plane signaling) — the kind of stack that lives in Linux drivers and userspace daemons, not in a statically-configured MCAL/BSW build. Adaptive Platform (or plain Linux underneath it) is where USB3/PCIe host controllers, QMI, and a full IP stack already exist.</li>
+<li>Its <em>timing is not deterministic by nature</em>: 5G/PC5 link establishment, congestion, retransmission, and channel access all vary. That variability is exactly what must <strong>not</strong> leak into the safety/real-time domain — see below.</li>
+<li>It is naturally a high-throughput, high-level data path (V2X messages destined for cloud services, GUI, or path-planning algorithms that already run on the AP side), not a register-level peripheral.</li>
+</ul>
+<p><strong>Why the radar/lidar sensor and the GPS receiver must sit on Cortex-M, not Cortex-A:</strong></p>
+<ul>
+<li>They feed a <strong>hard real-time control loop</strong> (collision avoidance, positioning for V2X message generation) where the consuming software needs a bounded, guaranteed-latency path from physical input to application logic — exactly what MCAL drivers (<code>Spi</code>, <code>Can</code>) plus a statically scheduled AUTOSAR OS task provide, and exactly what a general-purpose Linux scheduler on Cortex-A cannot promise.</li>
+<li>The GNSS <strong>1PPS</strong> signal is a hardware timing reference, not just data — it's typically wired to an MCU timer/capture peripheral to get a hardware timestamp with microsecond-level accuracy. That only works with direct, low-jitter register access (MCAL), which Cortex-A's OS-mediated I/O path does not offer.</li>
+<li>Keeping sensor ingestion on the same chip that runs the deterministic OS avoids an extra inter-chip hop (and its jitter) on the critical sensing→decision path; only the <em>result</em> of that processing needs to cross to Cortex-A (e.g., for display or cloud upload), not the raw, time-critical sensor stream.</li>
+</ul>
+<p><strong>How this split preserves Classic AUTOSAR's deterministic nature:</strong></p>
+<ul>
+<li><strong>Isolation of jitter sources.</strong> Everything inherently non-deterministic — radio link timing, Linux scheduling, GUI rendering, QMI/modem driver latency — stays entirely on the Cortex-A/Adaptive side. The Cortex-M/Classic side never blocks on, or is timed by, anything happening on Cortex-A; it only consumes whatever arrives over the Ethernet/SOME-IP link on its own schedule.</li>
+<li><strong>Static scheduling, no dynamic memory.</strong> Because Classic's OS tasks, BSW module configuration, and memory layout are all fixed at build time (see Classic Platform row in the Contrasts table above), the worst-case execution time of the sensor→decision path on Cortex-M is analyzable up front — a property Adaptive deliberately trades away for runtime service discovery and dynamic deployment.</li>
+<li><strong>Direct, single-owner hardware access.</strong> MCAL drivers give the Classic stack exclusive, register-level access to the CAN/SPI sensor bus and the GNSS/1PPS timer capture, with no OS-mediated abstraction layer (no Linux kernel driver, no virtual filesystem) sitting in the latency path the way it would on Cortex-A.</li>
+<li><strong>The Ethernet/SOME-IP boundary is also a determinism boundary.</strong> Whatever load or congestion exists on the Cortex-A side (modem traffic, GUI updates) cannot starve the Cortex-M task scheduler — the two chips' OS instances and clocks are independent. This is the same VFB principle covered in <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a> — a port connection's <em>realization</em> (here: inter-chip Ethernet) is decoupled from the application logic on either side — applied at the chip-pair level instead of the ECU-pair level.</li>
+</ul></section><section id="q-a"><h2>Q&A</h2><ul>
+<li><strong>Q: Why does AUTOSAR insist SW-Cs never touch hardware directly?</strong>
+  A: Portability — the same application SW-C can be reused on a different MCU/vendor by only re-generating RTE and re-configuring MCAL/ECU Abstraction, without touching application logic.</li>
+<li><strong>Q: Could a project mix Classic and Adaptive?</strong>
+  A: Yes — common in domain-controller architectures where a Classic-Platform "safety MCU" handles real-time I/O and a co-located Adaptive-Platform MPU handles compute-heavy services, communicating over an internal bus. See the V2X domain-controller Sample above for a worked, two-chip example of exactly this split.</li>
+</ul></section><section id="references"><h2>References</h2><ol>
+<li><a href="https://www.autosar.org/standards/classic-platform">AUTOSAR Classic Platform</a> — autosar.org standards page; "About"/"Description" sections are the source for the three-layer (Application/RTE/BSW) breakdown and the Classic Platform design-philosophy summary (hardware/application decoupling, determinism, reuse/interoperability, scalability) above.</li>
+<li><a href="https://www.autosar.org/standards/adaptive-platform/">AUTOSAR Adaptive Platform</a> — autosar.org standards page; source for the ARA, functional-cluster, dynamic-linking description, and the Adaptive Platform design-philosophy summary (service-oriented, distributed/agile development) above.</li>
+<li><em>Layered Software Architecture</em>, AUTOSAR Classic Platform R22-11, Document ID 53 — <a href="https://www.autosar.org/fileadmin/standards/R22-11/CP/AUTOSAR_EXP_LayeredSoftwareArchitecture.pdf">PDF</a> — source for the Top/Coarse view layer breakdown above; see <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a> for the full per-component detail, the Virtual Functional Bus, and a worked MCAL call-chain, all sourced from this same document.</li>
+<li><em>Explanation of <code>ara::com</code> API</em>, AUTOSAR Adaptive Platform R25-11, Document ID 846 — <a href="https://www.autosar.org/fileadmin/standards/R25-11/AP/AUTOSAR_AP_EXP_ARAComAPI.pdf">PDF</a> — source for the Proxy/Skeleton sample above (Listings 5.5, 5.13); see also the sibling specs in the same release: <em>Specification of Communication Management</em> (<code>AUTOSAR_AP_SWS_CommunicationManagement.pdf</code>) and <em>Requirements on Communication Management</em> (<code>AUTOSAR_AP_RS_CommunicationManagement.pdf</code>).</li>
+<li>Related: <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a>, <a href="/4.1/index.html">4.1 MCAL Application Design</a>, <a href="/6.1/index.html">6.1 ECU Development Lifecycle</a>.</li>
+</ol></section>
+<footer class="kb-footer">
+  <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

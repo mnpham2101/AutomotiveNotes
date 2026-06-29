@@ -1,0 +1,44 @@
+@startuml nxp-platform-stack
+title NXP Automotive Software / Platform Stack
+skinparam wrapWidth 200
+
+package "Chip Families" {
+  rectangle "S32K\nCortex-M, body/chassis/powertrain" as S32K
+  rectangle "S32G\nCortex-A + real-time core, gateway/ADAS" as S32G
+  rectangle "i.MX\nCortex-A, infotainment/cockpit" as IMX
+  rectangle "S32R / S32M\nradar / battery management" as OTHER
+}
+
+package "NXP Software" {
+  rectangle "S32 RTD\n(Real-Time Drivers / MCAL)" as RTD
+  rectangle "S32 Design Studio (S32DS)\nEclipse IDE + GCC toolchain" as S32DS
+  rectangle "S32 Configuration Tool\nMCAL config generation" as S32CFG
+  rectangle "S32 SDK / Example Apps" as SDK
+  rectangle "Linux BSP (meta-nxp-auto)\nfor S32G / i.MX" as BSP
+}
+
+package "Third-Party BSW (often layered on top of RTD)" {
+  rectangle "EB tresos AutoCore\n(Elektrobit)" as EB
+  rectangle "Vector MICROSAR" as VEC
+}
+
+package "Debug & Trace" {
+  rectangle "Lauterbach Trace32" as T32
+  rectangle "S32 Debug Probe / P&E Multilink" as PROBE
+}
+
+S32K --> RTD
+S32G --> RTD
+S32G --> BSP
+IMX --> BSP
+
+RTD --> S32CFG
+S32DS --> RTD
+RTD <-- EB : imports MCAL config
+RTD <-- VEC : imports MCAL config
+
+RTD --> T32
+RTD --> PROBE
+SDK --> RTD
+
+@enduml

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8.1 20-Day Training Plan &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li class="current"><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/8.1/index.html">8.1 20-Day Training Plan</a></div>
+</header>
+<div class="kb-toolbar"><a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>8.1 20-Day Training Plan</h1><p><a href="/0.0/index.html">← Home</a></p><nav class="kb-page-toc"><strong>Sections on this page:</strong><ul><li><a href="#concept-introduction">Concept Introduction</a> &middot; <a href="/8.1/concept-introduction.html">(own page)</a></li><li><a href="#scope-phase-structure">Scope — Phase Structure</a> &middot; <a href="/8.1/scope-phase-structure.html">(own page)</a></li><li><a href="#use-cases-how-to-use-this-plan">Use Cases — How to Use This Plan</a> &middot; <a href="/8.1/use-cases-how-to-use-this-plan.html">(own page)</a></li><li><a href="#day-by-day-plan">Day-by-Day Plan</a> &middot; <a href="/8.1/day-by-day-plan.html">(own page)</a></li><li><a href="#q-a">Q&A</a> &middot; <a href="/8.1/q-a.html">(own page)</a></li><li><a href="#references">References</a> &middot; <a href="/8.1/references.html">(own page)</a></li></ul></nav><section id="concept-introduction"><h2>Concept Introduction</h2><ul>
+<li>A 28-working-day self-study plan sequencing every file in this knowledge base into daily, checkable chunks, moving from <strong>process/architecture foundations → platform/tooling depth → leadership practice → a final synthesis review → an advanced knowledge-sharing extension</strong>.</li>
+<li>Each day lists concrete checkboxes; check them off as completed. Re-reading a file's Q&amp;A section out loud (or to a peer) is a good completion test before checking a box.</li>
+<li><strong>Delivery model — this plan is designed to run as knowledge sharing, not solo reading.</strong> Phases 1–5 (Days 1–20) are built on the <em>basic provided documents</em> — <a href="/1.1/index.html">1.1</a>, <a href="/2.1/index.html">2.1</a>, <a href="/2.2/index.html">2.2</a>, <a href="/6.1/index.html">6.1</a>, and the rest of this knowledge base — which every trainee reads as common ground. Phase 6 (Days 21–28) flips the model: each day names a <em>suggested topic</em> and a <em>research goal</em> rather than a single document to read; the trainee is expected to go beyond this knowledge base, pull in additional official AUTOSAR documents or vendor material on that topic, and produce a short write-up to actually share with a peer or the team — turning self-study into a recurring knowledge-sharing session.</li>
+</ul></section><section id="scope-phase-structure"><h2>Scope — Phase Structure</h2><ul>
+<li><strong>Phase 1 (Days 1–4): Process &amp; Architecture Foundations</strong> — <a href="/1.1/index.html">1.1</a>, <a href="/2.1/index.html">2.1</a>, <a href="/2.2/index.html">2.2</a>.</li>
+<li><strong>Phase 2 (Days 5–9): Platform &amp; Embedded Fundamentals</strong> — <a href="/3.1/index.html">3.1</a>, <a href="/3.2/index.html">3.2</a>, <a href="/5.1/index.html">5.1</a>.</li>
+<li><strong>Phase 3 (Days 10–14): Hands-On Worked Example</strong> — <a href="/4.1/index.html">4.1</a> and an attempted local build.</li>
+<li><strong>Phase 4 (Days 15–17): Lifecycle &amp; Tooling Breadth</strong> — <a href="/6.1/index.html">6.1</a>, <a href="/7.1/index.html">7.1</a>, <a href="/7.2/index.html">7.2</a>.</li>
+<li><strong>Phase 5 (Days 18–20): Leadership Practice &amp; Synthesis</strong> — communication/team-management drills + full review.</li>
+<li><strong>Phase 6 (Days 21–28): Advanced Topics — Knowledge-Sharing Extension</strong> — suggested topics and research goals drawn from the full AUTOSAR <em>Layered Software Architecture</em> specification (Doc ID 53, R22-11 — far deeper than the <a href="/2.1/index.html">2.1</a>/<a href="/2.2/index.html">2.2</a> summaries) and the official AUTOSAR <em>Workflow Example</em> (Doc ID 1145), covering material this knowledge base only summarizes or doesn't yet cover at all.</li>
+</ul></section><section id="use-cases-how-to-use-this-plan"><h2>Use Cases — How to Use This Plan</h2><ul>
+<li>Block <strong>60–90 minutes/day</strong>; each day's checklist is sized to fit that window including the linked file's Q&amp;A section.</li>
+<li>Where a day says "drill," it means producing something (a written answer, a diagram redraw, a mock email) — not just re-reading.</li>
+<li>If short on time, <strong>Phase 3 (the hands-on build) is the least skippable</strong> — it's the only phase that exercises real toolchain friction, which is where interview/on-the-job credibility is actually tested.</li>
+<li><strong>Phase 6 is the knowledge-sharing phase</strong>: budget extra time (90–120 minutes/day) since each day includes external research, not just reading this knowledge base. Where possible, actually deliver the day's write-up to a colleague rather than filing it away — the point of this phase is practicing the "explain it to the team" skill, not just personal study. Phase 6 days can be reordered or distributed one-per-week as an ongoing team session rather than run back-to-back.</li>
+</ul></section><section id="day-by-day-plan"><h2>Day-by-Day Plan</h2><h3 id="phase-1-process-architecture-foundations">Phase 1 — Process &amp; Architecture Foundations</h3>
+<ul class="task-list">
+<li><strong>Day 1 — ASPICE</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/1.1/index.html">1.1 ASPICE Overview</a> in full.</li>
+<li class="task-list-item"><input type="checkbox"/> Write out, from memory, the SWE.1–SWE.6 process list and one Tech Lead activity per process.</li>
+<li class="task-list-item"><input type="checkbox"/> Answer all 1.1 Q&amp;A questions without looking, then check against the file.</li>
+<li><strong>Day 2 — AUTOSAR Classic vs Adaptive</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/2.1/index.html">2.1 AUTOSAR Architecture</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> Redraw the layered architecture diagram from memory (App/RTE/BSW/MCAL).</li>
+<li class="task-list-item"><input type="checkbox"/> Write a 3-sentence explanation of Classic vs Adaptive suitable for a customer call.</li>
+<li><strong>Day 3 — MCAL &amp; Driver Layer</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> List 6 common MCAL modules and one peripheral each manages.</li>
+<li class="task-list-item"><input type="checkbox"/> Explain, in writing, the difference between MCAL driver / ECU Abstraction / Complex Device Driver.</li>
+<li><strong>Day 4 — Review &amp; Self-Test</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Re-answer Day 1–3 Q&amp;A sections cold.</li>
+<li class="task-list-item"><input type="checkbox"/> Identify the 2 weakest topics so far and re-read just those sections.</li>
+</ul>
+<h3 id="phase-2-platform-embedded-fundamentals">Phase 2 — Platform &amp; Embedded Fundamentals</h3>
+<ul class="task-list">
+<li><strong>Day 5 — Embedded Fundamentals</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/3.1/index.html">3.1 Embedded Fundamentals</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> Draw the Cortex-M boot chain (Boot ROM → stage-1 → stage-2 → app) from memory.</li>
+<li class="task-list-item"><input type="checkbox"/> Explain Cortex-M vs Cortex-A (MPU vs MMU) in 2 sentences.</li>
+<li><strong>Day 6 — Linux Services &amp; Daemons</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/3.2/index.html">3.2 Linux Services &amp; Daemons</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> Write a systemd <code>.service</code> unit from scratch (no copy-paste) for a hypothetical daemon.</li>
+<li class="task-list-item"><input type="checkbox"/> List the boot-to-ready chain for one of: Wi-Fi, Bluetooth, audio.</li>
+<li><strong>Day 7 — NXP Platform</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/5.1/index.html">5.1 NXP Platform Overview</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> List the NXP chip families relevant to this role and one use case each (S32K, S32G, i.MX).</li>
+<li class="task-list-item"><input type="checkbox"/> Explain the difference between NXP's S32 Configuration Tool and a full BSW vendor tool (EB tresos).</li>
+<li><strong>Day 8 — Cross-Topic Integration Drill</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Write a short narrative: "a CAN bus-off symptom is reported — trace it from application down to MCAL and possibly chip errata," citing which file covers each step.</li>
+<li><strong>Day 9 — Review &amp; Self-Test</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Re-answer Day 5–7 Q&amp;A sections cold.</li>
+<li class="task-list-item"><input type="checkbox"/> Mock-explain (out loud, timed 5 minutes) "MCAL vs driver vs bootloader" as if to a new hire.</li>
+</ul>
+<h3 id="phase-3-hands-on-worked-example">Phase 3 — Hands-On Worked Example</h3>
+<ul class="task-list">
+<li><strong>Day 10 — Study the Worked Example</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/4.1/index.html">4.1 MCAL Application Design</a> end to end.</li>
+<li class="task-list-item"><input type="checkbox"/> Annotate the architecture diagram with where each FR (FR-1..FR-5) is implemented.</li>
+<li><strong>Day 11 — Toolchain Setup</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Confirm <code>arm-none-eabi-gcc</code> (or equivalent) is installed and runs (<code>arm-none-eabi-gcc --version</code>), or install it.</li>
+<li class="task-list-item"><input type="checkbox"/> Read through the sample <code>Makefile</code> line by line and explain each flag's purpose in writing.</li>
+<li><strong>Day 12 — Build Attempt</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Recreate a minimal version of the project structure (<code>src/</code>, <code>startup/</code>, <code>linker/</code>) and attempt to compile a trivial stand-in for one MCAL call (a stub function), even without real RTD sources.</li>
+<li class="task-list-item"><input type="checkbox"/> Note every error encountered and how it was resolved — this log is valuable interview material.</li>
+<li><strong>Day 13 — Yocto Read-Through</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/7.2/index.html">7.2 Yocto Build System</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> Trace the build script's 6 stages and map each to the equivalent stage in the <a href="/4.1/index.html">4.1</a> Makefile.</li>
+<li><strong>Day 14 — Review &amp; Self-Test</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Re-answer Day 10–13 Q&amp;A sections cold.</li>
+<li class="task-list-item"><input type="checkbox"/> Write a 1-paragraph effort estimate for "add a second CAN channel" (per the 4.1 Q&amp;A prompt) as if presenting to a customer.</li>
+</ul>
+<h3 id="phase-4-lifecycle-tooling-breadth">Phase 4 — Lifecycle &amp; Tooling Breadth</h3>
+<ul class="task-list">
+<li><strong>Day 15 — ECU Lifecycle</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/6.1/index.html">6.1 ECU Development Lifecycle</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> Redraw the V-model and label each phase with its ASPICE process ID.</li>
+<li class="task-list-item"><input type="checkbox"/> Fill in the milestone-to-work-product table from memory, then check against the file.</li>
+<li><strong>Day 16 — Tech Stack Overview</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read <a href="/7.1/index.html">7.1 Tech Lead Tech Stack</a>.</li>
+<li class="task-list-item"><input type="checkbox"/> List every tool category and one specific tool per category without looking.</li>
+<li><strong>Day 17 — Tooling Decision Drill</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Write a short justification (as if to management) for investing in better static analysis tooling, using ASPICE/risk framing from <a href="/7.1/index.html">7.1</a> Q&amp;A.</li>
+</ul>
+<h3 id="phase-5-leadership-practice-synthesis">Phase 5 — Leadership Practice &amp; Synthesis</h3>
+<ul class="task-list">
+<li><strong>Day 18 — Communication Drills (JD Section 1)</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Draft a mock customer email explaining a schedule risk caused by an NXP RTD version upgrade (combine <a href="/5.1/index.html">5.1</a> + <a href="/6.1/index.html">6.1</a> reasoning).</li>
+<li class="task-list-item"><input type="checkbox"/> Practice a 2-minute spoken explanation of AUTOSAR Classic vs Adaptive, timed.</li>
+<li><strong>Day 19 — Team Management Drills (JD Section 2)</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Draft a sample sprint/milestone plan for a 10-engineer team covering one V-model cycle (per <a href="/6.1/index.html">6.1</a>).</li>
+<li class="task-list-item"><input type="checkbox"/> Write 3 mentoring talking points for a junior engineer struggling with MISRA compliance.</li>
+<li><strong>Day 20 — Full Synthesis Review</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Re-answer every Q&amp;A section across all 11 files, cold, in one sitting (time-box: 90 minutes).</li>
+<li class="task-list-item"><input type="checkbox"/> Identify remaining weak spots and schedule targeted re-reading.</li>
+<li class="task-list-item"><input type="checkbox"/> Re-read <a href="/0.0/index.html">0.0 Introduction</a> and confirm you can explain the whole knowledge base's structure unaided.</li>
+</ul>
+<h3 id="phase-6-advanced-topics-knowledge-sharing-extension">Phase 6 — Advanced Topics: Knowledge-Sharing Extension</h3>
+<p>Each day below names a <strong>suggested topic</strong> rather than a single file, because this knowledge base only summarizes it (or doesn't cover it at all) — that's the point. Per day: (1) read the cited source section first so the research has a baseline, (2) chase down at least one additional document/material on the topic (an official AUTOSAR spec, an NXP app note, a recognized blog/whitepaper) beyond what's cited here, (3) produce the listed knowledge-sharing output and, where possible, actually walk a colleague through it.</p>
+<ul class="task-list">
+<li><strong>Day 21 — CP Software Clusters &amp; Modular BSW Updates</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read AUTOSAR <em>Layered Software Architecture</em> (Doc ID 53), section on <strong>CP Software Clusters</strong> (Host Software Cluster vs Application Software Clusters, SwCluC, Binary Manifest).</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: find one public OEM/Tier-1 source on why splitting monolithic BSW into independently buildable/updatable clusters matters for OTA software updates; summarize in 5 bullets.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: a 1-page explainer of Host vs Application Software Cluster for a colleague unfamiliar with the concept.</li>
+<li><strong>Day 22 — Multi-Core &amp; Mixed-Criticality BSW Distribution</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read the same spec's sections on <strong>Content of Software Layers in Multi-Core Systems</strong> and <strong>...in Mixed-Critical Systems</strong> (partitions per core, master/satellite EcuM, IOC, ASIL-vs-QM BSW module placement).</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: pick one real multi-core automotive MCU (e.g. an NXP S32G/S32K3 family part) and sketch how BSW partitioning would map onto its cores.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: a diagram showing BSW module placement across 2 partitions/cores for a mixed-ASIL ECU, with the reasoning for each placement.</li>
+<li><strong>Day 23 — OS-Application Partitioning, Error Containment &amp; Restart</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read the spec's <strong>Integration and Runtime Aspects → Partitioning</strong> section (Protection Hook, <code>OsRestartTask</code>, <code>APPLICATION_ACCESSIBLE</code>/<code>RESTARTING</code>/<code>TERMINATED</code>, <code>TerminateApplication()</code>).</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: in the AUTOSAR OS specification, identify what actually triggers an application restart vs. a full termination.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: a short incident-style write-up — "SW-C X overruns its time budget — trace what happens from the Protection Hook through to RTE restart/cleanup."</li>
+<li><strong>Day 24 — BSW Scheduling, Data Consistency &amp; Mode Management</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read the spec's <strong>BSW Scheduling</strong> (BSW Scheduler, <code>BswTimingEvent</code>/<code>BswBackgroundEvent</code>/etc., <code>SchM_Enter</code>/<code>SchM_Exit</code>) and <strong>Mode Management</strong> (BswM mode arbitration, Vehicle/Application/BSW mode interplay) sections.</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: work out when a real integrator would choose interrupt-blocking critical sections vs. sequencing-only (no-op) <code>SchM_Enter</code>/<code>SchM_Exit</code> macros for two BSW modules sharing a resource.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: trace one mode request from a vehicle-level signal down through BswM to a concrete BSW mode switch, as a short annotated diagram.</li>
+<li><strong>Day 25 — Error Handling Taxonomy &amp; Diagnostics (Det/Dem/Dlt)</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read the spec's <strong>Error Handling, Reporting and Diagnostic</strong> sections (error type vs. error class taxonomy: Development/Runtime/Transient/Production errors; <code>Det_ReportError</code>, <code>Dem_SetEventStatus</code>, <code>Dlt_SendLogMessage</code>).</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: classify 5 realistic ECU faults (e.g. EEPROM write failure, CAN bus-off, an out-of-range API parameter, a transient bit-flip, a missing periodic CAN message) into the four error classes and pick the correct reporting API for each.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: a fault → error-class → reporting-module → production-reaction table.</li>
+<li><strong>Day 26 — Functional Safety (E2E) &amp; Security (SecOC/MACsec)</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read the spec's <strong>Safety: End-to-End (E2E) Communication Protection</strong> section — note explicitly that the legacy <strong>E2E wrapper</strong> pattern is superseded; new projects should use the standardized <strong>E2E transformer</strong> — and the <strong>Security: SecOC / MACsec Key Agreement</strong> sections.</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: compare E2E protection (signal-level CRC + counter), SecOC (MAC + freshness counter), and MACsec (Ethernet link-level ICV) — which threat (corruption vs. spoofing vs. replay) each one actually defends against.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: a short comparison table suitable for a customer-facing security-architecture discussion.</li>
+<li><strong>Day 27 — Energy Management &amp; Global Time Synchronization</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read the spec's <strong>Energy Management</strong> (Partial Networking / Partial Network Cluster, ECU Degradation) and <strong>Global Time Synchronization</strong> (StbM, CanTSyn/FrTSyn/EthTSyn, Secure Global Time Sync) sections.</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: design a Partial Network Cluster mapping across a small 3–4 ECU CAN example and walk through the wake/sleep flow; note which bus types (CAN, LIN, FlexRay, J1939) restrict or forbid Partial Networking and why.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: a redrawn PNC wake/sleep diagram plus 2–3 sentences on why sensor-fusion ECUs need synchronized global time.</li>
+<li><strong>Day 28 — AUTOSAR Methodology in Practice: the Official Workflow Example</strong></li>
+<li class="task-list-item"><input type="checkbox"/> Read the AUTOSAR <em>Workflow Example</em> supplementary material (Doc ID 1145) in full — the worked WheelSpeed/VehicleSpeed two-ECU CAN example, including its top-down vs. bottom-up System Description approaches (<code>RootSwCompositionPrototype</code>, <code>DataMapping</code>/<code>SenderReceiverToSignalMapping</code> attachment point) and its Appendix B meta-model class reference.</li>
+<li class="task-list-item"><input type="checkbox"/> Research goal: locate the official <code>WorkflowExample</code> package from the AUTOSAR Classic Platform standards page and inspect the real WheelSpeed/VehicleSpeed System Extract ARXML — identify the <code>SensorActuatorSwComponentType</code> and <code>EcuAbstractionSwComponentType</code> elements in the actual XML.</li>
+<li class="task-list-item"><input type="checkbox"/> Knowledge-sharing output: trace one signal end to end through the ARXML (sensor SW-C → CAN → consuming SW-C) citing the real XML element names found, and compare it against the <a href="/2.1/index.html">2.1</a> Sample call chain and the <a href="/6.1/index.html">6.1</a> 4-step methodology.</li>
+</ul></section><section id="q-a"><h2>Q&A</h2><ul>
+<li><strong>Q: What if 20 days isn't enough to feel ready?</strong>
+  A: Repeat Phase 3 (hands-on) and Phase 5 (leadership drills) — they're the highest-leverage, most perishable skills; conceptual recall (Phases 1–2/4) degrades slower and needs less repetition.</li>
+<li><strong>Q: Should this be done in order, or can phases be reordered?</strong>
+  A: Order matters for Phases 1→3 (each builds on the prior), but Phase 4 topics (<a href="/6.1/index.html">6.1</a>, <a href="/7.1/index.html">7.1</a>) can be moved earlier if a real project's context (e.g. an upcoming customer meeting) makes them urgent.</li>
+<li><strong>Q: Is Phase 6 mandatory, or only for someone aiming deeper than the core role?</strong>
+  A: It's the part of the plan designed to scale to a team rather than one trainee — run Days 1–20 once as shared onboarding, then run Phase 6 as a rotating weekly knowledge-sharing slot (one topic, one presenter, one week) so the research burden is distributed instead of falling on one person re-reading the full 193-page spec alone.</li>
+<li><strong>Q: Why is the Workflow Example saved for last (Day 28) instead of being folded into Phase 3's hands-on work?</strong>
+  A: By Day 28 the trainee already has the <a href="/2.1/index.html">2.1</a> call chain, the <a href="/4.1/index.html">4.1</a> hands-on build, and the <a href="/6.1/index.html">6.1</a> methodology fresh — that's what makes it possible to <em>recognize</em> the real meta-model classes in the Workflow Example's ARXML on sight rather than learning AUTOSAR meta-model vocabulary cold.</li>
+</ul></section><section id="references"><h2>References</h2><ul>
+<li>This plan only sequences material already cited per-file for Phases 1–5; see each linked file's own References section for primary sources.</li>
+<li><em>Layered Software Architecture</em>, AUTOSAR Classic Platform R22-11, Document ID 53 — <a href="https://www.autosar.org/fileadmin/standards/R22-11/CP/AUTOSAR_EXP_LayeredSoftwareArchitecture.pdf">PDF</a> — primary source for all of Phase 6 Days 21–27; this document goes substantially deeper than the summaries in <a href="/2.1/index.html">2.1</a>/<a href="/2.2/index.html">2.2</a> on multi-core/mixed-criticality systems, configuration classes, runtime/integration aspects, error handling, functional safety, security, energy management, and time synchronization.</li>
+<li><em>Workflow Example</em> (Supplementary material), AUTOSAR Classic Platform, Document ID 1145 — distributed as a <code>WorkflowExample</code> package via the <a href="https://www.autosar.org/standards/classic-platform">AUTOSAR Classic Platform standards page</a> — primary source for Phase 6 Day 28; a concrete, official worked instance of the <a href="/6.1/index.html">6.1</a> 4-step methodology with real ARXML.</li>
+</ul></section>
+<footer class="kb-footer">
+  <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

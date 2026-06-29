@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AUTOSAR Methodology — From System Configuration to ECU Executable — 6.1 ECU Development Lifecycle &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li class="current"><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/6.1/index.html">6.1 ECU Development Lifecycle</a> &raquo; AUTOSAR Methodology — From System Configuration to ECU Executable</div>
+</header>
+<div class="kb-toolbar"><a href="/6.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>6.1 ECU Development Lifecycle</h1><h2>AUTOSAR Methodology — From System Configuration to ECU Executable</h2><ul>
+<li>Inside <strong>SWE.3 (Detailed Design &amp; Unit Construction)</strong>, an AUTOSAR Classic ECU is built using AUTOSAR's own <strong>4-step methodology</strong> — Configure System → Extract ECU-Specific Information → Configure ECU → Generate Executable — which turns a vehicle-network-wide design into a flashable binary for each individual ECU.</li>
+<li>Every step both consumes and produces <strong>ARXML</strong> files (AUTOSAR's XML schema); these files <em>are</em> the reviewed, versioned work products handed between system architects, ECU integrators, and BSW suppliers — not just intermediate clutter.</li>
+</ul>
+<h3 id="step-1-configure-system">Step 1 — Configure System</h3>
+<ul>
+<li><strong>Goal</strong>: unify the description of the software components with the description of hardware resources, across the whole vehicle network (not yet a single ECU).</li>
+<li><strong>Inputs</strong>: the <em>System Configuration Input</em> (system-wide ECU resource specification and constraints) and the <em>Collection of Available SWC Implementations</em> (every software component available to place onto an ECU).</li>
+<li><strong>Activity</strong>: map software components onto ECUs with regard to resource budget and timing, performed at system level with an AUTOSAR System Configuration Generator/Editor.</li>
+<li><strong>Outputs</strong>: the <strong>System Configuration Description</strong> (bus mapping, network topology, SW-to-ECU mapping) and the <strong>System Communication Matrix</strong> (the data mapping between system-level signals and the frames/PDUs that carry them on the network).</li>
+</ul>
+<h3 id="step-2-extract-ecu-specific-information">Step 2 — Extract ECU-Specific Information</h3>
+<ul>
+<li><strong>Goal</strong>: narrow the system-wide description down to just what one ECU needs — without this step, every ECU integrator would receive the entire vehicle network's signal list.</li>
+<li><strong>Input</strong>: the System Configuration Description from Step 1.</li>
+<li><strong>Output</strong>: the <strong>ECU Extract of System Configuration</strong> — every signal and message that one specific ECU sends, receives, or is otherwise involved with.</li>
+</ul>
+<h3 id="step-3-configure-ecu">Step 3 — Configure ECU</h3>
+<ul>
+<li><strong>Goal</strong>: configure every BSW module (Com, Can, Os, NvM, RTE, ...) running on that one ECU.</li>
+<li><strong>Inputs</strong>: the ECU Extract from Step 2, plus each BSW supplier's <strong>BSW Module Description (BswMD)</strong> — a vendor-specific file declaring exactly which parameters that module exposes for configuration.</li>
+<li><strong>Three sub-activities</strong>, all operating on one evolving work product (the ECU Configuration Values):
+  1. <strong>Generate Base ECU Configuration Value description</strong> — every configurable parameter for every BSW module on the ECU is instantiated at its default value.
+  2. <strong>Edit ECU Configuration</strong> — an integrator opens the result in an AUTOSAR ECU Configuration Editor and overrides specific parameters with project-specific values (e.g. a CAN baud rate, a watchdog timeout).
+  3. <strong>Generate Configured Module Code</strong> — module code (<code>.c</code>) and headers (<code>.h</code>) are emitted for each BSW module; in practice this generator is usually supplied by the BSW vendor rather than hand-written in-house.</li>
+<li><strong>Output</strong>: the <strong>ECU Configuration Description</strong> — the fully resolved, per-ECU, per-module parameter set, and the single file a code generator needs to produce real C source for that ECU.</li>
+</ul>
+<h3 id="step-4-generate-executable">Step 4 — Generate Executable</h3>
+<ul>
+<li><strong>BSW/RTE generation</strong>: a code generator (typically implemented in Java, Xtend, Xpand, or C#) reads the ECU Configuration Description and emits <code>&lt;module&gt;_Cfg.c</code> / <code>&lt;module&gt;_Cfg.h</code> for each BSW module (RTE, Com, Os, and others).</li>
+<li><strong>RTE generation needs more than the others</strong>: because the RTE mediates between software components, services, and BSW, its generator additionally needs the <strong>OS configuration</strong>, the <strong>BswMD</strong> files, and the <strong>Service Component Description (SWCD)</strong> — all separate ARXML inputs beyond the ECU Configuration Description.</li>
+<li><strong>Compile &amp; link</strong>: the generated BSW/RTE code plus the hand-written SWC code is compiled and linked into the final <strong>ECU Executable</strong> — the binary flashed onto hardware.</li>
+<li><strong>Pre-compile vs. post-build split</strong>: many projects separate <strong>pre-compile-time</strong> and <strong>link-time</strong> BSW parameters (baked into the main code image) from <strong>post-build-time</strong> parameters (e.g. variant coding, calibration) so a separate <strong>ECU Post-Build Data Image</strong> can be flashed independently — letting one compiled binary serve multiple vehicle variants without a full rebuild.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 6.1 ECU Development Lifecycle:</strong><ul><li><a href="/6.1/concept-introduction.html">Concept Introduction</a></li><li><a href="/6.1/scope-the-v-model-phases.html">Scope — The V-Model Phases</a></li><li class="current"><a href="/6.1/autosar-methodology-from-system-configuration-to-ecu-executable.html">AUTOSAR Methodology — From System Configuration to ECU Executable</a></li><li><a href="/6.1/xml-files-that-describe-an-ecu-s-communication-network-and-configuration.html">XML Files That Describe an ECU's Communication Network and Configuration</a></li><li><a href="/6.1/q-a.html">Q&A</a></li><li><a href="/6.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/6.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

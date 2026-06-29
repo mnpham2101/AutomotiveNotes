@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope — Process Groups — 1.1 Automotive SPICE (ASPICE) Overview &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li class="current"><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a> &raquo; Scope — Process Groups</div>
+</header>
+<div class="kb-toolbar"><a href="/1.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>1.1 Automotive SPICE (ASPICE) Overview</h1><h2>Scope — Process Groups</h2><p>ASPICE groups processes by engineering concern. </p>
+<ul>
+<li><strong>SYS — System Engineering</strong>: SYS.1 Requirements Elicitation, SYS.2 System Requirements Analysis, SYS.3 System Architectural Design, SYS.4 System Integration &amp; Test, SYS.5 System Qualification Test.</li>
+<li><strong>SWE — Software Engineering</strong> (the primary home for day-to-day engineering work):</li>
+<li>SWE.1 Software Requirements Analysis</li>
+<li>SWE.2 Software Architectural Design</li>
+<li>SWE.3 Software Detailed Design and Unit Construction</li>
+<li>SWE.4 Software Unit Verification</li>
+<li>SWE.5 Software Integration and Integration Test</li>
+<li>SWE.6 Software Qualification Test</li>
+<li><strong>SUP — Support processes</strong>: SUP.1 Quality Assurance, SUP.8 Configuration Management, SUP.9 Problem Resolution Management, SUP.10 Change Request Management.</li>
+<li><strong>MAN — Management processes</strong>: MAN.3 Project Management, MAN.5 Risk Management.</li>
+<li><strong>ACQ / SPL — Acquisition / Supplier</strong>: relevant when the team itself is a sub-supplier or sources components.</li>
+</ul>
+<p><img alt="Automotive SPICE process groups overview" src="/images/aspice_progress_groups.png" /></p>
+<h3 id="capability-level-aka-process-maturity">Capability Level (a.k.a. Process Maturity)</h3>
+<ul>
+<li>ASPICE rates <strong>capability</strong> per individual process on a 0–5 scale; source [3] introduces these levels as <strong>"process maturity"</strong></li>
+<li><strong>CL0 Incomplete → CL1 Performed</strong>: the process either fails outright or produces inconsistent, ad-hoc results with no systematic management.</li>
+<li><strong>CL2 Managed</strong>: the process is planned, tracked, and resourced, and <strong>traceability to requirements is established</strong> — this is the industry-standard contractual minimum (see roadmap below).</li>
+<li><strong>CL3 Established</strong>: the process is defined and tailored from an organization-wide standard process, with systematic process improvement — commonly required for safety-relevant software.</li>
+<li><strong>CL4 Predictable / CL5 Innovating</strong>: quantitatively managed and continuously optimized respectively; rarely mandated in practice outside very mature suppliers.</li>
+</ul>
+<h3 id="roadmap-to-capability-level-2">Roadmap to Capability Level 2</h3>
+<ul>
+<li>Per [4], reaching CL2 centers on one core capability: <strong>traceability</strong> — the ability to track <em>who did what and why</em>, end-to-end from requirements to tests.</li>
+<li><strong>What it means</strong> (per [5]): traceability addresses the <em>relation and coverage</em> between elements across different work products — it's what enables coverage analysis, impact analysis, and requirement status tracking. This is distinct from <strong>consistency</strong>, which addresses <em>content and semantics</em> from one process to the other (i.e., the linked items don't just point at each other, they actually agree).</li>
+<li>
+<p><strong>Where bidirectional traceability is required</strong> (per [5], kept general — the point is the <em>direction and span</em> of the links, not memorizing every specific work-product pair):</p>
+<ul>
+<li>In the engineering processes: between affected work products <strong>on the left side of the V-model</strong>, between <strong>left-side and corresponding right-side</strong> work products, and between <strong>test cases and test results</strong> on the right side.</li>
+<li>In change request management (SUP.10): between a <strong>change request and the work products it affects</strong>, and between the <strong>change request and its corresponding problem report(s)</strong>.</li>
+</ul>
+<p><img alt="ASPICE bidirectional traceability across the V-model" src="/images/aspice_tracebility.png" /></p>
+</li>
+<li>
+<p><strong>How to implement it</strong>:</p>
+<ul>
+<li>Maintain these links in a dedicated <strong>Requirements Traceability Matrix (RTM)</strong>, either inside an ALM/requirements-management tool (e.g. DOORS NG, Polarion, Jama, codeBeamer — each with built-in traceability/link views) or, for smaller teams, a well-structured spreadsheet (per [6]: Excel/Google Sheets are explicitly viable if disciplined).</li>
+<li>Per [6], give every item a <strong>unique, stable ID</strong> (e.g. <code>SWE-001</code>) and <strong>never renumber</strong> it — if a requirement is removed, mark it <code>[DELETED]</code> rather than deleting the row, so historical links stay valid.</li>
+<li>Add explicit <strong>status/consistency-check columns</strong> (e.g. <code>Draft</code> / <code>Customer Review</code> / <code>Agreed</code> / <code>Baselined</code>, or flags like <code>MISSING_ID</code> / <code>NO_TEST_LINKED</code>) so gaps are visible at a glance instead of discovered during an assessment.</li>
+<li>Record <strong>parent traces</strong> (which system requirement a software requirement came from), <strong>component allocation</strong> (which architecture element implements it), and <strong>test linkage</strong> (which test case(s) verify it) as separate, queryable columns/links rather than free-text notes.</li>
+<li>Update the matrix as part of each work item's <strong>definition-of-done</strong> — e.g. a merge request isn't complete until its requirement/test links are updated — rather than reconstructing traceability retroactively right before an assessment.</li>
+</ul>
+</li>
+<li><strong>How the organization gets audited</strong>: a formal assessment run by an <strong>intacs-certified assessor</strong>, typically over 3–5 days:
+  1. <strong>Preparation</strong> — define the assessment scope (which processes, which project(s)) and select the assessor.
+  2. <strong>Execution</strong> — the assessor interviews practitioners, reviews work products, and observes how the process is actually performed, not just how it's documented.
+  3. <strong>Scoring</strong> — each process gets a capability rating built from individual base/generic practices, each rated Not / Partially / Largely / Fully achieved.
+  4. <strong>Reassessment</strong> — scheduled if non-conformities are found, to re-check after corrective action.</li>
+<li><strong>Evidence to provide for CL2</strong>: process descriptions/templates actually in use (not written for show), real work products from a real project, documentation showing the process being <em>planned, monitored, and adjusted</em> over time, the traceability matrices themselves, and team members available for interview to confirm the process is followed in practice and not only on paper.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 1.1 Automotive SPICE (ASPICE) Overview:</strong><ul><li><a href="/1.1/concept-introduction.html">Concept Introduction</a></li><li class="current"><a href="/1.1/scope-process-groups.html">Scope — Process Groups</a></li><li><a href="/1.1/member-responsibility.html">Member Responsibility</a></li><li><a href="/1.1/aspice-iso-26262-the-v-cycle.html">ASPICE, ISO 26262 & the V-Cycle</a></li><li><a href="/1.1/q-a.html">Q&A</a></li><li><a href="/1.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/1.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

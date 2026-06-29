@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope — NXP Software Stack — 5.1 NXP Automotive Software & Platform Overview &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li class="current"><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a> &raquo; Scope — NXP Software Stack</div>
+</header>
+<div class="kb-toolbar"><a href="/5.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>5.1 NXP Automotive Software & Platform Overview</h1><h2>Scope — NXP Software Stack</h2><p><img alt="NXP automotive software/platform stack" src="/diagrams/nxp-platform-stack.svg" /></p>
+<ul>
+<li><strong>S32 RTD (Real-Time Drivers)</strong>: NXP's AUTOSAR-flavored MCAL/driver package for S32K/S32G — the direct subject of <a href="/2.2/index.html">2.2</a>/<a href="/4.1/index.html">4.1</a>. Versioned per release (e.g. RTD 4.0.x, 5.0.x), with its own release notes and known-issues list a Tech Lead must track per customer-locked version.</li>
+<li><strong>S32 Design Studio (S32DS)</strong>: Eclipse-based IDE bundling the GCC Arm toolchain, debugger integration, and project templates.</li>
+<li><strong>S32 Configuration Tool</strong>: GUI tool generating MCAL/BSW configuration headers from a peripheral configuration model (alternative/complement to EB tresos for full BSW stacks).</li>
+<li><strong>Third-party BSW</strong>: many programs run a <strong>full AUTOSAR BSW stack</strong> from <strong>Elektrobit (EB tresos)</strong> or <strong>Vector (MICROSAR)</strong> <em>on top of</em> NXP's RTD MCAL — the Tech Lead must understand both vendor boundaries and how integration issues get triaged between them.</li>
+<li><strong>S32 SDK / Example Applications</strong>: reference application code demonstrating RTD usage, useful as a known-good baseline when debugging integration regressions.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 5.1 NXP Automotive Software & Platform Overview:</strong><ul><li><a href="/5.1/concept-introduction.html">Concept Introduction</a></li><li class="current"><a href="/5.1/scope-nxp-software-stack.html">Scope — NXP Software Stack</a></li><li><a href="/5.1/use-cases-platform-knowledge-in-daily-work.html">Use Cases — Platform Knowledge in Daily Work</a></li><li><a href="/5.1/sample-typical-debug-trace-setup.html">Sample — Typical Debug/Trace Setup</a></li><li><a href="/5.1/q-a.html">Q&A</a></li><li><a href="/5.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/5.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

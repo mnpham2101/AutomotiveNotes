@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.1 Worked Example — A Proposed MCAL Application &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li class="current"><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/4.1/index.html">4.1 Worked Example — A Proposed MCAL Application</a></div>
+</header>
+<div class="kb-toolbar"><a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>4.1 Worked Example — A Proposed MCAL Application</h1><p><a href="/0.0/index.html">← Home</a></p><nav class="kb-page-toc"><strong>Sections on this page:</strong><ul><li><a href="#concept-introduction">Concept Introduction</a> &middot; <a href="/4.1/concept-introduction.html">(own page)</a></li><li><a href="#scope">Scope</a> &middot; <a href="/4.1/scope.html">(own page)</a></li><li><a href="#requirements-main-functionality">Requirements / Main Functionality</a> &middot; <a href="/4.1/requirements-main-functionality.html">(own page)</a></li><li><a href="#architecture-diagram">Architecture Diagram</a> &middot; <a href="/4.1/architecture-diagram.html">(own page)</a></li><li><a href="#programming-language-dependencies">Programming Language & Dependencies</a> &middot; <a href="/4.1/programming-language-dependencies.html">(own page)</a></li><li><a href="#build-configuration-tech-stack-toolchain">Build Configuration / Tech Stack / Toolchain</a> &middot; <a href="/4.1/build-configuration-tech-stack-toolchain.html">(own page)</a></li><li><a href="#sample-application-main-loop">Sample — Application Main Loop</a> &middot; <a href="/4.1/sample-application-main-loop.html">(own page)</a></li><li><a href="#q-a">Q&A</a> &middot; <a href="/4.1/q-a.html">(own page)</a></li><li><a href="#references">References</a> &middot; <a href="/4.1/references.html">(own page)</a></li></ul></nav><section id="concept-introduction"><h2>Concept Introduction</h2><ul>
+<li>This is a concrete, buildable example tying together everything in <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a> and <a href="/3.1/index.html">3.1 Embedded Fundamentals</a>: a small <strong>AUTOSAR-Classic, MCAL-based application</strong> for an NXP S32K3-class MCU.</li>
+<li>Chosen application: <strong>"CAN Sensor Gateway"</strong> — reads an analog sensor (e.g. a battery-current shunt) and a digital input (e.g. a door-switch), publishes the values periodically on CAN, and exposes a watchdog-supervised health LED. Deliberately small enough to be a complete, traceable example, but touching every architectural concern a real MCAL feature would.</li>
+</ul></section><section id="scope"><h2>Scope</h2><ul>
+<li><strong>In scope</strong>: <code>Mcu</code>, <code>Port</code>, <code>Adc</code>, <code>Dio</code>, <code>Can</code>, <code>Gpt</code> (periodic trigger), <code>Wdg</code> MCAL modules; a thin application layer calling them directly (no RTE/SW-C — representative of a pre-RTE bring-up app or a CDD-style direct-MCAL component); build via S32 Design Studio / GCC toolchain.</li>
+<li><strong>Out of scope</strong>: full RTE-generated SW-C structure, Com/Dcm/Dem BSW services, multi-core, functional-safety qualification — omitted for clarity; in a real project these would wrap around this same MCAL usage.</li>
+</ul></section><section id="requirements-main-functionality"><h2>Requirements / Main Functionality</h2><ul>
+<li><strong>FR-1</strong>: Sample the analog sensor on <code>Adc</code> channel 0 every 10 ms via a <code>Gpt</code>-driven periodic interrupt.</li>
+<li><strong>FR-2</strong>: Read the digital door-switch on a <code>Dio</code> channel on every cycle.</li>
+<li><strong>FR-3</strong>: Transmit a CAN frame (ID <code>0x100</code>) every 100 ms containing the latest ADC value (scaled) and door-switch state.</li>
+<li><strong>FR-4</strong>: Service the hardware watchdog (<code>Wdg</code>) every cycle; on missed service, the MCU resets — basic fail-safe behavior.</li>
+<li><strong>FR-5</strong>: Drive a status LED (<code>Dio</code> output) — solid on = healthy, blinking = a self-detected fault (e.g. ADC out-of-range).</li>
+<li><strong>NFR-1</strong>: Worst-case cycle execution time must fit within the 10 ms period with margin (timing budget — typically validated with a logic analyzer / trace tool, see <a href="/5.1/index.html">5.1</a>).</li>
+<li><strong>NFR-2</strong>: MISRA-C:2012 mandatory/required rule compliance for all application code (consistent with <a href="/2.2/index.html">2.2</a> review expectations).</li>
+</ul></section><section id="architecture-diagram"><h2>Architecture Diagram</h2><p><img alt="MCAL Sensor Gateway application architecture" src="/diagrams/mcal-app-architecture.svg" /></p>
+<ul>
+<li>This same diagram's toolchain/layering is referenced again in <a href="/7.2/index.html">7.2 Yocto Build System</a> when contrasting a bare-metal MCAL build with a Linux/Yocto-based build for the Cortex-A side of a mixed system.</li>
+</ul></section><section id="programming-language-dependencies"><h2>Programming Language & Dependencies</h2><ul>
+<li><strong>Language</strong>: C (C99 subset honoring MISRA-C:2012), with a small amount of Arm assembly only in vendor-supplied startup code — standard for AUTOSAR Classic / MCAL-level code; C++ is essentially never used at this layer due to determinism and certification concerns.</li>
+<li><strong>Dependencies</strong>:</li>
+<li><strong>NXP S32K3 RTD (Real-Time Drivers)</strong> — provides the MCAL module implementations (<code>Adc.c/h</code>, <code>Dio.c/h</code>, <code>Can.c/h</code>, <code>Gpt.c/h</code>, <code>Wdg.c/h</code>, <code>Mcu.c/h</code>, <code>Port.c/h</code>).</li>
+<li><strong>CMSIS-Core(M)</strong> — Arm's hardware abstraction header set (NVIC access, intrinsics), pulled in by the RTD.</li>
+<li><strong>Vendor startup/linker files</strong> (<code>startup_S32K3xx.c</code>, <code>.ld</code> linker script) generated by S32 Design Studio project templates.</li>
+<li>No RTOS in this minimal example (super-loop + ISR design); a real project would typically add <strong>AUTOSAR OS</strong> or <strong>FreeRTOS</strong> for task scheduling once complexity grows.</li>
+</ul></section><section id="build-configuration-tech-stack-toolchain"><h2>Build Configuration / Tech Stack / Toolchain</h2><ul>
+<li><strong>IDE / Config tool</strong>: <strong>NXP S32 Design Studio for S32 Platform</strong> (Eclipse-based), with the <strong>S32 Configuration Tool</strong> plugin to generate MCAL config (<code>*_Cfg.c/h</code>) from a GUI peripheral configuration.</li>
+<li><strong>Compiler/toolchain</strong>: <strong>GNU Arm Embedded Toolchain (<code>arm-none-eabi-gcc</code>)</strong>, bundled with S32DS; alternative: IAR EWARM or Green Hills MULTI on some customer projects.</li>
+<li><strong>Build system</strong>: S32DS generates an <strong>Eclipse CDT-managed makefile project</strong>; for CI/headless builds, the same sources are typically built with a hand-written or generated <strong>GNU <code>make</code></strong> invocation calling <code>arm-none-eabi-gcc</code>/<code>arm-none-eabi-ld</code> directly — this is the integration point a Tech Lead must understand to set up Jenkins/CI (see <a href="/7.1/index.html">7.1</a>).</li>
+<li><strong>Debug/flash tooling</strong>: <strong>P&amp;E Micro Multilink</strong> or <strong>Lauterbach Trace32</strong>, via SWD/JTAG; <strong>S32 Debug Probe</strong> for low-cost bring-up.</li>
+<li><strong>Representative <code>make</code> build invocation</strong> (headless CI equivalent of the IDE build):</li>
+</ul>
+<pre><code class="language-makefile"># Makefile (simplified, illustrative)
+TOOLCHAIN  = arm-none-eabi
+CC         = $(TOOLCHAIN)-gcc
+OBJCOPY    = $(TOOLCHAIN)-objcopy
+MCU        = -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-d16
+
+CFLAGS     = $(MCU) -std=c99 -Wall -Os -ffunction-sections -fdata-sections \
+             -Iinc -IRTD/include -DCPU_S32K344
+
+LDFLAGS    = $(MCU) -Tlinker/S32K344_flash.ld -Wl,--gc-sections -nostartfiles
+
+SRCS       = src/main.c src/app_sensor.c \
+             RTD/src/Adc.c RTD/src/Dio.c RTD/src/Can.c RTD/src/Gpt.c \
+             RTD/src/Wdg.c RTD/src/Mcu.c RTD/src/Port.c \
+             startup/startup_S32K344.c
+
+OBJS       = $(SRCS:.c=.o)
+
+all: app.elf app.bin
+
+app.elf: $(OBJS)
+    $(CC) $(LDFLAGS) -o $@ $^
+
+app.bin: app.elf
+    $(OBJCOPY) -O binary $&lt; $@
+
+clean:
+    rm -f $(OBJS) app.elf app.bin
+</code></pre></section><section id="sample-application-main-loop"><h2>Sample — Application Main Loop</h2><pre><code class="language-c">int main(void) {
+    Mcu_Init(&amp;Mcu_Config_0);
+    Mcu_InitClock(McuClockSettingConfig_0);
+    Port_Init(&amp;Port_Config_0);
+    Adc_Init(&amp;Adc_Config_0);
+    Dio writes go through generated config implicitly via Port_Init
+    Can_Init(&amp;Can_Config_0);
+    Can_SetControllerMode(0, CAN_CS_STARTED);
+    Wdg_Init(&amp;Wdg_Config_0);
+    Gpt_Init(&amp;Gpt_Config_0);
+    Gpt_EnableNotification(GptChannel_10ms);
+    Gpt_StartTimer(GptChannel_10ms, GPT_10MS_TICKS);
+
+    while (1) {
+        Wdg_SetTriggerCondition(WDG_TRIGGER_OK);
+        /* cyclic work driven by Gpt ISR setting a flag; CAN Tx every 10th cycle */
+    }
+}
+
+/* Gpt ISR notification (10 ms tick) */
+void AppCyclicTask_10ms(void) {
+    Adc_ValueGroupType adc_val;
+    Adc_ReadGroup(AdcConf_AdcGroup_SensorGroup, &amp;adc_val);
+    Dio_LevelType door = Dio_ReadChannel(DioConf_DioChannel_DoorSwitch);
+    AppSensor_Update(adc_val, door);   /* app logic: scale, fault-check, LED state */
+    if (AppSensor_TxDue()) {
+        Can_Write(CanConf_CanHth_Tx100ms, AppSensor_GetCanPdu());
+    }
+}
+</code></pre></section><section id="q-a"><h2>Q&A</h2><ul>
+<li><strong>Q: Why no RTE in this example if it's "AUTOSAR Classic"?</strong>
+  A: To keep the worked example minimal and focused purely on MCAL usage. A production AUTOSAR Classic project would wrap <code>AppSensor_*</code> logic in an RTE-generated SW-C and route ADC/Dio/Can access through ECU Abstraction — but the MCAL calls at the bottom look exactly like this.</li>
+<li><strong>Q: How would you estimate effort to add a second CAN channel?</strong>
+  A: If the second channel uses already-supported hardware peripherals and the existing <code>Can</code> MCAL module instance model, it's mostly <strong>configuration effort</strong> (new <code>Can_Config</code> controller/HOH entries, regenerate) plus app-layer wiring — typically low effort. If it requires a peripheral not covered by the RTD module (e.g. a CAN-FD feature absent from the installed RTD version), it becomes a <strong>feasibility risk</strong> needing a vendor RTD upgrade or a CDD — this distinction is exactly the kind of feasibility analysis in JD 3.3.</li>
+<li><strong>Q: Where would unit tests live for this kind of code?</strong>
+  A: Application logic (<code>AppSensor_Update</code>, scaling/fault-check) is unit-testable on a host PC with a mocked MCAL (stub <code>Adc_ReadGroup</code>/<code>Dio_ReadChannel</code>), often using <strong>Unity/CMock</strong> or <strong>Google Test with C wrappers</strong> — MCAL/RTD code itself is usually vendor-validated and tested via hardware-in-the-loop instead.</li>
+</ul></section><section id="references"><h2>References</h2><ul>
+<li>NXP, <em>S32K3 Real-Time Drivers (RTD) User Guide</em> — vendor portal (registration required).</li>
+<li>NXP, <em>S32 Design Studio for S32 Platform</em> documentation — <a href="https://www.nxp.com/design/software/development-software/s32-design-studio-ide">https://www.nxp.com/design/software/development-software/s32-design-studio-ide</a>.</li>
+<li>MISRA Consortium, <em>MISRA C:2012</em> (with Amendment 2/3) — <a href="https://www.misra.org.uk/">https://www.misra.org.uk/</a>.</li>
+<li>Related: <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a>, <a href="/7.2/index.html">7.2 Yocto Build System</a>, <a href="/7.1/index.html">7.1 Tech Lead Tech Stack</a>.</li>
+</ul></section>
+<footer class="kb-footer">
+  <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

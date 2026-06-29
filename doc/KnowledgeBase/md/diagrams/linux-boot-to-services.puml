@@ -1,0 +1,26 @@
+@startuml linux-boot-to-services
+title Linux Boot-to-Application-Services Flow (Cortex-A companion processor)
+skinparam wrapWidth 200
+
+:Boot ROM;
+:U-Boot SPL;
+:U-Boot proper;
+:Linux Kernel boot;
+:systemd (PID 1)\nsysinit.target -> basic.target;
+:multi-user.target;
+
+fork
+  :Wi-Fi\nkernel driver -> wpa_supplicant.service -> connman.service;
+fork again
+  :Bluetooth\nkernel HCI driver -> bluetooth.service (BlueZ) -> A2DP/OBEX profile daemons;
+fork again
+  :Audio\nALSA kernel drivers -> pipewire.service -> application audio clients;
+fork again
+  :Media Access\nUSB/storage kernel drivers -> udisks2.service (auto-mount) -> media indexer service;
+end fork
+
+:Custom "system-readiness" service\n(Wants= all above, signals HMI via D-Bus once healthy);
+
+stop
+
+@enduml

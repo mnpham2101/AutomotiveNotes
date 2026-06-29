@@ -1,0 +1,22 @@
+@startuml cortex-boot-flow
+title Cortex-M Automotive Boot Flow (e.g. NXP S32K)
+skinparam wrapWidth 200
+
+start
+:Power-on Reset;
+:Boot ROM\n(immutable, in silicon);
+:Stage-1 / Primary Bootloader\n(clock & RAM init, minimal);
+if (Valid application image?\n(CRC / signature check)) then (yes)
+  :Stage-2 / Application Bootloader\n(reprogramming / UDS-over-CAN logic);
+  :Jump to Application;
+  :Reset_Handler()\ncopy .data, zero .bss, SystemInit();
+  :main()\nMcu_Init -> Port_Init -> other MCAL _Init();
+  :EcuM_Init()\nBSW startup state machine;
+  :StartOS()\nAUTOSAR OS scheduler running;
+  stop
+else (no)
+  :Stay in bootloader\n(await reprogramming via UDS/CAN);
+  stop
+endif
+
+@enduml

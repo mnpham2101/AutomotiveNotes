@@ -1,0 +1,53 @@
+@startuml aspice-process-groups
+title ASPICE Process Groups and Technical Lead Touch Points
+skinparam wrapWidth 200
+skinparam packageStyle rectangle
+
+package "MAN — Management" {
+  [MAN.3 Project Management]
+  [MAN.5 Risk Management]
+}
+
+package "SYS — System Engineering" {
+  [SYS.1 Requirements Elicitation]
+  [SYS.2 System Req. Analysis]
+  [SYS.3 System Arch. Design]
+  [SYS.4 System Integration & Test]
+  [SYS.5 System Qualification Test]
+}
+
+package "SWE — Software Engineering" {
+  [SWE.1 SW Requirements Analysis]
+  [SWE.2 SW Architectural Design]
+  [SWE.3 Detailed Design & Construction]
+  [SWE.4 SW Unit Verification]
+  [SWE.5 SW Integration & Test]
+  [SWE.6 SW Qualification Test]
+}
+
+package "SUP — Support" {
+  [SUP.1 Quality Assurance]
+  [SUP.8 Configuration Management]
+  [SUP.9 Problem Resolution]
+  [SUP.10 Change Request Mgmt]
+}
+
+actor "Technical Lead" as TL
+
+TL --> [SWE.2 SW Architectural Design] : owns architecture
+TL --> [SWE.3 Detailed Design & Construction] : code review
+TL --> [SUP.9 Problem Resolution] : technical ownership
+TL --> [SUP.10 Change Request Mgmt] : feasibility & estimation
+TL ..> [MAN.3 Project Management] : feeds estimates/risk
+
+[SYS.1 Requirements Elicitation] --> [SYS.2 System Req. Analysis]
+[SYS.2 System Req. Analysis] --> [SYS.3 System Arch. Design]
+[SYS.3 System Arch. Design] --> [SWE.1 SW Requirements Analysis]
+[SWE.1 SW Requirements Analysis] --> [SWE.2 SW Architectural Design]
+[SWE.2 SW Architectural Design] --> [SWE.3 Detailed Design & Construction]
+[SWE.3 Detailed Design & Construction] --> [SWE.4 SW Unit Verification]
+[SWE.4 SW Unit Verification] --> [SWE.5 SW Integration & Test]
+[SWE.5 SW Integration & Test] --> [SYS.4 System Integration & Test]
+[SYS.4 System Integration & Test] --> [SYS.5 System Qualification Test]
+
+@enduml

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q&A — 3.1 Embedded Systems Fundamentals — MCAL, Driver, Bootloader, Automotive Cortex Chips &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li class="current"><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/3.1/index.html">3.1 Embedded Systems Fundamentals — MCAL, Driver, Bootloader, Automotive Cortex Chips</a> &raquo; Q&A</div>
+</header>
+<div class="kb-toolbar"><a href="/3.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>3.1 Embedded Systems Fundamentals — MCAL, Driver, Bootloader, Automotive Cortex Chips</h1><h2>Q&A</h2><ul>
+<li><strong>Q: Why don't Cortex-M chips run Linux?</strong>
+  A: No MMU (or MPU-only, no virtual memory) and far less RAM/flash than Cortex-A parts — Linux's memory model and footprint don't fit; Cortex-M instead runs bare-metal, a small RTOS, or AUTOSAR OS.</li>
+<li><strong>Q: What's the difference between an MPU and an MMU?</strong>
+  A: An MPU (Memory Protection Unit, found on Cortex-M) defines a small number of fixed-size protected regions without address translation. An MMU (on Cortex-A) does full virtual-to-physical address translation, enabling separate process address spaces — required for a general-purpose OS.</li>
+<li><strong>Q: Why is a separate "stage-1" bootloader needed if Boot ROM can already load code?</strong>
+  A: Boot ROM is fixed in silicon and minimal (load-and-jump from a known location, maybe basic signature check). Field-updatable bootloader logic (UDS reprogramming, A/B image selection, rollback) must live in <strong>mutable flash</strong>, hence a second stage.</li>
+<li><strong>Q: How does a bootloader validate an application image before jumping to it?</strong>
+  A: Typically CRC32/checksum at minimum; safety/security-relevant designs add a cryptographic signature check (e.g., ECDSA) against a key stored in protected/OTP memory — relevant to secure boot discussions with security-conscious OEM customers.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 3.1 Embedded Systems Fundamentals — MCAL, Driver, Bootloader, Automotive Cortex Chips:</strong><ul><li><a href="/3.1/concept-introduction.html">Concept Introduction</a></li><li><a href="/3.1/scope-mcal-vs-driver-vs-bootloader.html">Scope — MCAL vs Driver vs Bootloader</a></li><li><a href="/3.1/use-cases.html">Use Cases</a></li><li><a href="/3.1/sample-cortex-m-boot-flow-typical-s32k.html">Sample — Cortex-M Boot Flow (Typical S32K)</a></li><li class="current"><a href="/3.1/q-a.html">Q&A</a></li><li><a href="/3.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/3.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

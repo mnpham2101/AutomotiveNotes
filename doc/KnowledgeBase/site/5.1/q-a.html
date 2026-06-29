@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q&A — 5.1 NXP Automotive Software & Platform Overview &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li class="current"><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a> &raquo; Q&A</div>
+</header>
+<div class="kb-toolbar"><a href="/5.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>5.1 NXP Automotive Software & Platform Overview</h1><h2>Q&A</h2><ul>
+<li><strong>Q: What's the practical difference between using NXP's own S32 Configuration Tool vs. a third-party BSW vendor's tool (EB tresos)?</strong>
+  A: NXP's tool configures <strong>RTD/MCAL only</strong>, generating chip-level driver config. EB tresos (or Vector DaVinci) configures the <strong>full BSW stack</strong> including RTE, Com, Dcm, OS — and typically <em>imports</em> the MCAL configuration so the two tools must stay in sync, which is itself a common integration friction point.</li>
+<li><strong>Q: Why would a project deliberately stay on an older RTD version instead of upgrading?</strong>
+  A: Re-qualification cost — once a customer has validated a specific RTD version (test reports, ASPICE work products tied to it), upgrading triggers re-test/re-review effort; teams often stay pinned until a defect or feature truly requires the upgrade — a recurring risk/feasibility trade-off (JD 3.3).</li>
+<li><strong>Q: How do you find out if a bug is a chip errata vs. a software bug?</strong>
+  A: Check the part-specific <strong>Chip Errata</strong> document (NXP publishes per silicon revision) against the symptom; if it matches, the errata document also usually states the official workaround, which then becomes a driver/MCAL-level patch.</li>
+<li><strong>Q: What does "NXP automotive software components" beyond MCAL typically include?</strong>
+  A: RTD's broader scope (beyond MCAL) like example BSW services, the S32 SDK demo apps, secure-boot/HSM (Hardware Security Module) firmware for S32K3's HSE core, and Linux BSPs (board support packages) for S32G/i.MX used with Yocto (see <a href="/7.2/index.html">7.2</a>).</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 5.1 NXP Automotive Software & Platform Overview:</strong><ul><li><a href="/5.1/concept-introduction.html">Concept Introduction</a></li><li><a href="/5.1/scope-nxp-software-stack.html">Scope — NXP Software Stack</a></li><li><a href="/5.1/use-cases-platform-knowledge-in-daily-work.html">Use Cases — Platform Knowledge in Daily Work</a></li><li><a href="/5.1/sample-typical-debug-trace-setup.html">Sample — Typical Debug/Trace Setup</a></li><li class="current"><a href="/5.1/q-a.html">Q&A</a></li><li><a href="/5.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/5.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

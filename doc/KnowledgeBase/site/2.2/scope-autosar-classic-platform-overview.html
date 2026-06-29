@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope — AUTOSAR Classic Platform Overview — 2.2 AUTOSAR Classic Platform &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li class="current"><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a> &raquo; Scope — AUTOSAR Classic Platform Overview</div>
+</header>
+<div class="kb-toolbar"><a href="/2.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>2.2 AUTOSAR Classic Platform</h1><h2>Scope — AUTOSAR Classic Platform Overview</h2><p>The full Classic Platform stack, layer by layer [1]:</p>
+<p><img alt="AUTOSAR Classic Platform layered architecture - detailed view" src="/images/autosar-classic-platform-details.png" /></p>
+<ul>
+<li><strong>Application Layer</strong> — Software Components (SW-Cs) implementing customer/OEM application logic; mostly hardware-independent, communicate only via <strong>ports</strong> (no direct hardware access).</li>
+<li><strong>RTE (Runtime Environment)</strong> — generated, ECU- and application-specific glue code providing communication services to SW-Cs.</li>
+<li><strong>Services Layer</strong> — highest BSW sub-layer: <strong>System Services</strong> (OS, timers, ECU state/mode management — EcuM, BswM — watchdog manager), <strong>Memory Services</strong> (NvM), <strong>Crypto Services</strong>, <strong>Off-Board Communication Services</strong> (V2X, off-board diagnostics), <strong>Communication Services</strong> (Com, PduR, diagnostic stacks Dcm/Dem).</li>
+<li><strong>ECU Abstraction Layer</strong> — interfaces the Microcontroller Abstraction Layer's drivers plus drivers for <em>external</em> devices; offers a peripheral/device API independent of µC-internal-vs-external location. Components: Onboard Device Abstraction, Memory/Crypto/Wireless-Communication/Communication HW Abstraction, and <strong>I/O Hardware Abstraction</strong> — placed here per [1], not in the Services Layer, because it abstracts I/O <em>location</em> (on-chip vs. on-board) and ECU hardware layout, not the sensors/actuators themselves.</li>
+<li><strong>Microcontroller Abstraction Layer (MCAL)</strong> — the lowest BSW layer; see the Module Map below for NXP's concrete module set.</li>
+<li><strong>Complex Drivers (CDD)</strong> — a driver for hardware AUTOSAR doesn't standardize (e.g., a custom sensor ASIC over SPI), spanning from the hardware directly up to the RTE; see the extensibility rule below.</li>
+<li><strong>Microcontroller</strong> — the physical MCU (e.g., NXP S32K).</li>
+</ul>
+<h3 id="hardware-independence-the-task-of-each-layer">Hardware Independence — the Task of Each Layer</h3>
+<p>Each layer's defining <strong>Task</strong> (the term used by the source spec [1] itself) is to make everything <em>above</em> it independent of whatever sits <em>below</em> it — this is the mechanism by which AUTOSAR achieves hardware independence, not an incidental side effect of layering:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Task [1]</th>
+<th>Implementation</th>
+<th>Upper interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MCAL</strong></td>
+<td>Make higher software layers independent of <strong>µC</strong></td>
+<td>µC-dependent</td>
+<td>Standardized, µC-independent</td>
+</tr>
+<tr>
+<td><strong>ECU Abstraction</strong></td>
+<td>Make higher software layers independent of <strong>ECU hardware layout</strong></td>
+<td>µC-independent, ECU-hardware-dependent</td>
+<td>µC- and ECU-hardware-independent</td>
+</tr>
+<tr>
+<td><strong>RTE</strong></td>
+<td>Make AUTOSAR Software Components independent of their <strong>mapping to a specific ECU</strong></td>
+<td>ECU- and application-specific (generated per ECU)</td>
+<td>Completely ECU-independent</td>
+</tr>
+</tbody>
+</table>
+<p>Practical effect: the same Application SW-C source code is reusable across different microcontrollers (NXP, Infineon, Renesas, ...) and different ECU hardware layouts — only the MCAL implementation/configuration and the ECU Abstraction drivers change, plus a re-generation of RTE/BSW configuration. MCAL's entire reason for existing is to absorb µC-specific register access so nothing above it ever has to touch a register directly.</p>
+<h3 id="virtual-functional-bus-vfb-and-signal-realization">Virtual Functional Bus (VFB) and Signal Realization</h3>
+<ul>
+<li>The VFB is the design-time concept that makes the RTE possible: "this virtual bus decouples the applications from the infrastructure. It communicates via dedicated ports... The VFB handles communication both within the individual ECU and between ECUs. From an application point of view, no detailed knowledge of lower-level technologies or dependencies is required" [2].</li>
+<li>Concretely: SW-Cs are designed and connected via ports <strong>before</strong> any ECU mapping exists. The VFB is what lets that design stay valid regardless of how SW-Cs are later distributed across ECUs.</li>
+<li><strong>Realization</strong> — once the AUTOSAR Methodology partitions SW-Cs onto concrete ECUs (see <a href="/6.1/index.html">6.1 ECU Development Lifecycle</a>), each VFB port connection is realized one of two ways:</li>
+<li><strong>Both endpoints on the same ECU</strong> → collapses to a direct, generated <strong>RTE</strong> call — no network involved.</li>
+<li><strong>Endpoints on different ECUs</strong> → realized as a full signal path down through Com → PduR → a Communication HW Abstraction module (e.g. CanIf) → an MCAL driver → the bus, and back up the mirrored path on the receiving ECU. See the Sample below for that exact path, with real API names.</li>
+<li>This is precisely why SW-C application code never has to change when a signal's routing is re-mapped from intra-ECU to inter-ECU (or vice versa) — the VFB/port abstraction is what AUTOSAR is protecting the application from.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 2.2 AUTOSAR Classic Platform:</strong><ul><li><a href="/2.2/concept-introduction.html">Concept Introduction</a></li><li class="current"><a href="/2.2/scope-autosar-classic-platform-overview.html">Scope — AUTOSAR Classic Platform Overview</a></li><li><a href="/2.2/scope-mcal-module-map.html">Scope — MCAL Module Map</a></li><li><a href="/2.2/scope-autosar-api-naming-submodules-and-standardized-services.html">Scope — AUTOSAR API Naming, Submodules and Standardized Services</a></li><li><a href="/2.2/sample-classic-platform-sw-c-to-mcal-call-chain-for-an-inter-ecu-signal.html">Sample — Classic Platform: SW-C to MCAL Call Chain for an Inter-ECU Signal</a></li><li><a href="/2.2/sample-classic-platform-cortex-m-mcu-receiving-sensor-data-over-can-fd.html">Sample — Classic Platform: Cortex-M MCU Receiving Sensor Data over CAN-FD</a></li><li><a href="/2.2/q-a.html">Q&A</a></li><li><a href="/2.2/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/2.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

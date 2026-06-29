@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 AUTOSAR Classic Platform &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li class="current"><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></div>
+</header>
+<div class="kb-toolbar"><a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>2.2 AUTOSAR Classic Platform</h1><p><a href="/0.0/index.html">← Home</a> · See also: <a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></p><nav class="kb-page-toc"><strong>Sections on this page:</strong><ul><li><a href="#concept-introduction">Concept Introduction</a> &middot; <a href="/2.2/concept-introduction.html">(own page)</a></li><li><a href="#scope-autosar-classic-platform-overview">Scope — AUTOSAR Classic Platform Overview</a> &middot; <a href="/2.2/scope-autosar-classic-platform-overview.html">(own page)</a></li><li><a href="#scope-mcal-module-map">Scope — MCAL Module Map</a> &middot; <a href="/2.2/scope-mcal-module-map.html">(own page)</a></li><li><a href="#scope-autosar-api-naming-submodules-and-standardized-services">Scope — AUTOSAR API Naming, Submodules and Standardized Services</a> &middot; <a href="/2.2/scope-autosar-api-naming-submodules-and-standardized-services.html">(own page)</a></li><li><a href="#sample-classic-platform-sw-c-to-mcal-call-chain-for-an-inter-ecu-signal">Sample — Classic Platform: SW-C to MCAL Call Chain for an Inter-ECU Signal</a> &middot; <a href="/2.2/sample-classic-platform-sw-c-to-mcal-call-chain-for-an-inter-ecu-signal.html">(own page)</a></li><li><a href="#sample-classic-platform-cortex-m-mcu-receiving-sensor-data-over-can-fd">Sample — Classic Platform: Cortex-M MCU Receiving Sensor Data over CAN-FD</a> &middot; <a href="/2.2/sample-classic-platform-cortex-m-mcu-receiving-sensor-data-over-can-fd.html">(own page)</a></li><li><a href="#q-a">Q&A</a> &middot; <a href="/2.2/q-a.html">(own page)</a></li><li><a href="#references">References</a> &middot; <a href="/2.2/references.html">(own page)</a></li></ul></nav><section id="concept-introduction"><h2>Concept Introduction</h2><ul>
+<li><strong>AUTOSAR Classic Platform (CP)</strong>'s design philosophy is to <strong>decouple application software from hardware</strong>: a layered architecture separates hardware-independent application software from hardware-oriented Basic Software (BSW) via the RTE, so SW-Cs can be developed without specific knowledge of the hardware used and relocated across ECUs without touching application code [2].</li>
+<li>That decoupling is what makes CP's other goals possible: <strong>determinism</strong> (static, build-time configuration, no dynamic memory, a minimal RTOS — predictable timing for safety-relevant control loops) and <strong>reuse/interoperability</strong> — standardized methodology and exchange formats let OEMs and suppliers integrate software modules from different sources, and scale the same software across car lines and variants [2].</li>
+<li>See <a href="/2.1/index.html">2.1 AUTOSAR Architecture</a> for the Classic-vs-Adaptive Platform contrast; this document zooms into Classic Platform's internal layering, scope, and a concrete MCAL-level call chain.</li>
+</ul></section><section id="scope-autosar-classic-platform-overview"><h2>Scope — AUTOSAR Classic Platform Overview</h2><p>The full Classic Platform stack, layer by layer [1]:</p>
+<p><img alt="AUTOSAR Classic Platform layered architecture - detailed view" src="/images/autosar-classic-platform-details.png" /></p>
+<ul>
+<li><strong>Application Layer</strong> — Software Components (SW-Cs) implementing customer/OEM application logic; mostly hardware-independent, communicate only via <strong>ports</strong> (no direct hardware access).</li>
+<li><strong>RTE (Runtime Environment)</strong> — generated, ECU- and application-specific glue code providing communication services to SW-Cs.</li>
+<li><strong>Services Layer</strong> — highest BSW sub-layer: <strong>System Services</strong> (OS, timers, ECU state/mode management — EcuM, BswM — watchdog manager), <strong>Memory Services</strong> (NvM), <strong>Crypto Services</strong>, <strong>Off-Board Communication Services</strong> (V2X, off-board diagnostics), <strong>Communication Services</strong> (Com, PduR, diagnostic stacks Dcm/Dem).</li>
+<li><strong>ECU Abstraction Layer</strong> — interfaces the Microcontroller Abstraction Layer's drivers plus drivers for <em>external</em> devices; offers a peripheral/device API independent of µC-internal-vs-external location. Components: Onboard Device Abstraction, Memory/Crypto/Wireless-Communication/Communication HW Abstraction, and <strong>I/O Hardware Abstraction</strong> — placed here per [1], not in the Services Layer, because it abstracts I/O <em>location</em> (on-chip vs. on-board) and ECU hardware layout, not the sensors/actuators themselves.</li>
+<li><strong>Microcontroller Abstraction Layer (MCAL)</strong> — the lowest BSW layer; see the Module Map below for NXP's concrete module set.</li>
+<li><strong>Complex Drivers (CDD)</strong> — a driver for hardware AUTOSAR doesn't standardize (e.g., a custom sensor ASIC over SPI), spanning from the hardware directly up to the RTE; see the extensibility rule below.</li>
+<li><strong>Microcontroller</strong> — the physical MCU (e.g., NXP S32K).</li>
+</ul>
+<h3 id="hardware-independence-the-task-of-each-layer">Hardware Independence — the Task of Each Layer</h3>
+<p>Each layer's defining <strong>Task</strong> (the term used by the source spec [1] itself) is to make everything <em>above</em> it independent of whatever sits <em>below</em> it — this is the mechanism by which AUTOSAR achieves hardware independence, not an incidental side effect of layering:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Task [1]</th>
+<th>Implementation</th>
+<th>Upper interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MCAL</strong></td>
+<td>Make higher software layers independent of <strong>µC</strong></td>
+<td>µC-dependent</td>
+<td>Standardized, µC-independent</td>
+</tr>
+<tr>
+<td><strong>ECU Abstraction</strong></td>
+<td>Make higher software layers independent of <strong>ECU hardware layout</strong></td>
+<td>µC-independent, ECU-hardware-dependent</td>
+<td>µC- and ECU-hardware-independent</td>
+</tr>
+<tr>
+<td><strong>RTE</strong></td>
+<td>Make AUTOSAR Software Components independent of their <strong>mapping to a specific ECU</strong></td>
+<td>ECU- and application-specific (generated per ECU)</td>
+<td>Completely ECU-independent</td>
+</tr>
+</tbody>
+</table>
+<p>Practical effect: the same Application SW-C source code is reusable across different microcontrollers (NXP, Infineon, Renesas, ...) and different ECU hardware layouts — only the MCAL implementation/configuration and the ECU Abstraction drivers change, plus a re-generation of RTE/BSW configuration. MCAL's entire reason for existing is to absorb µC-specific register access so nothing above it ever has to touch a register directly.</p>
+<h3 id="virtual-functional-bus-vfb-and-signal-realization">Virtual Functional Bus (VFB) and Signal Realization</h3>
+<ul>
+<li>The VFB is the design-time concept that makes the RTE possible: "this virtual bus decouples the applications from the infrastructure. It communicates via dedicated ports... The VFB handles communication both within the individual ECU and between ECUs. From an application point of view, no detailed knowledge of lower-level technologies or dependencies is required" [2].</li>
+<li>Concretely: SW-Cs are designed and connected via ports <strong>before</strong> any ECU mapping exists. The VFB is what lets that design stay valid regardless of how SW-Cs are later distributed across ECUs.</li>
+<li><strong>Realization</strong> — once the AUTOSAR Methodology partitions SW-Cs onto concrete ECUs (see <a href="/6.1/index.html">6.1 ECU Development Lifecycle</a>), each VFB port connection is realized one of two ways:</li>
+<li><strong>Both endpoints on the same ECU</strong> → collapses to a direct, generated <strong>RTE</strong> call — no network involved.</li>
+<li><strong>Endpoints on different ECUs</strong> → realized as a full signal path down through Com → PduR → a Communication HW Abstraction module (e.g. CanIf) → an MCAL driver → the bus, and back up the mirrored path on the receiving ECU. See the Sample below for that exact path, with real API names.</li>
+<li>This is precisely why SW-C application code never has to change when a signal's routing is re-mapped from intra-ECU to inter-ECU (or vice versa) — the VFB/port abstraction is what AUTOSAR is protecting the application from.</li>
+</ul></section><section id="scope-mcal-module-map"><h2>Scope — MCAL Module Map</h2><p><img alt="MCAL and driver layer zoom" src="/diagrams/mcal-driver-zoom.svg" /></p>
+<ul>
+<li><strong>Common MCAL modules</strong> (names are AUTOSAR-standardized; behavior is chip-specific):</li>
+<li><code>Mcu</code> — clock/PLL setup, reset, low-power mode entry.</li>
+<li><code>Port</code> / <code>Dio</code> — pin muxing (Port) and digital I/O (Dio).</li>
+<li><code>Adc</code> / <code>Pwm</code> / <code>Icu</code> (Input Capture Unit) / <code>Gpt</code> (General Purpose Timer) — analog &amp; timing peripherals.</li>
+<li><code>Spi</code> / <code>Can</code> / <code>Lin</code> / <code>Fls</code> (Flash) / <code>Eep</code> (EEPROM emulation) — communication &amp; non-volatile memory.</li>
+<li><code>WdgM</code>/<code>Wdg</code> — watchdog.</li>
+<li><strong>Each MCAL module</strong> typically exposes: <code>&lt;Module&gt;_Init()</code>, <code>&lt;Module&gt;_DeInit()</code>, read/write or notification functions, and a <code>&lt;Module&gt;_GetVersionInfo()</code> — a consistent pattern across all modules.</li>
+<li><strong>Configuration-driven</strong>: MCAL behavior is fixed mostly at <strong>build/generation time</strong> via a config tool (NXP S32 Configuration Tool, or EB tresos) producing <code>&lt;Module&gt;_Cfg.h/.c</code> — runtime flexibility is intentionally limited for determinism and certifiability.</li>
+</ul></section><section id="scope-autosar-api-naming-submodules-and-standardized-services"><h2>Scope — AUTOSAR API Naming, Submodules and Standardized Services</h2><p>AUTOSAR's "scope" extends beyond just naming the MCAL modules above — it is a defined set of standardized module APIs, named submodules per layer, and standardized service categories [1][2]:</p>
+<ul>
+<li><strong>Three kinds of interface, by name</strong> [1]:</li>
+<li><strong>AUTOSAR Interface</strong> — language-, ECU- and network-technology-independent; defines the ports through which SW-Cs and/or BSW modules send/receive information or invoke services. Can be realized either locally (intra-ECU) or over a network.</li>
+<li><strong>Standardized AUTOSAR Interface</strong> — an AUTOSAR Interface whose syntax <em>and</em> semantics are themselves standardized within AUTOSAR; used to expose <strong>AUTOSAR Services</strong> (Services Layer functionality) to application SW-Cs.</li>
+<li><strong>Standardized Interface</strong> — a plain, language-specific (typically C) API standardized by AUTOSAR without using the AUTOSAR Interface technique. Because it isn't an AUTOSAR Interface, it is always intra-ECU — communication through it can never be re-routed over a network. <strong>This is exactly what every MCAL API above is</strong>: <code>Can_Write</code>, <code>Adc_ReadGroup</code>, <code>Spi_WriteIB</code>, <code>Dio_WriteChannel</code> are all Standardized Interfaces, not AUTOSAR Interfaces — which is why a call into MCAL can never silently become a network call.</li>
+<li><strong>Named submodules per layer</strong> — every module in the Module Map above is a standardized, named module, not a generic placeholder. The same naming discipline continues one layer up: <strong>Services Layer</strong> → <code>Com</code>, <code>PduR</code>, <code>NvM</code>, <code>Dem</code>, <code>Det</code>, <code>Dlt</code>, <code>EcuM</code>, <code>BswM</code>, <code>ComM</code>, <code>WdgM</code>; <strong>ECU Abstraction Layer</strong> → <code>CanIf</code>, <code>IoHwAb</code>, <code>WdgIf</code>, <code>MemIf</code> (full ICC3 module map in [1]).</li>
+<li><strong>Six standardized service types</strong> [1] — the Services Layer (and the HW Abstraction/Driver groups beneath it, MCAL included) is organized around these categories regardless of silicon vendor: <strong>I/O</strong> (sensors, actuators, ECU onboard peripherals), <strong>Memory</strong> (internal/external non-volatile memory), <strong>Crypto</strong> (cryptographic primitives, HW- or SW-based), <strong>Communication</strong> (vehicle network systems, ECU onboard communication, ECU-internal SW), <strong>Off-board Communication</strong> (V2X, in-vehicle wireless, off-board diagnostics), <strong>System</strong> (OS, timers, error memory, ECU state/mode management). Every MCAL module above belongs to exactly one of these.</li>
+<li><strong>Complex Drivers extend — but don't break — the scope.</strong> AUTOSAR's own extensibility rule is explicit [1]: standard MCAL/BSW modules may be <em>extended</em> in functionality while remaining compliant; non-standard functionality is instead integrated as a <strong>Complex Driver (CDD)</strong> (see the Complex Drivers bullet above), and <strong>no further layers may be added</strong> to the architecture. A CDD spans from the hardware directly up to the RTE, bypassing MCAL/ECU-Abstraction/Services entirely, specifically to add functionality AUTOSAR has not standardized — devices outside AUTOSAR's scope, very high timing constraints (e.g. injection control, electric valve control, incremental position detection via TPU/PCP/CCU peripherals), or legacy/migration code — while still exposing a normal AUTOSAR Interface upward to SW-Cs [1]. A CDD's access back into the rest of the BSW is restricted: it may use named exclusive access points such as the PDU Router, NVRAM Manager, Watchdog Manager, or the SPI/GPT drivers, but only where those modules' functions are documented as re-entrant [1].</li>
+</ul></section><section id="sample-classic-platform-sw-c-to-mcal-call-chain-for-an-inter-ecu-signal"><h2>Sample — Classic Platform: SW-C to MCAL Call Chain for an Inter-ECU Signal</h2><p>Use case: an Application SW-C writes a signal (e.g., vehicle speed) that must reach another ECU over CAN. Walking the call chain down from the SW-C to the MCAL driver, and back up on the receiving ECU, makes the VFB realization principle above concrete, with the real API names used by AUTOSAR-compliant BSW stacks.</p>
+<p><strong>Transmit path (sending ECU):</strong></p>
+<pre><code class="language-c">/* Application SW-C, via RTE-generated accessor */
+Rte_Write_PPort_VehicleSpeed(speedValue);
+
+/* RTE forwards the write into the Services Layer */
+Com_SendSignal(VehicleSpeed_SignalId, &amp;speedValue);
+
+/* Com packs the signal into an I-PDU and hands it to PduR */
+PduR_ComTransmit(VehicleSpeed_PduId, &amp;pduInfo);
+
+/* PduR routes the I-PDU to the Communication HW Abstraction module for this PDU */
+CanIf_Transmit(VehicleSpeed_PduId, &amp;pduInfo);
+
+/* CanIf hands the L-PDU to the MCAL CAN driver for the configured controller/HTH */
+Can_Write(VehicleSpeed_Hth, &amp;canPdu);
+</code></pre>
+<p><strong>Receive path (receiving ECU):</strong></p>
+<pre><code class="language-c">/* Can driver (MCAL) — interrupt-driven; notifies CanIf of a newly received L-PDU */
+CanIf_RxIndication(&amp;mailbox, &amp;pduInfoPtr);
+
+/* CanIf dispatches the PDU to whichever upper-layer module is configured for it */
+PduR_CanIfRxIndication(VehicleSpeed_PduId, &amp;pduInfoPtr);
+
+/* Com unpacks the I-PDU back into the signal it carries */
+Com_RxIndication(VehicleSpeed_PduId, &amp;pduInfoPtr);
+
+/* RTE propagates the unpacked signal to the data element behind the receiver SW-C's port */
+</code></pre>
+<p>Each call above is a real, standardized AUTOSAR function name [3][4][5] — nothing in this chain is project-specific except the PDU/signal IDs and the SW-C's own port/data-element names. The CAN-FD Sample below walks the receive path again for a specific sensor use case, diagrammed step by step.</p></section><section id="sample-classic-platform-cortex-m-mcu-receiving-sensor-data-over-can-fd"><h2>Sample — Classic Platform: Cortex-M MCU Receiving Sensor Data over CAN-FD</h2><p>Use case: a Cortex-M-based ECU running Classic AUTOSAR receives data from a radar/lidar sensor over a CAN-FD bus — the call chain from the bus, through the <code>Can</code> MCAL driver, up to the application. CAN-FD is a documented extension of the AUTOSAR CAN Communication Stack: "the CAN Communication Stack supports ... CAN FD communication, if supported by hardware" [1].</p>
+<p><img alt="Cortex-M data flow when a sensor sends data to the MCU" src="/diagrams/cortexM_sensor_rx_dataflow.svg" /></p>
+<p>What AUTOSAR has defined at each step (function names and signatures taken from the R25-11 specs [3][4][5]):</p>
+<ol>
+<li><strong>Radar/lidar → CAN-FD bus (Microcontroller / HW)</strong> — the sensor transmits its measurement as a CAN-FD frame; the CAN controller hardware checks DLC/CRC on the raw bytes before handing them to the driver.</li>
+<li><strong><code>Can</code> driver — MCAL, Rx HW buffer</strong> — chip-specific, interrupt-driven; copies the received L-PDU out of the CAN-FD controller's hardware receive buffer, then calls the configured upper-layer notification:
+   <code>c
+   /* Can driver (MCAL) ISR — interrupt-driven; copies the L-PDU out of the HW mailbox, then notifies CanIf */
+   void Can_Isr_RxMailbox(void) {
+       /* ... read CAN-FD frame out of the controller's HW receive buffer into mailbox/pduInfo ... */
+       CanIf_RxIndication(&amp;mailbox, &amp;pduInfo);
+   }</code></li>
+<li><strong><code>CanIf</code> — ECU Abstraction Layer (Communication HW Abstraction), PDU dispatch</strong> — validates/filters the L-PDU and dispatches it (<code>PduId</code>, <code>SDU</code>) to whichever upper-layer module is configured for this PDU, independent of which CAN controller (on-chip or external ASIC) actually received it:
+   <code>c
+   void CanIf_RxIndication(const Can_HwType* Mailbox, const PduInfoType* PduInfoPtr) {
+       /* validates/filters, then calls the upper layer configured for this PDU */
+   }</code></li>
+<li><strong><code>PduR</code> — Services Layer, routes the PDU</strong> — for a direct 1:1 route the spec permits compiling this straight through to <code>Com_RxIndication</code> (a real, documented PduR optimization, not a simplification made for this sample):
+   <code>c
+   /* #define PduR_CanIfRxIndication Com_RxIndication */
+   void PduR_CanIfRxIndication(PduIdType RxPduId, const PduInfoType* PduInfoPtr) {
+       Com_RxIndication(RxPduId, PduInfoPtr);
+   }</code></li>
+<li><strong><code>Com</code> — Services Layer, unpacks signals</strong> — deserializes the I-PDU back into the signal(s) it carries:
+   <code>c
+   void Com_RxIndication(PduIdType RxPduId, const PduInfoType* PduInfoPtr) {
+       /* deserializes the I-PDU; updates the signal-update (unpacked) data element it carries */
+   }</code></li>
+<li><strong>RTE</strong> — propagates the unpacked signal update to the data element behind the Sensor Processing SW-C's receiver port.</li>
+<li><strong>Sensor Processing SWC — Application Layer, plausibility check</strong> — reads the new value via the RTE-generated accessor. <code>Rte_Read_&lt;port&gt;_&lt;dataElement&gt;</code> is the one conceptual name in this chain — the real symbol is generated per-project from the SW-C's actual port and data-element names, so no single standardized spelling exists.</li>
+</ol>
+<p>Note that only step 2 is MCAL proper — everything from <code>CanIf</code> upward is ECU Abstraction/Services/RTE, included here because the question "what happens to a sensor frame after the <code>Can</code> driver hands it off" is exactly where MCAL's responsibility ends and the rest of the stack picks up; see the generic transmit/receive Sample above for the transmit-side mirror of this chain.</p></section><section id="q-a"><h2>Q&A</h2><ul>
+<li><strong>Q: Who normally supplies MCAL — the OEM, the Tier-1, or the silicon vendor?</strong>
+  A: Usually the <strong>silicon vendor</strong> (NXP, via the RTD package) or a dedicated BSW vendor (Elektrobit tresos, Vector MICROSAR). The Tier-1's team <strong>configures and integrates</strong> it rather than writing it from scratch — though CDDs and bugfixes/patches are commonly authored in-house.</li>
+<li><strong>Q: What does DET stand for and why does it matter at this layer?</strong>
+  A: <strong>Development Error Tracing</strong> — a debug-build-only mechanism where MCAL functions validate parameters and report violations via <code>Det_ReportError</code>, disabled in production builds for performance. Code reviewers check that DET checks don't leak into release-build timing-critical paths.</li>
+<li><strong>Q: Can MCAL modules call each other directly?</strong>
+  A: Generally no — MCAL modules are largely independent/parallel; cross-module coordination happens at the ECU Abstraction or Services layer, preserving the layer's modularity.</li>
+<li><strong>Q: What's the practical difference between "ECU Abstraction" and "MCAL" when both seem to wrap hardware?</strong>
+  A: MCAL = one specific chip's register interface, standardized API. ECU Abstraction = hides <em>which</em> MCU is underneath, so the same ECU Abstraction call works whether MCAL is implemented for an NXP S32K or another vendor's MCU.</li>
+</ul></section><section id="references"><h2>References</h2><ol>
+<li><em>Layered Software Architecture</em>, AUTOSAR Classic Platform R22-11, Document ID 53 — <a href="https://www.autosar.org/fileadmin/standards/R22-11/CP/AUTOSAR_EXP_LayeredSoftwareArchitecture.pdf">PDF</a> — authoritative source for the per-layer Task/Properties table, the I/O Hardware Abstraction layer placement, the interface-type definitions, the six service types, and the Complex Driver extensibility rule above.</li>
+<li><a href="https://www.autosar.org/standards/classic-platform">AUTOSAR Classic Platform</a> — autosar.org standards page; source for the design-philosophy summary in Concept Introduction above (hardware/application decoupling, determinism, reuse/interoperability, scalability), the VFB quote above, and per-module SWS documents (e.g., SWS_Dio, SWS_Can).</li>
+<li><em>Specification of CAN Interface</em>, AUTOSAR Classic Platform R25-11, Document ID 12 — <a href="https://www.autosar.org/fileadmin/standards/R25-11/CP/AUTOSAR_CP_SWS_CANInterface.pdf">PDF</a> — source for <code>CanIf_Transmit</code> and <code>CanIf_RxIndication</code> in the Samples above.</li>
+<li><em>Specification of Communication</em>, AUTOSAR Classic Platform R25-11, Document ID 15 — <a href="https://www.autosar.org/fileadmin/standards/R25-11/CP/AUTOSAR_CP_SWS_COM.pdf">PDF</a> — source for <code>Com_SendSignal</code> and <code>Com_RxIndication</code> in the Samples above.</li>
+<li><em>Specification of PDU Router</em>, AUTOSAR Classic Platform R25-11, Document ID 35 — <a href="https://www.autosar.org/fileadmin/standards/R25-11/CP/AUTOSAR_CP_SWS_PDURouter.pdf">PDF</a> — source for <code>PduR_ComTransmit</code>, <code>PduR_CanIfRxIndication</code> (and the <code>#define</code>-to-<code>Com_RxIndication</code> routing optimization) in the Samples above.</li>
+<li>NXP, <em>S32K1xx / S32K3 RTD (Real-Time Drivers) Reference Manual</em> — vendor portal (login required), describes the concrete MCAL module set shipped for S32K.</li>
+<li>Related: <a href="/2.1/index.html">2.1 AUTOSAR Architecture</a>, <a href="/4.1/index.html">4.1 MCAL Application Design</a> for a full worked example built on these modules.</li>
+</ol></section>
+<footer class="kb-footer">
+  <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

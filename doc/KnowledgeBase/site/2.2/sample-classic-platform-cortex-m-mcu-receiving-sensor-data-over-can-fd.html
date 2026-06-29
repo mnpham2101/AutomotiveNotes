@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample — Classic Platform: Cortex-M MCU Receiving Sensor Data over CAN-FD — 2.2 AUTOSAR Classic Platform &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li class="current"><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a> &raquo; Sample — Classic Platform: Cortex-M MCU Receiving Sensor Data over CAN-FD</div>
+</header>
+<div class="kb-toolbar"><a href="/2.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>2.2 AUTOSAR Classic Platform</h1><h2>Sample — Classic Platform: Cortex-M MCU Receiving Sensor Data over CAN-FD</h2><p>Use case: a Cortex-M-based ECU running Classic AUTOSAR receives data from a radar/lidar sensor over a CAN-FD bus — the call chain from the bus, through the <code>Can</code> MCAL driver, up to the application. CAN-FD is a documented extension of the AUTOSAR CAN Communication Stack: "the CAN Communication Stack supports ... CAN FD communication, if supported by hardware" [1].</p>
+<p><img alt="Cortex-M data flow when a sensor sends data to the MCU" src="/diagrams/cortexM_sensor_rx_dataflow.svg" /></p>
+<p>What AUTOSAR has defined at each step (function names and signatures taken from the R25-11 specs [3][4][5]):</p>
+<ol>
+<li><strong>Radar/lidar → CAN-FD bus (Microcontroller / HW)</strong> — the sensor transmits its measurement as a CAN-FD frame; the CAN controller hardware checks DLC/CRC on the raw bytes before handing them to the driver.</li>
+<li><strong><code>Can</code> driver — MCAL, Rx HW buffer</strong> — chip-specific, interrupt-driven; copies the received L-PDU out of the CAN-FD controller's hardware receive buffer, then calls the configured upper-layer notification:
+   <code>c
+   /* Can driver (MCAL) ISR — interrupt-driven; copies the L-PDU out of the HW mailbox, then notifies CanIf */
+   void Can_Isr_RxMailbox(void) {
+       /* ... read CAN-FD frame out of the controller's HW receive buffer into mailbox/pduInfo ... */
+       CanIf_RxIndication(&amp;mailbox, &amp;pduInfo);
+   }</code></li>
+<li><strong><code>CanIf</code> — ECU Abstraction Layer (Communication HW Abstraction), PDU dispatch</strong> — validates/filters the L-PDU and dispatches it (<code>PduId</code>, <code>SDU</code>) to whichever upper-layer module is configured for this PDU, independent of which CAN controller (on-chip or external ASIC) actually received it:
+   <code>c
+   void CanIf_RxIndication(const Can_HwType* Mailbox, const PduInfoType* PduInfoPtr) {
+       /* validates/filters, then calls the upper layer configured for this PDU */
+   }</code></li>
+<li><strong><code>PduR</code> — Services Layer, routes the PDU</strong> — for a direct 1:1 route the spec permits compiling this straight through to <code>Com_RxIndication</code> (a real, documented PduR optimization, not a simplification made for this sample):
+   <code>c
+   /* #define PduR_CanIfRxIndication Com_RxIndication */
+   void PduR_CanIfRxIndication(PduIdType RxPduId, const PduInfoType* PduInfoPtr) {
+       Com_RxIndication(RxPduId, PduInfoPtr);
+   }</code></li>
+<li><strong><code>Com</code> — Services Layer, unpacks signals</strong> — deserializes the I-PDU back into the signal(s) it carries:
+   <code>c
+   void Com_RxIndication(PduIdType RxPduId, const PduInfoType* PduInfoPtr) {
+       /* deserializes the I-PDU; updates the signal-update (unpacked) data element it carries */
+   }</code></li>
+<li><strong>RTE</strong> — propagates the unpacked signal update to the data element behind the Sensor Processing SW-C's receiver port.</li>
+<li><strong>Sensor Processing SWC — Application Layer, plausibility check</strong> — reads the new value via the RTE-generated accessor. <code>Rte_Read_&lt;port&gt;_&lt;dataElement&gt;</code> is the one conceptual name in this chain — the real symbol is generated per-project from the SW-C's actual port and data-element names, so no single standardized spelling exists.</li>
+</ol>
+<p>Note that only step 2 is MCAL proper — everything from <code>CanIf</code> upward is ECU Abstraction/Services/RTE, included here because the question "what happens to a sensor frame after the <code>Can</code> driver hands it off" is exactly where MCAL's responsibility ends and the rest of the stack picks up; see the generic transmit/receive Sample above for the transmit-side mirror of this chain.</p><nav class="kb-page-toc"><strong>Other sections in 2.2 AUTOSAR Classic Platform:</strong><ul><li><a href="/2.2/concept-introduction.html">Concept Introduction</a></li><li><a href="/2.2/scope-autosar-classic-platform-overview.html">Scope — AUTOSAR Classic Platform Overview</a></li><li><a href="/2.2/scope-mcal-module-map.html">Scope — MCAL Module Map</a></li><li><a href="/2.2/scope-autosar-api-naming-submodules-and-standardized-services.html">Scope — AUTOSAR API Naming, Submodules and Standardized Services</a></li><li><a href="/2.2/sample-classic-platform-sw-c-to-mcal-call-chain-for-an-inter-ecu-signal.html">Sample — Classic Platform: SW-C to MCAL Call Chain for an Inter-ECU Signal</a></li><li class="current"><a href="/2.2/sample-classic-platform-cortex-m-mcu-receiving-sensor-data-over-can-fd.html">Sample — Classic Platform: Cortex-M MCU Receiving Sensor Data over CAN-FD</a></li><li><a href="/2.2/q-a.html">Q&A</a></li><li><a href="/2.2/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/2.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

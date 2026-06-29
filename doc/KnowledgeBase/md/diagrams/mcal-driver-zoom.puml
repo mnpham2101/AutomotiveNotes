@@ -1,0 +1,40 @@
+@startuml mcal-driver-zoom
+title MCAL & Driver Layer — Zoom In
+skinparam wrapWidth 200
+
+rectangle "ECU Abstraction Layer" as ECUABS {
+  rectangle "IoHwAb / abstracted wrappers" as IOHWAB
+  rectangle "Complex Device Driver (CDD)\n(non-standard hardware, e.g. custom sensor ASIC)" as CDD
+}
+
+package "MCAL — Microcontroller Abstraction Layer" {
+  rectangle "Mcu\nclock/PLL/reset" as MCU
+  rectangle "Port / Dio\npin mux & digital I/O" as PORTDIO
+  rectangle "Adc / Pwm / Icu / Gpt\nanalog & timing" as ANALOG
+  rectangle "Spi / Can / Lin\ncommunication" as COMM
+  rectangle "Fls / Eep\nnon-volatile memory" as NVM
+  rectangle "WdgM / Wdg\nwatchdog" as WDG
+}
+
+rectangle "Hardware Registers (NXP S32K MCU)" as REGS
+
+IOHWAB --> MCU
+IOHWAB --> PORTDIO
+IOHWAB --> ANALOG
+IOHWAB --> COMM
+CDD --> REGS : direct access\n(bypasses MCAL)
+
+MCU --> REGS
+PORTDIO --> REGS
+ANALOG --> REGS
+COMM --> REGS
+NVM --> REGS
+WDG --> REGS
+
+note right of CDD
+  CDDs bypass MCAL/RTE when
+  AUTOSAR doesn't standardize
+  the needed hardware feature.
+end note
+
+@enduml

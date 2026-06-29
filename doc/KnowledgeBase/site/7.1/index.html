@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.1 Tech Lead Tech Stack Overview &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li class="current"><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></div>
+</header>
+<div class="kb-toolbar"><a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>7.1 Tech Lead Tech Stack Overview</h1><p><a href="/0.0/index.html">← Home</a></p><nav class="kb-page-toc"><strong>Sections on this page:</strong><ul><li><a href="#concept-introduction">Concept Introduction</a> &middot; <a href="/7.1/concept-introduction.html">(own page)</a></li><li><a href="#scope-categorized-stack">Scope — Categorized Stack</a> &middot; <a href="/7.1/scope-categorized-stack.html">(own page)</a></li><li><a href="#use-cases">Use Cases</a> &middot; <a href="/7.1/use-cases.html">(own page)</a></li><li><a href="#sample-representative-jenkins-pipeline-stage-list">Sample — Representative Jenkins Pipeline Stage List</a> &middot; <a href="/7.1/sample-representative-jenkins-pipeline-stage-list.html">(own page)</a></li><li><a href="#q-a">Q&A</a> &middot; <a href="/7.1/q-a.html">(own page)</a></li><li><a href="#references">References</a> &middot; <a href="/7.1/references.html">(own page)</a></li></ul></nav><section id="concept-introduction"><h2>Concept Introduction</h2><ul>
+<li>Beyond AUTOSAR/MCAL domain knowledge, a Technical Lead in this role needs working fluency across a <strong>toolchain spanning embedded build systems, version control, CI, static analysis, requirements/defect tracking, and (for mixed Cortex-A systems) Linux build tooling</strong>.</li>
+<li>This file is an <strong>index/overview</strong>; the Yocto build system gets its own deep dive in <a href="/7.2/index.html">7.2</a> because of its size and direct relevance to the JD's "necessary knowledge" ask.</li>
+</ul></section><section id="scope-categorized-stack"><h2>Scope — Categorized Stack</h2><ul>
+<li><strong>Languages</strong>: <strong>C</strong> (primary, MISRA-governed, MCAL/BSW/application code), <strong>C++</strong> (occasionally for tooling/test harnesses, rarely production MCAL code), <strong>Python</strong> (build scripts, test automation, internal tooling), <strong>shell/Bash</strong> (CI glue, Yocto/Linux side).</li>
+<li><strong>Embedded build &amp; config tooling</strong>: NXP <strong>S32 Design Studio</strong> + <strong>S32 Configuration Tool</strong> (<a href="/5.1/index.html">5.1</a>), <strong>GNU Make</strong>, <strong>CMake</strong> (increasingly used to wrap cross-compilation for portability across IDE/CI), <strong>Elektrobit tresos</strong> / <strong>Vector DaVinci</strong> (BSW config, where used).</li>
+<li><strong>Version control &amp; review</strong>: <strong>Git</strong> (branching strategy literacy — trunk-based vs. release-branch models common in automotive due to long-lived variant maintenance), Git hosting w/ merge-request review workflows (GitLab/Bitbucket/Azure DevOps are common in automotive more than GitHub).</li>
+<li><strong>CI/CD</strong>: <strong>Jenkins</strong> (most common in automotive embedded due to on-prem/license-tool integration needs), increasingly <strong>GitLab CI</strong>; pipelines typically run: build → static analysis → unit test → HIL/target test trigger.</li>
+<li><strong>Static analysis &amp; MISRA compliance</strong>: <strong>Polyspace</strong> (MathWorks), <strong>Helix QAC / Klocwork</strong> (Perforce), <strong>Coverity</strong> — code review gate inputs (JD 3.2).</li>
+<li><strong>Requirements/defect/change management</strong>: <strong>IBM DOORS / DOORS NG</strong>, <strong>Polarion</strong>, <strong>JIRA</strong> (often paired — DOORS/Polarion for formal requirements traceability, JIRA for day-to-day defect/task tracking) — underpin SUP.9/SUP.10 processes from <a href="/1.1/index.html">1.1</a>.</li>
+<li><strong>Debug/trace</strong>: <strong>Lauterbach Trace32</strong>, <strong>P&amp;E Multilink</strong>, <strong>S32 Debug Probe</strong>, logic analyzers (Saleae) for bus-level (CAN/SPI) debugging.</li>
+<li><strong>Linux/Yocto side</strong> (for Cortex-A companion systems): <strong>Yocto/BitBake</strong>, <strong>devtool</strong>, <strong>systemd</strong> (<a href="/3.2/index.html">3.2</a>), <strong>U-Boot</strong>, <strong>buildroot</strong> (lighter alternative to Yocto on some smaller projects), <strong>Autotools</strong> (<code>autoconf</code>/<code>automake</code>/<code>libtool</code> — still found wrapping many upstream open-source packages consumed inside Yocto recipes or built standalone for a Linux target).</li>
+<li><strong>Communication/protocol tooling</strong>: CAN bus tools (<strong>Vector CANoe/CANalyzer</strong>, <strong>PEAK PCAN-View</strong>), diagnostic tooling (UDS/ISO 14229 testers).</li>
+</ul></section><section id="use-cases"><h2>Use Cases</h2><ul>
+<li><strong>Choosing CMake vs. raw Makefiles for a new MCAL project</strong>: CMake pays off when the same sources must build under multiple toolchains (S32DS-bundled GCC, a CI Docker image, a different customer's IAR toolchain) — a Tech Lead's tooling decision directly affects long-term maintenance cost, feeding JD 3.4 (technical decision-making).</li>
+<li><strong>Setting up Jenkins for a mixed MCAL + Yocto project</strong>: typically two pipelines — a fast MCAL build+static-analysis pipeline (minutes) and a slower full Yocto image build pipeline (potentially hours), gated differently in the merge workflow.</li>
+<li><strong>MISRA gate tuning</strong>: deciding which MISRA deviations are pre-approved project-wide vs. requiring per-instance justification in code review — a recurring code-review-policy decision for the Tech Lead (JD 3.2).</li>
+<li><strong>Mentoring</strong>: junior engineers often need guided ramp-up on Git workflow and static-analysis-tool literacy before they can contribute productively to review-gated code — direct tie to JD 2.3.</li>
+</ul></section><section id="sample-representative-jenkins-pipeline-stage-list"><h2>Sample — Representative Jenkins Pipeline Stage List</h2><pre><code class="language-groovy">// Jenkinsfile (declarative, simplified/illustrative)
+pipeline {
+    agent { label 'mcal-build-node' }
+    stages {
+        stage('Checkout')        { steps { checkout scm } }
+        stage('Generate Config') { steps { sh './tools/gen_mcal_config.sh' } }
+        stage('Build')           { steps { sh 'make -C build all' } }
+        stage('Static Analysis') { steps { sh 'polyspace-bug-finder -results-dir reports/' } }
+        stage('Unit Test')       { steps { sh 'ceedling test:all' } }
+        stage('Archive')         { steps { archiveArtifacts 'build/*.elf, reports/**' } }
+    }
+}
+</code></pre></section><section id="q-a"><h2>Q&A</h2><ul>
+<li><strong>Q: Why do automotive teams favor Jenkins over newer cloud-native CI (GitHub Actions, etc.)?</strong>
+  A: On-prem licensing for tools like Trace32/Polyspace/HIL rigs, plus long-lived programs (10+ years of variant maintenance) favor self-hosted, customizable CI infra that integrates with specialized lab hardware — though this is gradually shifting as more tooling moves to containerized/cloud forms.</li>
+<li><strong>Q: What's the role of Autotools in a Yocto-based project if Yocto has its own recipe format?</strong>
+  A: Many upstream open-source components Yocto packages (e.g. various GNU/Linux utilities) are themselves built with Autotools internally — a Yocto recipe for such a package often just wraps a standard <code>./configure &amp;&amp; make &amp;&amp; make install</code> sequence via the <code>autotools</code> bbclass. Understanding Autotools helps when patching or debugging those upstream recipes.</li>
+<li><strong>Q: How would you justify investing in better static analysis tooling to a customer or management?</strong>
+  A: Frame it in ASPICE/risk terms — static analysis catches MISRA/defect classes earlier (cheaper to fix at SWE.3/SWE.4 than after SYS.4 integration, see <a href="/6.1/index.html">6.1</a>), directly reducing field-defect risk a customer cares about contractually.</li>
+</ul></section><section id="references"><h2>References</h2><ul>
+<li>MISRA Consortium — <a href="https://www.misra.org.uk/">https://www.misra.org.uk/</a>.</li>
+<li>Jenkins documentation — <a href="https://www.jenkins.io/doc/">https://www.jenkins.io/doc/</a>.</li>
+<li>GNU, <em>Autoconf</em>, <em>Automake</em>, <em>Libtool</em> manuals — <a href="https://www.gnu.org/software/autoconf/">https://www.gnu.org/software/autoconf/</a>, <a href="https://www.gnu.org/software/automake/">https://www.gnu.org/software/automake/</a>.</li>
+<li>Related: <a href="/7.2/index.html">7.2 Yocto Build System</a>, <a href="/4.1/index.html">4.1 MCAL Application Design</a>.</li>
+</ul></section>
+<footer class="kb-footer">
+  <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

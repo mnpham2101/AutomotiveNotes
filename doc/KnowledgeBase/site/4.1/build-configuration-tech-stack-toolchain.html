@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Configuration / Tech Stack / Toolchain — 4.1 Worked Example — A Proposed MCAL Application &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li class="current"><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/4.1/index.html">4.1 Worked Example — A Proposed MCAL Application</a> &raquo; Build Configuration / Tech Stack / Toolchain</div>
+</header>
+<div class="kb-toolbar"><a href="/4.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>4.1 Worked Example — A Proposed MCAL Application</h1><h2>Build Configuration / Tech Stack / Toolchain</h2><ul>
+<li><strong>IDE / Config tool</strong>: <strong>NXP S32 Design Studio for S32 Platform</strong> (Eclipse-based), with the <strong>S32 Configuration Tool</strong> plugin to generate MCAL config (<code>*_Cfg.c/h</code>) from a GUI peripheral configuration.</li>
+<li><strong>Compiler/toolchain</strong>: <strong>GNU Arm Embedded Toolchain (<code>arm-none-eabi-gcc</code>)</strong>, bundled with S32DS; alternative: IAR EWARM or Green Hills MULTI on some customer projects.</li>
+<li><strong>Build system</strong>: S32DS generates an <strong>Eclipse CDT-managed makefile project</strong>; for CI/headless builds, the same sources are typically built with a hand-written or generated <strong>GNU <code>make</code></strong> invocation calling <code>arm-none-eabi-gcc</code>/<code>arm-none-eabi-ld</code> directly — this is the integration point a Tech Lead must understand to set up Jenkins/CI (see <a href="/7.1/index.html">7.1</a>).</li>
+<li><strong>Debug/flash tooling</strong>: <strong>P&amp;E Micro Multilink</strong> or <strong>Lauterbach Trace32</strong>, via SWD/JTAG; <strong>S32 Debug Probe</strong> for low-cost bring-up.</li>
+<li><strong>Representative <code>make</code> build invocation</strong> (headless CI equivalent of the IDE build):</li>
+</ul>
+<pre><code class="language-makefile"># Makefile (simplified, illustrative)
+TOOLCHAIN  = arm-none-eabi
+CC         = $(TOOLCHAIN)-gcc
+OBJCOPY    = $(TOOLCHAIN)-objcopy
+MCU        = -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-d16
+
+CFLAGS     = $(MCU) -std=c99 -Wall -Os -ffunction-sections -fdata-sections \
+             -Iinc -IRTD/include -DCPU_S32K344
+
+LDFLAGS    = $(MCU) -Tlinker/S32K344_flash.ld -Wl,--gc-sections -nostartfiles
+
+SRCS       = src/main.c src/app_sensor.c \
+             RTD/src/Adc.c RTD/src/Dio.c RTD/src/Can.c RTD/src/Gpt.c \
+             RTD/src/Wdg.c RTD/src/Mcu.c RTD/src/Port.c \
+             startup/startup_S32K344.c
+
+OBJS       = $(SRCS:.c=.o)
+
+all: app.elf app.bin
+
+app.elf: $(OBJS)
+    $(CC) $(LDFLAGS) -o $@ $^
+
+app.bin: app.elf
+    $(OBJCOPY) -O binary $&lt; $@
+
+clean:
+    rm -f $(OBJS) app.elf app.bin
+</code></pre><nav class="kb-page-toc"><strong>Other sections in 4.1 Worked Example — A Proposed MCAL Application:</strong><ul><li><a href="/4.1/concept-introduction.html">Concept Introduction</a></li><li><a href="/4.1/scope.html">Scope</a></li><li><a href="/4.1/requirements-main-functionality.html">Requirements / Main Functionality</a></li><li><a href="/4.1/architecture-diagram.html">Architecture Diagram</a></li><li><a href="/4.1/programming-language-dependencies.html">Programming Language & Dependencies</a></li><li class="current"><a href="/4.1/build-configuration-tech-stack-toolchain.html">Build Configuration / Tech Stack / Toolchain</a></li><li><a href="/4.1/sample-application-main-loop.html">Sample — Application Main Loop</a></li><li><a href="/4.1/q-a.html">Q&A</a></li><li><a href="/4.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/4.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

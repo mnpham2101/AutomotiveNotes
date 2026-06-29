@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope — The V-Model Phases — 6.1 ECU Development Lifecycle &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li class="current"><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/6.1/index.html">6.1 ECU Development Lifecycle</a> &raquo; Scope — The V-Model Phases</div>
+</header>
+<div class="kb-toolbar"><a href="/6.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>6.1 ECU Development Lifecycle</h1><h2>Scope — The V-Model Phases</h2><p><img alt="ECU development V-model lifecycle" src="/diagrams/ecu-vmodel-lifecycle.svg" /></p>
+<ul>
+<li><strong>Left side (definition, top-down)</strong>:
+  1. <strong>Requirements Elicitation</strong> (SYS.1) — OEM/customer requirements, often via a requirements management tool (e.g. Polarion, DOORS).
+  2. <strong>System Requirements Analysis</strong> (SYS.2) — allocate requirements to hardware vs. software, define system-level interfaces.
+  3. <strong>System Architectural Design</strong> (SYS.3) — partition into HW/SW components; decide e.g. "this signal is read via MCAL ADC, not an external sensor IC."
+  4. <strong>Software Requirements Analysis</strong> (SWE.1) and <strong>Software Architectural Design</strong> (SWE.2) — AUTOSAR layering decisions happen here.
+  5. <strong>Detailed Design &amp; Unit Construction</strong> (SWE.3) — the level at which MCAL configuration and CDD code are written; for an AUTOSAR Classic ECU this is where the AUTOSAR Methodology below actually runs.</li>
+<li><strong>Bottom (implementation)</strong>: actual coding/configuration, the "point" of the V.</li>
+<li><strong>Right side (verification, bottom-up)</strong>:
+  6. <strong>Unit Verification</strong> (SWE.4) — unit tests, static analysis, MISRA checks.
+  7. <strong>Software Integration &amp; Test</strong> (SWE.5) — bring SW-Cs/BSW/MCAL together on target or HIL (hardware-in-the-loop).
+  8. <strong>System Integration &amp; Test</strong> (SYS.4) — full ECU with all hardware, on a bench or vehicle mule.
+  9. <strong>System Qualification Test</strong> (SYS.5) — formal acceptance against original requirements, often customer-witnessed.</li>
+<li><strong>Beyond the V</strong>: <strong>SOP (Start of Production)</strong>, then <strong>field maintenance</strong> — software updates, field-issue triage (SUP.9), and eventually <strong>End of Life</strong>.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 6.1 ECU Development Lifecycle:</strong><ul><li><a href="/6.1/concept-introduction.html">Concept Introduction</a></li><li class="current"><a href="/6.1/scope-the-v-model-phases.html">Scope — The V-Model Phases</a></li><li><a href="/6.1/autosar-methodology-from-system-configuration-to-ecu-executable.html">AUTOSAR Methodology — From System Configuration to ECU Executable</a></li><li><a href="/6.1/xml-files-that-describe-an-ecu-s-communication-network-and-configuration.html">XML Files That Describe an ECU's Communication Network and Configuration</a></li><li><a href="/6.1/q-a.html">Q&A</a></li><li><a href="/6.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/6.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction — Automotive Embedded Technical Lead Knowledge Base &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li class="current"><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/0.0/index.html">Introduction — Automotive Embedded Technical Lead Knowledge Base</a></div>
+</header>
+<div class="kb-toolbar"><a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>Introduction — Automotive Embedded Technical Lead Knowledge Base</h1><nav class="kb-page-toc"><strong>Sections on this page:</strong><ul><li><a href="#motivating-scenario">Motivating Scenario</a> &middot; <a href="/0.0/motivating-scenario.html">(own page)</a></li><li><a href="#goals-purpose">Goals / Purpose</a> &middot; <a href="/0.0/goals-purpose.html">(own page)</a></li><li><a href="#scope-limitations">Scope & Limitations</a> &middot; <a href="/0.0/scope-limitations.html">(own page)</a></li><li><a href="#possible-audiences-applications">Possible Audiences / Applications</a> &middot; <a href="/0.0/possible-audiences-applications.html">(own page)</a></li><li><a href="#how-this-knowledge-base-is-organized">How This Knowledge Base Is Organized</a> &middot; <a href="/0.0/how-this-knowledge-base-is-organized.html">(own page)</a></li><li><a href="#references">References</a> &middot; <a href="/0.0/references.html">(own page)</a></li></ul></nav><section id="motivating-scenario"><h2>Motivating Scenario</h2><ul>
+<li>Imagine a Tier-1 supplier (or a semiconductor vendor's applications-engineering team) delivering the <strong>low-level software for an automotive ECU</strong> — for example a body control module, a battery management unit, or an ADAS sensor node — built on an <strong>NXP S32K / S32G</strong> microcontroller/MPU.</li>
+<li>The customer (an OEM or another Tier-1) supplies requirements through a <strong>formal, ASPICE-governed process</strong>: requirement specs, interface specs (CAN/LIN matrices, diagnostic specs), and a release schedule tied to vehicle program milestones (SOP — Start of Production).</li>
+<li>The supplier's delivery team is organized as roughly <strong>10 engineers</strong>: driver/MCAL developers, BSW integrators, a few test/validation engineers, and one <strong>Technical Lead</strong> who is the single point of contact for the customer on technical matters, owns code quality and architecture decisions, and manages day-to-day team execution.</li>
+<li>That Technical Lead role is the one described in the source job description this knowledge base was built from — it requires fluency across <strong>customer communication, technical ownership, team leadership, and deep NXP/AUTOSAR/MCAL knowledge</strong> simultaneously.</li>
+</ul></section><section id="goals-purpose"><h2>Goals / Purpose</h2><ul>
+<li>Give a structured, fast on-ramp into the <strong>concepts, vocabulary, and artifacts</strong> a Technical Lead in this kind of role is expected to already know or pick up quickly.</li>
+<li>Connect four areas that are normally taught separately: <strong>process (ASPICE)</strong>, <strong>software architecture (AUTOSAR)</strong>, <strong>platform (NXP silicon + tooling)</strong>, and <strong>leadership (estimation, review, mentoring, customer-facing communication)</strong>.</li>
+<li>Provide one <strong>worked example</strong> (a concrete MCAL application proposal, see <a href="/4.1/index.html">4.1</a>) that ties the abstract concepts to something buildable, with a real toolchain and build script.</li>
+<li>Provide a <strong>20-day training plan</strong> (<a href="/8.1/index.html">8.1</a>) so the material can be consumed in a structured, checkable way rather than read once and forgotten.</li>
+</ul></section><section id="scope-limitations"><h2>Scope & Limitations</h2><ul>
+<li><strong>In scope:</strong> conceptual foundations of ASPICE, AUTOSAR Classic (and a contrast with Adaptive), MCAL/driver/bootloader fundamentals, Linux service basics for infotainment/gateway-adjacent ECUs, NXP automotive platform landscape, ECU V-model lifecycle, the tech-lead tooling stack (including a Yocto deep dive), and a sample MCAL application design.</li>
+<li><strong>Out of scope / not a substitute for:</strong></li>
+<li>An official <strong>Automotive SPICE</strong> or <strong>AUTOSAR</strong> certification course.</li>
+<li>Hands-on access to <strong>NXP S32 RTD / S32 Design Studio / EB tresos</strong>, which are licensed, vendor-distributed tools — this knowledge base explains <em>what</em> they do and how they fit together, not a click-by-click tutorial.</li>
+<li>Legal, compliance, or functional-safety (ISO 26262) sign-off material — safety concepts are mentioned where relevant but not treated exhaustively.</li>
+<li>A specific OEM's internal process tailoring — every customer tailors ASPICE/AUTOSAR conventions; this is the generic foundation underneath that tailoring.</li>
+<li>Some details (module names, API signatures, file layouts) are <strong>illustrative/representative</strong> of typical NXP RTD / AUTOSAR Classic releases rather than copied from any specific licensed release — always cross-check against the exact RTD/MCAL version and customer-specific DET/SWS documents on a real project.</li>
+</ul></section><section id="possible-audiences-applications"><h2>Possible Audiences / Applications</h2><ul>
+<li>An engineer <strong>preparing for a Technical Lead interview or promotion</strong> in automotive embedded software.</li>
+<li>A new Technical Lead <strong>onboarding onto an NXP-based program</strong> who needs a shared map of the terrain before diving into vendor documentation.</li>
+<li>A team <strong>writing internal onboarding material</strong> for new hires joining an AUTOSAR Classic / MCAL delivery team.</li>
+<li>Applicable across automotive domains wherever MCAL + NXP silicon shows up: <strong>body control, powertrain peripherals, ADAS sensor front-ends, gateway/telematics units, battery management systems</strong>.</li>
+</ul></section><section id="how-this-knowledge-base-is-organized"><h2>How This Knowledge Base Is Organized</h2><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Topic</th>
+<th>Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Process — ASPICE</td>
+<td><a href="/1.1/index.html">1.1 ASPICE Overview</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Architecture — AUTOSAR</td>
+<td><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a>, <a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Platform fundamentals</td>
+<td><a href="/3.1/index.html">3.1 Embedded Fundamentals</a>, <a href="/3.2/index.html">3.2 Linux Services &amp; Daemons</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Worked example</td>
+<td><a href="/4.1/index.html">4.1 MCAL Application Design</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Vendor — NXP</td>
+<td><a href="/5.1/index.html">5.1 NXP Platform Overview</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Lifecycle</td>
+<td><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Tooling</td>
+<td><a href="/7.1/index.html">7.1 Tech Lead Tech Stack</a>, <a href="/7.2/index.html">7.2 Yocto Build System</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Plan</td>
+<td><a href="/8.1/index.html">8.1 20-Day Training Plan</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Each file is self-contained and focuses on one concept; cross-references point to siblings instead of repeating content.</li>
+<li>Recommended reading order follows the table top to bottom; the <a href="/8.1/index.html">training plan</a> sequences it into daily, checkable phases.</li>
+</ul></section><section id="references"><h2>References</h2><ul>
+<li>Source: internal job description for an "Automotive Embedded Software Technical Lead" role (NXP/MCAL/AUTOSAR focus) — not publicly linkable, summarized above under Motivating Scenario.</li>
+<li><a href="https://vda-qmc.de/en/automotive-spice/">VDA QMC — Automotive SPICE</a> — official home of the Automotive SPICE Process Reference &amp; Assessment Model.</li>
+<li><a href="https://www.autosar.org/">AUTOSAR.org</a> — official specifications for Classic and Adaptive platforms.</li>
+<li><a href="https://www.nxp.com/applications/automotive">NXP Semiconductors — Automotive</a> — product and software portfolio.</li>
+</ul></section>
+<footer class="kb-footer">
+  <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+@startuml yocto-layers-bitbake-flow
+title Yocto Layers and BitBake Build Flow
+skinparam wrapWidth 200
+
+package "Layers (priority-ordered)" {
+  rectangle "poky\n(meta, meta-poky, meta-yocto-bsp)" as POKY
+  rectangle "meta-nxp-auto\n(vendor BSP: S32G / i.MX machine defs)" as METANXP
+  rectangle "meta-myproject\n(custom recipes, .bbappend overrides)" as METAPROJ
+}
+
+rectangle "conf/local.conf\n(MACHINE, layers, build vars)" as LOCALCONF
+rectangle "conf/bblayers.conf\n(enabled layers)" as BBLAYERS
+
+rectangle "BitBake engine" as BITBAKE
+
+rectangle "Recipes (.bb)\nfetch -> configure -> compile -> install -> package" as RECIPES
+rectangle "Image recipe\n(core-image-minimal + IMAGE_INSTALL)" as IMAGE
+
+rectangle "Output\n.wic image + SDK (populate_sdk)" as OUTPUT
+
+POKY --> BBLAYERS
+METANXP --> BBLAYERS
+METAPROJ --> BBLAYERS
+BBLAYERS --> BITBAKE
+LOCALCONF --> BITBAKE
+
+BITBAKE --> RECIPES : resolves dependencies\n(sstate-cache reuse)
+RECIPES --> IMAGE
+IMAGE --> OUTPUT
+
+note right of METAPROJ
+  Custom application recipes
+  (e.g. media-indexer service
+  from 3.2) live here, alongside
+  .bbappend patches to upstream
+  recipes from poky / meta-nxp-auto.
+end note
+
+@enduml

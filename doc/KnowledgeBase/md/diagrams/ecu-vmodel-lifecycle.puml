@@ -1,0 +1,38 @@
+@startuml ecu-vmodel-lifecycle
+title ECU Development V-Model Lifecycle
+skinparam wrapWidth 200
+
+left to right direction
+
+rectangle "SYS.1\nRequirements Elicitation" as SYS1
+rectangle "SYS.2\nSystem Req. Analysis" as SYS2
+rectangle "SYS.3\nSystem Arch. Design" as SYS3
+rectangle "SWE.1\nSW Requirements Analysis" as SWE1
+rectangle "SWE.2\nSW Architectural Design" as SWE2
+rectangle "SWE.3\nDetailed Design &\nUnit Construction" as SWE3
+rectangle "SWE.4\nSW Unit Verification" as SWE4
+rectangle "SWE.5\nSW Integration & Test" as SWE5
+rectangle "SYS.4\nSystem Integration & Test" as SYS4
+rectangle "SYS.5\nSystem Qualification Test" as SYS5
+rectangle "SOP\n(Start of Production)" as SOP
+rectangle "Field Maintenance\nSUP.9 / SUP.10" as FIELD
+
+SYS1 --> SYS2
+SYS2 --> SYS3
+SYS3 --> SWE1
+SWE1 --> SWE2
+SWE2 --> SWE3
+SWE3 --> SWE4 : implementation point\n(bottom of the V)
+SWE4 --> SWE5
+SWE5 --> SYS4
+SYS4 --> SYS5
+SYS5 --> SOP
+SOP --> FIELD
+FIELD ..> SYS1 : field defect / change request\nre-opens left side
+
+note bottom of SWE3
+  MCAL configuration and
+  CDD code are written here.
+end note
+
+@enduml

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope — systemd Concepts a Tech Lead Should Know — 3.2 Linux Services, Daemons, and Boot-Time Application Startup &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li class="current"><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a> &raquo; Scope — systemd Concepts a Tech Lead Should Know</div>
+</header>
+<div class="kb-toolbar"><a href="/3.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>3.2 Linux Services, Daemons, and Boot-Time Application Startup</h1><h2>Scope — systemd Concepts a Tech Lead Should Know</h2><ul>
+<li><strong>Unit types</strong>: <code>.service</code> (a process), <code>.socket</code> (socket activation), <code>.target</code> (grouping/milestone, like a runlevel), <code>.mount</code>, <code>.timer</code>.</li>
+<li><strong>Dependency directives</strong> inside a unit: <code>Wants=</code>, <code>Requires=</code>, <code>After=</code>, <code>Before=</code> — control ordering and whether failures cascade.</li>
+<li><strong>Boot targets</strong>: <code>sysinit.target</code> → <code>basic.target</code> → <code>multi-user.target</code> (or <code>graphical.target</code> on systems with a display) — application services typically attach to <code>multi-user.target</code>.</li>
+<li><strong>Socket/D-Bus activation</strong>: many automotive services (e.g. ConnMan/NetworkManager, BlueZ) are started <strong>on first D-Bus request</strong> rather than unconditionally at boot, saving startup time and resources.</li>
+<li><strong>journald</strong>: systemd's logging — <code>journalctl -u &lt;service&gt;</code> is the first debugging step for a failed service, directly relevant to JD 3.1 (technical issue ownership).</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 3.2 Linux Services, Daemons, and Boot-Time Application Startup:</strong><ul><li><a href="/3.2/concept-introduction.html">Concept Introduction</a></li><li class="current"><a href="/3.2/scope-systemd-concepts-a-tech-lead-should-know.html">Scope — systemd Concepts a Tech Lead Should Know</a></li><li><a href="/3.2/use-cases-bring-up-sequencing-for-audio-wi-fi-bluetooth-media.html">Use Cases — Bring-Up Sequencing for Audio / Wi-Fi / Bluetooth / Media</a></li><li><a href="/3.2/sample-a-minimal-systemd-service-unit.html">Sample — A Minimal systemd Service Unit</a></li><li><a href="/3.2/q-a.html">Q&A</a></li><li><a href="/3.2/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/3.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

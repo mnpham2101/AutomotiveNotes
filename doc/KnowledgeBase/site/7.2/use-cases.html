@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use Cases — 7.2 Yocto Build System Deep Dive &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li class="current"><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a> &raquo; Use Cases</div>
+</header>
+<div class="kb-toolbar"><a href="/7.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>7.2 Yocto Build System Deep Dive</h1><h2>Use Cases</h2><ul>
+<li><strong>Adding a new application to the image</strong> (e.g. the <code>media-indexer</code> daemon from <a href="/3.2/index.html">3.2</a>): write a recipe, add it to the image recipe's <code>IMAGE_INSTALL</code>, rebuild — demonstrates the full recipe-to-image flow below.</li>
+<li><strong>Patching an upstream package</strong>: e.g. fixing a Bluetooth stack bug — done via a <code>.bbappend</code> adding a patch file, never by editing upstream source directly, preserving reproducibility.</li>
+<li><strong>BSP bring-up for a new board revision</strong>: extending/forking the vendor <code>meta-nxp</code> machine configuration — a common "platform integration" task (JD 4.2, "support integration, debugging... across NXP platforms").</li>
+<li><strong>Build time / CI strategy</strong>: full Yocto builds can take hours; Tech Leads typically set up <strong>shared sstate-cache and downloads mirrors</strong> across the team/CI to keep iteration time sane — an infrastructure decision with direct productivity impact (ties to JD 2.4 capacity planning).</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 7.2 Yocto Build System Deep Dive:</strong><ul><li><a href="/7.2/concept-introduction.html">Concept Introduction</a></li><li><a href="/7.2/scope-layer-build-flow-architecture.html">Scope — Layer/Build Flow Architecture</a></li><li class="current"><a href="/7.2/use-cases.html">Use Cases</a></li><li><a href="/7.2/sample-minimal-custom-layer-and-recipe.html">Sample — Minimal Custom Layer and Recipe</a></li><li><a href="/7.2/sample-build-script-setup-build-flash.html">Sample — Build Script (Setup → Build → Flash)</a></li><li><a href="/7.2/q-a.html">Q&A</a></li><li><a href="/7.2/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/7.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

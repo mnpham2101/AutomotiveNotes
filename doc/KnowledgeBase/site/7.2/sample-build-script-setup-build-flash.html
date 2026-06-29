@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample — Build Script (Setup → Build → Flash) — 7.2 Yocto Build System Deep Dive &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li class="current"><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a> &raquo; Sample — Build Script (Setup → Build → Flash)</div>
+</header>
+<div class="kb-toolbar"><a href="/7.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>7.2 Yocto Build System Deep Dive</h1><h2>Sample — Build Script (Setup → Build → Flash)</h2><pre><code class="language-bash">#!/usr/bin/env bash
+# build-image.sh — illustrative end-to-end Yocto build script
+set -euo pipefail
+
+YOCTO_RELEASE=&quot;scarthgap&quot;          # Yocto release codename
+MACHINE=&quot;s32g274ardb2&quot;             # NXP S32G2 RDB2 board, illustrative machine name
+BUILD_DIR=&quot;build-${MACHINE}&quot;
+
+# 1. Fetch poky + required layers (first run only)
+if [ ! -d poky ]; then
+    git clone -b &quot;${YOCTO_RELEASE}&quot; https://git.yoctoproject.org/poky
+    git clone -b &quot;${YOCTO_RELEASE}&quot; https://github.com/nxp-auto-linux/meta-nxp-auto.git
+fi
+
+# 2. Initialize the build environment (sources Yocto's env-setup script)
+source poky/oe-init-build-env &quot;${BUILD_DIR}&quot;
+
+# 3. Register layers (idempotent)
+bitbake-layers add-layer ../meta-nxp-auto
+bitbake-layers add-layer ../meta-myproject
+
+# 4. Pin MACHINE + shared caches in local.conf
+cat &gt;&gt; conf/local.conf &lt;&lt;EOF
+MACHINE = &quot;${MACHINE}&quot;
+SSTATE_DIR = &quot;/srv/yocto-cache/sstate&quot;
+DL_DIR = &quot;/srv/yocto-cache/downloads&quot;
+IMAGE_INSTALL:append = &quot; media-indexer&quot;
+EOF
+
+# 5. Build the target image
+bitbake core-image-minimal
+
+# 6. Output is under tmp/deploy/images/${MACHINE}/ — flash to SD card (DANGEROUS: verify /dev/sdX!)
+echo &quot;Image ready: ${BUILD_DIR}/tmp/deploy/images/${MACHINE}/core-image-minimal-${MACHINE}.wic.gz&quot;
+echo &quot;Flash with: gunzip -c &lt;image&gt;.wic.gz | sudo dd of=/dev/sdX bs=4M status=progress conv=fsync&quot;
+</code></pre>
+<ul>
+<li>This script mirrors, at the Linux/Yocto level, exactly the same conceptual stages as the bare-metal <code>Makefile</code> in <a href="/4.1/index.html">4.1</a>: <strong>fetch sources → configure target → compile → produce a flashable image</strong> — recognizing this parallel is useful when explaining either build system to someone only familiar with the other.</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 7.2 Yocto Build System Deep Dive:</strong><ul><li><a href="/7.2/concept-introduction.html">Concept Introduction</a></li><li><a href="/7.2/scope-layer-build-flow-architecture.html">Scope — Layer/Build Flow Architecture</a></li><li><a href="/7.2/use-cases.html">Use Cases</a></li><li><a href="/7.2/sample-minimal-custom-layer-and-recipe.html">Sample — Minimal Custom Layer and Recipe</a></li><li class="current"><a href="/7.2/sample-build-script-setup-build-flash.html">Sample — Build Script (Setup → Build → Flash)</a></li><li><a href="/7.2/q-a.html">Q&A</a></li><li><a href="/7.2/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/7.2/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

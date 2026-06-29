@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concept Introduction — 2.1 AUTOSAR Architecture — Classic vs Adaptive &middot; Automotive Tech Lead Knowledge Base</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="kb-layout">
+  <nav class="kb-sidebar"><h2>Topics</h2><ul><li><a href="/index.html">0.0 · Introduction</a></li><li><a href="/1.1/index.html">1.1 Automotive SPICE (ASPICE) Overview</a></li><li class="current"><a href="/2.1/index.html">2.1 AUTOSAR Architecture</a></li><li><a href="/2.2/index.html">2.2 AUTOSAR Classic Platform</a></li><li><a href="/3.1/index.html">3.1 Embedded Systems Fundamentals</a></li><li><a href="/3.2/index.html">3.2 Linux Services, Daemons, and Boot-Time Application Startup</a></li><li><a href="/4.1/index.html">4.1 Worked Example</a></li><li><a href="/5.1/index.html">5.1 NXP Automotive Software & Platform Overview</a></li><li><a href="/6.1/index.html">6.1 ECU Development Lifecycle</a></li><li><a href="/7.1/index.html">7.1 Tech Lead Tech Stack Overview</a></li><li><a href="/7.2/index.html">7.2 Yocto Build System Deep Dive</a></li><li><a href="/8.1/index.html">8.1 20-Day Training Plan</a></li></ul></nav>
+  <main class="kb-main">
+    
+<header class="kb-header" id="top">
+  <div class="kb-header-title"><a href="/index.html">Automotive Tech Lead Knowledge Base</a></div>
+  <div class="kb-breadcrumb"><a href="/index.html">Home</a> &raquo; <a href="/2.1/index.html">2.1 AUTOSAR Architecture — Classic vs Adaptive</a> &raquo; Concept Introduction</div>
+</header>
+<div class="kb-toolbar"><a href="/2.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a></div>
+<h1>2.1 AUTOSAR Architecture — Classic vs Adaptive</h1><h2>Concept Introduction</h2><ul>
+<li><strong>AUTOSAR</strong> (AUTomotive Open System ARchitecture) is a worldwide partnership standardizing automotive E/E (electrical/electronic) software architecture so OEMs and suppliers can exchange and reuse software components across ECUs and vendors.</li>
+<li>AUTOSAR publishes <strong>two platforms</strong> with different target hardware and use cases:</li>
+<li><strong>Classic Platform (CP)</strong> — for resource-constrained microcontrollers (MCUs), statically configured, no dynamic memory, runs without an OS-level process model beyond a minimal RTOS (OSEK/VDX-derived AUTOSAR OS). Distinguishes, on the highest abstraction level, three software layers running on the microcontroller: <strong>Application, RTE, and Basic Software (BSW)</strong> — source [1][3].</li>
+<li><strong>Adaptive Platform (AP)</strong> — for high-performance microprocessors (MPUs) running a POSIX-compliant OS (typically Linux), implementing <strong>ARA (AUTOSAR Runtime for Adaptive Applications)</strong>, with service-oriented communication (<code>ara::com</code>, SOME/IP), used for ADAS, HPC (high-performance compute), infotainment domain controllers — source [2].</li>
+</ul><nav class="kb-page-toc"><strong>Other sections in 2.1 AUTOSAR Architecture — Classic vs Adaptive:</strong><ul><li class="current"><a href="/2.1/concept-introduction.html">Concept Introduction</a></li><li><a href="/2.1/scope-design-philosophy-goals-classic-vs-adaptive.html">Scope — Design Philosophy & Goals: Classic vs Adaptive</a></li><li><a href="/2.1/scope-classic-platform-layers.html">Scope — Classic Platform Layers</a></li><li><a href="/2.1/scope-adaptive-platform-architecture.html">Scope — Adaptive Platform Architecture</a></li><li><a href="/2.1/sample-adaptive-platform-ara-com-event-subscription.html">Sample — Adaptive Platform: `ara::com` Event Subscription</a></li><li><a href="/2.1/sample-v2x-domain-controller-splitting-classic-and-adaptive-across-two-chips.html">Sample — V2X Domain Controller: Splitting Classic and Adaptive Across Two Chips</a></li><li><a href="/2.1/q-a.html">Q&A</a></li><li><a href="/2.1/references.html">References</a></li></ul></nav>
+<footer class="kb-footer">
+  <a href="/2.1/index.html">&laquo; Back to topic overview</a> &middot; <a href="/index.html">Home</a> &middot; <a href="#top">Back to top</a>
+</footer>
+
+  </main>
+</div>
+</body>
+</html>

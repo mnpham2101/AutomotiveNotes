@@ -1,0 +1,48 @@
+@startuml mcal-app-architecture
+title MCAL Sensor Gateway — Application Architecture (Worked Example, 4.1)
+skinparam wrapWidth 200
+
+package "Application Layer (app code, C, MISRA-C:2012)" {
+  rectangle "main()\nsuper-loop + Gpt ISR" as MAIN
+  rectangle "AppSensor_*\nscaling, fault-check, LED state" as APPSENSOR
+}
+
+package "MCAL (NXP S32K3 RTD)" {
+  rectangle "Mcu" as MCU
+  rectangle "Port" as PORT
+  rectangle "Adc" as ADC
+  rectangle "Dio" as DIO
+  rectangle "Gpt" as GPT
+  rectangle "Can" as CAN
+  rectangle "Wdg" as WDG
+}
+
+rectangle "Hardware\nNXP S32K3 (Cortex-M7)" as HW
+
+MAIN --> MCU
+MAIN --> PORT
+MAIN --> WDG
+MAIN --> GPT : 10ms periodic ISR
+GPT --> APPSENSOR : triggers AppCyclicTask_10ms
+APPSENSOR --> ADC : Adc_ReadGroup (sensor)
+APPSENSOR --> DIO : Dio_ReadChannel (door switch)
+APPSENSOR --> CAN : Can_Write (0x100, every 100ms)
+APPSENSOR --> DIO : Dio_WriteChannel (status LED)
+
+MCU --> HW
+PORT --> HW
+ADC --> HW
+DIO --> HW
+GPT --> HW
+CAN --> HW
+WDG --> HW
+
+note bottom of HW
+  Toolchain: S32 Design Studio,
+  arm-none-eabi-gcc, S32 Config Tool,
+  Lauterbach Trace32 / S32 Debug Probe.
+  Reused/contrasted in 7.2 (Yocto)
+  for the Cortex-A side of a mixed system.
+end note
+
+@enduml
