@@ -76,8 +76,7 @@ def nav_sidebar(docs, current_slug: str) -> str:
     for d in docs:
         href = "/index.html" if d.slug == HOME_SLUG else f"/{d.slug}/index.html"
         cls = ' class="current"' if d.slug == current_slug else ""
-        short_title = d.title.split(chr(8212))[0].strip()
-        label = short_title if short_title.startswith(d.slug) else f"{d.slug} · {short_title}"
+        label = d.title if d.title.startswith(d.slug) else f"{d.slug} · {d.title}"
         items.append(f'<li{cls}><a href="{href}">{label}</a></li>')
     return "<nav class=\"kb-sidebar\"><h2>Topics</h2><ul>" + "".join(items) + "</ul></nav>"
 
