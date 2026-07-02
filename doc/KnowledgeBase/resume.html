@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minh Pham — Engineering Dossier</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=IBM+Plex+Sans:wght@… rel="
+        stylesheet">
+
+    <style>
+        :root {
+
+            --paper: #E9E0C8;
+            /* warm oat */
+
+            --paper-2: #E1D5B4;
+            /* deeper oat panel */
+
+            --paper-3: #F1EAD7;
+            /* light lift */
+
+            --ink: #26221A;
+            /* dark warm near-black */
+
+            --ink-soft: #5A5241;
+            /* muted brown */
+
+            --teal: #23564F;
+            /* petrol / primary structure */
+
+            --teal-deep: #173A34;
+
+            --gold: #B4822A;
+            /* harvest ochre accent */
+
+            --rust: #9E4526;
+            /* burnt sienna, sparse */
+
+            --line: #B9AC86;
+            /* hairline on paper */
+
+            --shadow: rgba(38, 34, 26, .16);
+
+        }
+
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+
+            background: var(--teal-deep);
+
+            color: var(--ink);
+
+            font-family: "IBM Plex Sans", system-ui, sans-serif;
+
+            -webkit-font-smoothing: antialiased;
+
+            overflow: hidden;
+
+        }
+
+
+
+        /* ---------- stage ---------- */
+
+        .deck {
+            position: fixed;
+            inset: 0;
+        }
+
+        .slide {
+
+            position: absolute;
+            inset: 0;
+
+            display: none;
+
+            padding: clamp(24px, 4.2vw, 64px) clamp(26px, 5vw, 84px);
+
+            background:
+
+                radial-gradient(120% 130% at 12% 0%, #EFE7D0 0%, var(--paper) 42%, #E3D8BC 100%);
+
+            animation: fade .5s ease both;
+
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .slide {
+                animation: none;
+            }
+        }
+
+
+
+        /* faint engineering grid + paper grain */
+
+        .slide::before {
+
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+
+            background-image:
+
+                linear-gradient(var(--line) 1px, transparent 1px),
+
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+
+            background-size: 44px 44px;
+
+            opacity: .10;
+
+            mask-image: radial-gradient(130% 120% at 80% 20%, #000 40%, transparent 92%);
+
+            -webkit-mask-image: radial-gradient(130% 120% at 80% 20%, #000 40%, transparent 92%);
+
+        }
+
+        /* registration crosshairs in the corners */
+
+        .slide::after {
+
+            content: "";
+            position: absolute;
+            inset: clamp(14px, 2vw, 30px);
+
+            pointer-events: none;
+
+            border: 1px solid transparent;
+
+            background:
+
+                linear-gradient(var(--teal), var(--teal)) top left/16px 1px no-repeat,
+
+                linear-gradient(var(--teal), var(--teal)) top left/1px 16px no-repeat,
+
+                linear-gradient(var(--teal), var(--teal)) top right/16px 1px no-repeat,
+
+                linear-gradient(var(--teal), var(--teal)) top right/1px 16px no-repeat,
+
+                linear-gradient(var(--teal), var(--teal)) bottom left/16px 1px no-repeat,
+
+                linear-gradient(var(--teal), var(--teal)) bottom left/1px 16px no-repeat,
+
+                linear-gradient(var(--teal), var(--teal)) bottom right/16px 1px no-repeat,
+
+                linear-gradient(var(--teal), var(--teal)) bottom right/1px 16px no-repeat;
+
+            opacity: .55;
+
+        }
+
+        .slide>* {
+            position: relative;
+            z-index: 2;
+        }
+
+
+
+        /* ---------- shared header ---------- */
+
+        .top {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            gap: 16px;
+            flex: 0 0 auto;
+
+            border-bottom: 1.5px solid var(--ink);
+
+            padding-bottom: clamp(8px, 1.1vw, 14px);
+
+        }
+
+        .eyebrow {
+
+            font-family: "IBM Plex Mono", monospace;
+
+            font-size: clamp(9px, 1.02vw, 12.5px);
+
+            letter-spacing: .24em;
+            text-transform: uppercase;
+
+            color: var(--teal);
+            font-weight: 600;
+
+            display: flex;
+            align-items: center;
+            gap: .7em;
+
+        }
+
+        .eyebrow .tick {
+            width: 26px;
+            height: 2px;
+            background: var(--gold);
+            display: inline-block;
+        }
+
+        .idx {
+
+            font-family: "IBM Plex Mono", monospace;
+
+            font-size: clamp(9px, 1.02vw, 12.5px);
+
+            letter-spacing: .18em;
+            color: var(--ink-soft);
+            white-space: nowrap;
+
+            text-align: right;
+
+        }
+
+        .idx b {
+            color: var(--ink);
+        }
+
+
+
+        .h-sec {
+
+            font-family: "Zilla Slab", serif;
+            font-weight: 700;
+
+            font-size: clamp(24px, 3.9vw, 50px);
+
+            line-height: 1.02;
+            letter-spacing: -.01em;
+            color: var(--ink);
+
+            margin-top: clamp(12px, 1.8vw, 26px);
+            flex: 0 0 auto;
+
+        }
+
+        .h-sec .amp {
+            color: var(--rust);
+        }
+
+        .sub {
+
+            font-family: "IBM Plex Mono", monospace;
+
+            font-size: clamp(10px, 1.12vw, 14px);
+            color: var(--ink-soft);
+
+            letter-spacing: .04em;
+            margin-top: 6px;
+
+        }
+
+
+
+        .body {
+            flex: 1 1 auto;
+            display: flex;
+            min-height: 0;
+            margin-top: clamp(14px, 2vw, 30px);
+        }
+
+
+
+        /* ---------- title slide ---------- */
+
+        .title-wrap {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .kicker {
+
+            font-family: "IBM Plex Mono", monospace;
+            font-weight: 600;
+
+            font-size: clamp(10px, 1.25vw, 15px);
+            letter-spacing: .28em;
+
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: clamp(10px, 1.5vw, 18px);
+
+            display: flex;
+            align-items: center;
+            gap: .8em;
+            flex-wrap: wrap;
+
+        }
+
+        .kicker .dot {
+            width: 7px;
+            height: 7px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .name {
+
+            font-family: "Zilla Slab", serif;
+            font-weight: 700;
+
+            font-size: clamp(46px, 10.5vw, 138px);
+            line-height: .9;
+            letter-spacing: -.02em;
+
+            color: var(--ink);
+
+        }
+
+        .name .last {
+            color: var(--teal);
+        }
+
+        .rule-lg {
+            height: 3px;
+            background: var(--ink);
+            margin: clamp(16px, 2.4vw, 32px) 0;
+            width: min(560px, 70%);
+            position: relative;
+        }
+
+        .rule-lg::after {
+            content: "";
+            position: absolute;
+            right: -1px;
+            top: -4px;
+            width: 11px;
+            height: 11px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        .lede {
+
+            font-family: "Zilla Slab", serif;
+            font-weight: 500;
+
+            font-size: clamp(17px, 2.55vw, 32px);
+            line-height: 1.3;
+
+            color: var(--ink);
+            max-width: 20ch;
+
+        }
+
+        .lede em {
+            font-style: normal;
+            color: var(--rust);
+        }
+
+        .contact {
+
+            margin-top: clamp(22px, 3.4vw, 44px);
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(8px, 1.2vw, 16px) clamp(14px, 2.2vw, 30px);
+
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(10px, 1.12vw, 13.5px);
+
+            color: var(--ink);
+            letter-spacing: .02em;
+
+        }
+
+        .contact span {
+            display: flex;
+            align-items: center;
+            gap: .55em;
+        }
+
+        .contact span::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            background: var(--teal);
+            flex: 0 0 auto;
+        }
+
+
+
+        /* ---------- generic content ---------- */
+
+        .col {
+            flex: 1 1 0;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 1.4vw, 18px);
+        }
+
+        .cols-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(24px, 3.6vw, 58px);
+            width: 100%;
+        }
+
+        .col-title {
+
+            font-family: "IBM Plex Mono", monospace;
+            font-weight: 600;
+
+            font-size: clamp(10px, 1.05vw, 13px);
+            letter-spacing: .18em;
+            text-transform: uppercase;
+
+            color: var(--teal);
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--line);
+
+        }
+
+
+
+        /* list items */
+
+        ul.items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(9px, 1.15vw, 15px);
+        }
+
+        ul.items li {
+
+            position: relative;
+            padding-left: 1.5em;
+
+            font-size: clamp(12.5px, 1.42vw, 18px);
+            line-height: 1.4;
+            color: var(--ink);
+
+        }
+
+        ul.items li::before {
+
+            content: "";
+            position: absolute;
+            left: 0;
+            top: .5em;
+
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+
+            transform: rotate(45deg);
+
+        }
+
+        ul.items li b {
+            font-weight: 700;
+            color: var(--teal-deep);
+        }
+
+        ul.items li .n {
+            color: var(--ink-soft);
+        }
+
+
+
+        /* tag grid (tools / domains) */
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(8px, 1.1vw, 13px);
+            align-content: flex-start;
+        }
+
+        .tag {
+
+            font-family: "IBM Plex Mono", monospace;
+            font-weight: 500;
+
+            font-size: clamp(11px, 1.28vw, 16px);
+
+            padding: .5em .85em;
+            border: 1.5px solid var(--ink);
+
+            background: var(--paper-3);
+            color: var(--ink);
+            white-space: nowrap;
+
+            box-shadow: 3px 3px 0 var(--shadow);
+
+        }
+
+        .tag.hi {
+            background: var(--teal);
+            color: var(--paper);
+            border-color: var(--teal);
+        }
+
+        .tag.au {
+            background: var(--gold);
+            color: #241d08;
+            border-color: var(--gold);
+        }
+
+
+
+        .domain {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(11px, 1.5vw, 19px);
+        }
+
+        .drow {
+            display: flex;
+            gap: clamp(12px, 1.6vw, 22px);
+            align-items: baseline;
+        }
+
+        .dlabel {
+
+            flex: 0 0 clamp(120px, 15vw, 210px);
+
+            font-family: "Zilla Slab", serif;
+            font-weight: 600;
+
+            font-size: clamp(14px, 1.7vw, 22px);
+            color: var(--teal-deep);
+            line-height: 1.15;
+
+        }
+
+        .dtext {
+            font-size: clamp(12px, 1.38vw, 17px);
+            line-height: 1.4;
+            color: var(--ink);
+        }
+
+
+
+        /* experience */
+
+        .job-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 14px;
+            flex-wrap: wrap;
+
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 6px;
+            margin-bottom: clamp(8px, 1vw, 12px);
+        }
+
+        .job-co {
+            font-family: "Zilla Slab", serif;
+            font-weight: 700;
+            font-size: clamp(16px, 2vw, 27px);
+            color: var(--ink);
+            line-height: 1.05;
+        }
+
+        .job-co .loc {
+            font-family: "IBM Plex Sans";
+            font-weight: 400;
+            font-size: .62em;
+            color: var(--ink-soft);
+        }
+
+        .job-role {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(10px, 1.12vw, 14px);
+            color: var(--teal);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: .03em;
+        }
+
+        .job-date {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(10px, 1.1vw, 13.5px);
+            color: var(--rust);
+            font-weight: 600;
+            letter-spacing: .06em;
+            white-space: nowrap;
+        }
+
+        .mini-title {
+            font-family: "IBM Plex Mono", monospace;
+            font-weight: 600;
+            font-size: clamp(9.5px, 1vw, 12px);
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 7px;
+        }
+
+
+
+        ul.tight {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(6px, .8vw, 11px);
+        }
+
+        ul.tight li {
+            position: relative;
+            padding-left: 1.15em;
+            font-size: clamp(11px, 1.24vw, 15.5px);
+            line-height: 1.34;
+            color: var(--ink);
+        }
+
+        ul.tight li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: .5em;
+            width: 6px;
+            height: 6px;
+            background: var(--teal);
+            transform: rotate(45deg);
+        }
+
+        ul.tight li b {
+            color: var(--teal-deep);
+            font-weight: 700;
+        }
+
+
+
+        .stack {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(16px, 2.1vw, 30px);
+            width: 100%;
+        }
+
+
+
+        /* closing */
+
+        .thanks {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .thanks .big {
+            font-family: "Zilla Slab", serif;
+            font-weight: 700;
+            font-size: clamp(34px, 6.5vw, 86px);
+            line-height: .95;
+            color: var(--ink);
+            letter-spacing: -.02em;
+        }
+
+        .thanks .big em {
+            font-style: normal;
+            color: var(--teal);
+        }
+
+        .blog {
+            margin-top: clamp(16px, 2vw, 26px);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(12px, 1.4vw, 17px);
+            color: var(--ink);
+        }
+
+        .blog a {
+            color: var(--rust);
+            text-decoration: none;
+            border-bottom: 2px solid var(--gold);
+        }
+
+
+
+        /* ---------- footer / nav ---------- */
+
+        .footer {
+
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 40;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 10px clamp(20px, 4vw, 54px);
+
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 11px;
+            letter-spacing: .14em;
+
+            color: var(--paper);
+            pointer-events: none;
+
+        }
+
+        .footer .brand {
+            opacity: .72;
+            text-transform: uppercase;
+        }
+
+        .navbtns {
+            display: flex;
+            gap: 8px;
+            pointer-events: auto;
+        }
+
+        .navbtns button {
+
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 12px;
+
+            background: transparent;
+            color: var(--paper);
+            border: 1.5px solid rgba(233, 224, 200, .5);
+
+            width: 34px;
+            height: 30px;
+            cursor: pointer;
+            transition: .15s;
+            letter-spacing: 0;
+
+        }
+
+        .navbtns button:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #241d08;
+        }
+
+        .navbtns button:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .counter {
+            pointer-events: none;
+        }
+
+        .counter b {
+            color: var(--gold);
+        }
+
+
+
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gold);
+            z-index: 50;
+            transition: width .35s ease;
+        }
+
+
+
+        /* dots */
+
+        .dots {
+            position: fixed;
+            bottom: 46px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 40;
+            display: flex;
+            gap: 9px;
+            pointer-events: auto;
+        }
+
+        .dots button {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: 1.4px solid rgba(233, 224, 200, .55);
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .dots button.on {
+            background: var(--gold);
+            border-color: var(--gold);
+            transform: scale(1.15);
+        }
+
+        .dots button:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+
+
+        .hint {
+            position: fixed;
+            bottom: 44px;
+            right: clamp(20px, 4vw, 54px);
+            z-index: 40;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 10px;
+            letter-spacing: .12em;
+            color: var(--paper);
+            opacity: .5;
+            text-transform: uppercase;
+        }
+
+
+
+        @media (max-width:720px) {
+
+            .cols-2 {
+                grid-template-columns: 1fr;
+                gap: clamp(14px, 4vw, 22px);
+            }
+
+            .body {
+                overflow-y: auto;
+            }
+
+            .dlabel {
+                flex-basis: 110px;
+            }
+
+            .hint {
+                display: none;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="progress" id="progress"></div>
+
+
+
+    <div class="deck" id="deck">
+
+
+
+        <!-- 1 · TITLE / OBJECTIVE -->
+
+        <section class="slide active">
+
+            <div class="title-wrap">
+
+                <div class="kicker">C / C++ <span class="dot"></span> Firmware <span class="dot"></span> Embedded
+                    Systems</div>
+
+                <h1 class="name">MINH <span class="last">PHAM</span></h1>
+
+                <div class="rule-lg"></div>
+
+                <p class="lede">Building dependable systems in C/C++ — from <em>firmware</em> and 5G to <em>automotive
+                        HMI</em>.</p>
+
+                <div class="contact">
+
+                    <span>Ho Chi Minh City, VN</span>
+
+                    <span>096.462.7117</span>
+
+                    <span>mnpham1986@gmail.com</span>
+
+                    <span>freewindcode.com</span>
+
+                    <span>github.com/mnpham2101</span>
+
+                    <span>in/minh-pham</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 2 · EDUCATION & CERTIFICATIONS -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Foundations</div>
+
+                <div class="idx">SEC <b>02</b> / 09</div>
+
+            </div>
+
+            <h2 class="h-sec">Education <span class="amp">&amp;</span> Certifications</h2>
+
+            <div class="body">
+
+                <div class="cols-2">
+
+                    <div class="col">
+
+                        <div class="col-title">Education</div>
+
+                        <ul class="items">
+
+                            <li><b>BS — Electrical &amp; Computer Engineering</b><br>California Polytechnic University,
+                                Pomona <span class="n">· 2012</span></li>
+
+                            <li><b>BS — Electrical &amp; Computer Engineering</b><br>University of North Florida <span
+                                    class="n">· 2014–2015</span></li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="col">
+
+                        <div class="col-title">Certifications</div>
+
+                        <ul class="items">
+
+                            <li><b>IEEE Wireless Communications Professional</b><br><span class="n">Certified Nov
+                                    2018</span></li>
+
+                            <li><b>HackerRank</b> — Problem Solving (Basic)</li>
+
+                            <li><b>LeetCode</b> — algorithmic problem solving</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 3 · DOMAIN-SPECIFIC BACKGROUND -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Expertise</div>
+
+                <div class="idx">SEC <b>03</b> / 09</div>
+
+            </div>
+
+            <h2 class="h-sec">Domain-Specific Background</h2>
+
+            <div class="body">
+
+                <div class="domain">
+
+                    <div class="drow">
+                        <div class="dlabel">Automotive SW</div>
+                        <div class="dtext">AUTOSAR Classic &amp; AUTOSAR Adaptive.</div>
+                    </div>
+
+                    <div class="drow">
+                        <div class="dlabel">Android Platform</div>
+                        <div class="dtext">Binder IPC / RPC; Looper, MessageQueue &amp; Handler for threading and
+                            communication.</div>
+                    </div>
+
+                    <div class="drow">
+                        <div class="dlabel">5G</div>
+                        <div class="dtext">MAC-layer protocol design and implementation.</div>
+                    </div>
+
+                    <div class="drow">
+                        <div class="dlabel">Embedded Systems</div>
+                        <div class="dtext">SPI, I2C, UART, CAN, LIN; boot procedure, interrupts; AUTOSAR platform.</div>
+                    </div>
+
+                    <div class="drow">
+                        <div class="dlabel">Software QC</div>
+                        <div class="dtext">Manual &amp; automation testing on 5G products; V-Model test process.</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 4 · SOFTWARE TOOLS -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Toolchain</div>
+
+                <div class="idx">SEC <b>04</b> / 09</div>
+
+            </div>
+
+            <h2 class="h-sec">Software Tools</h2>
+
+            <p class="sub">Languages, frameworks &amp; instruments in active use</p>
+
+            <div class="body">
+
+                <div class="tags" style="align-content:center;">
+
+                    <span class="tag au">Agentic AI</span>
+
+                    <span class="tag hi">C / C++ (C++17)</span>
+
+                    <span class="tag hi">Rust</span>
+
+                    <span class="tag">GoogleTest</span>
+
+                    <span class="tag">Qt Framework</span>
+
+                    <span class="tag">Slint</span>
+
+                    <span class="tag">Flutter · Flutter Engine</span>
+
+                    <span class="tag">C#</span>
+
+                    <span class="tag">Ranorex</span>
+
+                    <span class="tag">Python</span>
+
+                    <span class="tag">Robot Framework</span>
+
+                    <span class="tag">QXDM</span>
+
+                    <span class="tag">Wireshark</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 5 · WHAT I COULD CONTRIBUTE -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Value</div>
+
+                <div class="idx">SEC <b>05</b> / 09</div>
+
+            </div>
+
+            <h2 class="h-sec">What I Could Contribute</h2>
+
+            <div class="body">
+
+                <ul class="items" style="justify-content:center;gap:clamp(14px,2vw,26px);">
+
+                    <li><b>Safe, professional AI</b> — using agentic AI to plan, coordinate, and streamline delivery.
+                    </li>
+
+                    <li><b>Sharp task planning</b> — minimize risk, atomic single-objective steps, clear direction.</li>
+
+                    <li><b>Rigorous code review</b> — fluent in MISRA and C / C++ best practice.</li>
+
+                    <li><b>Dedicated teammate</b> — strong work ethic, aiming for 100% satisfaction on every task.</li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 6 · EXPERIENCE — FPT -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Professional Experience</div>
+
+                <div class="idx">SEC <b>06</b> / 09</div>
+
+            </div>
+
+            <div class="job-head">
+
+                <div>
+
+                    <div class="job-co">FPT Software <span class="loc">— Danang, Vietnam</span></div>
+
+                    <div class="job-role">Senior Architect · Technical Lead</div>
+
+                </div>
+
+                <div class="job-date">Jan 2024 – Present</div>
+
+            </div>
+
+            <div class="body">
+
+                <div class="cols-2">
+
+                    <div class="col">
+
+                        <div class="mini-title">Leadership</div>
+
+                        <ul class="tight">
+
+                            <li>Architecture &amp; technical lead; drove tickets and progress as Agile master.</li>
+
+                            <li>Reviewed architecture, system design, and ECU functional / non-functional features.</li>
+
+                            <li>Reviewed code for best-practice compliance and testability.</li>
+
+                            <li>Led technical presentations and requirement discussions with customers.</li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="col">
+
+                        <div class="mini-title">Engineering</div>
+
+                        <ul class="tight">
+
+                            <li><b>Vehicle infotainment HMI</b> in Dart — components, data flow, gRPC services;
+                                Bluetooth via BlueZ; Wi-Fi C++ Linux daemon.</li>
+
+                            <li><b>Qt-removal migration</b> to C++20 / Rust — Asio, KDBindings, SQLiteCpp, std::variant,
+                                spdlog; custom encrypted full-duplex CNC protocol.</li>
+
+                            <li>gTests at <b>&gt;84%</b> C0/C1/C2 coverage with parameterized tests.</li>
+
+                            <li>Slint components + Rust logic under strict customer coding rules.</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 7 · EXPERIENCE — TMA + Rikkeisoft -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Professional Experience</div>
+
+                <div class="idx">SEC <b>07</b> / 09</div>
+
+            </div>
+
+            <div class="body" style="margin-top:clamp(10px,1.4vw,20px);">
+
+                <div class="stack">
+
+                    <div>
+
+                        <div class="job-head">
+
+                            <div>
+
+                                <div class="job-co">TMA Solutions <span class="loc">— Ho Chi Minh City</span></div>
+
+                                <div class="job-role">Senior Software Engineer · 5G Distributed Unit (DU)</div>
+
+                            </div>
+
+                            <div class="job-date">Oct 2023 – Dec 2024</div>
+
+                        </div>
+
+                        <ul class="tight">
+
+                            <li>Implemented <b>RLC</b> (AM/UM) and MAC counters per 3GPP &amp; O-RAN; resolved
+                                memory-leak issues.</li>
+
+                            <li>Handled abnormal cell-delete behavior across <b>NG &amp; F1AP</b> interfaces.</li>
+
+                            <li>Built UL power-control algorithm and proposed PHR-based UL scheduling.</li>
+
+                            <li>Robot Framework automation; code review and 5G / clean-code training.</li>
+
+                        </ul>
+
+                    </div>
+
+                    <div>
+
+                        <div class="job-head">
+
+                            <div>
+
+                                <div class="job-co">Rikkeisoft <span class="loc">— Hanoi · client:
+                                        AllianceBernstein</span></div>
+
+                                <div class="job-role">Junior Software Engineer</div>
+
+                            </div>
+
+                            <div class="job-date">Jul 2022 – Oct 2023</div>
+
+                        </div>
+
+                        <ul class="tight">
+
+                            <li>Built end-of-day account-balance daemon driven by SQL Server state.</li>
+
+                            <li>SOAP transaction handler integrated with <b>gSOAP</b>; C++ SQL / stored-procedure
+                                access.</li>
+
+                            <li>C# / Ranorex automation reading Excel test data; monitored Control-M jobs and
+                                root-caused failures.</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 8 · EXPERIENCE — LGE + Vinsmart -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Professional Experience</div>
+
+                <div class="idx">SEC <b>08</b> / 09</div>
+
+            </div>
+
+            <div class="body" style="margin-top:clamp(10px,1.4vw,20px);">
+
+                <div class="stack">
+
+                    <div>
+
+                        <div class="job-head">
+
+                            <div>
+
+                                <div class="job-co">LG Electronics <span class="loc">— Hanoi</span></div>
+
+                                <div class="job-role">Embedded System / Senior Research Engineer · Telematics</div>
+
+                            </div>
+
+                            <div class="job-date">Sep 2020 – Jul 2022</div>
+
+                        </div>
+
+                        <ul class="tight">
+
+                            <li>Built middleware for Telematics — <b>Routing, HMI &amp; SMS</b> services;
+                                AUTOSAR-compliant code.</li>
+
+                            <li>Async APIs over Android Binder; Qualcomm <b>Telux SDK</b> &amp; IPA driver for layer-3
+                                routing.</li>
+
+                            <li>Diagnosed issues via QXDM and proprietary logs across interworking modules.</li>
+
+                        </ul>
+
+                    </div>
+
+                    <div>
+
+                        <div class="job-head">
+
+                            <div>
+
+                                <div class="job-co">Vinsmart <span class="loc">— Hanoi</span></div>
+
+                                <div class="job-role">QA Engineer · 5G Layer-2 Operation</div>
+
+                            </div>
+
+                            <div class="job-date">Sep 2019 – Sep 2020</div>
+
+                        </div>
+
+                        <ul class="tight">
+
+                            <li>Designed and ran test cases; debugged issues and coordinated with 3rd-party vendors.
+                            </li>
+
+                            <li>Built <b>DCI-decoder</b> and TBS-calculation tools (Java / Python); C simulation of
+                                PUCCH resources.</li>
+
+                            <li>Presented 3GPP specs to the team — DL/UL-CCH, DMRS, HARQ, MCS, TBS.</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 9 · HOBBIES / CLOSE -->
+
+        <section class="slide">
+
+            <div class="top">
+
+                <div class="eyebrow"><span class="tick"></span>Beyond Work</div>
+
+                <div class="idx">SEC <b>09</b> / 09</div>
+
+            </div>
+
+            <h2 class="h-sec">Hobbies &amp; Other Activities</h2>
+
+            <div class="thanks">
+
+                <div class="big">Let&rsquo;s build something <em>reliable.</em></div>
+
+                <div class="blog">Writing technical blogs &rarr; <a
+                        href="https://freewindcode.com/blog/">freewindcode.com/blog</a></div>
+
+                <div class="contact" style="margin-top:clamp(20px,2.6vw,34px);">
+
+                    <span>Minh Pham</span>
+
+                    <span>mnpham1986@gmail.com</span>
+
+                    <span>096.462.7117</span>
+
+                    <span>github.com/mnpham2101</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+    </div>
+
+
+
+    <div class="dots" id="dots"></div>
+
+    <div class="footer">
+
+        <div class="brand">Minh Pham · Engineering Dossier</div>
+
+        <div class="counter">SLIDE <b id="cur">01</b> / <span id="tot">09</span></div>
+
+        <div class="navbtns">
+
+            <button id="prev" aria-label="Previous slide">&larr;</button>
+
+            <button id="next" aria-label="Next slide">&rarr;</button>
+
+        </div>
+
+    </div>
+
+    <div class="hint">← → to navigate</div>
+
+
+
+    <script>
+
+        const slides = [...document.querySelectorAll('.slide')];
+
+        const total = slides.length;
+
+        let i = 0;
+
+        const cur = document.getElementById('cur');
+
+        const progress = document.getElementById('progress');
+
+        const dotsWrap = document.getElementById('dots');
+
+        document.getElementById('tot').textContent = String(total).padStart(2, '0');
+
+
+
+        slides.forEach((_, n) => {
+
+            const b = document.createElement('button');
+
+            b.setAttribute('aria-label', 'Go to slide ' + (n + 1));
+
+            b.addEventListener('click', () => go(n));
+
+            dotsWrap.appendChild(b);
+
+        });
+
+        const dots = [...dotsWrap.children];
+
+
+
+        function go(n) {
+
+            i = (n + total) % total;
+
+            slides.forEach((s, k) => s.classList.toggle('active', k === i));
+
+            dots.forEach((d, k) => d.classList.toggle('on', k === i));
+
+            cur.textContent = String(i + 1).padStart(2, '0');
+
+            progress.style.width = ((i + 1) / total * 100) + '%';
+
+        }
+
+        const next = () => go(i + 1), prev = () => go(i - 1);
+
+        document.getElementById('next').addEventListener('click', next);
+
+        document.getElementById('prev').addEventListener('click', prev);
+
+        window.addEventListener('keydown', e => {
+
+            if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); }
+
+            else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+
+            else if (e.key === 'Home') { go(0); } else if (e.key === 'End') { go(total - 1); }
+
+        });
+
+        // swipe
+
+        let x0 = null;
+
+        window.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+
+        window.addEventListener('touchend', e => {
+
+            if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0;
+
+            if (Math.abs(dx) > 45) { dx < 0 ? next() : prev(); } x0 = null;
+
+        }, { passive: true });
+
+        go(0);
+
+    </script>
+
+</body>
+
+</html>

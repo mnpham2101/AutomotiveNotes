@@ -1,0 +1,62 @@
+@startuml exception-entry-return
+title Exception Entry & Exception Return -- Cortex-M7 (ARMv7-M)
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+  BackgroundColor #F4F6F9
+  BorderColor #5B6270
+  DiamondBackgroundColor #FDF0E2
+  DiamondBorderColor #E8791B
+  ArrowColor #5B6270
+  FontColor #1D2027
+}
+skinparam partition {
+  BackgroundColor #FFFFFF
+  BorderColor #C9D0DA
+  FontColor #1D2027
+  FontStyle bold
+}
+
+partition "Exception Entry" #E8F0FE {
+  start
+  :NVIC selects the highest-priority exception
+  that is pending, enabled, and higher priority
+  than whatever is currently executing;
+  :Finish the in-flight instruction
+  (multi-cycle instructions: complete,
+  or abandon and restart after entry);
+  :Push the exception stack frame
+  (R0-R3, R12, LR, PC, xPSR)
+  onto the active stack (MSP or PSP);<<#FDE3E4>>
+  :Read the vector table entry
+  for this exception number;
+  :Load PC with the handler's address;
+  :Load LR with the EXC_RETURN value
+  (not a normal return address);
+  :Update IPSR to the exception number,
+  enter Handler mode;
+  :Execute the exception handler;<<#DCE8F7>>
+  stop
+}
+
+partition "Exception Return" #FFF3E0 {
+  start
+  :Handler executes "BX LR" (or a "POP"
+  that restores PC) with the EXC_RETURN
+  value now in LR / on the stack;
+  if (Another exception already\npending at sufficient priority?) then (yes)
+    :Skip the unstack/restack pair;<<#C9F0E6>>
+    :Tail-chain directly into the
+    next handler's vector;
+    stop
+  else (no)
+    :Decode EXC_RETURN -- target stack,
+    target mode, FPU frame or not;
+    :Pop the exception stack frame
+    (restore R0-R3, R12, LR, PC, xPSR);<<#FDE3E4>>
+    :Resume execution at the restored PC,
+    in the restored stack/mode;
+    stop
+  endif
+}
+
+@enduml

@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1180" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect x="0" y="0" width="1400" height="1180" fill="#eef1f6"/>
+
+  <!-- Title -->
+  <text x="40" y="45" font-size="28" font-weight="700" fill="#1d2027">Where the exception-config registers live</text>
+  <text x="40" y="72" font-size="15" fill="#5b6270">Arm Cortex-M7 (STM32F7/H7-series) address map → Private Peripheral Bus → System Control Space</text>
+
+  <!-- ===================== Panel 1 : Full 4GB map ===================== -->
+  <g>
+    <rect x="40" y="100" width="400" height="480" rx="10" fill="#ffffff" stroke="#c9d0da"/>
+    <text x="58" y="128" font-size="15" font-weight="700" fill="#1d2027">1 · Full 4 GB memory map</text>
+    <text x="382" y="128" font-size="11" fill="#9aa2b1" text-anchor="end">0xFFFF_FFFF</text>
+
+    <rect x="58" y="140" width="364" height="70" rx="6" fill="#e0464f"/>
+    <text x="70" y="162" font-size="13" font-weight="700" fill="#ffffff">System / PPB</text>
+    <text x="70" y="180" font-size="11" fill="#ffe3e4">← your registers are in here</text>
+    <text x="410" y="150" font-size="10.5" fill="#ffe3e4" text-anchor="end">0xE000_0000</text>
+
+    <rect x="58" y="216" width="364" height="70" rx="6" fill="#f4f6f9" stroke="#dde2e8"/>
+    <text x="70" y="248" font-size="13" font-weight="600" fill="#1d2027">External device</text>
+    <text x="410" y="226" font-size="10.5" fill="#9aa2b1" text-anchor="end">0xA000_0000</text>
+
+    <rect x="58" y="292" width="364" height="70" rx="6" fill="#f4f6f9" stroke="#dde2e8"/>
+    <text x="70" y="324" font-size="13" font-weight="600" fill="#1d2027">External RAM</text>
+    <text x="410" y="302" font-size="10.5" fill="#9aa2b1" text-anchor="end">0x6000_0000</text>
+
+    <rect x="58" y="368" width="364" height="70" rx="6" fill="#f4f6f9" stroke="#dde2e8"/>
+    <text x="70" y="400" font-size="13" font-weight="600" fill="#1d2027">Peripheral</text>
+    <text x="410" y="378" font-size="10.5" fill="#9aa2b1" text-anchor="end">0x4000_0000</text>
+
+    <rect x="58" y="444" width="364" height="60" rx="6" fill="#f4f6f9" stroke="#dde2e8"/>
+    <text x="70" y="472" font-size="13" font-weight="600" fill="#1d2027">SRAM</text>
+    <text x="410" y="454" font-size="10.5" fill="#9aa2b1" text-anchor="end">0x2000_0000</text>
+
+    <rect x="58" y="512" width="364" height="58" rx="6" fill="#f4f6f9" stroke="#dde2e8"/>
+    <text x="70" y="536" font-size="13" font-weight="600" fill="#1d2027">Code</text>
+    <text x="70" y="554" font-size="11" fill="#5b6270">Flash / boot</text>
+    <text x="410" y="522" font-size="10.5" fill="#9aa2b1" text-anchor="end">0x0000_0000</text>
+  </g>
+
+  <!-- connector 1 -->
+  <line x1="440" y1="176" x2="500" y2="150" stroke="#e0464f" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="440" y1="176" x2="500" y2="580" stroke="#e0464f" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <!-- ===================== Panel 2 : PPB ===================== -->
+  <g>
+    <rect x="500" y="100" width="400" height="480" rx="10" fill="#ffffff" stroke="#c9d0da"/>
+    <text x="518" y="128" font-size="15" font-weight="700" fill="#1d2027">2 · Private Peripheral Bus</text>
+    <text x="842" y="128" font-size="11" fill="#9aa2b1" text-anchor="end">0xE00F_FFFF</text>
+
+    <rect x="518" y="140" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="161" font-size="12" fill="#9aa2b1">ROM table</text>
+    <text x="870" y="150" font-size="10" fill="#9aa2b1" text-anchor="end">0xE00F_F000</text>
+
+    <rect x="518" y="176" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="197" font-size="12" fill="#9aa2b1">ETM</text>
+    <text x="870" y="186" font-size="10" fill="#9aa2b1" text-anchor="end">0xE004_1000</text>
+
+    <rect x="518" y="212" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="233" font-size="12" fill="#9aa2b1">TPIU</text>
+    <text x="870" y="222" font-size="10" fill="#9aa2b1" text-anchor="end">0xE004_0000</text>
+
+    <rect x="518" y="248" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="269" font-size="12" fill="#9aa2b1">Reserved</text>
+    <text x="870" y="258" font-size="10" fill="#9aa2b1" text-anchor="end">0xE000_F000</text>
+
+    <rect x="518" y="288" width="364" height="80" rx="6" fill="#1a5fb4" stroke="#154a8f" stroke-width="2"/>
+    <text x="530" y="318" font-size="14" font-weight="700" fill="#ffffff">System Control Space</text>
+    <text x="530" y="338" font-size="11.5" fill="#dce8f7">NVIC · SCB · SysTick · MPU</text>
+    <text x="870" y="298" font-size="10.5" fill="#dce8f7" text-anchor="end">0xE000_E000</text>
+
+    <rect x="518" y="374" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="395" font-size="12" fill="#9aa2b1">Reserved</text>
+    <text x="870" y="384" font-size="10" fill="#9aa2b1" text-anchor="end">0xE000_3000</text>
+
+    <rect x="518" y="410" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="431" font-size="12" fill="#9aa2b1">FPB</text>
+    <text x="870" y="420" font-size="10" fill="#9aa2b1" text-anchor="end">0xE000_2000</text>
+
+    <rect x="518" y="446" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="467" font-size="12" fill="#9aa2b1">DWT</text>
+    <text x="870" y="456" font-size="10" fill="#9aa2b1" text-anchor="end">0xE000_1000</text>
+
+    <rect x="518" y="482" width="364" height="34" fill="#f4f6f9"/>
+    <text x="530" y="503" font-size="12" fill="#9aa2b1">ITM</text>
+    <text x="870" y="492" font-size="10" fill="#9aa2b1" text-anchor="end">0xE000_0000</text>
+  </g>
+
+  <!-- connector 2 -->
+  <line x1="900" y1="328" x2="960" y2="150" stroke="#1a5fb4" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="900" y1="328" x2="960" y2="580" stroke="#1a5fb4" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <!-- ===================== Panel 3 : SCS ===================== -->
+  <g>
+    <rect x="960" y="100" width="400" height="480" rx="10" fill="#ffffff" stroke="#c9d0da"/>
+    <text x="978" y="128" font-size="15" font-weight="700" fill="#1d2027">3 · System Control Space</text>
+    <text x="1302" y="128" font-size="10.5" fill="#9aa2b1" text-anchor="end">0xE000_E000–0xE000_EFFF</text>
+
+    <rect x="978" y="140" width="364" height="50" rx="6" fill="#f4f6f9" stroke="#dde2e8"/>
+    <text x="990" y="162" font-size="13" font-weight="700" fill="#1d2027">STIR</text>
+    <text x="990" y="178" font-size="10.5" fill="#5b6270">software-triggered interrupt</text>
+    <text x="1330" y="150" font-size="10" fill="#9aa2b1" text-anchor="end">0xE000_EF00</text>
+
+    <rect x="978" y="200" width="364" height="50" rx="6" fill="#5b6270"/>
+    <text x="990" y="222" font-size="13" font-weight="700" fill="#ffffff">MPU</text>
+    <text x="990" y="238" font-size="10.5" fill="#e5e7eb">memory protection unit</text>
+    <text x="1330" y="210" font-size="10" fill="#e5e7eb" text-anchor="end">0xE000_ED90</text>
+
+    <rect x="978" y="260" width="364" height="100" rx="6" fill="#e8791b"/>
+    <text x="990" y="292" font-size="15" font-weight="700" fill="#ffffff">SCB</text>
+    <text x="990" y="312" font-size="11.5" fill="#fde3c8">ICSR · AIRCR · SHPR · SHCSR · CFSR …</text>
+    <text x="1330" y="270" font-size="10.5" fill="#fde3c8" text-anchor="end">0xE000_ED00</text>
+
+    <rect x="978" y="370" width="364" height="100" rx="6" fill="#1a8f7b"/>
+    <text x="990" y="402" font-size="15" font-weight="700" fill="#ffffff">NVIC</text>
+    <text x="990" y="422" font-size="11.5" fill="#c9f0e6">ISER · ICER · ISPR · ICPR · IABR · IPR</text>
+    <text x="1330" y="380" font-size="10.5" fill="#c9f0e6" text-anchor="end">0xE000_E100</text>
+
+    <rect x="978" y="480" width="364" height="50" rx="6" fill="#7c4fd6"/>
+    <text x="990" y="502" font-size="13" font-weight="700" fill="#ffffff">SysTick</text>
+    <text x="990" y="518" font-size="10.5" fill="#e6dcf9">system timer</text>
+    <text x="1330" y="490" font-size="10" fill="#e6dcf9" text-anchor="end">0xE000_E010</text>
+
+    <rect x="978" y="540" width="364" height="34" fill="#f4f6f9"/>
+    <text x="990" y="561" font-size="12" font-weight="600" fill="#1d2027">ICTR</text>
+    <text x="1120" y="561" font-size="10.5" fill="#5b6270">interrupt controller type</text>
+    <text x="1330" y="551" font-size="10" fill="#9aa2b1" text-anchor="end">0xE000_E004</text>
+  </g>
+
+  <!-- ===================== Register list section ===================== -->
+  <text x="40" y="640" font-size="20" font-weight="700" fill="#1d2027">The registers that configure exceptions</text>
+
+  <!-- NVIC column -->
+  <text x="40" y="672" font-size="13" font-weight="700" fill="#1a8f7b">NVIC — per-interrupt control</text>
+  <g font-size="11.5">
+    <rect x="40" y="686" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="40" y="686" width="4" height="52" fill="#1a8f7b"/>
+    <text x="56" y="706" font-weight="700" fill="#1d2027">NVIC_ISER0-15</text>
+    <text x="440" y="706" fill="#9aa2b1" text-anchor="end">0xE000_E100</text>
+    <text x="56" y="724" fill="#5b6270">Set-Enable — enable an IRQ</text>
+
+    <rect x="40" y="746" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="40" y="746" width="4" height="52" fill="#1a8f7b"/>
+    <text x="56" y="766" font-weight="700" fill="#1d2027">NVIC_ICER0-15</text>
+    <text x="440" y="766" fill="#9aa2b1" text-anchor="end">0xE000_E180</text>
+    <text x="56" y="784" fill="#5b6270">Clear-Enable — disable an IRQ</text>
+
+    <rect x="40" y="806" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="40" y="806" width="4" height="52" fill="#1a8f7b"/>
+    <text x="56" y="826" font-weight="700" fill="#1d2027">NVIC_ISPR0-15</text>
+    <text x="440" y="826" fill="#9aa2b1" text-anchor="end">0xE000_E200</text>
+    <text x="56" y="844" fill="#5b6270">Set-Pending</text>
+
+    <rect x="40" y="866" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="40" y="866" width="4" height="52" fill="#1a8f7b"/>
+    <text x="56" y="886" font-weight="700" fill="#1d2027">NVIC_ICPR0-15</text>
+    <text x="440" y="886" fill="#9aa2b1" text-anchor="end">0xE000_E280</text>
+    <text x="56" y="904" fill="#5b6270">Clear-Pending</text>
+
+    <rect x="40" y="926" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="40" y="926" width="4" height="52" fill="#1a8f7b"/>
+    <text x="56" y="946" font-weight="700" fill="#1d2027">NVIC_IABR0-15</text>
+    <text x="440" y="946" fill="#9aa2b1" text-anchor="end">0xE000_E300</text>
+    <text x="56" y="964" fill="#5b6270">Active bit per IRQ</text>
+
+    <rect x="40" y="986" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="40" y="986" width="4" height="52" fill="#1a8f7b"/>
+    <text x="56" y="1006" font-weight="700" fill="#1d2027">NVIC_IPR0-123</text>
+    <text x="440" y="1006" fill="#9aa2b1" text-anchor="end">0xE000_E400</text>
+    <text x="56" y="1024" fill="#5b6270">Priority, one byte per IRQ</text>
+  </g>
+
+  <!-- SCB column -->
+  <text x="490" y="672" font-size="13" font-weight="700" fill="#e8791b">SCB — system exceptions &amp; faults</text>
+  <g font-size="11.5">
+    <rect x="490" y="686" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="490" y="686" width="4" height="52" fill="#e8791b"/>
+    <text x="506" y="706" font-weight="700" fill="#1d2027">ICSR</text>
+    <text x="890" y="706" fill="#9aa2b1" text-anchor="end">0xE000_ED04</text>
+    <text x="506" y="724" fill="#5b6270">Int Ctrl/State — NMI, PendSV, SysTick</text>
+
+    <rect x="490" y="746" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="490" y="746" width="4" height="52" fill="#e8791b"/>
+    <text x="506" y="766" font-weight="700" fill="#1d2027">AIRCR</text>
+    <text x="890" y="766" fill="#9aa2b1" text-anchor="end">0xE000_ED0C</text>
+    <text x="506" y="784" fill="#5b6270">Reset req + priority grouping</text>
+
+    <rect x="490" y="806" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="490" y="806" width="4" height="52" fill="#e8791b"/>
+    <text x="506" y="826" font-weight="700" fill="#1d2027">SHPR1-3</text>
+    <text x="890" y="826" fill="#9aa2b1" text-anchor="end">0xE000_ED18</text>
+    <text x="506" y="844" fill="#5b6270">System-handler priority</text>
+
+    <rect x="490" y="866" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="490" y="866" width="4" height="52" fill="#e8791b"/>
+    <text x="506" y="886" font-weight="700" fill="#1d2027">SHCSR</text>
+    <text x="890" y="886" fill="#9aa2b1" text-anchor="end">0xE000_ED24</text>
+    <text x="506" y="904" fill="#5b6270">System-handler control/state</text>
+
+    <rect x="490" y="926" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="490" y="926" width="4" height="52" fill="#e8791b"/>
+    <text x="506" y="946" font-weight="700" fill="#1d2027">CFSR</text>
+    <text x="890" y="946" fill="#9aa2b1" text-anchor="end">0xE000_ED28</text>
+    <text x="506" y="964" fill="#5b6270">MMFSR + BFSR + UFSR fault status</text>
+
+    <rect x="490" y="986" width="410" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="490" y="986" width="4" height="52" fill="#e8791b"/>
+    <text x="506" y="1006" font-weight="700" fill="#1d2027">HFSR / MMFAR / BFAR</text>
+    <text x="890" y="1006" fill="#9aa2b1" text-anchor="end">0xE000_ED2C+</text>
+    <text x="506" y="1024" fill="#5b6270">HardFault status, fault addresses</text>
+  </g>
+
+  <!-- System control column -->
+  <text x="940" y="672" font-size="13" font-weight="700" fill="#1a5fb4">System control</text>
+  <g font-size="11.5">
+    <rect x="940" y="686" width="420" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="940" y="686" width="4" height="52" fill="#1a5fb4"/>
+    <text x="956" y="706" font-weight="700" fill="#1d2027">ICTR</text>
+    <text x="1350" y="706" fill="#9aa2b1" text-anchor="end">0xE000_E004</text>
+    <text x="956" y="724" fill="#5b6270">Interrupt controller type</text>
+
+    <rect x="940" y="746" width="420" height="52" rx="6" fill="#ffffff" stroke="#dde2e8"/>
+    <rect x="940" y="746" width="4" height="52" fill="#1a5fb4"/>
+    <text x="956" y="766" font-weight="700" fill="#1d2027">SysTick</text>
+    <text x="1350" y="766" fill="#9aa2b1" text-anchor="end">0xE000_E010</text>
+    <text x="956" y="784" fill="#5b6270">SYST_CSR / RVR / CVR timer</text>
+
+    <rect x="940" y="806" width="420" height="224" rx="8" fill="#fdf0e2" stroke="#e8c896" stroke-dasharray="5 4"/>
+    <text x="956" y="830" font-size="13" font-weight="700" fill="#1d2027">Not in the memory map</text>
+    <text x="956" y="854" fill="#5b6270">PRIMASK · FAULTMASK · BASEPRI</text>
+    <text x="956" y="876" fill="#5b6270">They have no address — reached only</text>
+    <text x="956" y="896" fill="#5b6270">via MRS / MSR instructions (CMSIS</text>
+    <text x="956" y="916" fill="#5b6270">__disable_irq(), __set_BASEPRI(), …).</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="40" y="1080" font-size="12" fill="#5b6270">Addresses are the architectural Cortex-M7 (ARMv7-M) System Control Space layout, identical on every Cortex-M7-based</text>
+  <text x="40" y="1098" font-size="12" fill="#5b6270">device — shown here using the STM32F7/H7-series naming from ST's PM0253 programming manual. The PRIMASK / FAULTMASK /</text>
+  <text x="40" y="1116" font-size="12" fill="#5b6270">BASEPRI mask registers have no address; they are core special registers reached only via MRS / MSR.</text>
+</svg>
