@@ -1,0 +1,63 @@
+@startuml io-readkey-process-states
+title Process P state changes around a blocking ReadKey()
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+  BackgroundColor #F4F6F9
+  BorderColor #5B6270
+  DiamondBackgroundColor #FDF0E2
+  DiamondBorderColor #E8791B
+  ArrowColor #5B6270
+  FontColor #1D2027
+}
+skinparam partition {
+  BackgroundColor #FFFFFF
+  BorderColor #C9D0DA
+  FontColor #1D2027
+  FontStyle bold
+}
+skinparam note {
+  BackgroundColor #FDF0E2
+  BorderColor #E8791B
+}
+
+start
+partition "P.status = ACTIVE -- Scheduler MAY run P" #C9F0E6 {
+  :Scheduler selects P (round-robin);
+  :P executes the ReadKey() supervisor
+  call -> enters the OS kernel;
+}
+if (Kernel I/O buffer empty?) then (yes)
+  :saved XP -= 4
+  (SVC will re-execute when P next runs);
+  :sleep(KBD_EVENT)
+  P.status = KBD_EVENT;<<#FDE3E4>>
+  partition "P.status = WAITING -- Scheduler SKIPS P" #FDE3E4 {
+    :P gets zero CPU time;
+    note right
+      Scheduler() only picks
+      processes whose
+      status == ACTIVE
+    end note
+    :Other ACTIVE processes run...
+    until a key press raises the
+    keyboard interrupt;
+    :ISR appends the character
+    to the kernel I/O buffer
+    (buffer no longer empty);
+    :wakeup(KBD_EVENT)
+    P.status = ACTIVE;<<#C9F0E6>>
+  }
+  :P is schedulable again --
+  next round it re-executes the SVC
+  and re-checks the buffer;
+  stop
+else (no)
+  :c = dequeue from buffer,
+  saved R0 = c;
+  :Return to user mode at XP:
+  P continues, still ACTIVE,
+  character in R0;
+  stop
+endif
+
+@enduml
