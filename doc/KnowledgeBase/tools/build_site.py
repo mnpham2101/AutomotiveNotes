@@ -17,6 +17,7 @@ import shutil
 from pathlib import Path
 
 import markdown
+from pygments.formatters import HtmlFormatter
 
 ROOT = Path(__file__).resolve().parent.parent
 MD_DIR = ROOT / "md"
@@ -27,8 +28,15 @@ SITE_DIR = ROOT / "site"
 SITE_TITLE = "Automotive Tech Lead Knowledge Base"
 HOME_SLUG = "0.0"
 
-MD_EXTENSIONS = ["fenced_code", "tables", "sane_lists", "toc", "pymdownx.tasklist"]
-MD_EXTENSION_CONFIGS = {"pymdownx.tasklist": {"custom_checkbox": False, "clickable_checkbox": True}}
+MD_EXTENSIONS = ["tables", "sane_lists", "toc", "pymdownx.tasklist", "pymdownx.superfences", "pymdownx.highlight"]
+MD_EXTENSION_CONFIGS = {
+    "pymdownx.tasklist": {"custom_checkbox": False, "clickable_checkbox": True},
+    # Unknown languages (e.g. bitbake) fall back to plain text rather than erroring.
+    "pymdownx.highlight": {"guess_lang": False},
+}
+
+# Pygments theme for fenced code blocks; one-dark's background matches --code-bg.
+PYGMENTS_STYLE = "one-dark"
 
 MD_LINK_RE = re.compile(r"\]\((\d+\.\d+)-[^)]+\.md\)")
 IMG_LINK_RE = re.compile(r"\]\((diagrams|images)/([^)]+)\)")
@@ -246,7 +254,11 @@ def main() -> int:
     (SITE_DIR / "diagrams").mkdir()
     (SITE_DIR / "images").mkdir()
 
-    (SITE_DIR / "assets" / "style.css").write_text(STYLE_CSS, encoding="utf-8")
+    pygments_css = HtmlFormatter(style=PYGMENTS_STYLE).get_style_defs(".highlight")
+    (SITE_DIR / "assets" / "style.css").write_text(
+        STYLE_CSS + "\n/* Pygments syntax highlighting */\n" + pygments_css + "\n",
+        encoding="utf-8",
+    )
 
     for svg in DIAGRAMS_DIR.glob("*.svg"):
         shutil.copy(svg, SITE_DIR / "diagrams" / svg.name)

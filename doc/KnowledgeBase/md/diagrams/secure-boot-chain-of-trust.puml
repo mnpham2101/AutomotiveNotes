@@ -1,0 +1,33 @@
+@startuml secure-boot-chain-of-trust
+title Secure Boot Chain of Trust (e.g. NXP S32K/S32G HSM + Cortex-M/A boot)
+skinparam wrapWidth 220
+
+partition "Factory — Secure Provisioning (once, in a controlled facility)" {
+  start
+  :Generate device-unique key pair\n(or derive from a device secret);
+  :Burn OEM public-key hash / root cert\ninto OTP / eFuses (write-once);
+  :Provision device-unique keys + certs\ninto the HSM's protected key store;
+  :Lock debug access\n(JTAG/SWD disabled or authenticated);
+}
+
+partition "Every Power-On / Reset — Secure Boot" {
+  :Power-on Reset;
+  :Boot ROM\n(immutable Root of Trust, in silicon);
+  if (Stage-1 bootloader image signature\nvalid against OTP-anchored public key?) then (yes)
+    :Stage-1 Bootloader runs\n(clock/RAM init, HSM handshake);
+    if (Stage-2 / Application image\nsignature valid against Stage-1's\ntrusted key/cert?) then (yes)
+      :Jump to Application\n(chain of trust intact, each stage\nverifies the next before executing it);
+      :Application runs;
+      stop
+    else (no)
+      :Reject image;
+      :Stay in bootloader\n(await authenticated reprogramming);
+      stop
+    endif
+  else (no)
+    :Halt / enter secure failure state\n(no unsigned code ever executes);
+    stop
+  endif
+}
+
+@enduml
