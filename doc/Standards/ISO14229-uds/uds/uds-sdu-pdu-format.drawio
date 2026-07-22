@@ -1,0 +1,256 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="UDS A_SDU vs A_PDU" id="uds-sdu-pdu-format">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1020" pageHeight="1087" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=19;fontColor=#000000;fontStyle=1;" value="ISO 14229-1 Message Structure — A_SDU vs A_PDU">
+          <mxGeometry x="0" y="8" width="1020" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;" value="1.  A_SDU — Application layer Service Data Unit  (Clause 6.4)">
+          <mxGeometry x="30" y="271" width="960" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="The parameter list passed across the request / indication / response / confirm service primitives (Clause 6.3.2, 6.3.3).">
+          <mxGeometry x="30" y="290" width="960" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="A_Mtype&#10;diagnostics /&#10;remote diagnostics&#10;M">
+          <mxGeometry x="30" y="313" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="A_SA&#10;Source Address&#10;2 bytes&#10;M">
+          <mxGeometry x="150" y="313" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="A_TA&#10;Target Address&#10;2 bytes&#10;M">
+          <mxGeometry x="260" y="313" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="A_TA_type&#10;physical /&#10;functional&#10;M">
+          <mxGeometry x="370" y="313" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="[A_AE]&#10;Remote Address&#10;2 bytes&#10;C — remote only">
+          <mxGeometry x="490" y="313" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="A_Length&#10;byte count of&#10;A_Data — 4 bytes&#10;M">
+          <mxGeometry x="620" y="313" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;fontStyle=1;" value="A_Data&#10;parameter 1 … parameter n&#10;the service-specific parameters&#10;M">
+          <mxGeometry x="730" y="313" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="A_Result   —   ok / error&#10;request-confirm / response-confirm primitives only">
+          <mxGeometry x="30" y="385" width="300" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#b83f2e;" value="This is the one A_SDU parameter with no counterpart in the A_PDU. It reports local">
+          <mxGeometry x="345" y="385" width="645" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#b83f2e;" value="transmission status back to the application and is never encoded into a message.">
+          <mxGeometry x="345" y="400" width="645" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#b83f2e;" value="[Clause 6.3.4, 6.4.1.6]">
+          <mxGeometry x="345" y="415" width="645" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="439" as="sourcePoint" />
+            <mxPoint x="510" y="477" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n16" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#333333;fontStyle=1;" value="The application layer prepends the A_PCI to build the A_PDU  [Clause 7.2]">
+          <mxGeometry x="525" y="447" width="465" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n17" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;" value="2.  A_PDU — Application layer Protocol Data Unit  (Clause 7.2)">
+          <mxGeometry x="30" y="483" width="960" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="&quot;Mtype, SA, TA, TA_type, RA, Length are the same parameters as used in the A_SDU&quot; — A_Data now starts with the A_PCI.">
+          <mxGeometry x="30" y="502" width="960" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n19" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="Mtype&#10;diagnostics /&#10;remote diagnostics&#10;M">
+          <mxGeometry x="30" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n20" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="SA&#10;Source Address&#10;2 bytes&#10;M">
+          <mxGeometry x="150" y="525" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n21" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="TA&#10;Target Address&#10;2 bytes&#10;M">
+          <mxGeometry x="260" y="525" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n22" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="TA_type&#10;physical /&#10;functional&#10;M">
+          <mxGeometry x="370" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n23" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="[RA]&#10;Remote Address&#10;renamed from A_AE&#10;C — remote only">
+          <mxGeometry x="490" y="525" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n24" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="Length&#10;byte count of&#10;A_Data&#10;M">
+          <mxGeometry x="620" y="525" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n25" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;fontStyle=1;" value="A_PCI&#10;added here&#10;M">
+          <mxGeometry x="730" y="525" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n26" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;" value="parameter 1 … parameter n&#10;carried over from the A_SDU&#10;M">
+          <mxGeometry x="830" y="525" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n27" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#333333;" value="└──────  A_Data  ──────┘">
+          <mxGeometry x="730" y="587" width="260" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="n28" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="Mtype, SA, TA, TA_type, [RA] and Length are service parameters handed to the lower layers — only A_Data is transmitted as literal bytes.">
+          <mxGeometry x="30" y="603" width="960" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n29" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;" value="3.  Inside A_Data — the transmitted bytes  (Clause 7.3)">
+          <mxGeometry x="30" y="629" width="960" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n30" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="The A_PCI is 1 byte (SI) for requests and positive responses, and 2 bytes (NR_SI + SI) for negative responses.">
+          <mxGeometry x="30" y="648" width="960" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n31" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#000000;fontStyle=1;" value="Request">
+          <mxGeometry x="30" y="691" width="150" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="n32" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;" value="A_PCI · SI&#10;request SID, 1 byte&#10;M">
+          <mxGeometry x="185" y="673" width="170" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n33" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="sub-function&#10;1 byte&#10;U — service dependent">
+          <mxGeometry x="355" y="673" width="185" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n34" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="parameter(s)&#10;DID / RID / groupOfDTC&#10;C — service dependent">
+          <mxGeometry x="540" y="673" width="220" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n35" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="data record&#10;variable length&#10;U — service dependent">
+          <mxGeometry x="760" y="673" width="230" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n36" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#000000;fontStyle=1;" value="Positive response">
+          <mxGeometry x="30" y="755" width="150" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="n37" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;" value="A_PCI · SI&#10;request SID + 0x40&#10;M">
+          <mxGeometry x="185" y="737" width="170" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n38" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="sub-function&#10;echoed, if the service uses one&#10;C">
+          <mxGeometry x="355" y="737" width="185" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n39" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="parameter(s)&#10;echoed DID / RID&#10;C — service dependent">
+          <mxGeometry x="540" y="737" width="220" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n40" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="data record&#10;the returned payload&#10;U — service dependent">
+          <mxGeometry x="760" y="737" width="230" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n41" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#000000;fontStyle=1;" value="Negative response">
+          <mxGeometry x="30" y="819" width="150" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=9.5;align=center;verticalAlign=middle;" value="A_PCI · NR_SI&#10;0x7F — fixed&#10;M">
+          <mxGeometry x="185" y="801" width="170" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n43" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=9.5;align=center;verticalAlign=middle;" value="A_PCI · SI&#10;copy of the request SID&#10;M">
+          <mxGeometry x="355" y="801" width="185" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n44" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=9.5;align=center;verticalAlign=middle;" value="responseCode&#10;NRC, 1 byte&#10;M">
+          <mxGeometry x="540" y="801" width="220" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="n45" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#b83f2e;fontStyle=1;" value="Always exactly">
+          <mxGeometry x="772" y="813" width="218" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n46" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#b83f2e;fontStyle=1;" value="3 bytes.">
+          <mxGeometry x="772" y="829" width="218" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n47" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="On a negative response the A_PCI is two bytes: NR_SI (0x7F) followed by a copy of the request SID; responseCode is A_Data.Parameter 1.  [Table 3]">
+          <mxGeometry x="185" y="857" width="805" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n48" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;fontSize=9.5;align=center;verticalAlign=middle;" value="">
+          <mxGeometry x="30" y="885" width="960" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="n49" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=12.5;fontColor=#000000;fontStyle=1;" value="A_SDU vs A_PDU — what actually differs">
+          <mxGeometry x="44" y="893" width="932" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n50" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;" value="•">
+          <mxGeometry x="44" y="919" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n51" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="In the A_SDU but NOT in the A_PDU  —  A_Result (ok / error). It belongs to the request-confirm and response-confirm">
+          <mxGeometry x="60" y="919" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n52" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="primitives only, reports local transmission status to the application, and is never encoded into a message.">
+          <mxGeometry x="60" y="934" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n53" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;" value="•">
+          <mxGeometry x="44" y="954" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n54" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="In the A_PDU but NOT in the A_SDU  —  A_PCI: the Service Identifier (SI), preceded by NR_SI = 0x7F on negative">
+          <mxGeometry x="60" y="954" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n55" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="responses. The application layer adds it when it constructs the A_PDU from the A_SDU.">
+          <mxGeometry x="60" y="969" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n56" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;" value="•">
+          <mxGeometry x="44" y="989" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n57" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="Renamed rather than added  —  A_AE in the A_SDU appears as RA in the A_PDU. Both are the optional remote address,">
+          <mxGeometry x="60" y="989" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n58" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="present only when Mtype = remote diagnostics.">
+          <mxGeometry x="60" y="1004" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n59" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;" value="•">
+          <mxGeometry x="44" y="1024" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n60" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="Unchanged  —  Mtype, SA, TA, TA_type and Length pass through from the A_SDU to the A_PDU as they are.">
+          <mxGeometry x="60" y="1024" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n61" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;" value="•">
+          <mxGeometry x="44" y="1044" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n62" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;" value="Exception  —  periodic responses of ReadDataByPeriodicIdentifier (0x2A) carry no A_PCI at all.  [Clause 7.3.1]">
+          <mxGeometry x="60" y="1044" width="916" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n63" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;" value="0.  Service vs protocol — where each data unit lives  (Clause 4, Figure 1)">
+          <mxGeometry x="30" y="46" width="960" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n64" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="ISO 14229-1 follows the OSI service conventions: a vertical service interface inside each node, and a horizontal protocol between peer nodes.">
+          <mxGeometry x="30" y="65" width="960" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n65" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10.5;fontColor=#000000;fontStyle=1;" value="Client node  (tester)">
+          <mxGeometry x="30" y="88" width="300" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n66" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;" value="Application&#10;the service user">
+          <mxGeometry x="30" y="106" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n67" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;" value="Application layer&#10;the service provider">
+          <mxGeometry x="30" y="192" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n68" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10.5;fontColor=#000000;fontStyle=1;" value="Server node  (ECU)">
+          <mxGeometry x="690" y="88" width="300" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n69" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;" value="Application&#10;the service user">
+          <mxGeometry x="690" y="106" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n70" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;" value="Application layer&#10;the service provider">
+          <mxGeometry x="690" y="192" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n71" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;startArrow=block;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180.0" y="146" as="sourcePoint" />
+            <mxPoint x="180.0" y="192" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n72" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;startArrow=block;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840.0" y="146" as="sourcePoint" />
+            <mxPoint x="840.0" y="192" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n73" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;" value="A_SDU&#10;service primitives">
+          <mxGeometry x="192" y="152" width="132" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="n74" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;" value="A_SDU&#10;service primitives">
+          <mxGeometry x="696" y="152" width="132" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="n75" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;startArrow=block;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="212" as="sourcePoint" />
+            <mxPoint x="690" y="212" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n76" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;fontStyle=1;" value="A_PDU  =  A_SDU  +  A_PCI">
+          <mxGeometry x="378" y="176" width="264" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="n77" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8.8;fontColor=#555555;" value="transmission to peer entity">
+          <mxGeometry x="330" y="216" width="360" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="n78" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#333333;" value="The A_SDU never leaves the node. The A_PDU is what one application layer says to its peer — which is why it must carry the A_PCI.">
+          <mxGeometry x="30" y="238" width="960" height="16" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

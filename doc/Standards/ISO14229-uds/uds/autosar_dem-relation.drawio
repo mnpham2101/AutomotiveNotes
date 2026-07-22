@@ -1,0 +1,101 @@
+<mxfile host="app.diagrams.net" agent="Claude">
+  <diagram name="DEM Call Flow" id="dem-callflow">
+    <mxGraphModel dx="971" dy="1940" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="660" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" value="DEM Internal Architecture &amp;amp; Relationship with other Autosar Components" vertex="1">
+          <mxGeometry height="30" width="400" x="300" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="swc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;" value="SWC Monitors&#xa;&#xa;fault detection logic&#xa;(sensors, comm, safety)" vertex="1">
+          <mxGeometry height="80" width="180" x="40" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="rte" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;" value="RTE&#xa;&#xa;Dem_SetEventStatus /&#xa;Dem_ReportErrorStatus" vertex="1">
+          <mxGeometry height="80" width="140" x="260" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="demOuter" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff5f3;strokeColor=#b83f2e;strokeWidth=2;fontSize=15;fontStyle=1;fontColor=#6b1d0d;verticalAlign=top;spacingTop=8;arcSize=6;" value="DEM" vertex="1">
+          <mxGeometry height="440" width="520" x="440" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="debounce" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Debouncing&#xa;&#xa;Counter-based or monitor-&#xa;internal fault confirmation" vertex="1">
+          <mxGeometry height="80" width="220" x="465" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="evtMem" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Event Memory Manager&#xa;&#xa;DTC status bits, priority,&#xa;aging / healing cycles" vertex="1">
+          <mxGeometry height="80" width="230" x="700" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="ff" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Freeze Frame /&#xa;Extended Data Manager&#xa;&#xa;snapshot &amp; occurrence data&#xa;per DTC (mileage, RPM, etc.)" vertex="1">
+          <mxGeometry height="80" width="220" x="465" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="dtcMgr" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="DTC / Event Status&#xa;Manager&#xa;&#xa;event combination,&#xa;DTC groups, suppression" vertex="1">
+          <mxGeometry height="80" width="230" x="700" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="callback" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10.5;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Callback / Notification Interface&#xa;&#xa;notifies FIM, DCM, SWCs of event/DTC status changes" vertex="1">
+          <mxGeometry height="60" width="465" x="465" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="nvmIface" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10.5;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="NvM Interface&#xa;&#xa;persist event data to NVRAM" vertex="1">
+          <mxGeometry height="70" width="220" x="465" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="dcmIface" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=1.5;fontSize=10.5;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="Dcm Interface&#xa;&#xa;serves DTC/status/freeze-frame reads" vertex="1">
+          <mxGeometry height="70" width="230" x="700" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="nvm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;strokeWidth=1.3;fontSize=12.5;fontStyle=1;" value="NvM" vertex="1">
+          <mxGeometry height="60" width="150" x="40" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="fim" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;strokeWidth=1.3;fontSize=12.5;fontStyle=1;" value="FIM" vertex="1">
+          <mxGeometry height="60" width="150" x="40" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="dcm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=1.5;fontSize=12.5;fontStyle=1;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="DCM&#xa;&#xa;tester-facing service layer" vertex="1">
+          <mxGeometry height="70" width="160" x="770" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="swc" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="rte">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="rte" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.5;entryX=0;entryY=0.35;" target="debounce" value="event status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="debounce" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=1;exitY=0.475;entryX=0;entryY=0.475;" target="evtMem">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="ff" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=1;exitY=0.475;entryX=0;entryY=0.475;" target="dtcMgr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="dtcMgr" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;edgeStyle=orthogonalEdgeStyle;entryDx=0;entryDy=0;exitDx=0;exitDy=0;" target="callback">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="246" />
+              <mxPoint x="950" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="dtcMgr" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.1;exitX=0.5;exitY=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="callback">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="callback" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=0.25;exitY=1;entryX=0.25;entryY=0;" target="nvmIface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="callback" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=0.75;exitY=1;entryX=0.75;entryY=0;" target="dcmIface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="nvmIface" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=-0.001;exitY=0.598;entryX=1;entryY=0.35;exitDx=0;exitDy=0;exitPerimeter=0;" target="nvm" value="store/restore">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="callback" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=0;exitY=0.5;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitDx=0;exitDy=0;" target="fim" value="status change notify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" style="edges=1;html=1;endArrow=block;fontSize=9;fontColor=#1f5fa8;strokeColor=#1f5fa8;strokeWidth=2;entryX=0.283;entryY=0.052;entryDx=0;entryDy=0;entryPerimeter=0;" target="dcm" value="request">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="815" y="448.28" as="sourcePoint" />
+            <mxPoint x="818.04" y="532.98" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="dcm" style="edges=1;html=1;endArrow=block;fontSize=9;fontColor=#1f5fa8;strokeColor=#1f5fa8;strokeWidth=2;entryX=0.709;exitY=0.024;entryY=1.003;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.583;exitDx=0;exitDy=0;exitPerimeter=0;" target="dcmIface" value="DTC data">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="520" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flowtext" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#333333;" value="Flow: Monitor detects fault → RTE → DEM debounces → updates Event/DTC status → stores freeze frame/extended&#xa;data via NvM → notifies FIM (function inhibition) → on tester request, DCM queries DEM via Dcm interface for DTC data" vertex="1">
+          <mxGeometry height="40" width="700" x="150" y="608" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

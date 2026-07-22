@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="960px" height="268px" viewBox="0 0 960 268" content="&lt;mxfile host=&quot;app.diagrams.net&quot; agent=&quot;Claude&quot; version=&quot;24.7.17&quot;&gt;
+  &lt;diagram name=&quot;uds-slide-service-vs-protocol&quot; id=&quot;uds-slide-service-vs-protocol&quot;&gt;
+    &lt;mxGraphModel dx=&quot;985&quot; dy=&quot;1642&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;960&quot; pageHeight=&quot;268&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;n1&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Where each data unit lives — ISO 14229-1 Clause 4, Figure 1&quot;&gt;
+          &lt;mxGeometry x=&quot;0&quot; y=&quot;12&quot; width=&quot;960&quot; height=&quot;22&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n2&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#607d8b;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Client node  (tester)&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;46&quot; width=&quot;300&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n3&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;&quot; value=&quot;Application&amp;#10;service user&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;66&quot; width=&quot;300&quot; height=&quot;42&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n4&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;&quot; value=&quot;Application layer&amp;#10;service provider&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;156&quot; width=&quot;300&quot; height=&quot;42&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n5&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#607d8b;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Server node  (ECU)&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;46&quot; width=&quot;300&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n6&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;&quot; value=&quot;Application&amp;#10;service user&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;66&quot; width=&quot;300&quot; height=&quot;42&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n7&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;&quot; value=&quot;Application layer&amp;#10;service provider&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;156&quot; width=&quot;300&quot; height=&quot;42&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n8&quot; parent=&quot;1&quot; edge=&quot;1&quot; style=&quot;endArrow=block;html=1;strokeColor=#263238;strokeWidth=1.5;fillColor=#263238;startArrow=block;startFill=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;170.0&quot; y=&quot;108&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;170.0&quot; y=&quot;156&quot; as=&quot;targetPoint&quot; /&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n9&quot; parent=&quot;1&quot; edge=&quot;1&quot; style=&quot;endArrow=block;html=1;strokeColor=#263238;strokeWidth=1.5;fillColor=#263238;startArrow=block;startFill=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;770.0&quot; y=&quot;108&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;770.0&quot; y=&quot;156&quot; as=&quot;targetPoint&quot; /&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n10&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#546e7a;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;178&quot; y=&quot;116&quot; width=&quot;128&quot; height=&quot;32&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n11&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#546e7a;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;654&quot; y=&quot;116&quot; width=&quot;128&quot; height=&quot;32&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n12&quot; parent=&quot;1&quot; edge=&quot;1&quot; style=&quot;endArrow=block;html=1;strokeColor=#263238;strokeWidth=1.5;fillColor=#263238;startArrow=block;startFill=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;320&quot; y=&quot;177&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;620&quot; y=&quot;177&quot; as=&quot;targetPoint&quot; /&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n13&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_PDU = A_SDU + A_PCI&quot;&gt;
+          &lt;mxGeometry x=&quot;370&quot; y=&quot;160&quot; width=&quot;200&quot; height=&quot;34&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n14&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#607d8b;fontFamily=DejaVu Sans;&quot; value=&quot;transmission to peer entity&quot;&gt;
+          &lt;mxGeometry x=&quot;320&quot; y=&quot;198&quot; width=&quot;300&quot; height=&quot;14&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n15&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Vertical = the service (Clause 6).  Horizontal = the protocol (Clause 7).&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;218&quot; width=&quot;920&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n16&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;&quot; value=&quot;The A_SDU never leaves the node; the A_PDU is what the peer receives.&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;236&quot; width=&quot;920&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;">
+<rect width="960" height="268" fill="#ffffff"/>
+<defs><marker id="ah" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#263238"/></marker><marker id="at" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="9 0, 0 3.5, 9 7" fill="#263238"/></marker></defs>
+<text x="480.0" y="28.4" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="15.0" font-weight="700" fill="#14337a" text-anchor="middle">Where each data unit lives — ISO 14229-1 Clause 4, Figure 1</text>
+<text x="170.0" y="58.0" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="11.0" font-weight="700" fill="#607d8b" text-anchor="middle">Client node  (tester)</text>
+<rect x="20" y="66" width="300" height="42" rx="2" fill="#e3f2fd" stroke="#1565c0" stroke-width="1"/>
+<text x="170.0" y="83.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="400" fill="#263238" text-anchor="middle">Application</text>
+<text x="170.0" y="97.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">service user</text>
+<rect x="20" y="156" width="300" height="42" rx="2" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
+<text x="170.0" y="173.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="400" fill="#263238" text-anchor="middle">Application layer</text>
+<text x="170.0" y="187.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">service provider</text>
+<text x="770.0" y="58.0" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="11.0" font-weight="700" fill="#607d8b" text-anchor="middle">Server node  (ECU)</text>
+<rect x="620" y="66" width="300" height="42" rx="2" fill="#e3f2fd" stroke="#1565c0" stroke-width="1"/>
+<text x="770.0" y="83.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="400" fill="#263238" text-anchor="middle">Application</text>
+<text x="770.0" y="97.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">service user</text>
+<rect x="620" y="156" width="300" height="42" rx="2" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
+<text x="770.0" y="173.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="400" fill="#263238" text-anchor="middle">Application layer</text>
+<text x="770.0" y="187.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">service provider</text>
+<line x1="170.0" y1="116.0" x2="170.0" y2="148.0" stroke="#263238" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#at)"/>
+<line x1="770.0" y1="116.0" x2="770.0" y2="148.0" stroke="#263238" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#at)"/>
+<rect x="178" y="116" width="128" height="32" rx="2" fill="#ffffff" stroke="#546e7a" stroke-width="1"/>
+<text x="242.0" y="135.6" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_SDU</text>
+<rect x="654" y="116" width="128" height="32" rx="2" fill="#ffffff" stroke="#546e7a" stroke-width="1"/>
+<text x="718.0" y="135.6" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_SDU</text>
+<line x1="328.0" y1="177.0" x2="612.0" y2="177.0" stroke="#263238" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#at)"/>
+<rect x="370" y="160" width="200" height="34" rx="2" fill="#fff3e0" stroke="#f26f21" stroke-width="1"/>
+<text x="470.0" y="180.6" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_PDU = A_SDU + A_PCI</text>
+<text x="470.0" y="208.2" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">transmission to peer entity</text>
+<text x="20.0" y="229.8" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.5" font-weight="700" fill="#263238" text-anchor="start">Vertical = the service (Clause 6).  Horizontal = the protocol (Clause 7).</text>
+<text x="20.0" y="247.8" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.5" font-weight="400" fill="#607d8b" text-anchor="start">The A_SDU never leaves the node; the A_PDU is what the peer receives.</text>
+</svg>

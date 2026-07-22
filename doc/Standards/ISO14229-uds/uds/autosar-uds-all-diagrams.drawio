@@ -1,0 +1,632 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.0.0" type="device">
+  <diagram name="AUTOSAR - OSI Mapping" id="autosar-osi-mapping">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+<mxCell id="o101" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontColor=#000000;fontStyle=1;" value="UDS / AUTOSAR Communication Stack Mapped onto the OSI Reference Model" vertex="1">
+ <mxGeometry height="30" width="1000" x="0" y="10" as="geometry"/>
+</mxCell>
+<mxCell id="o102" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#555555;fontStyle=1;" value="OSI Layer (ISO 7498-1)" vertex="1">
+ <mxGeometry height="20" width="200" x="60" y="52" as="geometry"/>
+</mxCell>
+<mxCell id="o103" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#555555;fontStyle=1;" value="AUTOSAR / UDS module implementing it" vertex="1">
+ <mxGeometry height="20" width="460" x="300" y="52" as="geometry"/>
+</mxCell>
+<mxCell id="o104" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=12;align=center;verticalAlign=middle;fontStyle=1;fontColor=#0d3a6b;" value="Layer 7
+Application" vertex="1">
+ <mxGeometry height="64" width="200" x="60" y="78" as="geometry"/>
+</mxCell>
+<mxCell id="o105" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=11;align=center;verticalAlign=middle;fontColor=#0d3a6b;" value="UDS (ISO 14229-1) service definitions, executed by DCM (DSL / DSD / DSP)
+— confirmed by ISO doc: &quot;Unified diagnostic services occupy layer 7&quot;" vertex="1">
+ <mxGeometry height="64" width="460" x="300" y="78" as="geometry"/>
+</mxCell>
+<mxCell id="o106" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=12;align=center;verticalAlign=middle;dashed=1;fontStyle=1;fontColor=#777777;" value="Layer 6
+Presentation" vertex="1">
+ <mxGeometry height="52" width="200" x="60" y="154" as="geometry"/>
+</mxCell>
+<mxCell id="o107" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;align=center;verticalAlign=middle;dashed=1;fontColor=#777777;" value="Not separately implemented in the CAN diagnostic stack — no dedicated AUTOSAR module" vertex="1">
+ <mxGeometry height="52" width="460" x="300" y="154" as="geometry"/>
+</mxCell>
+<mxCell id="o108" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=12;align=center;verticalAlign=middle;dashed=1;fontStyle=1;fontColor=#777777;" value="Layer 5
+Session" vertex="1">
+ <mxGeometry height="52" width="200" x="60" y="218" as="geometry"/>
+</mxCell>
+<mxCell id="o109" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;align=center;verticalAlign=middle;dashed=1;fontColor=#777777;" value="Not separately implemented — diagnostic &quot;session&quot; concept (defaultSession, programmingSession, etc.) is actually a Layer-7 UDS concept (DiagnosticSessionControl), not an OSI L5 session" vertex="1">
+ <mxGeometry height="52" width="460" x="300" y="218" as="geometry"/>
+</mxCell>
+<mxCell id="o110" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=12;align=center;verticalAlign=middle;fontStyle=1;fontColor=#7a5c10;" value="Layer 4
+Transport" vertex="1">
+ <mxGeometry height="64" width="200" x="60" y="282" as="geometry"/>
+</mxCell>
+<mxCell id="o111" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=11;align=center;verticalAlign=middle;fontColor=#7a5c10;" value="CanTp — segmentation/reassembly, flow control (implements ISO 15765-2, which is itself titled &quot;Transport protocol AND network layer services&quot;)" vertex="1">
+ <mxGeometry height="64" width="460" x="300" y="282" as="geometry"/>
+</mxCell>
+<mxCell id="o112" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=12;align=center;verticalAlign=middle;fontStyle=1;fontColor=#7a5c10;" value="Layer 3
+Network" vertex="1">
+ <mxGeometry height="64" width="200" x="60" y="358" as="geometry"/>
+</mxCell>
+<mxCell id="o113" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=11;align=center;verticalAlign=middle;fontColor=#7a5c10;" value="Also CanTp (addressing/N_AI per ISO 15765-2). PduR does NOT belong here — see note at right: it is a routing/multiplexing module, not an OSI layer" vertex="1">
+ <mxGeometry height="64" width="460" x="300" y="358" as="geometry"/>
+</mxCell>
+<mxCell id="o114" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=12;align=center;verticalAlign=middle;fontStyle=1;fontColor=#255a25;" value="Layer 2
+Data Link" vertex="1">
+ <mxGeometry height="64" width="200" x="60" y="434" as="geometry"/>
+</mxCell>
+<mxCell id="o115" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=11;align=center;verticalAlign=middle;fontColor=#255a25;" value="CanIf — CAN frame handling, ID filtering/routing between CanDrv and upper modules (CanTp / COM / PduR)" vertex="1">
+ <mxGeometry height="64" width="460" x="300" y="434" as="geometry"/>
+</mxCell>
+<mxCell id="o116" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=12;align=center;verticalAlign=middle;fontStyle=1;fontColor=#000000;" value="Layer 1
+Physical" vertex="1">
+ <mxGeometry height="64" width="200" x="60" y="510" as="geometry"/>
+</mxCell>
+<mxCell id="o117" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=11;align=center;verticalAlign=middle;fontColor=#000000;" value="CanDrv (CAN controller driver) + CAN transceiver / bus wiring — the actual physical medium and its closest software driver" vertex="1">
+ <mxGeometry height="64" width="460" x="300" y="510" as="geometry"/>
+</mxCell>
+<mxCell id="o118" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#b8860b;fontSize=10.5;align=center;verticalAlign=middle;dashed=1;fontColor=#7a5c10;" value="PduR (PDU Router)
+
+Routes/multiplexes PDUs between DCM, CanTp, COM, and other upper/lower BSW modules. It has NO formal OSI-layer equivalent — it is an AUTOSAR-internal software dispatcher, not addressing/routing across a network the way an OSI Layer-3 protocol does." vertex="1">
+ <mxGeometry height="130" width="200" x="790" y="282" as="geometry"/>
+</mxCell>
+<mxCell id="o119" parent="1" style="endArrow=block;html=1;strokeColor=#888888;strokeWidth=1.3;fillColor=#888888;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="160" y="142" as="sourcePoint"/>
+  <mxPoint x="160" y="154" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o120" parent="1" style="endArrow=block;html=1;strokeColor=#888888;strokeWidth=1.3;fillColor=#888888;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="160" y="206" as="sourcePoint"/>
+  <mxPoint x="160" y="218" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o121" parent="1" style="endArrow=block;html=1;strokeColor=#888888;strokeWidth=1.3;fillColor=#888888;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="160" y="270" as="sourcePoint"/>
+  <mxPoint x="160" y="282" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o122" parent="1" style="endArrow=block;html=1;strokeColor=#888888;strokeWidth=1.3;fillColor=#888888;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="160" y="346" as="sourcePoint"/>
+  <mxPoint x="160" y="358" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o123" parent="1" style="endArrow=block;html=1;strokeColor=#888888;strokeWidth=1.3;fillColor=#888888;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="160" y="422" as="sourcePoint"/>
+  <mxPoint x="160" y="434" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o124" parent="1" style="endArrow=block;html=1;strokeColor=#888888;strokeWidth=1.3;fillColor=#888888;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="160" y="498" as="sourcePoint"/>
+  <mxPoint x="160" y="510" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o125" parent="1" style="endArrow=block;html=1;strokeColor=#1f5fa8;strokeWidth=1.3;fillColor=#1f5fa8;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="260" y="110" as="sourcePoint"/>
+  <mxPoint x="300" y="110" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o126" parent="1" style="endArrow=block;html=1;strokeColor=#c99a2e;strokeWidth=1.3;fillColor=#c99a2e;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="260" y="314" as="sourcePoint"/>
+  <mxPoint x="300" y="314" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o127" parent="1" style="endArrow=block;html=1;strokeColor=#c99a2e;strokeWidth=1.3;fillColor=#c99a2e;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="260" y="390" as="sourcePoint"/>
+  <mxPoint x="300" y="390" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o128" parent="1" style="endArrow=block;html=1;strokeColor=#3a8a3a;strokeWidth=1.3;fillColor=#3a8a3a;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="260" y="466" as="sourcePoint"/>
+  <mxPoint x="300" y="466" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o129" parent="1" style="endArrow=block;html=1;strokeColor=#666666;strokeWidth=1.3;fillColor=#666666;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="260" y="542" as="sourcePoint"/>
+  <mxPoint x="300" y="542" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o130" parent="1" style="endArrow=block;html=1;strokeColor=#b8860b;strokeWidth=1.3;fillColor=#b8860b;dashed=1;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="760" y="122.8" as="sourcePoint"/>
+  <mxPoint x="890" y="282" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="o131" parent="1" style="endArrow=block;html=1;strokeColor=#b8860b;strokeWidth=1.3;fillColor=#b8860b;dashed=1;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="890" y="412" as="sourcePoint"/>
+  <mxPoint x="760" y="301.2" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="UDS Message Format Mapping (updated)" id="uds-message-format-updated">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+<mxCell id="c2" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontColor=#000000;fontStyle=1;" value="Common UDS Message Format &amp; Field Mapping to DCM / DEM Services" vertex="1">
+  <mxGeometry height="30" width="900" x="50" y="10" as="geometry" />
+</mxCell>
+<mxCell id="c3" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;" value="Full A_PDU per ISO 14229-1 (clause 8.2, mandatory parameters per 7.4.1):" vertex="1">
+  <mxGeometry height="22" width="900" x="55" y="46" as="geometry" />
+</mxCell>
+<mxCell id="c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="Mtype
+(diagnostics /
+remote diagnostics)" vertex="1">
+  <mxGeometry height="56" width="86" x="55" y="70" as="geometry" />
+</mxCell>
+<mxCell id="c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="SA
+Source Address
+(2 bytes)" vertex="1">
+  <mxGeometry height="56" width="80" x="141" y="70" as="geometry" />
+</mxCell>
+<mxCell id="c6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="TA
+Target Address
+(2 bytes)" vertex="1">
+  <mxGeometry height="56" width="80" x="221" y="70" as="geometry" />
+</mxCell>
+<mxCell id="c7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="TA_Type
+physical /
+functional" vertex="1">
+  <mxGeometry height="56" width="92" x="301" y="70" as="geometry" />
+</mxCell>
+<mxCell id="c8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;" value="[RA]
+Remote Address
+optional, remote fmt" vertex="1">
+  <mxGeometry height="56" width="86" x="393" y="70" as="geometry" />
+</mxCell>
+<mxCell id="c9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;fontStyle=1;" value="A_Data
+= SID/NRC + Sub-function +
+Parameter + Data Record
+(the message bytes — see below)" vertex="1">
+  <mxGeometry height="56" width="190" x="479" y="70" as="geometry" />
+</mxCell>
+<mxCell id="c10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;" value="Length
+byte count
+of A_Data" vertex="1">
+  <mxGeometry height="56" width="90" x="669" y="70" as="geometry" />
+</mxCell>
+<mxCell id="c11" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="Mtype, SA, TA, TA_Type, [RA] and Length are addressing/length parameters of the A_SDU / A_PDU service primitive (clause 7.3-7.4, 8.2) - carried via the" vertex="1">
+  <mxGeometry height="17" width="900" x="55" y="136" as="geometry" />
+</mxCell>
+<mxCell id="c12" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;" value="diagnostic transport/session layer, not as literal bytes inside the message. A_Data is the only part transmitted as the byte string shown below." vertex="1">
+  <mxGeometry height="20" width="900" x="55" y="151" as="geometry" />
+</mxCell>
+<mxCell id="c13" parent="1" style="endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;" edge="1">
+ <mxGeometry relative="1" as="geometry">
+  <mxPoint x="574.0" y="126" as="sourcePoint"/>
+  <mxPoint x="574.0" y="177" as="targetPoint"/>
+ </mxGeometry>
+</mxCell>
+<mxCell id="c14" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;" value="Generic ISO 14229-1 message layout (all services follow this shape):" vertex="1">
+  <mxGeometry height="24" width="600" x="55" y="238" as="geometry" />
+</mxCell>
+<mxCell id="c15" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11.5;fontColor=#000000;fontStyle=1;" value="Request" vertex="1">
+  <mxGeometry height="20" width="120" x="55" y="268" as="geometry" />
+</mxCell>
+<mxCell id="c16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=10.5;align=center;verticalAlign=middle;" value="SID
+(1 byte)" vertex="1">
+  <mxGeometry height="50" width="100" x="55" y="290" as="geometry" />
+</mxCell>
+<mxCell id="c17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=10.5;align=center;verticalAlign=middle;dashed=1;" value="Sub-function
+(1 byte, optional)" vertex="1">
+  <mxGeometry height="50" width="160" x="155" y="290" as="geometry" />
+</mxCell>
+<mxCell id="c18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=10.5;align=center;verticalAlign=middle;" value="Parameter
+(DID / RID / groupOfDTC, 1-3 bytes)" vertex="1">
+  <mxGeometry height="50" width="220" x="315" y="290" as="geometry" />
+</mxCell>
+<mxCell id="c19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=10.5;align=center;verticalAlign=middle;dashed=1;" value="Data Record
+(variable, optional - e.g. write value, routine control option record)" vertex="1">
+  <mxGeometry height="50" width="300" x="535" y="290" as="geometry" />
+</mxCell>
+<mxCell id="c20" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11.5;fontColor=#000000;fontStyle=1;" value="Positive Response" vertex="1">
+  <mxGeometry height="20" width="200" x="55" y="354" as="geometry" />
+</mxCell>
+<mxCell id="c21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=10.5;align=center;verticalAlign=middle;" value="SID + 0x40
+(1 byte)" vertex="1">
+  <mxGeometry height="50" width="100" x="55" y="376" as="geometry" />
+</mxCell>
+<mxCell id="c22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=10.5;align=center;verticalAlign=middle;dashed=1;" value="Sub-function echo
+(optional)" vertex="1">
+  <mxGeometry height="50" width="160" x="155" y="376" as="geometry" />
+</mxCell>
+<mxCell id="c23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=10.5;align=center;verticalAlign=middle;" value="Parameter echo
+(DID / RID, optional)" vertex="1">
+  <mxGeometry height="50" width="220" x="315" y="376" as="geometry" />
+</mxCell>
+<mxCell id="c24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=10.5;align=center;verticalAlign=middle;" value="Data Record
+(requested data / status / results - filled in by RTE-SWC or DEM)" vertex="1">
+  <mxGeometry height="50" width="300" x="535" y="376" as="geometry" />
+</mxCell>
+<mxCell id="c25" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11.5;fontColor=#000000;fontStyle=1;" value="Negative Response" vertex="1">
+  <mxGeometry height="20" width="200" x="55" y="440" as="geometry" />
+</mxCell>
+<mxCell id="c26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=10.5;align=center;verticalAlign=middle;" value="0x7F
+(1 byte)" vertex="1">
+  <mxGeometry height="50" width="90" x="55" y="462" as="geometry" />
+</mxCell>
+<mxCell id="c27" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=10.5;align=center;verticalAlign=middle;" value="Original SID
+(1 byte)" vertex="1">
+  <mxGeometry height="50" width="140" x="145" y="462" as="geometry" />
+</mxCell>
+<mxCell id="c28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=10.5;align=center;verticalAlign=middle;" value="NRC
+(1 byte - negative response code)" vertex="1">
+  <mxGeometry height="50" width="180" x="285" y="462" as="geometry" />
+</mxCell>
+<mxCell id="c29" parent="1" style="line;strokeColor=#999999;strokeWidth=1.2;" value="" vertex="1">
+ <mxGeometry height="10" width="900" x="55" y="526" as="geometry" />
+</mxCell>
+<mxCell id="c30" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;" value="Worked examples - fields mapped to the services in sections 2.1-2.3:" vertex="1">
+  <mxGeometry height="24" width="700" x="55" y="536" as="geometry" />
+</mxCell>
+<mxCell id="c31" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11.5;fontColor=#0d3a6b;fontStyle=1;" value="ReadDataByIdentifier (0x22 / 0x62) - served by DCM&#x27;s DSP via RTE/SWC" vertex="1">
+  <mxGeometry height="20" width="700" x="55" y="568" as="geometry" />
+</mxCell>
+<mxCell id="c32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=10;align=center;verticalAlign=middle;" value="SID = 0x22 / 0x62" vertex="1">
+  <mxGeometry height="46" width="140" x="55" y="590" as="geometry" />
+</mxCell>
+<mxCell id="c33" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=10;align=center;verticalAlign=middle;" value="Parameter = DID (2 bytes, repeatable)" vertex="1">
+  <mxGeometry height="46" width="220" x="195" y="590" as="geometry" />
+</mxCell>
+<mxCell id="c34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=10;align=center;verticalAlign=middle;" value="Data = dataRecord per DID, in request order (from RTE / SWC)" vertex="1">
+  <mxGeometry height="46" width="380" x="415" y="590" as="geometry" />
+</mxCell>
+<mxCell id="c35" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11.5;fontColor=#0d3a6b;fontStyle=1;" value="RoutineControl (0x31 / 0x71) - served by DCM&#x27;s DSP via RTE/SWC" vertex="1">
+  <mxGeometry height="20" width="700" x="55" y="646" as="geometry" />
+</mxCell>
+<mxCell id="c36" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=10;align=center;verticalAlign=middle;" value="SID = 0x31 / 0x71" vertex="1">
+  <mxGeometry height="46" width="120" x="55" y="668" as="geometry" />
+</mxCell>
+<mxCell id="c37" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=10;align=center;verticalAlign=middle;" value="Sub-function = start (0x01) / stop (0x02) / requestResults (0x03)" vertex="1">
+  <mxGeometry height="46" width="240" x="185" y="668" as="geometry" />
+</mxCell>
+<mxCell id="c38" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=10;align=center;verticalAlign=middle;" value="Parameter = RID (2 bytes)" vertex="1">
+  <mxGeometry height="46" width="160" x="435" y="668" as="geometry" />
+</mxCell>
+<mxCell id="c39" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=10;align=center;verticalAlign=middle;" value="Data = routineControlOptionRecord (req) / routineStatusRecord (resp), from RTE / SWC" vertex="1">
+  <mxGeometry height="46" width="300" x="605" y="668" as="geometry" />
+</mxCell>
+<mxCell id="c40" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11.5;fontColor=#6b1d0d;fontStyle=1;" value="ReadDTCInformation (0x19 / 0x59) - DCM&#x27;s DSP calls DEM&#x27;s Dcm Interface" vertex="1">
+  <mxGeometry height="20" width="700" x="55" y="724" as="geometry" />
+</mxCell>
+<mxCell id="c41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=10;align=center;verticalAlign=middle;" value="SID = 0x19 / 0x59" vertex="1">
+  <mxGeometry height="46" width="120" x="55" y="746" as="geometry" />
+</mxCell>
+<mxCell id="c42" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=10;align=center;verticalAlign=middle;" value="Sub-function = report type, e.g. reportDTCByStatusMask (0x02), reportDTCSnapshot... (0x04)" vertex="1">
+  <mxGeometry height="46" width="260" x="185" y="746" as="geometry" />
+</mxCell>
+<mxCell id="c43" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=10;align=center;verticalAlign=middle;" value="Parameter = DTCStatusMask / DTCMaskRecord" vertex="1">
+  <mxGeometry height="46" width="200" x="455" y="746" as="geometry" />
+</mxCell>
+<mxCell id="c44" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=10;align=center;verticalAlign=middle;" value="Data = DTC + status records (Event/Status Mgr) or snapshot/extended data records (Freeze Frame Mgr) - from DEM" vertex="1">
+  <mxGeometry height="46" width="345" x="665" y="746" as="geometry" />
+</mxCell>
+<mxCell id="c45" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11.5;fontColor=#6b1d0d;fontStyle=1;" value="ClearDiagnosticInformation (0x14 / 0x54) - DCM&#x27;s DSP calls DEM&#x27;s Dcm Interface" vertex="1">
+  <mxGeometry height="20" width="700" x="55" y="802" as="geometry" />
+</mxCell>
+<mxCell id="c46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=10;align=center;verticalAlign=middle;" value="SID = 0x14 / 0x54" vertex="1">
+  <mxGeometry height="46" width="120" x="55" y="824" as="geometry" />
+</mxCell>
+<mxCell id="c47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=10;align=center;verticalAlign=middle;" value="Parameter = groupOfDTC (3 bytes)" vertex="1">
+  <mxGeometry height="46" width="200" x="185" y="824" as="geometry" />
+</mxCell>
+<mxCell id="c48" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=10;align=center;verticalAlign=middle;" value="No data record - response only confirms clearing; DEM&#x27;s Event Memory Manager purges matching status/freeze-frame/extended-data entries" vertex="1">
+  <mxGeometry height="46" width="420" x="395" y="824" as="geometry" />
+</mxCell>
+<mxCell id="c49" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;fontSize=10.5;align=left;verticalAlign=middle;" value="Color key:  Blue = SID field   Orange = Sub-function field   Green = Parameter (DID/RID/groupOfDTC) field   Grey = Data record, sourced from RTE/SWC   Red = Data record, sourced from DEM" vertex="1">
+  <mxGeometry height="40" width="900" x="55" y="890" as="geometry" />
+</mxCell>
+<mxCell id="c50" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;fontSize=10.5;align=left;verticalAlign=middle;" value="Purple = A_PDU addressing/length parameters (Mtype/SA/TA/TA_Type/RA/Length) - session/transport layer, not literal message bytes" vertex="1">
+  <mxGeometry height="26" width="900" x="55" y="942" as="geometry" />
+</mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="DCM Call Flow" id="dcm-callflow">
+    <mxGraphModel dx="971" dy="2580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="640" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" value="DCM Internal Submodules &amp; Call Flow" vertex="1">
+          <mxGeometry height="30" width="400" x="410" y="-620" as="geometry" />
+        </mxCell>
+        <mxCell id="tester" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#555555;strokeWidth=1.5;fontSize=12.5;fontStyle=1;" value="Diagnostic&#xa;Tester" vertex="1">
+          <mxGeometry height="70" width="120" x="10" y="-220" as="geometry" />
+        </mxCell>
+        <mxCell id="pdur" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;strokeWidth=1.3;fontSize=12.5;fontStyle=1;" value="PduR&#xa;(Comm Stack)" vertex="1">
+          <mxGeometry height="70" width="110" x="180" y="-220" as="geometry" />
+        </mxCell>
+        <mxCell id="dcmOuter" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fbff;strokeColor=#1f5fa8;strokeWidth=2;fontSize=15;fontStyle=1;fontColor=#0d3a6b;verticalAlign=top;spacingTop=8;arcSize=7;" value="DCM" vertex="1">
+          <mxGeometry height="340" width="480" x="360" y="-450" as="geometry" />
+        </mxCell>
+        <mxCell id="dsl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=1.5;fontSize=10.5;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="DSL&#xa;Diagnostic Session Layer&#xa;&#xa;Rx/Tx buffers, timing (P2/P2*),&#xa;session &amp; security state, ComM" vertex="1">
+          <mxGeometry height="90" width="180" x="390" y="-240" as="geometry" />
+        </mxCell>
+        <mxCell id="dsd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=1.5;fontSize=10.5;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="DSD&#xa;Diagnostic Service Dispatcher&#xa;&#xa;SID validation, session/security&#xa;check, dispatch to DSP" vertex="1">
+          <mxGeometry height="90" width="200" x="610" y="-240" as="geometry" />
+        </mxCell>
+        <mxCell id="dsp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=1.5;fontSize=10.5;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="DSP&#xa;Diagnostic Service Processing&#xa;&#xa;Per-service logic: RDBI, WDBI,&#xa;RoutineControl, ReadDTC... calls&#xa;RTE / NvM / DEM to get data" vertex="1">
+          <mxGeometry height="110" width="300" x="510" y="-400" as="geometry" />
+        </mxCell>
+        <mxCell id="rteSwc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;strokeWidth=1.5;fontSize=12.5;fontStyle=1;align=center;verticalAlign=middle;" value="RTE / SWCs&#xa;&#xa;application data, I/O control" vertex="1">
+          <mxGeometry height="80" width="180" x="580" y="-560" as="geometry" />
+        </mxCell>
+        <mxCell id="dem" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=12.5;fontStyle=1;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="DEM&#xa;&#xa;DTC status, freeze frame,&#xa;extended data" vertex="1">
+          <mxGeometry height="80" width="200" x="970" y="-380" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="tester" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=1.006;exitY=0.344;entryX=0;entryY=0.35;exitDx=0;exitDy=0;exitPerimeter=0;" target="pdur" value="request">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="pdur" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=0;exitY=0.7;entryX=1;entryY=0.7;" target="tester" value="response">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="pdur" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.25;entryX=-0.002;entryY=0.414;entryDx=0;entryDy=0;entryPerimeter=0;exitDx=0;exitDy=0;" target="dsl" value="Dcm_ProvideRxBuffer /&#xa;PduR_DcmTransmit">
+          <mxGeometry relative="1" x="0.1906" y="25" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="dsl" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;exitX=-0.006;exitY=0.804;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="pdur">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="dsl" style="edges=1;html=1;endArrow=block;fontSize=8.5;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.3;entryX=0;entryY=0.3;" target="dsd" value="new request">
+          <mxGeometry relative="1" y="27" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="dsd" style="edges=1;html=1;endArrow=block;fontSize=8.5;strokeColor=#444444;strokeWidth=1.5;exitX=0;exitY=0.7;entryX=1;entryY=0.7;" target="dsl" value="pos/neg resp">
+          <mxGeometry relative="1" x="-0.5" y="17" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="dsd" style="edges=1;html=1;endArrow=block;fontSize=8.5;strokeColor=#444444;strokeWidth=1.5;exitX=0.5;exitY=0;entryX=0.666;entryY=0.973;exitDx=0;exitDy=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="dsp" value="process svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="dsp" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;exitX=0.458;exitY=1.013;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="647.4" y="-240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="dsp" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;exitX=0.534;exitY=0.008;entryX=0.25;entryY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670.11" y="-430" />
+              <mxPoint x="670.11" y="-450" />
+            </Array>
+            <mxPoint x="669.7100000000002" y="-400.3299999999999" as="sourcePoint" />
+            <mxPoint x="670.11" y="-480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;exitX=0.593;exitY=1.02;entryX=0.589;entryY=0.02;entryDx=0;entryDy=0;entryPerimeter=0;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="720.04" y="-479.9999999999999" as="sourcePoint" />
+            <mxPoint x="720" y="-399.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="dsp" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#7a1f9c;strokeWidth=2;exitX=0.998;exitY=0.667;entryX=-0.003;entryY=0.659;exitDx=0;exitDy=0;exitPerimeter=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="dem" value="Dem_GetDTC*,&#xa;Dem_ClearDTC">
+          <mxGeometry relative="1" x="0.0066" y="-17" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="dem" style="edges=1;html=1;endArrow=block;strokeColor=#7a1f9c;strokeWidth=2;exitX=0;exitY=0.25;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="810" y="-360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flowtext" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#333333;" value="Flow: Tester → PduR → DSL (buffer/timing) → DSD (validate SID/session/security) → DSP (execute service,&#xa;read/write via RTE or query DEM for DTC/event data) → response travels back DSP → DSD → DSL → PduR → Tester" vertex="1">
+          <mxGeometry height="40" width="700" x="290" y="-90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="DEM Call Flow" id="dem-callflow">
+    <mxGraphModel dx="800" dy="1334" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="660" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" value="DEM Internal Architecture &amp;amp; Relationship with other Autosar Components" vertex="1">
+          <mxGeometry height="30" width="400" x="300" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="swc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;" value="SWC Monitors&#xa;&#xa;fault detection logic&#xa;(sensors, comm, safety)" vertex="1">
+          <mxGeometry height="80" width="180" x="40" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="rte" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;" value="RTE&#xa;&#xa;Dem_SetEventStatus /&#xa;Dem_ReportErrorStatus" vertex="1">
+          <mxGeometry height="80" width="140" x="260" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="demOuter" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff5f3;strokeColor=#b83f2e;strokeWidth=2;fontSize=15;fontStyle=1;fontColor=#6b1d0d;verticalAlign=top;spacingTop=8;arcSize=6;" value="DEM" vertex="1">
+          <mxGeometry height="440" width="520" x="440" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="debounce" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Debouncing&#xa;&#xa;Counter-based or monitor-&#xa;internal fault confirmation" vertex="1">
+          <mxGeometry height="80" width="220" x="465" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="evtMem" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Event Memory Manager&#xa;&#xa;DTC status bits, priority,&#xa;aging / healing cycles" vertex="1">
+          <mxGeometry height="80" width="230" x="700" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="ff" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Freeze Frame /&#xa;Extended Data Manager&#xa;&#xa;snapshot &amp; occurrence data&#xa;per DTC (mileage, RPM, etc.)" vertex="1">
+          <mxGeometry height="80" width="220" x="465" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="dtcMgr" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="DTC / Event Status&#xa;Manager&#xa;&#xa;event combination,&#xa;DTC groups, suppression" vertex="1">
+          <mxGeometry height="80" width="230" x="700" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="callback" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10.5;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="Callback / Notification Interface&#xa;&#xa;notifies FIM, DCM, SWCs of event/DTC status changes" vertex="1">
+          <mxGeometry height="60" width="465" x="465" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="nvmIface" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=1.5;fontSize=10.5;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="NvM Interface&#xa;&#xa;persist event data to NVRAM" vertex="1">
+          <mxGeometry height="70" width="220" x="465" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="dcmIface" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=1.5;fontSize=10.5;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="Dcm Interface&#xa;&#xa;serves DTC/status/freeze-frame reads" vertex="1">
+          <mxGeometry height="70" width="230" x="700" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="nvm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;strokeWidth=1.3;fontSize=12.5;fontStyle=1;" value="NvM" vertex="1">
+          <mxGeometry height="60" width="150" x="40" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="fim" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;strokeWidth=1.3;fontSize=12.5;fontStyle=1;" value="FIM" vertex="1">
+          <mxGeometry height="60" width="150" x="40" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="dcm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=1.5;fontSize=12.5;fontStyle=1;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="DCM&#xa;&#xa;tester-facing service layer" vertex="1">
+          <mxGeometry height="70" width="160" x="770" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="swc" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="rte">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="rte" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.5;entryX=0;entryY=0.35;" target="debounce" value="event status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="debounce" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=1;exitY=0.475;entryX=0;entryY=0.475;" target="evtMem">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="ff" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=1;exitY=0.475;entryX=0;entryY=0.475;" target="dtcMgr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="dtcMgr" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;edgeStyle=orthogonalEdgeStyle;entryDx=0;entryDy=0;exitDx=0;exitDy=0;" target="callback">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="246" />
+              <mxPoint x="950" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="dtcMgr" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.1;exitX=0.5;exitY=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="callback">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="callback" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=0.25;exitY=1;entryX=0.25;entryY=0;" target="nvmIface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="callback" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.3;exitX=0.75;exitY=1;entryX=0.75;entryY=0;" target="dcmIface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="nvmIface" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=-0.001;exitY=0.598;entryX=1;entryY=0.35;exitDx=0;exitDy=0;exitPerimeter=0;" target="nvm" value="store/restore">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="callback" style="edges=1;html=1;endArrow=block;fontSize=9;strokeColor=#444444;strokeWidth=1.5;exitX=0;exitY=0.5;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitDx=0;exitDy=0;" target="fim" value="status change notify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" style="edges=1;html=1;endArrow=block;fontSize=9;fontColor=#1f5fa8;strokeColor=#1f5fa8;strokeWidth=2;entryX=0.283;entryY=0.052;entryDx=0;entryDy=0;entryPerimeter=0;" target="dcm" value="request">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="815" y="448.28" as="sourcePoint" />
+            <mxPoint x="818.04" y="532.98" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="dcm" style="edges=1;html=1;endArrow=block;fontSize=9;fontColor=#1f5fa8;strokeColor=#1f5fa8;strokeWidth=2;entryX=0.709;exitY=0.024;entryY=1.003;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.583;exitDx=0;exitDy=0;exitPerimeter=0;" target="dcmIface" value="DTC data">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="520" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flowtext" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#333333;" value="Flow: Monitor detects fault → RTE → DEM debounces → updates Event/DTC status → stores freeze frame/extended&#xa;data via NvM → notifies FIM (function inhibition) → on tester request, DCM queries DEM via Dcm interface for DTC data" vertex="1">
+          <mxGeometry height="40" width="700" x="150" y="608" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="AUTOSAR - DCM and DEM" id="autosar-dcm-dem-fixed">
+    <mxGraphModel dx="971" dy="1940" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" value="AUTOSAR Classic Platform — Where DCM &amp; DEM Sit" vertex="1">
+          <mxGeometry height="30" width="840" x="80" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="appLayer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf2ff;strokeColor=#3b6fb6;strokeWidth=1.5;fontSize=14;fontStyle=1;verticalAlign=top;spacingTop=8;" value="Application Layer" vertex="1">
+          <mxGeometry height="56" width="840" x="80" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="appLayerSub" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;" value="Software Components (SWCs) — monitors report faults; app logic calls diagnostic services" vertex="1">
+          <mxGeometry height="20" width="820" x="90" y="71" as="geometry" />
+        </mxCell>
+        <mxCell id="rte" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;strokeWidth=1.5;fontSize=13;fontStyle=1;" value="RTE (Runtime Environment)" vertex="1">
+          <mxGeometry height="38" width="840" x="80" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="bswOuter" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f6f6f6;strokeColor=#888888;strokeWidth=1.5;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingLeft=15;spacingTop=8;arcSize=5;" value="Basic Software (BSW) — Services Layer" vertex="1">
+          <mxGeometry height="290" width="840" x="80" y="182" as="geometry" />
+        </mxCell>
+        <mxCell id="sysServ" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=8;" value="System Services" vertex="1">
+          <mxGeometry height="216" width="260" x="100" y="214" as="geometry" />
+        </mxCell>
+        <mxCell id="dem" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;strokeWidth=2;fontSize=11;fontColor=#6b1d0d;align=center;verticalAlign=middle;" value="DEM&#xa;Diagnostic Event Manager&#xa;&#xa;Event/DTC status, freeze frame,&#xa;extended data, aging/healing&#xa;reports to DCM on request" vertex="1">
+          <mxGeometry height="92" width="230" x="115" y="243" as="geometry" />
+        </mxCell>
+        <mxCell id="sysServOthers" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#444444;" value="EcuM · ComM · BswM · FiM&#xa;Det · Dlt" vertex="1">
+          <mxGeometry height="40" width="230" x="115" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="commServ" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=8;" value="Communication Services" vertex="1">
+          <mxGeometry height="216" width="270" x="375" y="214" as="geometry" />
+        </mxCell>
+        <mxCell id="dcm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;strokeWidth=2;fontSize=11;fontColor=#0d3a6b;align=center;verticalAlign=middle;" value="DCM&#xa;Diagnostic Communication Manager&#xa;&#xa;UDS (ISO 14229) service handling,&#xa;sessions, security, DID/routine&#xa;requests to/from tester" vertex="1">
+          <mxGeometry height="92" width="240" x="390" y="243" as="geometry" />
+        </mxCell>
+        <mxCell id="comMgr" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=10.5;fontStyle=1;" value="COM Manager" vertex="1">
+          <mxGeometry height="30" width="100" x="400" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="pduR" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=10.5;fontStyle=1;" value="PduR" vertex="1">
+          <mxGeometry height="30" width="100" x="520" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="commServOthers" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10.5;fontColor=#444444;" value="CanTp/CanIf · SoAd (DoIP)" vertex="1">
+          <mxGeometry height="20" width="270" x="375" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="memServ" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=8;" value="Memory Services" vertex="1">
+          <mxGeometry height="216" width="240" x="660" y="214" as="geometry" />
+        </mxCell>
+        <mxCell id="nvm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;fontStyle=1;" value="NvM" vertex="1">
+          <mxGeometry height="30" width="80" x="740" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="nvmSub" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10.5;fontColor=#555555;" value="(NVRAM Manager)" vertex="1">
+          <mxGeometry height="20" width="240" x="660" y="292" as="geometry" />
+        </mxCell>
+        <mxCell id="memOthers" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#444444;" value="MemIf&#xa;Fee / Ea" vertex="1">
+          <mxGeometry height="40" width="240" x="660" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="edgeDemToDcm" edge="1" parent="1" source="dem" style="edges=1;html=1;endArrow=block;fontSize=8.5;fontColor=#7a1f9c;strokeColor=#7a1f9c;strokeWidth=2;exitX=1;exitY=0.35;entryX=0;entryY=0.35;" target="dcm" value="DTC request">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edgeDcmToDem" edge="1" parent="1" source="dcm" style="edges=1;html=1;endArrow=block;fontSize=8.5;fontColor=#7a1f9c;strokeColor=#7a1f9c;strokeWidth=2;exitX=0;exitY=0.65;entryX=1;entryY=0.65;" target="dem" value="DTC data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edgeDemToNvm" edge="1" parent="1" source="dem" style="edges=1;html=1;endArrow=block;dashed=1;fontSize=8.5;strokeColor=#444444;strokeWidth=1.2;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;exitX=0.112;exitY=0.988;exitDx=0;exitDy=0;exitPerimeter=0;entryDx=0;entryDy=0;" target="nvm" value="store/restore event data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140.81" y="370" />
+              <mxPoint x="140" y="370" />
+              <mxPoint x="140" y="460.07" />
+              <mxPoint x="690" y="460.07" />
+              <mxPoint x="690" y="275.04" />
+            </Array>
+            <mxPoint x="60" y="340" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ecuAbs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=13;fontStyle=1;" value="ECU Abstraction Layer" vertex="1">
+          <mxGeometry height="44" width="800" x="100" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="mcal" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=13;fontStyle=1;" value="Microcontroller Abstraction Layer (MCAL)" vertex="1">
+          <mxGeometry height="40" width="800" x="100" y="548" as="geometry" />
+        </mxCell>
+        <mxCell id="hw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#555555;strokeWidth=1.5;fontSize=14;fontStyle=1;" value="Microcontroller Hardware" vertex="1">
+          <mxGeometry height="46" width="840" x="80" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="arr1" edge="1" parent="1" source="appLayer" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;" target="rte">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr2" edge="1" parent="1" source="rte" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;" target="bswOuter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr3" edge="1" parent="1" source="bswOuter" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;" target="ecuAbs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr4" edge="1" parent="1" source="ecuAbs" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;" target="mcal">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr5" edge="1" parent="1" source="mcal" style="edges=1;html=1;endArrow=block;strokeColor=#444444;strokeWidth=1.5;" target="hw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="960px" height="250px" viewBox="0 0 960 250" content="&lt;mxfile host=&quot;app.diagrams.net&quot; agent=&quot;Claude&quot; version=&quot;24.7.17&quot;&gt;
+  &lt;diagram name=&quot;uds-slide-apdu&quot; id=&quot;uds-slide-apdu&quot;&gt;
+    &lt;mxGraphModel dx=&quot;985&quot; dy=&quot;1642&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;960&quot; pageHeight=&quot;250&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;n1&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_PDU — Application layer Protocol Data Unit  (Clause 7.2)&quot;&gt;
+          &lt;mxGeometry x=&quot;0&quot; y=&quot;12&quot; width=&quot;960&quot; height=&quot;22&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n2&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;&quot; value=&quot;&amp;quot;Directly constructed from the A_SDU and the layer specific control information A_PCI.&amp;quot;&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;42&quot; width=&quot;920&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n3&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;MType&amp;#10;same as A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;68&quot; width=&quot;118&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n4&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;SA&amp;#10;same as A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;138&quot; y=&quot;68&quot; width=&quot;108&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n5&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;TA&amp;#10;same as A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;246&quot; y=&quot;68&quot; width=&quot;108&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n6&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;TAtype&amp;#10;same as A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;354&quot; y=&quot;68&quot; width=&quot;122&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n7&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;&quot; value=&quot;[RA]&amp;#10;renamed from A_AE&quot;&gt;
+          &lt;mxGeometry x=&quot;476&quot; y=&quot;68&quot; width=&quot;128&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n8&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Length&amp;#10;same as A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;604&quot; y=&quot;68&quot; width=&quot;108&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n9&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_PCI&amp;#10;added here&quot;&gt;
+          &lt;mxGeometry x=&quot;712&quot; y=&quot;68&quot; width=&quot;96&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n10&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#546e7a;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;parameter 1 … n&amp;#10;from the A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;808&quot; y=&quot;68&quot; width=&quot;132&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n11&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#607d8b;fontFamily=DejaVu Sans;&quot; value=&quot;└──────  A_Data  ──────┘&quot;&gt;
+          &lt;mxGeometry x=&quot;712&quot; y=&quot;134&quot; width=&quot;228&quot; height=&quot;14&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n12&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#b0bec5;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;&quot; value=&quot;&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;162&quot; width=&quot;920&quot; height=&quot;66&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n13&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Difference from the A_SDU&quot;&gt;
+          &lt;mxGeometry x=&quot;34&quot; y=&quot;170&quot; width=&quot;892&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n14&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;&quot; value=&quot;•  Added: A_PCI — the Service Identifier (SI); on negative responses preceded by NR_SI = 0x7F.&quot;&gt;
+          &lt;mxGeometry x=&quot;34&quot; y=&quot;190&quot; width=&quot;892&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n15&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;&quot; value=&quot;•  Renamed: A_AE → RA.   •  Dropped: A_Result.   •  Unchanged: MType, SA, TA, TAtype, Length.&quot;&gt;
+          &lt;mxGeometry x=&quot;34&quot; y=&quot;208&quot; width=&quot;892&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;">
+<rect width="960" height="250" fill="#ffffff"/>
+<defs><marker id="ah" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#263238"/></marker><marker id="at" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="9 0, 0 3.5, 9 7" fill="#263238"/></marker></defs>
+<text x="480.0" y="28.4" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="15.0" font-weight="700" fill="#14337a" text-anchor="middle">A_PDU — Application layer Protocol Data Unit  (Clause 7.2)</text>
+<text x="20.0" y="53.8" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.5" font-weight="400" fill="#607d8b" text-anchor="start">"Directly constructed from the A_SDU and the layer specific control information A_PCI."</text>
+<rect x="20" y="68" width="118" height="62" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+<text x="79.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">MType</text>
+<text x="79.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">same as A_SDU</text>
+<rect x="138" y="68" width="108" height="62" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+<text x="192.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">SA</text>
+<text x="192.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">same as A_SDU</text>
+<rect x="246" y="68" width="108" height="62" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+<text x="300.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">TA</text>
+<text x="300.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">same as A_SDU</text>
+<rect x="354" y="68" width="122" height="62" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+<text x="415.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">TAtype</text>
+<text x="415.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">same as A_SDU</text>
+<rect x="476" y="68" width="128" height="62" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="540.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">[RA]</text>
+<text x="540.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">renamed from A_AE</text>
+<rect x="604" y="68" width="108" height="62" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+<text x="658.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">Length</text>
+<text x="658.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">same as A_SDU</text>
+<rect x="712" y="68" width="96" height="62" rx="2" fill="#fff3e0" stroke="#f26f21" stroke-width="1"/>
+<text x="760.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_PCI</text>
+<text x="760.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">added here</text>
+<rect x="808" y="68" width="132" height="62" rx="2" fill="#ffffff" stroke="#546e7a" stroke-width="1"/>
+<text x="874.0" y="95.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">parameter 1 … n</text>
+<text x="874.0" y="109.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">from the A_SDU</text>
+<text x="826.0" y="144.2" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">└──────  A_Data  ──────┘</text>
+<rect x="20" y="162" width="920" height="66" rx="2" fill="#f7f9fb" stroke="#b0bec5" stroke-width="1"/>
+<text x="34.0" y="182.0" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="11.0" font-weight="700" fill="#14337a" text-anchor="start">Difference from the A_SDU</text>
+<text x="34.0" y="201.6" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="400" fill="#263238" text-anchor="start">•  Added: A_PCI — the Service Identifier (SI); on negative responses preceded by NR_SI = 0x7F.</text>
+<text x="34.0" y="219.6" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="400" fill="#263238" text-anchor="start">•  Renamed: A_AE → RA.   •  Dropped: A_Result.   •  Unchanged: MType, SA, TA, TAtype, Length.</text>
+</svg>

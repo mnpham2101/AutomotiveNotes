@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1020px" height="1087px" viewBox="0 0 1020 1087" style="background:#ffffff;" content="&lt;mxfile host=&quot;app.diagrams.net&quot; agent=&quot;Claude&quot; version=&quot;24.7.17&quot;&gt;
+  &lt;diagram name=&quot;UDS A_SDU vs A_PDU&quot; id=&quot;uds-sdu-pdu-format&quot;&gt;
+    &lt;mxGraphModel dx=&quot;985&quot; dy=&quot;1642&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1020&quot; pageHeight=&quot;1087&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;n1&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=19;fontColor=#000000;fontStyle=1;&quot; value=&quot;ISO 14229-1 Message Structure — A_SDU vs A_PDU&quot;&gt;
+          &lt;mxGeometry x=&quot;0&quot; y=&quot;8&quot; width=&quot;1020&quot; height=&quot;30&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n2&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;&quot; value=&quot;1.  A_SDU — Application layer Service Data Unit  (Clause 6.4)&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;271&quot; width=&quot;960&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n3&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;&quot; value=&quot;The parameter list passed across the request / indication / response / confirm service primitives (Clause 6.3.2, 6.3.3).&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;290&quot; width=&quot;960&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n4&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_Mtype&amp;#10;diagnostics /&amp;#10;remote diagnostics&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;313&quot; width=&quot;120&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n5&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_SA&amp;#10;Source Address&amp;#10;2 bytes&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;150&quot; y=&quot;313&quot; width=&quot;110&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n6&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_TA&amp;#10;Target Address&amp;#10;2 bytes&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;260&quot; y=&quot;313&quot; width=&quot;110&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n7&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_TA_type&amp;#10;physical /&amp;#10;functional&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;370&quot; y=&quot;313&quot; width=&quot;120&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n8&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;[A_AE]&amp;#10;Remote Address&amp;#10;2 bytes&amp;#10;C — remote only&quot;&gt;
+          &lt;mxGeometry x=&quot;490&quot; y=&quot;313&quot; width=&quot;130&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n9&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_Length&amp;#10;byte count of&amp;#10;A_Data — 4 bytes&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;313&quot; width=&quot;110&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n10&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;fontStyle=1;&quot; value=&quot;A_Data&amp;#10;parameter 1 … parameter n&amp;#10;the service-specific parameters&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;730&quot; y=&quot;313&quot; width=&quot;260&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n11&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;A_Result   —   ok / error&amp;#10;request-confirm / response-confirm primitives only&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;385&quot; width=&quot;300&quot; height=&quot;46&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n12&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#b83f2e;&quot; value=&quot;This is the one A_SDU parameter with no counterpart in the A_PDU. It reports local&quot;&gt;
+          &lt;mxGeometry x=&quot;345&quot; y=&quot;385&quot; width=&quot;645&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n13&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#b83f2e;&quot; value=&quot;transmission status back to the application and is never encoded into a message.&quot;&gt;
+          &lt;mxGeometry x=&quot;345&quot; y=&quot;400&quot; width=&quot;645&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n14&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#b83f2e;&quot; value=&quot;[Clause 6.3.4, 6.4.1.6]&quot;&gt;
+          &lt;mxGeometry x=&quot;345&quot; y=&quot;415&quot; width=&quot;645&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n15&quot; parent=&quot;1&quot; edge=&quot;1&quot; style=&quot;endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;510&quot; y=&quot;439&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;510&quot; y=&quot;477&quot; as=&quot;targetPoint&quot; /&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n16&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#333333;fontStyle=1;&quot; value=&quot;The application layer prepends the A_PCI to build the A_PDU  [Clause 7.2]&quot;&gt;
+          &lt;mxGeometry x=&quot;525&quot; y=&quot;447&quot; width=&quot;465&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n17&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;&quot; value=&quot;2.  A_PDU — Application layer Protocol Data Unit  (Clause 7.2)&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;483&quot; width=&quot;960&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n18&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;&quot; value=&quot;&amp;quot;Mtype, SA, TA, TA_type, RA, Length are the same parameters as used in the A_SDU&amp;quot; — A_Data now starts with the A_PCI.&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;502&quot; width=&quot;960&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n19&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;Mtype&amp;#10;diagnostics /&amp;#10;remote diagnostics&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;525&quot; width=&quot;120&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n20&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;SA&amp;#10;Source Address&amp;#10;2 bytes&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;150&quot; y=&quot;525&quot; width=&quot;110&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n21&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;TA&amp;#10;Target Address&amp;#10;2 bytes&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;260&quot; y=&quot;525&quot; width=&quot;110&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n22&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;TA_type&amp;#10;physical /&amp;#10;functional&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;370&quot; y=&quot;525&quot; width=&quot;120&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n23&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;[RA]&amp;#10;Remote Address&amp;#10;renamed from A_AE&amp;#10;C — remote only&quot;&gt;
+          &lt;mxGeometry x=&quot;490&quot; y=&quot;525&quot; width=&quot;130&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n24&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#efe6fa;strokeColor=#6a3fa0;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;Length&amp;#10;byte count of&amp;#10;A_Data&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;525&quot; width=&quot;110&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n25&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;fontStyle=1;&quot; value=&quot;A_PCI&amp;#10;added here&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;730&quot; y=&quot;525&quot; width=&quot;100&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n26&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;parameter 1 … parameter n&amp;#10;carried over from the A_SDU&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;830&quot; y=&quot;525&quot; width=&quot;160&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n27&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#333333;&quot; value=&quot;└──────  A_Data  ──────┘&quot;&gt;
+          &lt;mxGeometry x=&quot;730&quot; y=&quot;587&quot; width=&quot;260&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n28&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;&quot; value=&quot;Mtype, SA, TA, TA_type, [RA] and Length are service parameters handed to the lower layers — only A_Data is transmitted as literal bytes.&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;603&quot; width=&quot;960&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n29&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;&quot; value=&quot;3.  Inside A_Data — the transmitted bytes  (Clause 7.3)&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;629&quot; width=&quot;960&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n30&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;&quot; value=&quot;The A_PCI is 1 byte (SI) for requests and positive responses, and 2 bytes (NR_SI + SI) for negative responses.&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;648&quot; width=&quot;960&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n31&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#000000;fontStyle=1;&quot; value=&quot;Request&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;691&quot; width=&quot;150&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n32&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_PCI · SI&amp;#10;request SID, 1 byte&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;185&quot; y=&quot;673&quot; width=&quot;170&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n33&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;sub-function&amp;#10;1 byte&amp;#10;U — service dependent&quot;&gt;
+          &lt;mxGeometry x=&quot;355&quot; y=&quot;673&quot; width=&quot;185&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n34&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;parameter(s)&amp;#10;DID / RID / groupOfDTC&amp;#10;C — service dependent&quot;&gt;
+          &lt;mxGeometry x=&quot;540&quot; y=&quot;673&quot; width=&quot;220&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n35&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;data record&amp;#10;variable length&amp;#10;U — service dependent&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;673&quot; width=&quot;230&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n36&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#000000;fontStyle=1;&quot; value=&quot;Positive response&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;755&quot; width=&quot;150&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n37&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_PCI · SI&amp;#10;request SID + 0x40&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;185&quot; y=&quot;737&quot; width=&quot;170&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n38&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;sub-function&amp;#10;echoed, if the service uses one&amp;#10;C&quot;&gt;
+          &lt;mxGeometry x=&quot;355&quot; y=&quot;737&quot; width=&quot;185&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n39&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;parameter(s)&amp;#10;echoed DID / RID&amp;#10;C — service dependent&quot;&gt;
+          &lt;mxGeometry x=&quot;540&quot; y=&quot;737&quot; width=&quot;220&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n40&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=9.5;align=center;verticalAlign=middle;dashed=1;&quot; value=&quot;data record&amp;#10;the returned payload&amp;#10;U — service dependent&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;737&quot; width=&quot;230&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n41&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#000000;fontStyle=1;&quot; value=&quot;Negative response&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;819&quot; width=&quot;150&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n42&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_PCI · NR_SI&amp;#10;0x7F — fixed&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;185&quot; y=&quot;801&quot; width=&quot;170&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n43&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe0dc;strokeColor=#b83f2e;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_PCI · SI&amp;#10;copy of the request SID&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;355&quot; y=&quot;801&quot; width=&quot;185&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n44&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;responseCode&amp;#10;NRC, 1 byte&amp;#10;M&quot;&gt;
+          &lt;mxGeometry x=&quot;540&quot; y=&quot;801&quot; width=&quot;220&quot; height=&quot;54&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n45&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#b83f2e;fontStyle=1;&quot; value=&quot;Always exactly&quot;&gt;
+          &lt;mxGeometry x=&quot;772&quot; y=&quot;813&quot; width=&quot;218&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n46&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#b83f2e;fontStyle=1;&quot; value=&quot;3 bytes.&quot;&gt;
+          &lt;mxGeometry x=&quot;772&quot; y=&quot;829&quot; width=&quot;218&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n47&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;&quot; value=&quot;On a negative response the A_PCI is two bytes: NR_SI (0x7F) followed by a copy of the request SID; responseCode is A_Data.Parameter 1.  [Table 3]&quot;&gt;
+          &lt;mxGeometry x=&quot;185&quot; y=&quot;857&quot; width=&quot;805&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n48&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;885&quot; width=&quot;960&quot; height=&quot;190&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n49&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=12.5;fontColor=#000000;fontStyle=1;&quot; value=&quot;A_SDU vs A_PDU — what actually differs&quot;&gt;
+          &lt;mxGeometry x=&quot;44&quot; y=&quot;893&quot; width=&quot;932&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n50&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;&quot; value=&quot;•&quot;&gt;
+          &lt;mxGeometry x=&quot;44&quot; y=&quot;919&quot; width=&quot;16&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n51&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;In the A_SDU but NOT in the A_PDU  —  A_Result (ok / error). It belongs to the request-confirm and response-confirm&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;919&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n52&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;primitives only, reports local transmission status to the application, and is never encoded into a message.&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;934&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n53&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;&quot; value=&quot;•&quot;&gt;
+          &lt;mxGeometry x=&quot;44&quot; y=&quot;954&quot; width=&quot;16&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n54&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;In the A_PDU but NOT in the A_SDU  —  A_PCI: the Service Identifier (SI), preceded by NR_SI = 0x7F on negative&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;954&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n55&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;responses. The application layer adds it when it constructs the A_PDU from the A_SDU.&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;969&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n56&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;&quot; value=&quot;•&quot;&gt;
+          &lt;mxGeometry x=&quot;44&quot; y=&quot;989&quot; width=&quot;16&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n57&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;Renamed rather than added  —  A_AE in the A_SDU appears as RA in the A_PDU. Both are the optional remote address,&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;989&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n58&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;present only when Mtype = remote diagnostics.&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;1004&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n59&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;&quot; value=&quot;•&quot;&gt;
+          &lt;mxGeometry x=&quot;44&quot; y=&quot;1024&quot; width=&quot;16&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n60&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;Unchanged  —  Mtype, SA, TA, TA_type and Length pass through from the A_SDU to the A_PDU as they are.&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;1024&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n61&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#000000;fontStyle=1;&quot; value=&quot;•&quot;&gt;
+          &lt;mxGeometry x=&quot;44&quot; y=&quot;1044&quot; width=&quot;16&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n62&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.8;fontColor=#000000;&quot; value=&quot;Exception  —  periodic responses of ReadDataByPeriodicIdentifier (0x2A) carry no A_PCI at all.  [Clause 7.3.1]&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;1044&quot; width=&quot;916&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n63&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;fontStyle=1;&quot; value=&quot;0.  Service vs protocol — where each data unit lives  (Clause 4, Figure 1)&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;46&quot; width=&quot;960&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n64&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#555555;&quot; value=&quot;ISO 14229-1 follows the OSI service conventions: a vertical service interface inside each node, and a horizontal protocol between peer nodes.&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;65&quot; width=&quot;960&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n65&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=10.5;fontColor=#000000;fontStyle=1;&quot; value=&quot;Client node  (tester)&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;88&quot; width=&quot;300&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n66&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;Application&amp;#10;the service user&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;106&quot; width=&quot;300&quot; height=&quot;40&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n67&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;Application layer&amp;#10;the service provider&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;192&quot; width=&quot;300&quot; height=&quot;40&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n68&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=10.5;fontColor=#000000;fontStyle=1;&quot; value=&quot;Server node  (ECU)&quot;&gt;
+          &lt;mxGeometry x=&quot;690&quot; y=&quot;88&quot; width=&quot;300&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n69&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d9ecff;strokeColor=#1f5fa8;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;Application&amp;#10;the service user&quot;&gt;
+          &lt;mxGeometry x=&quot;690&quot; y=&quot;106&quot; width=&quot;300&quot; height=&quot;40&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n70&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f5e6;strokeColor=#3a8a3a;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;Application layer&amp;#10;the service provider&quot;&gt;
+          &lt;mxGeometry x=&quot;690&quot; y=&quot;192&quot; width=&quot;300&quot; height=&quot;40&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n71&quot; parent=&quot;1&quot; edge=&quot;1&quot; style=&quot;endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;startArrow=block;startFill=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;180.0&quot; y=&quot;146&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;180.0&quot; y=&quot;192&quot; as=&quot;targetPoint&quot; /&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n72&quot; parent=&quot;1&quot; edge=&quot;1&quot; style=&quot;endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;startArrow=block;startFill=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;840.0&quot; y=&quot;146&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;840.0&quot; y=&quot;192&quot; as=&quot;targetPoint&quot; /&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n73&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_SDU&amp;#10;service primitives&quot;&gt;
+          &lt;mxGeometry x=&quot;192&quot; y=&quot;152&quot; width=&quot;132&quot; height=&quot;34&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n74&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=9.5;align=center;verticalAlign=middle;&quot; value=&quot;A_SDU&amp;#10;service primitives&quot;&gt;
+          &lt;mxGeometry x=&quot;696&quot; y=&quot;152&quot; width=&quot;132&quot; height=&quot;34&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n75&quot; parent=&quot;1&quot; edge=&quot;1&quot; style=&quot;endArrow=block;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#333333;startArrow=block;startFill=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;330&quot; y=&quot;212&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;212&quot; as=&quot;targetPoint&quot; /&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n76&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#c99a2e;fontSize=9.5;align=center;verticalAlign=middle;fontStyle=1;&quot; value=&quot;A_PDU  =  A_SDU  +  A_PCI&quot;&gt;
+          &lt;mxGeometry x=&quot;378&quot; y=&quot;176&quot; width=&quot;264&quot; height=&quot;32&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n77&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=8.8;fontColor=#555555;&quot; value=&quot;transmission to peer entity&quot;&gt;
+          &lt;mxGeometry x=&quot;330&quot; y=&quot;216&quot; width=&quot;360&quot; height=&quot;14&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n78&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=9.7;fontColor=#333333;&quot; value=&quot;The A_SDU never leaves the node. The A_PDU is what one application layer says to its peer — which is why it must carry the A_PCI.&quot;&gt;
+          &lt;mxGeometry x=&quot;30&quot; y=&quot;238&quot; width=&quot;960&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;">
+<rect width="1020" height="1087" fill="#ffffff"/>
+<defs><marker id="arrowhead" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#333333"/></marker><marker id="arrowtail" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="9 0, 0 3.5, 9 7" fill="#333333"/></marker></defs>
+<text x="510.0" y="29.8" font-family="Helvetica, Arial, sans-serif" font-size="19.0" font-weight="700" fill="#000000" text-anchor="middle">ISO 14229-1 Message Structure — A_SDU vs A_PDU</text>
+<text x="30.0" y="285.7" font-family="Helvetica, Arial, sans-serif" font-size="13.0" font-weight="700" fill="#000000" text-anchor="start">1.  A_SDU — Application layer Service Data Unit  (Clause 6.4)</text>
+<text x="30.0" y="301.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#555555" text-anchor="start">The parameter list passed across the request / indication / response / confirm service primitives (Clause 6.3.2, 6.3.3).</text>
+<rect x="30" y="313" width="120" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="90.0" y="327.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_Mtype</text>
+<text x="90.0" y="340.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">diagnostics /</text>
+<text x="90.0" y="352.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">remote diagnostics</text>
+<text x="90.0" y="365.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="150" y="313" width="110" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="205.0" y="327.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_SA</text>
+<text x="205.0" y="340.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Source Address</text>
+<text x="205.0" y="352.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">2 bytes</text>
+<text x="205.0" y="365.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="260" y="313" width="110" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="315.0" y="327.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_TA</text>
+<text x="315.0" y="340.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Target Address</text>
+<text x="315.0" y="352.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">2 bytes</text>
+<text x="315.0" y="365.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="370" y="313" width="120" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="430.0" y="327.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_TA_type</text>
+<text x="430.0" y="340.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">physical /</text>
+<text x="430.0" y="352.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">functional</text>
+<text x="430.0" y="365.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="490" y="313" width="130" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="555.0" y="327.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">[A_AE]</text>
+<text x="555.0" y="340.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Remote Address</text>
+<text x="555.0" y="352.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">2 bytes</text>
+<text x="555.0" y="365.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">C — remote only</text>
+<rect x="620" y="313" width="110" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="675.0" y="327.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_Length</text>
+<text x="675.0" y="340.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">byte count of</text>
+<text x="675.0" y="352.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">A_Data — 4 bytes</text>
+<text x="675.0" y="365.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="730" y="313" width="260" height="60" fill="#ffffff" stroke="#333333" stroke-width="1"/>
+<text x="860.0" y="327.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#000000" text-anchor="middle">A_Data</text>
+<text x="860.0" y="340.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">parameter 1 … parameter n</text>
+<text x="860.0" y="352.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">the service-specific parameters</text>
+<text x="860.0" y="365.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="30" y="385" width="300" height="46" fill="#ffe0dc" stroke="#b83f2e" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="180.0" y="405.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_Result   —   ok / error</text>
+<text x="180.0" y="417.7" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">request-confirm / response-confirm primitives only</text>
+<text x="345.0" y="396.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#b83f2e" text-anchor="start">This is the one A_SDU parameter with no counterpart in the A_PDU. It reports local</text>
+<text x="345.0" y="411.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#b83f2e" text-anchor="start">transmission status back to the application and is never encoded into a message.</text>
+<text x="345.0" y="426.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#b83f2e" text-anchor="start">[Clause 6.3.4, 6.4.1.6]</text>
+<line x1="510.0" y1="439.0" x2="510.0" y2="469.0" stroke="#333333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="525.0" y="458.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#333333" text-anchor="start">The application layer prepends the A_PCI to build the A_PDU  [Clause 7.2]</text>
+<text x="30.0" y="497.7" font-family="Helvetica, Arial, sans-serif" font-size="13.0" font-weight="700" fill="#000000" text-anchor="start">2.  A_PDU — Application layer Protocol Data Unit  (Clause 7.2)</text>
+<text x="30.0" y="513.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#555555" text-anchor="start">"Mtype, SA, TA, TA_type, RA, Length are the same parameters as used in the A_SDU" — A_Data now starts with the A_PCI.</text>
+<rect x="30" y="525" width="120" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="90.0" y="539.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Mtype</text>
+<text x="90.0" y="552.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">diagnostics /</text>
+<text x="90.0" y="564.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">remote diagnostics</text>
+<text x="90.0" y="577.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="150" y="525" width="110" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="205.0" y="539.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">SA</text>
+<text x="205.0" y="552.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Source Address</text>
+<text x="205.0" y="564.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">2 bytes</text>
+<text x="205.0" y="577.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="260" y="525" width="110" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="315.0" y="539.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">TA</text>
+<text x="315.0" y="552.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Target Address</text>
+<text x="315.0" y="564.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">2 bytes</text>
+<text x="315.0" y="577.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="370" y="525" width="120" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="430.0" y="539.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">TA_type</text>
+<text x="430.0" y="552.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">physical /</text>
+<text x="430.0" y="564.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">functional</text>
+<text x="430.0" y="577.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="490" y="525" width="130" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="555.0" y="539.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">[RA]</text>
+<text x="555.0" y="552.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Remote Address</text>
+<text x="555.0" y="564.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">renamed from A_AE</text>
+<text x="555.0" y="577.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">C — remote only</text>
+<rect x="620" y="525" width="110" height="60" fill="#efe6fa" stroke="#6a3fa0" stroke-width="1"/>
+<text x="675.0" y="539.6" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Length</text>
+<text x="675.0" y="552.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">byte count of</text>
+<text x="675.0" y="564.7" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">A_Data</text>
+<text x="675.0" y="577.2" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="730" y="525" width="100" height="60" fill="#fff3d6" stroke="#c99a2e" stroke-width="1"/>
+<text x="780.0" y="545.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#000000" text-anchor="middle">A_PCI</text>
+<text x="780.0" y="558.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">added here</text>
+<text x="780.0" y="571.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="830" y="525" width="160" height="60" fill="#ffffff" stroke="#333333" stroke-width="1"/>
+<text x="910.0" y="545.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">parameter 1 … parameter n</text>
+<text x="910.0" y="558.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">carried over from the A_SDU</text>
+<text x="910.0" y="571.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<text x="860.0" y="597.7" font-family="Helvetica, Arial, sans-serif" font-size="9.0" font-weight="400" fill="#333333" text-anchor="middle">└──────  A_Data  ──────┘</text>
+<text x="30.0" y="614.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#555555" text-anchor="start">Mtype, SA, TA, TA_type, [RA] and Length are service parameters handed to the lower layers — only A_Data is transmitted as literal bytes.</text>
+<text x="30.0" y="643.7" font-family="Helvetica, Arial, sans-serif" font-size="13.0" font-weight="700" fill="#000000" text-anchor="start">3.  Inside A_Data — the transmitted bytes  (Clause 7.3)</text>
+<text x="30.0" y="659.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#555555" text-anchor="start">The A_PCI is 1 byte (SI) for requests and positive responses, and 2 bytes (NR_SI + SI) for negative responses.</text>
+<text x="30.0" y="704.0" font-family="Helvetica, Arial, sans-serif" font-size="11.0" font-weight="700" fill="#000000" text-anchor="start">Request</text>
+<rect x="185" y="673" width="170" height="54" fill="#fff3d6" stroke="#c99a2e" stroke-width="1"/>
+<text x="270.0" y="690.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_PCI · SI</text>
+<text x="270.0" y="703.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">request SID, 1 byte</text>
+<text x="270.0" y="716.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="355" y="673" width="185" height="54" fill="#d9ecff" stroke="#1f5fa8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="447.5" y="690.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">sub-function</text>
+<text x="447.5" y="703.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">1 byte</text>
+<text x="447.5" y="716.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">U — service dependent</text>
+<rect x="540" y="673" width="220" height="54" fill="#e6f5e6" stroke="#3a8a3a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="650.0" y="690.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">parameter(s)</text>
+<text x="650.0" y="703.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">DID / RID / groupOfDTC</text>
+<text x="650.0" y="716.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">C — service dependent</text>
+<rect x="760" y="673" width="230" height="54" fill="#eeeeee" stroke="#666666" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="875.0" y="690.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">data record</text>
+<text x="875.0" y="703.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">variable length</text>
+<text x="875.0" y="716.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">U — service dependent</text>
+<text x="30.0" y="768.0" font-family="Helvetica, Arial, sans-serif" font-size="11.0" font-weight="700" fill="#000000" text-anchor="start">Positive response</text>
+<rect x="185" y="737" width="170" height="54" fill="#fff3d6" stroke="#c99a2e" stroke-width="1"/>
+<text x="270.0" y="754.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_PCI · SI</text>
+<text x="270.0" y="767.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">request SID + 0x40</text>
+<text x="270.0" y="780.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="355" y="737" width="185" height="54" fill="#d9ecff" stroke="#1f5fa8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="447.5" y="754.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">sub-function</text>
+<text x="447.5" y="767.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">echoed, if the service uses one</text>
+<text x="447.5" y="780.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">C</text>
+<rect x="540" y="737" width="220" height="54" fill="#e6f5e6" stroke="#3a8a3a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="650.0" y="754.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">parameter(s)</text>
+<text x="650.0" y="767.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">echoed DID / RID</text>
+<text x="650.0" y="780.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">C — service dependent</text>
+<rect x="760" y="737" width="230" height="54" fill="#eeeeee" stroke="#666666" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="875.0" y="754.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">data record</text>
+<text x="875.0" y="767.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">the returned payload</text>
+<text x="875.0" y="780.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">U — service dependent</text>
+<text x="30.0" y="832.0" font-family="Helvetica, Arial, sans-serif" font-size="11.0" font-weight="700" fill="#000000" text-anchor="start">Negative response</text>
+<rect x="185" y="801" width="170" height="54" fill="#ffe0dc" stroke="#b83f2e" stroke-width="1"/>
+<text x="270.0" y="818.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_PCI · NR_SI</text>
+<text x="270.0" y="831.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">0x7F — fixed</text>
+<text x="270.0" y="844.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="355" y="801" width="185" height="54" fill="#ffe0dc" stroke="#b83f2e" stroke-width="1"/>
+<text x="447.5" y="818.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_PCI · SI</text>
+<text x="447.5" y="831.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">copy of the request SID</text>
+<text x="447.5" y="844.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<rect x="540" y="801" width="220" height="54" fill="#eeeeee" stroke="#666666" stroke-width="1"/>
+<text x="650.0" y="818.9" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">responseCode</text>
+<text x="650.0" y="831.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">NRC, 1 byte</text>
+<text x="650.0" y="844.0" font-family="Helvetica, Arial, sans-serif" font-size="8.7" font-weight="400" fill="#333333" text-anchor="middle">M</text>
+<text x="772.0" y="824.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#b83f2e" text-anchor="start">Always exactly</text>
+<text x="772.0" y="840.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#b83f2e" text-anchor="start">3 bytes.</text>
+<text x="185.0" y="868.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#555555" text-anchor="start">On a negative response the A_PCI is two bytes: NR_SI (0x7F) followed by a copy of the request SID; responseCode is A_Data.Parameter 1.  [Table 3]</text>
+<rect x="30" y="885" width="960" height="190" fill="#fafafa" stroke="#999999" stroke-width="1"/>
+<text x="44.0" y="907.5" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#000000" text-anchor="start">A_SDU vs A_PDU — what actually differs</text>
+<text x="44.0" y="930.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#000000" text-anchor="start">•</text>
+<text x="60.0" y="930.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">In the A_SDU but NOT in the A_PDU  —  A_Result (ok / error). It belongs to the request-confirm and response-confirm</text>
+<text x="60.0" y="945.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">primitives only, reports local transmission status to the application, and is never encoded into a message.</text>
+<text x="44.0" y="965.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#000000" text-anchor="start">•</text>
+<text x="60.0" y="965.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">In the A_PDU but NOT in the A_SDU  —  A_PCI: the Service Identifier (SI), preceded by NR_SI = 0x7F on negative</text>
+<text x="60.0" y="980.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">responses. The application layer adds it when it constructs the A_PDU from the A_SDU.</text>
+<text x="44.0" y="1000.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#000000" text-anchor="start">•</text>
+<text x="60.0" y="1000.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">Renamed rather than added  —  A_AE in the A_SDU appears as RA in the A_PDU. Both are the optional remote address,</text>
+<text x="60.0" y="1015.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">present only when Mtype = remote diagnostics.</text>
+<text x="44.0" y="1035.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#000000" text-anchor="start">•</text>
+<text x="60.0" y="1035.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">Unchanged  —  Mtype, SA, TA, TA_type and Length pass through from the A_SDU to the A_PDU as they are.</text>
+<text x="44.0" y="1055.6" font-family="Helvetica, Arial, sans-serif" font-size="10.0" font-weight="700" fill="#000000" text-anchor="start">•</text>
+<text x="60.0" y="1055.5" font-family="Helvetica, Arial, sans-serif" font-size="9.8" font-weight="400" fill="#000000" text-anchor="start">Exception  —  periodic responses of ReadDataByPeriodicIdentifier (0x2A) carry no A_PCI at all.  [Clause 7.3.1]</text>
+<text x="30.0" y="60.7" font-family="Helvetica, Arial, sans-serif" font-size="13.0" font-weight="700" fill="#000000" text-anchor="start">0.  Service vs protocol — where each data unit lives  (Clause 4, Figure 1)</text>
+<text x="30.0" y="76.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#555555" text-anchor="start">ISO 14229-1 follows the OSI service conventions: a vertical service interface inside each node, and a horizontal protocol between peer nodes.</text>
+<text x="180.0" y="99.8" font-family="Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#000000" text-anchor="middle">Client node  (tester)</text>
+<rect x="30" y="106" width="300" height="40" fill="#d9ecff" stroke="#1f5fa8" stroke-width="1"/>
+<text x="180.0" y="123.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Application</text>
+<text x="180.0" y="135.7" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">the service user</text>
+<rect x="30" y="192" width="300" height="40" fill="#e6f5e6" stroke="#3a8a3a" stroke-width="1"/>
+<text x="180.0" y="209.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Application layer</text>
+<text x="180.0" y="221.7" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">the service provider</text>
+<text x="840.0" y="99.8" font-family="Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#000000" text-anchor="middle">Server node  (ECU)</text>
+<rect x="690" y="106" width="300" height="40" fill="#d9ecff" stroke="#1f5fa8" stroke-width="1"/>
+<text x="840.0" y="123.2" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Application</text>
+<text x="840.0" y="135.7" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">the service user</text>
+<rect x="690" y="192" width="300" height="40" fill="#e6f5e6" stroke="#3a8a3a" stroke-width="1"/>
+<text x="840.0" y="209.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">Application layer</text>
+<text x="840.0" y="221.7" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">the service provider</text>
+<line x1="180.0" y1="154.0" x2="180.0" y2="184.0" stroke="#333333" stroke-width="1.5" marker-end="url(#arrowhead)" marker-start="url(#arrowtail)"/>
+<line x1="840.0" y1="154.0" x2="840.0" y2="184.0" stroke="#333333" stroke-width="1.5" marker-end="url(#arrowhead)" marker-start="url(#arrowtail)"/>
+<rect x="192" y="152" width="132" height="34" fill="#ffffff" stroke="#333333" stroke-width="1"/>
+<text x="258.0" y="166.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_SDU</text>
+<text x="258.0" y="178.7" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">service primitives</text>
+<rect x="696" y="152" width="132" height="34" fill="#ffffff" stroke="#333333" stroke-width="1"/>
+<text x="762.0" y="166.1" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">A_SDU</text>
+<text x="762.0" y="178.7" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#000000" text-anchor="middle">service primitives</text>
+<line x1="338.0" y1="212.0" x2="682.0" y2="212.0" stroke="#333333" stroke-width="1.5" marker-end="url(#arrowhead)" marker-start="url(#arrowtail)"/>
+<rect x="378" y="176" width="264" height="32" fill="#fff3d6" stroke="#c99a2e" stroke-width="1"/>
+<text x="510.0" y="195.4" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#000000" text-anchor="middle">A_PDU  =  A_SDU  +  A_PCI</text>
+<text x="510.0" y="226.2" font-family="Helvetica, Arial, sans-serif" font-size="8.8" font-weight="400" fill="#555555" text-anchor="middle">transmission to peer entity</text>
+<text x="30.0" y="249.5" font-family="Helvetica, Arial, sans-serif" font-size="9.7" font-weight="400" fill="#333333" text-anchor="start">The A_SDU never leaves the node. The A_PDU is what one application layer says to its peer — which is why it must carry the A_PCI.</text>
+</svg>

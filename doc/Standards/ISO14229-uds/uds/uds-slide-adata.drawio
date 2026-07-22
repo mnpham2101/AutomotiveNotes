@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-slide-adata" id="uds-slide-adata">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="290" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="Inside A_Data — the transmitted bytes  (Clause 7.3)">
+          <mxGeometry x="0" y="12" width="960" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="A_PCI is 1 byte (SI) for requests and positive responses, 2 bytes (NR_SI + SI) for negative responses.">
+          <mxGeometry x="20" y="42" width="920" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Request">
+          <mxGeometry x="20" y="86" width="140" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="A_PCI · SI&#10;request SID">
+          <mxGeometry x="168" y="70" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;" value="sub-function&#10;1 byte, optional">
+          <mxGeometry x="318" y="70" width="176" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;" value="parameter(s)&#10;DID / RID / DTC group">
+          <mxGeometry x="494" y="70" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;" value="data record&#10;variable, optional">
+          <mxGeometry x="694" y="70" width="246" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Positive response">
+          <mxGeometry x="20" y="152" width="140" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="A_PCI · SI&#10;SID + 0x40">
+          <mxGeometry x="168" y="136" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;" value="sub-function&#10;echoed">
+          <mxGeometry x="318" y="136" width="176" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;" value="parameter(s)&#10;echoed">
+          <mxGeometry x="494" y="136" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;" value="data record&#10;returned payload">
+          <mxGeometry x="694" y="136" width="246" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Negative response">
+          <mxGeometry x="20" y="218" width="140" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="A_PCI · NR_SI&#10;0x7F">
+          <mxGeometry x="168" y="202" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="A_PCI · SI&#10;request SID">
+          <mxGeometry x="318" y="202" width="176" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="responseCode&#10;NRC, 1 byte">
+          <mxGeometry x="494" y="202" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n17" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#c62828;fontFamily=DejaVu Sans;fontStyle=1;" value="Always exactly 3 bytes.">
+          <mxGeometry x="708" y="218" width="232" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Nesting:  A_PDU → A_Data → A_PCI → SI.   Per-service tables from Clause 9 onwards show A_Data only.">
+          <mxGeometry x="20" y="262" width="920" height="16" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

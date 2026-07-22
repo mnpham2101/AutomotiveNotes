@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-slide-service-vs-protocol" id="uds-slide-service-vs-protocol">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="268" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="Where each data unit lives — ISO 14229-1 Clause 4, Figure 1">
+          <mxGeometry x="0" y="12" width="960" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#607d8b;fontFamily=DejaVu Sans;fontStyle=1;" value="Client node  (tester)">
+          <mxGeometry x="20" y="46" width="300" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Application&#10;service user">
+          <mxGeometry x="20" y="66" width="300" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Application layer&#10;service provider">
+          <mxGeometry x="20" y="156" width="300" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#607d8b;fontFamily=DejaVu Sans;fontStyle=1;" value="Server node  (ECU)">
+          <mxGeometry x="620" y="46" width="300" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Application&#10;service user">
+          <mxGeometry x="620" y="66" width="300" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Application layer&#10;service provider">
+          <mxGeometry x="620" y="156" width="300" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#263238;strokeWidth=1.5;fillColor=#263238;startArrow=block;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170.0" y="108" as="sourcePoint" />
+            <mxPoint x="170.0" y="156" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n9" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#263238;strokeWidth=1.5;fillColor=#263238;startArrow=block;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="770.0" y="108" as="sourcePoint" />
+            <mxPoint x="770.0" y="156" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#546e7a;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="A_SDU">
+          <mxGeometry x="178" y="116" width="128" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#546e7a;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="A_SDU">
+          <mxGeometry x="654" y="116" width="128" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#263238;strokeWidth=1.5;fillColor=#263238;startArrow=block;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="320" y="177" as="sourcePoint" />
+            <mxPoint x="620" y="177" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n13" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="A_PDU = A_SDU + A_PCI">
+          <mxGeometry x="370" y="160" width="200" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="transmission to peer entity">
+          <mxGeometry x="320" y="198" width="300" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Vertical = the service (Clause 6).  Horizontal = the protocol (Clause 7).">
+          <mxGeometry x="20" y="218" width="920" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="The A_SDU never leaves the node; the A_PDU is what the peer receives.">
+          <mxGeometry x="20" y="236" width="920" height="16" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

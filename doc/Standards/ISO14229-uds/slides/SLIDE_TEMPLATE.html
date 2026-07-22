@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deck Title Goes Here</title>
+<style>
+:root{
+  --ink:#263238; --ink-2:#37474f; --muted:#607d8b; --faint:#90a4ae;
+  --rule:#b0bec5; --rule-soft:#cfd8dc; --wash:#eceff1; --page:#f7f9fb;
+  --navy:#14337a; --blue:#1565c0; --blue-wash:#e3f2fd;
+  --accent:#f26f21; --accent-dark:#e65100; --accent-wash:#fff3e0;
+  --green:#2e7d32; --green-wash:#e8f5e9; --red:#c62828;
+  --font:"DejaVu Sans",Verdana,Geneva,sans-serif;
+  --mono:"DejaVu Sans Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--wash);color:var(--ink);font-family:var(--font);
+     font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ---------------------------------------------------------------- shell */
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+nav{background:var(--ink);color:#fff;padding:26px 0 40px;position:sticky;top:0;
+    height:100vh;overflow-y:auto}
+nav .brand{padding:0 22px 18px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:14px}
+nav .brand b{display:block;font-size:15px;line-height:1.35}
+nav .brand span{display:block;color:var(--faint);font-size:11.5px;margin-top:6px}
+nav .grp{color:var(--accent);font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;
+         padding:16px 22px 6px;font-weight:700}
+nav a{display:block;color:#cfd8dc;text-decoration:none;font-size:13px;
+      padding:6px 22px 6px 26px;border-left:3px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav a.on{color:#fff;border-left-color:var(--accent);background:rgba(242,111,33,.14)}
+
+main{padding:0}
+.rail{position:fixed;top:0;left:264px;right:0;height:3px;background:transparent;z-index:20}
+.rail i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* ---------------------------------------------------------------- slides */
+.slide{min-height:100vh;padding:64px 76px 92px;display:flex;flex-direction:column;
+       justify-content:center;background:var(--page);border-bottom:1px solid var(--rule-soft);
+       position:relative;scroll-margin-top:0}
+.slide-inner{max-width:1080px;width:100%;margin:0 auto}
+.slide h2{margin:0 0 30px;font-size:34px;line-height:1.2;color:var(--navy);font-weight:700;
+          letter-spacing:-.01em}
+.slide h2::after{content:"";display:block;width:64px;height:4px;background:var(--accent);
+                 margin-top:16px;border-radius:2px}
+
+.slide ul{margin:0;padding-left:0;list-style:none}
+.slide li{position:relative;padding:0 0 0 30px;margin:0 0 14px;font-size:19px;line-height:1.5}
+.slide li::before{content:"";position:absolute;left:6px;top:.62em;width:8px;height:8px;
+                  background:var(--accent);border-radius:50%}
+.slide li strong{color:var(--navy)}
+.slide p{font-size:18px}
+.slide code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
+            color:var(--blue);padding:2px 6px;border-radius:3px}
+
+figure{margin:0 0 26px;text-align:center}
+figure img{max-width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:4px;
+           background:#fff}
+
+table{border-collapse:collapse;width:100%;margin:0 0 22px;font-size:16px;background:#fff}
+th{background:var(--ink);color:#fff;text-align:left;padding:11px 14px;font-weight:700;font-size:14px}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:nth-child(even) td{background:var(--page)}
+td strong{color:var(--accent-dark)}
+
+.ref{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.ref::before{content:"▸ ";color:var(--accent)}
+.note{display:none}
+
+.foot{position:absolute;left:76px;right:76px;bottom:26px;display:flex;
+      justify-content:space-between;align-items:center;font-size:11.5px;color:var(--faint);
+      border-top:1px solid var(--rule-soft);padding-top:10px}
+.foot .n{font-family:var(--mono)}
+
+/* ------------------------------------------------------- title & divider */
+.slide.title{background:var(--ink);color:#fff;text-align:center}
+.slide.title h1{margin:0;font-size:50px;line-height:1.15;color:#fff;font-weight:700;
+                letter-spacing:-.02em}
+.slide.title .bar{width:96px;height:5px;background:var(--accent);margin:26px auto;border-radius:3px}
+.slide.title .sub{font-size:21px;color:var(--rule)}
+.slide.title .meta{margin-top:44px;font-size:12.5px;color:var(--faint);font-family:var(--mono)}
+.slide.title .foot{display:none}
+
+.slide.divider{background:var(--navy);color:#fff}
+.slide.divider .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+                       color:var(--accent);font-weight:700;margin-bottom:14px}
+.slide.divider h2{color:#fff;font-size:42px}
+.slide.divider h2::after{background:var(--accent)}
+.slide.divider ol{margin:26px 0 0;padding-left:20px;color:var(--rule);font-size:17px}
+.slide.divider li{font-size:17px}
+.slide.divider li::before{background:var(--rule)}
+
+/* ---------------------------------------------------------------- print */
+@media print{
+  nav,.rail{display:none}
+  .shell{display:block}
+  body{background:#fff}
+  .slide{min-height:auto;height:19.0cm;page-break-after:always;break-after:page;
+         padding:36px 44px 60px;border:0}
+  .slide h2{font-size:26px}.slide li{font-size:15px;margin-bottom:9px}
+  .slide.title h1{font-size:38px}
+  .note{display:block;margin-top:18px;padding:10px 14px;background:var(--wash);
+        border-left:3px solid var(--faint);font-size:12px;color:var(--ink-2)}
+  .foot{left:44px;right:44px;bottom:16px}
+  @page{size:A4 landscape;margin:8mm}
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav{position:static;height:auto}
+  .rail{left:0}
+  .slide{padding:44px 26px 80px;min-height:auto}
+  .slide h2{font-size:26px}.slide li{font-size:16px}
+  .foot{left:26px;right:26px}
+}
+</style>
+</head><body>
+<div class="rail"><i></i></div>
+<div class="shell">
+<nav><div class="brand"><b>Deck Title Goes Here</b><span>One line describing the deck</span></div><a href="#s0" data-i="0">Title</a>
+<div class="grp">Section — First Topic</div>
+<a href="#s1" data-i="1">Overview</a>
+<a href="#s2" data-i="2">A slide with bullets</a>
+<a href="#s3" data-i="3">A slide with a figure</a>
+<a href="#s4" data-i="4">A slide with a table</a>
+<div class="grp">Section — Second Topic</div>
+<a href="#s5" data-i="5">Overview</a>
+<a href="#s6" data-i="6">Another slide</a>
+<a href="#s7" data-i="7">Takeaways</a></nav>
+<main><section class="slide title" id="s0"><div class="slide-inner">
+<h1>Deck Title Goes Here</h1>
+<div class="bar"></div>
+<div class="sub">One line describing the deck</div>
+<div class="meta">Source / author / date — shown on every slide</div>
+</div></section>
+<section class="slide divider" id="s1"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section — First Topic</h2></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">1 / 7</span></div></section>
+<section class="slide" id="s2"><div class="slide-inner"><h2>A slide with bullets</h2>
+<ul>
+<li>Keep each bullet to one line.</li>
+<li>State the conclusion, not the reasoning.</li>
+<li>Bold the <strong>one term</strong> that matters most.</li>
+<li>Three to five bullets is the working limit.</li>
+</ul>
+<div class="ref">Source reference</div></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">2 / 7</span></div></section>
+<section class="slide" id="s3"><div class="slide-inner"><h2>A slide with a figure</h2>
+<figure><img alt="Describe the figure here — swap this for your own diagram" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSI5NjBweCIgaGVpZ2h0PSIyOTBweCIgdmlld0JveD0iMCAwIDk2MCAyOTAiPgo8cmVjdCB3aWR0aD0iOTYwIiBoZWlnaHQ9IjI5MCIgZmlsbD0iI2ZmZmZmZiIvPgo8ZGVmcz48bWFya2VyIGlkPSJhaCIgbWFya2VyV2lkdGg9IjkiIG1hcmtlckhlaWdodD0iNyIgcmVmWD0iOCIgcmVmWT0iMy41IiBvcmllbnQ9ImF1dG8iPjxwb2x5Z29uIHBvaW50cz0iMCAwLCA5IDMuNSwgMCA3IiBmaWxsPSIjMjYzMjM4Ii8+PC9tYXJrZXI+PG1hcmtlciBpZD0iYXQiIG1hcmtlcldpZHRoPSI5IiBtYXJrZXJIZWlnaHQ9IjciIHJlZlg9IjEiIHJlZlk9IjMuNSIgb3JpZW50PSJhdXRvIj48cG9seWdvbiBwb2ludHM9IjkgMCwgMCAzLjUsIDkgNyIgZmlsbD0iIzI2MzIzOCIvPjwvbWFya2VyPjwvZGVmcz4KPHRleHQgeD0iNDgwLjAiIHk9IjI4LjQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE1LjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxNDMzN2EiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkluc2lkZSBBX0RhdGEg4oCUIHRoZSB0cmFuc21pdHRlZCBieXRlcyAgKENsYXVzZSA3LjMpPC90ZXh0Pgo8dGV4dCB4PSIyMC4wIiB5PSI1My44IiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMC41IiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjNjA3ZDhiIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPkFfUENJIGlzIDEgYnl0ZSAoU0kpIGZvciByZXF1ZXN0cyBhbmQgcG9zaXRpdmUgcmVzcG9uc2VzLCAyIGJ5dGVzIChOUl9TSSArIFNJKSBmb3IgbmVnYXRpdmUgcmVzcG9uc2VzLjwvdGV4dD4KPHRleHQgeD0iMjAuMCIgeT0iOTkuMCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEuMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzI2MzIzOCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5SZXF1ZXN0PC90ZXh0Pgo8cmVjdCB4PSIxNjgiIHk9IjcwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjUwIiByeD0iMiIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iMjQzLjAiIHk9IjkxLjkiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwLjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNjMyMzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFfUENJIMK3IFNJPC90ZXh0Pgo8dGV4dCB4PSIyNDMuMCIgeT0iMTA1LjMiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkuMCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzYwN2Q4YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+cmVxdWVzdCBTSUQ8L3RleHQ+CjxyZWN0IHg9IjMxOCIgeT0iNzAiIHdpZHRoPSIxNzYiIGhlaWdodD0iNTAiIHJ4PSIyIiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCAzIi8+Cjx0ZXh0IHg9IjQwNi4wIiB5PSI5MS45IiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMC4wIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMjYzMjM4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5zdWItZnVuY3Rpb248L3RleHQ+Cjx0ZXh0IHg9IjQwNi4wIiB5PSIxMDUuMyIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOS4wIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjNjA3ZDhiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4xIGJ5dGUsIG9wdGlvbmFsPC90ZXh0Pgo8cmVjdCB4PSI0OTQiIHk9IjcwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUwIiByeD0iMiIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPgo8dGV4dCB4PSI1OTQuMCIgeT0iOTEuOSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAuMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzI2MzIzOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+cGFyYW1ldGVyKHMpPC90ZXh0Pgo8dGV4dCB4PSI1OTQuMCIgeT0iMTA1LjMiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkuMCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzYwN2Q4YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RElEIC8gUklEIC8gRFRDIGdyb3VwPC90ZXh0Pgo8cmVjdCB4PSI2OTQiIHk9IjcwIiB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjUwIiByeD0iMiIgZmlsbD0iI2VjZWZmMSIgc3Ryb2tlPSIjOTBhNGFlIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPgo8dGV4dCB4PSI4MTcuMCIgeT0iOTEuOSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAuMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzI2MzIzOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+ZGF0YSByZWNvcmQ8L3RleHQ+Cjx0ZXh0IHg9IjgxNy4wIiB5PSIxMDUuMyIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOS4wIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjNjA3ZDhiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj52YXJpYWJsZSwgb3B0aW9uYWw8L3RleHQ+Cjx0ZXh0IHg9IjIwLjAiIHk9IjE2NS4wIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMS4wIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMjYzMjM4IiB0ZXh0LWFuY2hvcj0ic3RhcnQiPlBvc2l0aXZlIHJlc3BvbnNlPC90ZXh0Pgo8cmVjdCB4PSIxNjgiIHk9IjEzNiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSI1MCIgcng9IjIiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIgc3Ryb2tlLXdpZHRoPSIxIi8+Cjx0ZXh0IHg9IjI0My4wIiB5PSIxNTcuOSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAuMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzI2MzIzOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QV9QQ0kgwrcgU0k8L3RleHQ+Cjx0ZXh0IHg9IjI0My4wIiB5PSIxNzEuMyIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOS4wIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjNjA3ZDhiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5TSUQgKyAweDQwPC90ZXh0Pgo8cmVjdCB4PSIzMTgiIHk9IjEzNiIgd2lkdGg9IjE3NiIgaGVpZ2h0PSI1MCIgcng9IjIiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtZGFzaGFycmF5PSI0IDMiLz4KPHRleHQgeD0iNDA2LjAiIHk9IjE1Ny45IiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMC4wIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMjYzMjM4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5zdWItZnVuY3Rpb248L3RleHQ+Cjx0ZXh0IHg9IjQwNi4wIiB5PSIxNzEuMyIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOS4wIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjNjA3ZDhiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5lY2hvZWQ8L3RleHQ+CjxyZWN0IHg9IjQ5NCIgeT0iMTM2IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUwIiByeD0iMiIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPgo8dGV4dCB4PSI1OTQuMCIgeT0iMTU3LjkiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwLjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNjMyMzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnBhcmFtZXRlcihzKTwvdGV4dD4KPHRleHQgeD0iNTk0LjAiIHk9IjE3MS4zIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5LjAiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM2MDdkOGIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPmVjaG9lZDwvdGV4dD4KPHJlY3QgeD0iNjk0IiB5PSIxMzYiIHdpZHRoPSIyNDYiIGhlaWdodD0iNTAiIHJ4PSIyIiBmaWxsPSIjZWNlZmYxIiBzdHJva2U9IiM5MGE0YWUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCAzIi8+Cjx0ZXh0IHg9IjgxNy4wIiB5PSIxNTcuOSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAuMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzI2MzIzOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+ZGF0YSByZWNvcmQ8L3RleHQ+Cjx0ZXh0IHg9IjgxNy4wIiB5PSIxNzEuMyIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOS4wIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjNjA3ZDhiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5yZXR1cm5lZCBwYXlsb2FkPC90ZXh0Pgo8dGV4dCB4PSIyMC4wIiB5PSIyMzEuMCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEuMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzI2MzIzOCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5OZWdhdGl2ZSByZXNwb25zZTwvdGV4dD4KPHJlY3QgeD0iMTY4IiB5PSIyMDIiIHdpZHRoPSIxNTAiIGhlaWdodD0iNTAiIHJ4PSIyIiBmaWxsPSIjZmZlYmVlIiBzdHJva2U9IiNjNjI4MjgiIHN0cm9rZS13aWR0aD0iMSIvPgo8dGV4dCB4PSIyNDMuMCIgeT0iMjIzLjkiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwLjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNjMyMzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFfUENJIMK3IE5SX1NJPC90ZXh0Pgo8dGV4dCB4PSIyNDMuMCIgeT0iMjM3LjMiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkuMCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzYwN2Q4YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MHg3RjwvdGV4dD4KPHJlY3QgeD0iMzE4IiB5PSIyMDIiIHdpZHRoPSIxNzYiIGhlaWdodD0iNTAiIHJ4PSIyIiBmaWxsPSIjZmZlYmVlIiBzdHJva2U9IiNjNjI4MjgiIHN0cm9rZS13aWR0aD0iMSIvPgo8dGV4dCB4PSI0MDYuMCIgeT0iMjIzLjkiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwLjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNjMyMzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFfUENJIMK3IFNJPC90ZXh0Pgo8dGV4dCB4PSI0MDYuMCIgeT0iMjM3LjMiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucywgVmVyZGFuYSwgR2VuZXZhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkuMCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzYwN2Q4YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+cmVxdWVzdCBTSUQ8L3RleHQ+CjxyZWN0IHg9IjQ5NCIgeT0iMjAyIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUwIiByeD0iMiIgZmlsbD0iI2VjZWZmMSIgc3Ryb2tlPSIjOTBhNGFlIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iNTk0LjAiIHk9IjIyMy45IiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMC4wIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMjYzMjM4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5yZXNwb25zZUNvZGU8L3RleHQ+Cjx0ZXh0IHg9IjU5NC4wIiB5PSIyMzcuMyIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOS4wIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjNjA3ZDhiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5OUkMsIDEgYnl0ZTwvdGV4dD4KPHRleHQgeD0iNzA4LjAiIHk9IjIzMC44IiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMC41IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjYzYyODI4IiB0ZXh0LWFuY2hvcj0ic3RhcnQiPkFsd2F5cyBleGFjdGx5IDMgYnl0ZXMuPC90ZXh0Pgo8dGV4dCB4PSIyMC4wIiB5PSIyNzMuOCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLCBWZXJkYW5hLCBHZW5ldmEsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAuNSIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzYwN2Q4YiIgdGV4dC1hbmNob3I9InN0YXJ0Ij5OZXN0aW5nOiAgQV9QRFUg4oaSIEFfRGF0YSDihpIgQV9QQ0kg4oaSIFNJLiAgIFBlci1zZXJ2aWNlIHRhYmxlcyBmcm9tIENsYXVzZSA5IG9ud2FyZHMgc2hvdyBBX0RhdGEgb25seS48L3RleHQ+Cjwvc3ZnPg==" /></figure>
+<ul>
+<li>One or two bullets that add what the figure cannot show.</li>
+<li>Do not restate the figure's labels.</li>
+</ul>
+<div class="ref">Source reference</div>
+<div class="note"><b>Note — </b>Speaker notes go here — the detail you say out loud but do not put on screen.</div></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">3 / 7</span></div></section>
+<section class="slide" id="s4"><div class="slide-inner"><h2>A slide with a table</h2>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Column</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value</td>
+<td>Value</td>
+</tr>
+<tr>
+<td>Value</td>
+<td>Value</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>One closing bullet drawing the conclusion from the table.</li>
+</ul></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">4 / 7</span></div></section>
+<section class="slide divider" id="s5"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section — Second Topic</h2></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">5 / 7</span></div></section>
+<section class="slide" id="s6"><div class="slide-inner"><h2>Another slide</h2>
+<ul>
+<li>Sections group slides on the same topic.</li>
+<li>Start a new <code>##</code> whenever the topic changes.</li>
+</ul></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">6 / 7</span></div></section>
+<section class="slide" id="s7"><div class="slide-inner"><h2>Takeaways</h2>
+<ul>
+<li>Close every deck with the three or four things worth remembering.</li>
+<li>One line each.</li>
+</ul></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">7 / 7</span></div></section></main>
+</div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var bar=document.querySelector('.rail i');
+  function current(){
+    var best=0,bd=1e9;
+    slides.forEach(function(s,i){var d=Math.abs(s.getBoundingClientRect().top);
+      if(d<bd){bd=d;best=i}});
+    return best;
+  }
+  function sync(){
+    var i=current();
+    links.forEach(function(a){a.classList.toggle('on',a.dataset.i===String(i))});
+    if(bar)bar.style.width=(slides.length<2?100:(i/(slides.length-1))*100)+'%';
+  }
+  addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync);
+  addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    var i=current(),t=null;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')t=i+1;
+    if(e.key==='ArrowUp'||e.key==='ArrowLeft'||e.key==='PageUp')t=i-1;
+    if(e.key==='Home')t=0;
+    if(e.key==='End')t=slides.length-1;
+    if(t===null)return;
+    e.preventDefault();
+    slides[Math.max(0,Math.min(slides.length-1,t))].scrollIntoView({behavior:'smooth'});
+  });
+  sync();
+})();
+</script>
+</body></html>

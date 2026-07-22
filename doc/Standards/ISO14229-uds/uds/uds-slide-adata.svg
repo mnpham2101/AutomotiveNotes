@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="960px" height="290px" viewBox="0 0 960 290" content="&lt;mxfile host=&quot;app.diagrams.net&quot; agent=&quot;Claude&quot; version=&quot;24.7.17&quot;&gt;
+  &lt;diagram name=&quot;uds-slide-adata&quot; id=&quot;uds-slide-adata&quot;&gt;
+    &lt;mxGraphModel dx=&quot;985&quot; dy=&quot;1642&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;960&quot; pageHeight=&quot;290&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;n1&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Inside A_Data — the transmitted bytes  (Clause 7.3)&quot;&gt;
+          &lt;mxGeometry x=&quot;0&quot; y=&quot;12&quot; width=&quot;960&quot; height=&quot;22&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n2&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;&quot; value=&quot;A_PCI is 1 byte (SI) for requests and positive responses, 2 bytes (NR_SI + SI) for negative responses.&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;42&quot; width=&quot;920&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n3&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Request&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;86&quot; width=&quot;140&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n4&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_PCI · SI&amp;#10;request SID&quot;&gt;
+          &lt;mxGeometry x=&quot;168&quot; y=&quot;70&quot; width=&quot;150&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n5&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;&quot; value=&quot;sub-function&amp;#10;1 byte, optional&quot;&gt;
+          &lt;mxGeometry x=&quot;318&quot; y=&quot;70&quot; width=&quot;176&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n6&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;&quot; value=&quot;parameter(s)&amp;#10;DID / RID / DTC group&quot;&gt;
+          &lt;mxGeometry x=&quot;494&quot; y=&quot;70&quot; width=&quot;200&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n7&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;&quot; value=&quot;data record&amp;#10;variable, optional&quot;&gt;
+          &lt;mxGeometry x=&quot;694&quot; y=&quot;70&quot; width=&quot;246&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n8&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Positive response&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;152&quot; width=&quot;140&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n9&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_PCI · SI&amp;#10;SID + 0x40&quot;&gt;
+          &lt;mxGeometry x=&quot;168&quot; y=&quot;136&quot; width=&quot;150&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n10&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;&quot; value=&quot;sub-function&amp;#10;echoed&quot;&gt;
+          &lt;mxGeometry x=&quot;318&quot; y=&quot;136&quot; width=&quot;176&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n11&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;&quot; value=&quot;parameter(s)&amp;#10;echoed&quot;&gt;
+          &lt;mxGeometry x=&quot;494&quot; y=&quot;136&quot; width=&quot;200&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n12&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;dashed=1;fontStyle=1;&quot; value=&quot;data record&amp;#10;returned payload&quot;&gt;
+          &lt;mxGeometry x=&quot;694&quot; y=&quot;136&quot; width=&quot;246&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n13&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Negative response&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;218&quot; width=&quot;140&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n14&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_PCI · NR_SI&amp;#10;0x7F&quot;&gt;
+          &lt;mxGeometry x=&quot;168&quot; y=&quot;202&quot; width=&quot;150&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n15&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;A_PCI · SI&amp;#10;request SID&quot;&gt;
+          &lt;mxGeometry x=&quot;318&quot; y=&quot;202&quot; width=&quot;176&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n16&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;responseCode&amp;#10;NRC, 1 byte&quot;&gt;
+          &lt;mxGeometry x=&quot;494&quot; y=&quot;202&quot; width=&quot;200&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n17&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#c62828;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Always exactly 3 bytes.&quot;&gt;
+          &lt;mxGeometry x=&quot;708&quot; y=&quot;218&quot; width=&quot;232&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;n18&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;&quot; value=&quot;Nesting:  A_PDU → A_Data → A_PCI → SI.   Per-service tables from Clause 9 onwards show A_Data only.&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;262&quot; width=&quot;920&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;">
+<rect width="960" height="290" fill="#ffffff"/>
+<defs><marker id="ah" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#263238"/></marker><marker id="at" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="9 0, 0 3.5, 9 7" fill="#263238"/></marker></defs>
+<text x="480.0" y="28.4" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="15.0" font-weight="700" fill="#14337a" text-anchor="middle">Inside A_Data — the transmitted bytes  (Clause 7.3)</text>
+<text x="20.0" y="53.8" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.5" font-weight="400" fill="#607d8b" text-anchor="start">A_PCI is 1 byte (SI) for requests and positive responses, 2 bytes (NR_SI + SI) for negative responses.</text>
+<text x="20.0" y="99.0" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="11.0" font-weight="700" fill="#263238" text-anchor="start">Request</text>
+<rect x="168" y="70" width="150" height="50" rx="2" fill="#fff3e0" stroke="#f26f21" stroke-width="1"/>
+<text x="243.0" y="91.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_PCI · SI</text>
+<text x="243.0" y="105.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">request SID</text>
+<rect x="318" y="70" width="176" height="50" rx="2" fill="#e3f2fd" stroke="#1565c0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="406.0" y="91.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">sub-function</text>
+<text x="406.0" y="105.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">1 byte, optional</text>
+<rect x="494" y="70" width="200" height="50" rx="2" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="594.0" y="91.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">parameter(s)</text>
+<text x="594.0" y="105.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">DID / RID / DTC group</text>
+<rect x="694" y="70" width="246" height="50" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="817.0" y="91.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">data record</text>
+<text x="817.0" y="105.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">variable, optional</text>
+<text x="20.0" y="165.0" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="11.0" font-weight="700" fill="#263238" text-anchor="start">Positive response</text>
+<rect x="168" y="136" width="150" height="50" rx="2" fill="#fff3e0" stroke="#f26f21" stroke-width="1"/>
+<text x="243.0" y="157.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_PCI · SI</text>
+<text x="243.0" y="171.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">SID + 0x40</text>
+<rect x="318" y="136" width="176" height="50" rx="2" fill="#e3f2fd" stroke="#1565c0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="406.0" y="157.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">sub-function</text>
+<text x="406.0" y="171.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">echoed</text>
+<rect x="494" y="136" width="200" height="50" rx="2" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="594.0" y="157.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">parameter(s)</text>
+<text x="594.0" y="171.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">echoed</text>
+<rect x="694" y="136" width="246" height="50" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="817.0" y="157.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">data record</text>
+<text x="817.0" y="171.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">returned payload</text>
+<text x="20.0" y="231.0" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="11.0" font-weight="700" fill="#263238" text-anchor="start">Negative response</text>
+<rect x="168" y="202" width="150" height="50" rx="2" fill="#ffebee" stroke="#c62828" stroke-width="1"/>
+<text x="243.0" y="223.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_PCI · NR_SI</text>
+<text x="243.0" y="237.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">0x7F</text>
+<rect x="318" y="202" width="176" height="50" rx="2" fill="#ffebee" stroke="#c62828" stroke-width="1"/>
+<text x="406.0" y="223.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">A_PCI · SI</text>
+<text x="406.0" y="237.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">request SID</text>
+<rect x="494" y="202" width="200" height="50" rx="2" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+<text x="594.0" y="223.9" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.0" font-weight="700" fill="#263238" text-anchor="middle">responseCode</text>
+<text x="594.0" y="237.3" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="9.0" font-weight="400" fill="#607d8b" text-anchor="middle">NRC, 1 byte</text>
+<text x="708.0" y="230.8" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.5" font-weight="700" fill="#c62828" text-anchor="start">Always exactly 3 bytes.</text>
+<text x="20.0" y="273.8" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.5" font-weight="400" fill="#607d8b" text-anchor="start">Nesting:  A_PDU → A_Data → A_PCI → SI.   Per-service tables from Clause 9 onwards show A_Data only.</text>
+</svg>
