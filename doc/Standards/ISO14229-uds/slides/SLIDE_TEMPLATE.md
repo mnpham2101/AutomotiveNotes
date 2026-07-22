@@ -21,7 +21,7 @@
 
   SLIDE BODY — keep it sparse
     - 3 to 5 bullets, one line each. No paragraphs.
-    - One figure per slide: ![alt](diagram.svg)
+    - One figure per slide: ![alt](../uds/asset/diagram.svg)
     - If a figure already shows the structure, do NOT also table its fields.
     - Tables only when the content is genuinely tabular and the slide has no figure.
     - `[Clause 9.2.1]` in backticks at the end = source reference, rendered small.
@@ -40,7 +40,7 @@
 
 ### A slide with a figure
 
-![Describe the figure here — swap this for your own diagram](uds-slide-adata.svg)
+![Describe the figure here — swap this for your own diagram](../uds/asset/uds-slide-adata.svg)
 
 - One or two bullets that add what the figure cannot show.
 - Do not restate the figure's labels.

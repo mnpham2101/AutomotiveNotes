@@ -25,7 +25,7 @@
 
 ### Where UDS sits in the OSI stack
 
-![UDS/AUTOSAR communication stack mapped onto the OSI reference model](autosar-uds-osi-mapping.svg)
+![UDS/AUTOSAR communication stack mapped onto the OSI reference model](../uds/asset/autosar-uds-osi-mapping.svg)
 
 - UDS = **layer 7**. The data link provides layers 1–6.
 - ISO 14229-2 at the session layer; ISO 15765-2 / 13400-2 span transport **and** network.
@@ -91,7 +91,7 @@
 
 ### Service vs protocol — two data units
 
-![Where each data unit lives](uds-slide-service-vs-protocol.svg)
+![Where each data unit lives](../uds/asset/uds-slide-service-vs-protocol.svg)
 
 - **Vertical** = the service, inside one node. **Horizontal** = the protocol, between peers.
 - This is why there are two data units rather than one.
@@ -100,7 +100,7 @@
 
 ### A_SDU — Service Data Unit
 
-![A_SDU parameters](uds-slide-asdu.svg)
+![A_SDU parameters](../uds/asset/uds-slide-asdu.svg)
 
 - What the application handed to the application layer.
 - **A_Result** is the one parameter that never becomes part of a message.
@@ -109,7 +109,7 @@
 
 ### A_PDU — Protocol Data Unit
 
-![A_PDU parameters](uds-slide-apdu.svg)
+![A_PDU parameters](../uds/asset/uds-slide-apdu.svg)
 
 - The A_SDU plus **A_PCI** — the Service Identifier.
 - Without the A_PCI the peer cannot tell which service the bytes belong to.
@@ -118,7 +118,7 @@
 
 ### Inside A_Data — the transmitted bytes
 
-![A_Data byte layout](uds-slide-adata.svg)
+![A_Data byte layout](../uds/asset/uds-slide-adata.svg)
 
 - Only `A_Data` goes on the wire; addressing is handed to the lower layers.
 - Negative responses are always exactly 3 bytes.
@@ -148,7 +148,7 @@
 
 ### Where DCM and DEM sit
 
-![DCM and DEM in the AUTOSAR layered architecture](autosar-dcm-dem.svg)
+![DCM and DEM in the AUTOSAR layered architecture](../uds/asset/autosar-dcm-dem.svg)
 
 - Both in the **Services Layer**, but different functional groups.
 - DCM → Communication Services. DEM → System Services. NvM → Memory Services.
@@ -163,7 +163,7 @@
 
 ### DCM — call flow
 
-![DCM internal submodules and call flow](autosar-dcm-relation.svg)
+![DCM internal submodules and call flow](../uds/asset/autosar-dcm-relation.svg)
 
 - Request: PduR → DSL → DSD → DSP. The response returns the same way.
 - DSP calls RTE/SWC for application data, DEM for DTC data.
@@ -179,7 +179,7 @@
 
 ### DEM — call flow
 
-![DEM internal architecture and call flow](1784716420683_autosar-dem-relation.svg)
+![DEM internal architecture and call flow](../uds/asset/autosar-dem-relation.svg)
 
 - SWC monitor reports a fault via RTE; debouncing confirms it before storage.
 - FIM is notified so dependent functions can be inhibited; NvM persists the entry.

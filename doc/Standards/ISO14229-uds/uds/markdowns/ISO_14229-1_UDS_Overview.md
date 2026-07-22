@@ -31,7 +31,7 @@ The ISO document does not go further than that — it does not itself specify wh
 
 The mapping below is therefore drawn from general AUTOSAR/ISO 15765 architecture knowledge, not from ISO 14229-1 itself.
 
-![UDS/AUTOSAR communication stack mapped onto the OSI reference model](autosar-uds-osi-mapping.svg)
+![UDS/AUTOSAR communication stack mapped onto the OSI reference model](../asset/autosar-uds-osi-mapping.svg)
 
 A few clarifications on that mapping:
 
@@ -66,7 +66,7 @@ ISO 14229-1 groups its services into **functional units**, one per clause. The *
 - **A_SDU** (Application layer **Service** Data Unit) — parameters passed across the service primitive, application ↔ application layer; never leaves the ECU. Figure 1: `SA, TA, TAtype, [parameter#1, parameter#2, …]`. [Clause 6.4]
 - **A_PDU** (Application layer **Protocol** Data Unit) — "directly constructed from the A_SDU and the layer specific control information A_PCI"; what one application layer sends to its peer. Figure 1: `SA, TA, TAtype, `**`A_PCI`**`, [parameter#1, parameter#2, …]`. [Clause 7.2]
 
-![ISO 14229-1 message structure: A_SDU vs A_PDU](uds-sdu-pdu-format.svg)
+![ISO 14229-1 message structure: A_SDU vs A_PDU](../asset/uds-sdu-pdu-format.svg)
 
 **Parameters.** A_SDU per Clause 6.4; A_PDU per Clause 8.2, Tables 9 and 10. A dash means the field does not exist at that level.
 
@@ -97,7 +97,7 @@ Request = SID + optional sub-function + optional parameter + optional data recor
 
 Positive response: request SID + `0x40`, echoed parameters, data record. Negative response: fixed 3 bytes — `0x7F`, request SID, 1-byte NRC. [Clause 7.4, Table 3]
 
-![Common UDS message format and field mapping to DCM/DEM services](full-UDS-msg-format.svg)
+![Common UDS message format and field mapping to DCM/DEM services](../asset/full-UDS-msg-format.svg)
 
 | Service                    | SID / Response SID | Sub-function                             | Parameter                     | Data record                                                                        |
 | -------------------------- | ------------------ | ---------------------------------------- | ----------------------------- | ---------------------------------------------------------------------------------- |
@@ -171,7 +171,7 @@ Both DCM and DEM are BSW modules that live in the **Services Layer**, below the 
 - **DEM is in System Services**, alongside modules like EcuM, ComM, BswM, Det, and Dlt. [AUTOSAR CP SWS Diagnostic Event Manager]
 - **NvM (used by DEM to persist event data) is in Memory Services**, a separate functional group from both.
 
-![DCM and DEM in the AUTOSAR layered architecture](autosar-dcm-dem.svg)
+![DCM and DEM in the AUTOSAR layered architecture](../asset/autosar-dcm-dem.svg)
 
 - DCM sits between the diagnostic tester (via the communication stack: PduR, CanTp/CanIf, or DoIP/SoAd) and the rest of the ECU, translating UDS requests into internal calls.
 - DEM sits between the application layer (SWCs with monitor functions that detect faults) and NvM (to persist event data), and it exposes DTC/event data to DCM on request.
@@ -189,7 +189,7 @@ Both DCM and DEM are BSW modules that live in the **Services Layer**, below the 
 
 #### 2.2.2 DCM basic call flow 
 
-![DCM internal submodules and call flow](autosar-dcm-relation.svg)
+![DCM internal submodules and call flow](../asset/autosar-dcm-relation.svg)
 
 1. Tester sends a UDS request → arrives via the communication stack → **PduR** hands it to **DSL**.
 2. **DSL** buffers the message and notifies **DSD** of the new request.
@@ -213,7 +213,7 @@ Both DCM and DEM are BSW modules that live in the **Services Layer**, below the 
 
 ### 2.3.1 DEM basic call flow 
 
-![DEM internal architecture and call flow](autosar-dem-relation.svg)
+![DEM internal architecture and call flow](../asset/autosar-dem-relation.svg)
 
 1. A **SWC monitor** detects a fault condition and reports it via **RTE** (`Dem_SetEventStatus` / `Dem_ReportErrorStatus`).
 2. DEM's **debouncing** logic confirms the fault before treating it as failed.
