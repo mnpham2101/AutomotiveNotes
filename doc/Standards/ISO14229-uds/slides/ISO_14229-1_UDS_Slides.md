@@ -18,10 +18,14 @@
 
 - **Client** = diagnostic tester, usually off-board.
 - **Server** = a function inside an ECU, not the ECU itself.
-- Client requests a service; server performs it and responds.
+- Client requests a service; the server validates, executes, then answers — positive response, negative response with an NRC, or nothing when the positive response is suppressed.
+- Response behavior follows rules Figure 5, 6 Clause 7.5, followed by check on mandatory fields (ServiceId, Subfunction) in UDS request message.  
+- One diagnostic protocol instance per server — **one request at a time**, held until the final response is sent. One diagnostic protocol instance can only handle one request at a time
 - Roles are independent of the data link. Multiple clients may exist.
 
-`[Clause 1 Scope; Clause 6.1]`
+`[Clause 1 Scope; 6.1; server response rules 7.5.2, 7.5.6]`
+
+> note: There is no general server response behaviour available for request messages without sub-function parameter (7.5.4.1) — each such service defines its own response table.
 
 ### Where UDS sits in the OSI stack
 
@@ -37,55 +41,58 @@
 
 ### Services are grouped into functional units
 
-| Clause | Functional unit | Services |
-| --- | --- | --- |
-| 9 | Diagnostic and Communication Management | 10 |
-| 10 | Data Transmission | 7 |
-| 11 | Stored Data Transmission | 2 |
-| 12 | InputOutput Control | 1 |
-| 13 | Routine | 1 |
-| 14 | Upload Download | 5 |
+- 6 functional units are described in ISO14229-2013, one clause per function unit from Clause 9->14
 
-- 26 services total. One clause per functional unit.
+| Clause | Functional unit                         |
+| ------ | --------------------------------------- |
+| 9      | Diagnostic and Communication Management |
+| 10     | Data Transmission                       |
+| 11     | Stored Data Transmission                |
+| 12     | InputOutput Control                     |
+| 13     | Routine                                 |
+| 14     | Upload Download                         |
+
+- Each functional unit may provide one or several services.
 
 `[Clause 9.1, Table 22]`
 
 ### Diagnostic and Communication Management — the 10 services
 
-| Service | What it does |
-| --- | --- |
-| DiagnosticSessionControl | Enables a diagnostic session |
-| ECUReset | Forces a server reset |
-| SecurityAccess | Unlocks restricted data and services |
-| CommunicationControl | Switches message classes on/off |
-| TesterPresent | Signals the client is still connected |
-| AccessTimingParameter | Reads/changes communication timing |
-| SecuredDataTransmission | Transmits in cryptographically secured mode |
-| ControlDTCSetting | Stops/resumes DTC status bit updating |
-| ResponseOnEvent | Runs a service automatically on an event |
-| LinkControl | Reconfigures the link, e.g. baudrate |
-
-- These manage the diagnostic **conversation**, not payload data.
-
+- Provide 10 services:
+  
+| Service                  | What it does                                |
+| ------------------------ | ------------------------------------------- |
+| DiagnosticSessionControl | Enables a diagnostic session                |
+| ECUReset                 | Forces a server reset                       |
+| SecurityAccess           | Unlocks restricted data and services        |
+| CommunicationControl     | Switches message classes on/off             |
+| TesterPresent            | Signals the client is still connected       |
+| AccessTimingParameter    | Reads/changes communication timing          |
+| SecuredDataTransmission  | Transmits in cryptographically secured mode |
+| ControlDTCSetting        | Stops/resumes DTC status bit updating       |
+| ResponseOnEvent          | Runs a service automatically on an event    |
+| LinkControl              | Reconfigures the link, e.g. baudrate        |
 `[Table 22; per-service descriptions 9.2.1 – 9.11.1]`
 
-### RoutineControl (0x31)
+### DiagnosticSessionControl service
 
-- Runs a defined sequence of steps in the server and returns results.
-- Typical uses: memory erase, self-test, adaptive-value learning.
-- Routine addressed by a 2-byte **routineIdentifier**.
-- Three sub-functions: **start** (mandatory), **stop**, **request results**.
-
-`[Clause 13.2.1]`
-
-### DiagnosticSessionControl (0x10)
-
-- Switches the server between diagnostic sessions.
-- Each session enables a different set of services — **the OEM defines which**.
-- Exactly one session active at a time; server powers up in defaultSession.
-- Sessions: default, programming, extended, safetySystem.
+- A service provided by DCM functional unit
+- A **session** — a server state that enables a specific set of diagnostic services and functionality. Four are defined: default, programming, extended, safetySystem.
+- Switches the server between diagnostic **sessions** — exactly one active at a time; the server powers up in defaultSession.
+- **Provides to the client** — a different set of enabled services and functionality per **session**, plus the timing values valid for it; **the OEM defines which**.
+- **Typical use** — extendedDiagnosticSession before routines or writes, programmingSession before a reflash, defaultSession once finished.
 
 `[Clause 9.2.1]`
+
+### Routine Control function unit
+
+- This functional unit specifies the services of remote activation of routines, as they shall be implemented in servers and client. Provide single service `RoutineControl`
+- `RoutineControl` service runs a defined sequence of steps in the server and returns results.
+- **Provides to the client** — remote activation and control of a routine that executes inside the server, plus the results it produces; the routines themselves are manufacturer-defined.
+- **Session used** — allowed in the defaultSession; a non-default **session** is required only for secured routines (SecurityAccess is not available in defaultSession) or for a routine the client must stop actively.
+- **Typical use** — memory erase (programmingSession, during a reflash), self-test, adaptive-value learning; also overriding the normal control strategy or driving a value over time.
+
+`[Clause 13.1, 13.2.1; Table 23 and its note e]`
 
 ## Section 3 — Message Structure
 
@@ -123,18 +130,30 @@
 - Only `A_Data` goes on the wire; addressing is handed to the lower layers.
 - Negative responses are always exactly 3 bytes.
 
-`[Clause 7.3, 7.4]`
+`[Clause 8.2 request message; 7.4 negative response]`
+
+### The sub-function byte
+
+![Sub-function byte structure — bit 7 is SPRMIB, bits 6–0 carry the sub-function value](../uds/asset/uds-slide-subfunction.svg)
+
+- Present only in services that define one — always **exactly 1 byte, 8 bits**.
+- Bit 7 = **SPRMIB**, suppressPosRspMsgIndicationBit; bits 6–0 = the sub-function value, 0x00–0x7F.
+- Both SPRMIB values must be supported for every sub-function value the server supports.
+
+`[Clause 8.2.2, Tables 11 and 14]`
+
+> note: There is no general server response behaviour available for request messages without sub-function parameter (7.5.4.1).
 
 ### Where the data comes from
 
-| Service | Data record sourced from |
-| --- | --- |
-| ReadDataByIdentifier / WriteDataByIdentifier | RTE / SWC |
-| RoutineControl | RTE / SWC |
-| DiagnosticSessionControl | Server timing parameters |
-| ReadDTCInformation | **DEM** |
-| ClearDiagnosticInformation | **DEM** |
-| ControlDTCSetting | **DEM** |
+| Service                                      | Data record sourced from |
+| -------------------------------------------- | ------------------------ |
+| ReadDataByIdentifier / WriteDataByIdentifier | RTE / SWC                |
+| RoutineControl                               | RTE / SWC                |
+| DiagnosticSessionControl                     | Server timing parameters |
+| ReadDTCInformation                           | **DEM**                  |
+| ClearDiagnosticInformation                   | **DEM**                  |
+| ControlDTCSetting                            | **DEM**                  |
 
 - Identical message shape either way — only the data source differs.
 

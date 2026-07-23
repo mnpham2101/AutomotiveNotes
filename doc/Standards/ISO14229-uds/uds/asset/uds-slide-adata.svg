@@ -5,7 +5,7 @@
       &lt;root&gt;
         &lt;mxCell id=&quot;0&quot; /&gt;
         &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;
-        &lt;mxCell id=&quot;n1&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Inside A_Data — the transmitted bytes  (Clause 7.3)&quot;&gt;
+        &lt;mxCell id=&quot;n1&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;&quot; value=&quot;Inside A_Data — the transmitted bytes  (Clause 8.2)&quot;&gt;
           &lt;mxGeometry x=&quot;0&quot; y=&quot;12&quot; width=&quot;960&quot; height=&quot;22&quot; as=&quot;geometry&quot; /&gt;
         &lt;/mxCell&gt;
         &lt;mxCell id=&quot;n2&quot; parent=&quot;1&quot; vertex=&quot;1&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;&quot; value=&quot;A_PCI is 1 byte (SI) for requests and positive responses, 2 bytes (NR_SI + SI) for negative responses.&quot;&gt;
@@ -65,7 +65,7 @@
 &lt;/mxfile&gt;">
 <rect width="960" height="290" fill="#ffffff"/>
 <defs><marker id="ah" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#263238"/></marker><marker id="at" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="9 0, 0 3.5, 9 7" fill="#263238"/></marker></defs>
-<text x="480.0" y="28.4" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="15.0" font-weight="700" fill="#14337a" text-anchor="middle">Inside A_Data — the transmitted bytes  (Clause 7.3)</text>
+<text x="480.0" y="28.4" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="15.0" font-weight="700" fill="#14337a" text-anchor="middle">Inside A_Data — the transmitted bytes  (Clause 8.2)</text>
 <text x="20.0" y="53.8" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="10.5" font-weight="400" fill="#607d8b" text-anchor="start">A_PCI is 1 byte (SI) for requests and positive responses, 2 bytes (NR_SI + SI) for negative responses.</text>
 <text x="20.0" y="99.0" font-family="DejaVu Sans, Verdana, Geneva, sans-serif" font-size="11.0" font-weight="700" fill="#263238" text-anchor="start">Request</text>
 <rect x="168" y="70" width="150" height="50" rx="2" fill="#fff3e0" stroke="#f26f21" stroke-width="1"/>

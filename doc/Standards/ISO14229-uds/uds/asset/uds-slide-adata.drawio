@@ -4,7 +4,7 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="n1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="Inside A_Data — the transmitted bytes  (Clause 7.3)">
+        <mxCell id="n1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="Inside A_Data — the transmitted bytes  (Clause 8.2)">
           <mxGeometry x="0" y="12" width="960" height="22" as="geometry" />
         </mxCell>
         <mxCell id="n2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="A_PCI is 1 byte (SI) for requests and positive responses, 2 bytes (NR_SI + SI) for negative responses.">
