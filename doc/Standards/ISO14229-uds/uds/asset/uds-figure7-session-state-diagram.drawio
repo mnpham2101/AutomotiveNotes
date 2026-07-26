@@ -1,0 +1,61 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-figure7-session-state-diagram" id="uds-figure7-session-state-diagram">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="420" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="f1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="Figure 7 — Server diagnostic session state diagram (Clause 9.2.1)"><mxGeometry x="0" y="8" width="800" height="22" as="geometry" /></mxCell>
+
+        <!-- States -->
+        <mxCell id="fDefault" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=13;fontFamily=DejaVu Sans;fontStyle=1;fontColor=#263238;" value="default&#10;session"><mxGeometry x="100" y="150" width="200" height="100" as="geometry" /></mxCell>
+        <mxCell id="fOther" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=13;fontFamily=DejaVu Sans;fontStyle=1;fontColor=#263238;" value="any&#10;other&#10;session"><mxGeometry x="500" y="150" width="200" height="100" as="geometry" /></mxCell>
+
+        <!-- Self-loop 1: default -> default -->
+        <mxCell id="fLoop1" parent="1" edge="1" source="fDefault" target="fDefault" style="edgeStyle=none;curved=1;html=1;endArrow=block;endFill=1;strokeColor=#2e7d32;exitX=0.08;exitY=0.25;exitDx=0;exitDy=0;entryX=0.08;entryY=0.75;entryDx=0;entryDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="30" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fLabel1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontFamily=DejaVu Sans;fontStyle=1;fontColor=#2e7d32;" value="1"><mxGeometry x="10" y="185" width="40" height="30" as="geometry" /></mxCell>
+
+        <!-- Self-loop 3: other -> other -->
+        <mxCell id="fLoop3" parent="1" edge="1" source="fOther" target="fOther" style="edgeStyle=none;curved=1;html=1;endArrow=block;endFill=1;strokeColor=#1565c0;exitX=0.92;exitY=0.25;exitDx=0;exitDy=0;entryX=0.92;entryY=0.75;entryDx=0;entryDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="770" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fLabel3" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontFamily=DejaVu Sans;fontStyle=1;fontColor=#1565c0;" value="3"><mxGeometry x="750" y="185" width="40" height="30" as="geometry" /></mxCell>
+
+        <!-- Transition 2: default -> other (top arc) -->
+        <mxCell id="fArc2" parent="1" edge="1" source="fDefault" target="fOther" style="edgeStyle=none;curved=1;html=1;endArrow=block;endFill=1;strokeColor=#455a64;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="75" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fLabel2" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontFamily=DejaVu Sans;fontStyle=1;fontColor=#455a64;" value="2"><mxGeometry x="380" y="45" width="40" height="30" as="geometry" /></mxCell>
+
+        <!-- Transition 4: other -> default (bottom arc) -->
+        <mxCell id="fArc4" parent="1" edge="1" source="fOther" target="fDefault" style="edgeStyle=none;curved=1;html=1;endArrow=block;endFill=1;strokeColor=#455a64;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fLabel4" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontFamily=DejaVu Sans;fontStyle=1;fontColor=#455a64;" value="4"><mxGeometry x="380" y="335" width="40" height="30" as="geometry" /></mxCell>
+
+        <!-- Footer -->
+        <mxCell id="fFoot" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="Transition labels 1-4 correspond to the rows of the Session Transition Behavior table."><mxGeometry x="0" y="385" width="800" height="16" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

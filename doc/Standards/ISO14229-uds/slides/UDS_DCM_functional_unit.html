@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagnostic and Communication Management functional unit</title>
+<style>
+:root{
+  --ink:#263238; --ink-2:#37474f; --muted:#607d8b; --faint:#90a4ae;
+  --rule:#b0bec5; --rule-soft:#cfd8dc; --wash:#eceff1; --page:#f7f9fb;
+  --navy:#14337a; --blue:#1565c0; --blue-wash:#e3f2fd;
+  --accent:#f26f21; --accent-dark:#e65100; --accent-wash:#fff3e0;
+  --green:#2e7d32; --green-wash:#e8f5e9; --red:#c62828;
+  --font:"DejaVu Sans",Verdana,Geneva,sans-serif;
+  --mono:"DejaVu Sans Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--wash);color:var(--ink);font-family:var(--font);
+     font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ---------------------------------------------------------------- shell */
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+nav{background:var(--ink);color:#fff;padding:26px 0 40px;position:sticky;top:0;
+    height:100vh;overflow-y:auto}
+nav .brand{padding:0 22px 18px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:14px}
+nav .brand b{display:block;font-size:15px;line-height:1.35}
+nav .brand span{display:block;color:var(--faint);font-size:11.5px;margin-top:6px}
+nav .grp{color:var(--accent);font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;
+         padding:16px 22px 6px;font-weight:700}
+nav a{display:block;color:#cfd8dc;text-decoration:none;font-size:13px;
+      padding:6px 22px 6px 26px;border-left:3px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav a.on{color:#fff;border-left-color:var(--accent);background:rgba(242,111,33,.14)}
+
+main{padding:0}
+.rail{position:fixed;top:0;left:264px;right:0;height:3px;background:transparent;z-index:20}
+.rail i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* ---------------------------------------------------------------- slides */
+.slide{min-height:100vh;padding:64px 76px 92px;display:flex;flex-direction:column;
+       justify-content:center;background:var(--page);border-bottom:1px solid var(--rule-soft);
+       position:relative;scroll-margin-top:0}
+.slide-inner{max-width:1080px;width:100%;margin:0 auto}
+.slide h2{margin:0 0 30px;font-size:34px;line-height:1.2;color:var(--navy);font-weight:700;
+          letter-spacing:-.01em}
+.slide h2::after{content:"";display:block;width:64px;height:4px;background:var(--accent);
+                 margin-top:16px;border-radius:2px}
+
+.slide ul{margin:0;padding-left:0;list-style:none}
+.slide li{position:relative;padding:0 0 0 30px;margin:0 0 14px;font-size:19px;line-height:1.5}
+.slide li::before{content:"";position:absolute;left:6px;top:.62em;width:8px;height:8px;
+                  background:var(--accent);border-radius:50%}
+.slide li strong{color:var(--navy)}
+.slide p{font-size:18px}
+.slide code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
+            color:var(--blue);padding:2px 6px;border-radius:3px}
+
+figure{margin:0 0 26px;text-align:center}
+figure img{max-width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:4px;
+           background:#fff}
+
+table{border-collapse:collapse;width:100%;margin:0 0 22px;font-size:16px;background:#fff}
+th{background:var(--ink);color:#fff;text-align:left;padding:11px 14px;font-weight:700;font-size:14px}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:nth-child(even) td{background:var(--page)}
+td strong{color:var(--accent-dark)}
+
+.ref{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.ref::before{content:"▸ ";color:var(--accent)}
+.note{display:none}
+
+.foot{position:absolute;left:76px;right:76px;bottom:26px;display:flex;
+      justify-content:space-between;align-items:center;font-size:11.5px;color:var(--faint);
+      border-top:1px solid var(--rule-soft);padding-top:10px}
+.foot .n{font-family:var(--mono)}
+
+/* ------------------------------------------------------- title & divider */
+.slide.title{background:var(--ink);color:#fff;text-align:center}
+.slide.title h1{margin:0;font-size:50px;line-height:1.15;color:#fff;font-weight:700;
+                letter-spacing:-.02em}
+.slide.title .bar{width:96px;height:5px;background:var(--accent);margin:26px auto;border-radius:3px}
+.slide.title .sub{font-size:21px;color:var(--rule)}
+.slide.title .meta{margin-top:44px;font-size:12.5px;color:var(--faint);font-family:var(--mono)}
+.slide.title .foot{display:none}
+
+.slide.divider{background:var(--navy);color:#fff}
+.slide.divider .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+                       color:var(--accent);font-weight:700;margin-bottom:14px}
+.slide.divider h2{color:#fff;font-size:42px}
+.slide.divider h2::after{background:var(--accent)}
+.slide.divider ol{margin:26px 0 0;padding-left:20px;color:var(--rule);font-size:17px}
+.slide.divider li{font-size:17px}
+.slide.divider li::before{background:var(--rule)}
+
+/* ---------------------------------------------------------------- print */
+@media print{
+  nav,.rail{display:none}
+  .shell{display:block}
+  body{background:#fff}
+  .slide{min-height:auto;height:19.0cm;page-break-after:always;break-after:page;
+         padding:36px 44px 60px;border:0}
+  .slide h2{font-size:26px}.slide li{font-size:15px;margin-bottom:9px}
+  .slide.title h1{font-size:38px}
+  .note{display:block;margin-top:18px;padding:10px 14px;background:var(--wash);
+        border-left:3px solid var(--faint);font-size:12px;color:var(--ink-2)}
+  .foot{left:44px;right:44px;bottom:16px}
+  @page{size:A4 landscape;margin:8mm}
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav{position:static;height:auto}
+  .rail{left:0}
+  .slide{padding:44px 26px 80px;min-height:auto}
+  .slide h2{font-size:26px}.slide li{font-size:16px}
+  .foot{left:26px;right:26px}
+}
+</style>
+</head><body>
+<div class="rail"><i></i></div>
+<div class="shell">
+<nav><div class="brand"><b>Diagnostic and Communication Management functional unit</b><span>ISO 14229-1:2013 — Service 0x10</span></div><a href="#s0" data-i="0">Title</a>
+<div class="grp">Section 1 — Diagnostic Session Control service</div>
+<a href="#s1" data-i="1">Overview</a>
+<a href="#s2" data-i="2">Introduction</a>
+<a href="#s3" data-i="3">Session — Key Concepts</a>
+<a href="#s4" data-i="4">Session Transition Behavior (Server-Side) [Clause 9.2.1, Figure 7]</a>
+<a href="#s5" data-i="5">Non-default Session Expiry</a>
+<a href="#s6" data-i="6">Session List — Overview [Clause 9.2.2.2, Table 25]</a>
+<a href="#s7" data-i="7">Session Info in UDS Request</a>
+<a href="#s8" data-i="8">Special Notes: programmingSession Exit [Clause 9.2.2.2, Table 25 — 0x02 programmingSession]</a>
+<div class="grp">Section 2 — ECU Reset Service</div>
+<a href="#s9" data-i="9">Overview</a>
+<div class="grp">Section 3 — Security Access</div>
+<a href="#s10" data-i="10">Overview</a>
+<div class="grp">Section 4 — Communication Control</div>
+<a href="#s11" data-i="11">Overview</a></nav>
+<main><section class="slide title" id="s0"><div class="slide-inner">
+<h1>Diagnostic and Communication Management functional unit</h1>
+<div class="bar"></div>
+<div class="sub">ISO 14229-1:2013 — Service 0x10</div>
+</div></section>
+<section class="slide divider" id="s1"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 1 — Diagnostic Session Control service</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">1 / 11</span></div></section>
+<section class="slide" id="s2"><div class="slide-inner"><h2>Introduction</h2>
+<ul>
+<li><strong>Service:</strong> <code>DiagnosticSessionControl</code> (SID <strong>0x10</strong>) [Clause 9.2]</li>
+<li><strong>Owner unit:</strong> Diagnostic &amp; Communication Management (DCM) functional unit [Clause 9.1, Table 22]</li>
+<li><strong>Purpose:</strong> enables different <strong>diagnostic sessions</strong> in the server (ECU) [Clause 9.2.1]</li>
+<li>A diagnostic session enables a <strong>specific set of services / functionality</strong> in the server [Clause 9.2.1]</li>
+<li>Server may also report data-link timing parameters valid for the active session [Clause 9.2.1]</li>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">2 / 11</span></div></section>
+<section class="slide" id="s3"><div class="slide-inner"><h2>Session — Key Concepts</h2>
+<ul>
+<li><strong>One session at a time</strong></li>
+<li>There shall <strong>always be exactly one</strong> diagnostic session active in a server [Clause 9.2.1]</li>
+<li>Server <strong>always starts in <code>defaultSession</code></strong> on power-up [Clause 9.2.1]</li>
+<li>
+<p>Stays in <code>defaultSession</code> unless another session is explicitly requested [Clause 9.2.1]</p>
+</li>
+<li>
+<p><strong>Identifying field</strong></p>
+</li>
+<li>Sub-function byte <strong><code>diagnosticSessionType</code></strong> (request byte #2, range <code>0x00–0xFF</code>) [Clause 9.2.2.1, Table 24]</li>
+<li>
+<p>This value both <strong>selects</strong> and <strong>reports back</strong> (in the positive response) the active session [Clause 9.2.2.2, Table 25; Clause 9.2.3.1, Table 26]</p>
+</li>
+<li>
+<p><strong>How to enter a session</strong></p>
+</li>
+<li>Client sends request: <code>0x10 &lt;diagnosticSessionType&gt;</code> [Clause 9.2.2.1, Table 24]</li>
+<li>Server replies positive: <code>0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord]</code> [Clause 9.2.3.1, Table 26]</li>
+<li>Server may impose entry conditions (examples from the standard) [Clause 9.2.1]:<ul>
+<li>Restricted to a specific <strong>client diagnostic address</strong></li>
+<li><strong>Safety conditions</strong> (e.g. vehicle not moving, engine off)</li>
+</ul>
+</li>
+<li>
+<p>If conditions aren't met → <strong>negative response</strong>, current session continues unchanged [Clause 9.2.1]</p>
+</li>
+<li>
+<p><strong>Non-default sessions are supersets</strong></p>
+</li>
+<li>Functionality of <code>defaultSession</code> is included in every non-default session (<strong>except <code>programmingSession</code></strong>) [Clause 9.2.1]</li>
+<li>Non-default sessions require an active <strong>session timer</strong>, kept alive by <code>TesterPresent</code> (0x3E) [Clause 9.2.1, Table 23]</li>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">3 / 11</span></div></section>
+<section class="slide" id="s4"><div class="slide-inner"><h2>Session Transition Behavior (Server-Side) [Clause 9.2.1, Figure 7]</h2>
+<figure><img alt="Figure 7 — Server diagnostic session state diagram" src="uds-figure7-session-state-diagram.svg" /></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Label</th>
+<th>Transition</th>
+<th>Server Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td><code>default</code> → <code>default</code> (re-request)</td>
+<td><br> Full re-initialization of the session; <br> reset all activated/changed settings, <br>  no changes to non-volatile memory</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td><code>default</code> → <code>other</code></td>
+<td>Stop all events configured via <code>ResponseOnEvent</code> (0x86)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td><code>other</code> → <code>other</code> (same or different)</td>
+<td><br>  Stop RoE events; <br>  <strong>re-lock security</strong> and reset any dependent active diagnostic functionality; <br>  keep other active functionality (e.g. periodic scheduler, CommunicationControl, ControlDTCSetting)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td><code>other</code> → <code>default</code></td>
+<td><br> Stop all events configured via <code>ResponseOnEvent</code> (0x86); <br> terminate/reset functionality not supported in defaultSession (e.g. restore normal communication, DTC setting); <br> no changes to non-volative memory</td>
+</tr>
+</tbody>
+</table></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">4 / 11</span></div></section>
+<section class="slide" id="s5"><div class="slide-inner"><h2>Non-default Session Expiry</h2>
+<ul>
+<li>per Table 23 note (Clause 9.2.1):</li>
+</ul>
+<blockquote>
+<p>"Any non-defaultSession is tied to a diagnostic session timer that has to be kept active by the client."</p>
+</blockquote>
+<ul>
+<li>a server in non-default session kept an internal timer and falls back to default session per timer expiry.</li>
+<li>The client keeps the timer from expiring either by:</li>
+<li>sending other diagnostic service requests, or</li>
+<li>sending TesterPresent (0x3E) periodically when no other diagnostic traffic is happening (Clause 9.6.1)</li>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">5 / 11</span></div></section>
+<section class="slide" id="s6"><div class="slide-inner"><h2>Session List — Overview [Clause 9.2.2.2, Table 25]</h2>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Session</th>
+<th>Mnemonic</th>
+<th>Cvt</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x00</code></td>
+<td>ISOSAEReserved</td>
+<td>ISOSAERESRVD</td>
+<td>M</td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td><strong><code>0x01</code></strong></td>
+<td><strong>defaultSession</strong></td>
+<td>DS</td>
+<td>M</td>
+<td>Normal operating mode; no timeout handling needed; entered automatically at power-up</td>
+</tr>
+<tr>
+<td><code>0x02</code></td>
+<td>programmingSession</td>
+<td>PRGS</td>
+<td>U</td>
+<td>Enables services for <strong>memory programming</strong> (flashing) of the server</td>
+</tr>
+<tr>
+<td><code>0x03</code></td>
+<td>extendedDiagnosticSession</td>
+<td>EXTDS</td>
+<td>U</td>
+<td>Enables services for adjusting functions (e.g. idle speed, CO value) and other non-default/timed services</td>
+</tr>
+<tr>
+<td><code>0x04</code></td>
+<td>safetySystemDiagnosticSession</td>
+<td>SSDS</td>
+<td>U</td>
+<td>Enables services supporting <strong>safety-system</strong> functions (e.g. airbag deployment)</td>
+</tr>
+<tr>
+<td><code>0x05–0x3F</code></td>
+<td>ISOSAEReserved</td>
+<td>ISOSAERESRVD</td>
+<td>M</td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td><code>0x40–0x5F</code></td>
+<td>vehicleManufacturerSpecific</td>
+<td>VMS</td>
+<td>U</td>
+<td>OEM-defined sessions</td>
+</tr>
+<tr>
+<td><code>0x60–0x7E</code></td>
+<td>systemSupplierSpecific</td>
+<td>SSS</td>
+<td>U</td>
+<td>Supplier-defined sessions</td>
+</tr>
+<tr>
+<td><code>0x7F</code></td>
+<td>ISOSAEReserved</td>
+<td>ISOSAERESRVD</td>
+<td>M</td>
+<td>Reserved</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Cvt: M = Mandatory, U = User-optional per implementation)</em></p>
+<ul>
+<li>Clause 9.2.1, Table 23 maps the services to allowable defaultSession and non-defaultSession.</li>
+</ul>
+<div class="note"><b>Note — </b>The session value above is embedded in **bits 6-0** of the sub-function byte of the UDS request (bit 7 is the separate SPRMIB flag). Further detail of the message structure is in the next slide.</div></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">6 / 11</span></div></section>
+<section class="slide" id="s7"><div class="slide-inner"><h2>Session Info in UDS Request</h2>
+<figure><img alt="Request message A_Data structure" src="uds-request-message-structure.svg" /></figure>
+<ul>
+<li><strong>A_Data byte #1</strong> — Service ID: <code>0x10</code> (DiagnosticSessionControl / DSC) [Clause 9.2.2.1, Table 24]</li>
+<li><strong>A_Data byte #2</strong> — the sub-function byte, <code>sub-function = [diagnosticSessionType]</code> [Clause 9.2.2.1, Table 24]</li>
+<li><strong>Bit 7</strong> — <code>SPRMIB</code> (suppressPosRspMsgIndicationBit), <code>0x80</code></li>
+<li><strong>Bits 6-0</strong> — together form <strong>one 7-bit field</strong>, <code>diagnosticSessionType</code>, range <code>0x00 – 0x7F</code>; a session is a <em>value</em> of that whole field, not a single bit [Clause 9.2.2.2, Table 25]</li>
+<li>The positive response echoes the same value: <code>0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord]</code> [Clause 9.2.3.1, Table 26]</li>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">7 / 11</span></div></section>
+<section class="slide" id="s8"><div class="slide-inner"><h2>Special Notes: programmingSession Exit [Clause 9.2.2.2, Table 25 — 0x02 programmingSession]</h2>
+<ul>
+<li>Only exit routes when <code>programmingSession</code> runs in <strong>boot software</strong>:
+  1. <code>ECUReset</code> (0x11) initiated by client
+  2. <code>DiagnosticSessionControl</code> with <code>sessionType = defaultSession</code>
+  3. Session layer timeout</li>
+<li>On exit (defaultSession request or timeout), if valid application software exists → server <strong>restarts the application</strong></li>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">8 / 11</span></div></section>
+<section class="slide divider" id="s9"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 2 — ECU Reset Service</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">9 / 11</span></div></section>
+<section class="slide divider" id="s10"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 3 — Security Access</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">10 / 11</span></div></section>
+<section class="slide divider" id="s11"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 4 — Communication Control</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">11 / 11</span></div></section></main>
+</div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var bar=document.querySelector('.rail i');
+  function current(){
+    var best=0,bd=1e9;
+    slides.forEach(function(s,i){var d=Math.abs(s.getBoundingClientRect().top);
+      if(d<bd){bd=d;best=i}});
+    return best;
+  }
+  function sync(){
+    var i=current();
+    links.forEach(function(a){a.classList.toggle('on',a.dataset.i===String(i))});
+    if(bar)bar.style.width=(slides.length<2?100:(i/(slides.length-1))*100)+'%';
+  }
+  addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync);
+  addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    var i=current(),t=null;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')t=i+1;
+    if(e.key==='ArrowUp'||e.key==='ArrowLeft'||e.key==='PageUp')t=i-1;
+    if(e.key==='Home')t=0;
+    if(e.key==='End')t=slides.length-1;
+    if(t===null)return;
+    e.preventDefault();
+    slides[Math.max(0,Math.min(slides.length-1,t))].scrollIntoView({behavior:'smooth'});
+  });
+  sync();
+})();
+</script>
+</body></html>

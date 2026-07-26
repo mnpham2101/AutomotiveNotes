@@ -1,0 +1,47 @@
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="800" height="420" fill="#ffffff"/>
+
+  <defs>
+    <marker id="fig7arrow-green" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#2e7d32"/>
+    </marker>
+    <marker id="fig7arrow-blue" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#1565c0"/>
+    </marker>
+    <marker id="fig7arrow-gray" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#455a64"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">Figure 7 — Server diagnostic session state diagram (Clause 9.2.1)</text>
+
+  <!-- States -->
+  <ellipse cx="200" cy="200" rx="100" ry="50" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="200" y="196" text-anchor="middle" font-size="13" font-weight="bold" fill="#263238">default</text>
+  <text x="200" y="214" text-anchor="middle" font-size="13" font-weight="bold" fill="#263238">session</text>
+
+  <ellipse cx="600" cy="200" rx="100" ry="50" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="600" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#263238">any</text>
+  <text x="600" y="205" text-anchor="middle" font-size="13" font-weight="bold" fill="#263238">other</text>
+  <text x="600" y="220" text-anchor="middle" font-size="13" font-weight="bold" fill="#263238">session</text>
+
+  <!-- Self-loop 1: default -> default (bulge left) -->
+  <path d="M 108,170 C 20,180 20,220 108,230" fill="none" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#fig7arrow-green)"/>
+  <text x="30" y="205" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e7d32">1</text>
+
+  <!-- Self-loop 3: other -> other (bulge right) -->
+  <path d="M 692,170 C 780,180 780,220 692,230" fill="none" stroke="#1565c0" stroke-width="1.5" marker-end="url(#fig7arrow-blue)"/>
+  <text x="770" y="205" text-anchor="middle" font-size="16" font-weight="bold" fill="#1565c0">3</text>
+
+  <!-- Transition 2: default -> other (top arc) -->
+  <path d="M 275,157 Q 400,80 525,157" fill="none" stroke="#455a64" stroke-width="1.5" marker-end="url(#fig7arrow-gray)"/>
+  <text x="400" y="70" text-anchor="middle" font-size="16" font-weight="bold" fill="#455a64">2</text>
+
+  <!-- Transition 4: other -> default (bottom arc) -->
+  <path d="M 525,243 Q 400,320 275,243" fill="none" stroke="#455a64" stroke-width="1.5" marker-end="url(#fig7arrow-gray)"/>
+  <text x="400" y="335" text-anchor="middle" font-size="16" font-weight="bold" fill="#455a64">4</text>
+
+  <!-- Footer -->
+  <text x="400" y="400" text-anchor="middle" font-size="9.5" fill="#90a4ae">Transition labels 1-4 correspond to the rows of the Session Transition Behavior table.</text>
+</svg>

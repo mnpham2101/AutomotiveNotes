@@ -1,0 +1,77 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-request-message-structure" id="uds-request-message-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="520" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title / subtitle -->
+        <mxCell id="m1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="Request message — A_Data structure (Clause 9.2.2.1, Table 24)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="m2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DiagnosticSessionControl request = 2 bytes of A_Data: Service ID (SID) followed by the sub-function byte."><mxGeometry x="20" y="36" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Byte-level labels -->
+        <mxCell id="m3" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #1"><mxGeometry x="250" y="60" width="150" height="14" as="geometry" /></mxCell>
+        <mxCell id="m4" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #2"><mxGeometry x="450" y="60" width="350" height="14" as="geometry" /></mxCell>
+
+        <!-- Byte-level boxes -->
+        <mxCell id="m5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="0x10&#10;SID: DiagnosticSessionControl (DSC)"><mxGeometry x="250" y="78" width="150" height="48" as="geometry" /></mxCell>
+        <mxCell id="m6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="sub-function = [ diagnosticSessionType ]&#10;0x00 – 0xFF"><mxGeometry x="450" y="78" width="350" height="48" as="geometry" /></mxCell>
+
+        <!-- Connectors from byte #2 down to bit-level expansion -->
+        <mxCell id="m7" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="472" y="126" as="sourcePoint" /><mxPoint x="472" y="162" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m8" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="647" y="126" as="sourcePoint" /><mxPoint x="647" y="162" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m9" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#f26f21;fontFamily=DejaVu Sans;fontStyle=2;" value="byte #2 expanded into bits"><mxGeometry x="450" y="140" width="350" height="14" as="geometry" /></mxCell>
+
+        <!-- Bit-level labels -->
+        <mxCell id="m10" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 7"><mxGeometry x="450" y="164" width="44" height="14" as="geometry" /></mxCell>
+        <mxCell id="m11" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bits 6 – 0"><mxGeometry x="494" y="164" width="306" height="14" as="geometry" /></mxCell>
+
+        <!-- Bit-level boxes -->
+        <mxCell id="m12" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="SPRMIB&#10;0x80"><mxGeometry x="450" y="180" width="44" height="44" as="geometry" /></mxCell>
+        <mxCell id="m13" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="diagnosticSessionType&#10;one 7-bit field, 0x00 – 0x7F"><mxGeometry x="494" y="180" width="306" height="44" as="geometry" /></mxCell>
+
+        <!-- Note -->
+        <mxCell id="m14" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Bit 7 = SPRMIB (single flag bit). Bits 6-0 together form ONE 7-bit number — a session is a value of that whole field (Table 25), not an individual bit."><mxGeometry x="20" y="232" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Connector down to reference table -->
+        <mxCell id="m15" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#2e7d32;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="647" y="254" as="sourcePoint" /><mxPoint x="647" y="270" as="targetPoint" /></mxGeometry></mxCell>
+
+        <mxCell id="m16" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="diagnosticSessionType field values (Clause 9.2.2.2, Table 25)"><mxGeometry x="20" y="272" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Reference table: column 1 -->
+        <mxCell id="m17" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x00"><mxGeometry x="20" y="296" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m18" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="ISOSAEReserved"><mxGeometry x="110" y="296" width="360" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="m19" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x01"><mxGeometry x="20" y="332" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m20" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="defaultSession (DS)"><mxGeometry x="110" y="332" width="360" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="m21" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x02"><mxGeometry x="20" y="368" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m22" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="programmingSession (PRGS)"><mxGeometry x="110" y="368" width="360" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="m23" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x03"><mxGeometry x="20" y="404" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m24" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="extendedDiagnosticSession (EXTDS)"><mxGeometry x="110" y="404" width="360" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="m25" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x04"><mxGeometry x="20" y="440" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m26" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="safetySystemDiagnosticSession (SSDS)"><mxGeometry x="110" y="440" width="360" height="32" as="geometry" /></mxCell>
+
+        <!-- Reference table: column 2 -->
+        <mxCell id="m27" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x05 – 0x3F"><mxGeometry x="500" y="296" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m28" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="ISOSAEReserved"><mxGeometry x="590" y="296" width="350" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="m29" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x40 – 0x5F"><mxGeometry x="500" y="332" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m30" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="vehicleManufacturerSpecific (VMS)"><mxGeometry x="590" y="332" width="350" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="m31" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f9a825;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x60 – 0x7E"><mxGeometry x="500" y="368" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m32" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f9a825;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="systemSupplierSpecific (SSS)"><mxGeometry x="590" y="368" width="350" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="m33" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x7F"><mxGeometry x="500" y="404" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="m34" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="ISOSAEReserved"><mxGeometry x="590" y="404" width="350" height="32" as="geometry" /></mxCell>
+
+        <!-- Footer notes -->
+        <mxCell id="m35" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Each row is a value (or range of values) of the same 7-bit field — the ranges are not tied to any single bit position."><mxGeometry x="20" y="480" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="m36" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Positive response echoes the same diagnosticSessionType value: 0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord] (Table 26)."><mxGeometry x="20" y="500" width="920" height="16" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

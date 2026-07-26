@@ -180,7 +180,7 @@
 - **DSD** — Diagnostic Service Dispatcher. Validates the SID, dispatches.
 - **DSP** — Diagnostic Service Processing. Executes the service, builds the response.
 
-### DCM — call flow
+### DCM — relation with other components
 
 ![DCM internal submodules and call flow](../uds/asset/autosar-dcm-relation.svg)
 
@@ -196,7 +196,7 @@
 
 > note: DEM has no formal submodule split in its SWS — these are functional groupings.
 
-### DEM — call flow
+### DEM — relation with other components
 
 ![DEM internal architecture and call flow](../uds/asset/autosar-dem-relation.svg)
 
