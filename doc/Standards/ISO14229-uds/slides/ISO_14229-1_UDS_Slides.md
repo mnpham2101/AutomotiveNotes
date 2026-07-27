@@ -1,7 +1,7 @@
 # ISO 14229-1 — Unified Diagnostic Services
 
 > subtitle: Application-layer diagnostics for automotive ECUs
-> footer: Source — ISO 14229-1:2013(E) · companion to ISO_14229-1_UDS_Overview.md
+> footer: Source — ISO 14229-1:2013(E)
 
 ## Section 1 — Foundations
 
@@ -43,18 +43,16 @@
 
 - 6 functional units are described in ISO14229-2013, one clause per function unit from Clause 9->14
 
-| Clause | Functional unit                         |
-| ------ | --------------------------------------- |
-| 9      | Diagnostic and Communication Management |
-| 10     | Data Transmission                       |
-| 11     | Stored Data Transmission                |
-| 12     | InputOutput Control                     |
-| 13     | Routine                                 |
-| 14     | Upload Download                         |
+| Clause | Functional unit                         | What it's for                                                    |
+| ------ | ---------------------------------------- | ----------------------------------------------------------------- |
+| 9      | Diagnostic and Communication Management  | Manages the diagnostic conversation — session, security, connection, DTC recording |
+| 10     | Data Transmission                        | Reads and writes manufacture data, by identifier or by memory address |
+| 11     | Stored Data Transmission                 | Reads and clears stored fault information (DTCs, snapshots)       |
+| 12     | InputOutput Control                      | Overrides an input signal or forces an actuator output            |
+| 13     | Routine                                  | Starts/stops a server-resident routine and fetches its results    |
+| 14     | Upload Download                          | Negotiates and executes bulk data/file transfer — the basis of flash programming |
 
 - Each functional unit may provide one or several services.
-- refer to [presentation](UDS_DCM_functional_unit.html) for details on Diagnostic and Communication Management.
-- refer to [presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
 `[Clause 9.1, Table 22]`
 
 ### Diagnostic and Communication Management — the 10 services
@@ -83,7 +81,14 @@
 - **Provides to the client** — a different set of enabled services and functionality per **session**, plus the timing values valid for it; **the OEM defines which**.
 - **Typical use** — extendedDiagnosticSession before routines or writes, programmingSession before a reflash, defaultSession once finished.
 
+- refer to [DCM presentation](UDS_DCM_functional_unit.html) for details on Diagnostic and Communication Management and its DiagnosticSessionControl service
+
 `[Clause 9.2.1]`
+
+### Data Transmission function unit
+
+- the functional unit grouping the services that reads/writes *dataRecord* values between client and server (ECU). 
+- refer to [presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
 
 ### Routine Control function unit
 
