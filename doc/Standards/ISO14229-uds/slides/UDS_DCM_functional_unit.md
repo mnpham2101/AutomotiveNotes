@@ -7,37 +7,36 @@
 ### Introduction
 
 - **Service:** `DiagnosticSessionControl` (SID **0x10**) [Clause 9.2]
-- **Owner unit:** Diagnostic & Communication Management (DCM) functional unit [Clause 9.1, Table 22]
-- **Purpose:** enables different **diagnostic sessions** in the server (ECU) [Clause 9.2.1]
-- A diagnostic session enables a **specific set of services / functionality** in the server [Clause 9.2.1]
+- **Purpose:** enables different *diagnostic sessions* in the server (ECU) [Clause 9.2.1]
+- A diagnostic session enables a *specific set of services / functionality* in the server [Clause 9.2.1]
 - Server may also report data-link timing parameters valid for the active session [Clause 9.2.1]
 
 ### Session — Key Concepts
 
 - **One session at a time**
-  - There shall **always be exactly one** diagnostic session active in a server [Clause 9.2.1]
-  - Server **always starts in `defaultSession`** on power-up [Clause 9.2.1]
-  - Stays in `defaultSession` unless another session is explicitly requested [Clause 9.2.1]
+    - There shall **always be exactly one** diagnostic session active in a server [Clause 9.2.1]
+    - Server **always starts in `defaultSession`** on power-up [Clause 9.2.1]
+    - Stays in `defaultSession` unless another session is explicitly requested [Clause 9.2.1]
 
 - **Identifying field**
-  - Sub-function byte **`diagnosticSessionType`** (request byte #2, range `0x00–0xFF`) [Clause 9.2.2.1, Table 24]
-  - This value both **selects** and **reports back** (in the positive response) the active session [Clause 9.2.2.2, Table 25; Clause 9.2.3.1, Table 26]
+    - Sub-function byte **`diagnosticSessionType`** (request byte #2, range `0x00–0xFF`) [Clause 9.2.2.1, Table 24]
+    - This value both **selects** and **reports back** (in the positive response) the active session [Clause 9.2.2.2, Table 25; Clause 9.2.3.1, Table 26]
 
 - **How to enter a session**
-  - Client sends request: `0x10 <diagnosticSessionType>` [Clause 9.2.2.1, Table 24]
-  - Server replies positive: `0x50 <diagnosticSessionType> [sessionParameterRecord]` [Clause 9.2.3.1, Table 26]
-  - Server may impose entry conditions (examples from the standard) [Clause 9.2.1]:
-    - Restricted to a specific **client diagnostic address**
-    - **Safety conditions** (e.g. vehicle not moving, engine off)
-  - If conditions aren't met → **negative response**, current session continues unchanged [Clause 9.2.1]
+    - Client sends request: `0x10 <diagnosticSessionType>` [Clause 9.2.2.1, Table 24]
+    - Server replies positive: `0x50 <diagnosticSessionType> [sessionParameterRecord]` [Clause 9.2.3.1, Table 26]
+    - Server may impose entry conditions (examples from the standard) [Clause 9.2.1]:
+        - Restricted to a specific **client diagnostic address**
+        - **Safety conditions** (e.g. vehicle not moving, engine off)
+    - If conditions aren't met → **negative response**, current session continues unchanged [Clause 9.2.1]
 
 - **Non-default sessions are supersets**
-  - Functionality of `defaultSession` is included in every non-default session (**except `programmingSession`**) [Clause 9.2.1]
-  - Non-default sessions require an active **session timer**, kept alive by `TesterPresent` (0x3E) [Clause 9.2.1, Table 23]
+    - Functionality of `defaultSession` is included in every non-default session (**except `programmingSession`**) [Clause 9.2.1]
+    - Non-default sessions require an active **session timer**, kept alive by `TesterPresent` (0x3E) [Clause 9.2.1, Table 23]
 
-### Session Transition Behavior (Server-Side) [Clause 9.2.1, Figure 7]
+### Session Transition Behavior 
 
-![Figure 7 — Server diagnostic session state diagram](../uds/asset/uds-figure7-session-state-diagram.svg)
+![Clause 9.2.1, Figure 7 — Server diagnostic session state diagram](../uds/asset/uds-figure7-session-state-diagram.svg)
 
 | Label | Transition | Server Action |
 |:---:|---|---|
@@ -57,7 +56,10 @@
   * sending other diagnostic service requests, or
   * sending TesterPresent (0x3E) periodically when no other diagnostic traffic is happening (Clause 9.6.1)
 
-### Session List — Overview [Clause 9.2.2.2, Table 25]
+### Session List — Overview 
+
+* sub-function param on diagnosticSessionType req msg indicates the requested session type.
+* available session types listed on Clause 9.2.2.2, Table 25: 
 
 | Value | Session | Mnemonic | Cvt | Purpose |
 |---|---|---|---|---|
@@ -81,13 +83,18 @@
 
 ![Request message A_Data structure](../uds/asset/uds-request-message-structure.svg)
 
+### Session Info in UDS Request ( Cont )
 - **A_Data byte #1** — Service ID: `0x10` (DiagnosticSessionControl / DSC) [Clause 9.2.2.1, Table 24]
+
 - **A_Data byte #2** — the sub-function byte, `sub-function = [diagnosticSessionType]` [Clause 9.2.2.1, Table 24]
-  - **Bit 7** — `SPRMIB` (suppressPosRspMsgIndicationBit), `0x80`
-  - **Bits 6-0** — together form **one 7-bit field**, `diagnosticSessionType`, range `0x00 – 0x7F`; a session is a *value* of that whole field, not a single bit [Clause 9.2.2.2, Table 25]
+    - **Bit 7** — `SPRMIB` (suppressPosRspMsgIndicationBit), `0x80`
+    - **Bits 6-0** — together form **one 7-bit field**, `diagnosticSessionType`, range `0x00 – 0x7F`; a session is a *value* of that whole field, not a single bit [Clause 9.2.2.2, Table 25]
+
 - The positive response echoes the same value: `0x50 <diagnosticSessionType> [sessionParameterRecord]` [Clause 9.2.3.1, Table 26]
 
-### Special Notes: programmingSession Exit [Clause 9.2.2.2, Table 25 — 0x02 programmingSession]
+### Special Notes: programmingSession Exit 
+
+Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 
 - Only exit routes when `programmingSession` runs in **boot software**:
   1. `ECUReset` (0x11) initiated by client

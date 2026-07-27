@@ -1,0 +1,138 @@
+<svg viewBox="0 0 960 460" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="460" fill="#ffffff"/>
+
+  <!-- Title / subtitle -->
+  <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">ReadDataByIdentifier positive response — A_Data structure (Clause 10.2.3.1, Table 144)</text>
+  <text x="20" y="48" font-size="10.5" fill="#607d8b">Response = 0x62 followed by, for every requested dataIdentifier, the 2-byte DID echo immediately followed by that DID's dataRecord.</text>
+
+  <!-- Byte-level labels, first block -->
+  <text x="105" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #1</text>
+  <text x="247" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">#2</text>
+  <text x="372" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">#3</text>
+  <text x="675" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">#4 … #(k-1)+4</text>
+
+  <!-- Byte-level boxes, first block -->
+  <rect x="40" y="80" width="130" height="52" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="105" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">Response SID</text>
+  <text x="105" y="112" text-anchor="middle" font-size="9.5" fill="#263238">0x62</text>
+  <text x="105" y="125" text-anchor="middle" font-size="8" fill="#607d8b">RDBIPR · M</text>
+
+  <rect x="190" y="80" width="115" height="52" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="247" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">DID #1 (MSB)</text>
+  <text x="247" y="112" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="247" y="125" text-anchor="middle" font-size="8" fill="#607d8b">DID_HB · M</text>
+
+  <rect x="315" y="80" width="115" height="52" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="372" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">DID #1 (LSB)</text>
+  <text x="372" y="112" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="372" y="125" text-anchor="middle" font-size="8" fill="#607d8b">DID_LB · M</text>
+
+  <rect x="440" y="80" width="470" height="52" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="675" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataRecord #1 — k bytes</text>
+  <text x="675" y="112" text-anchor="middle" font-size="9.5" fill="#263238">DREC_DATA1 … DREC_DATAk, each 0x00 – 0xFF</text>
+  <text x="675" y="125" text-anchor="middle" font-size="8" fill="#607d8b">first data byte M, the rest U — length and content are vehicle manufacturer specific</text>
+
+  <!-- Repeating-block bracket -->
+  <line x1="190" y1="140" x2="910" y2="140" stroke="#5e35b1"/>
+  <line x1="190" y1="140" x2="190" y2="134" stroke="#5e35b1"/>
+  <line x1="910" y1="140" x2="910" y2="134" stroke="#5e35b1"/>
+  <text x="550" y="154" text-anchor="middle" font-size="9" font-style="italic" fill="#5e35b1">one DID-echo + dataRecord block per requested dataIdentifier — repeated m times, in request order</text>
+
+  <text x="480" y="174" text-anchor="middle" font-size="14" fill="#90a4ae">⋮</text>
+
+  <!-- Byte-level labels, last block -->
+  <text x="247" y="192" text-anchor="middle" font-size="9.5" fill="#90a4ae">#n-(o-1)-2</text>
+  <text x="372" y="192" text-anchor="middle" font-size="9.5" fill="#90a4ae">#n-(o-1)-1</text>
+  <text x="675" y="192" text-anchor="middle" font-size="9.5" fill="#90a4ae">#n-(o-1) … #n</text>
+
+  <!-- Byte-level boxes, last block -->
+  <rect x="190" y="198" width="115" height="52" fill="#fff3e0" stroke="#f26f21" stroke-dasharray="4 3"/>
+  <text x="247" y="216" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">DID #m (MSB)</text>
+  <text x="247" y="230" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="247" y="243" text-anchor="middle" font-size="8" fill="#607d8b">DID_HB · U</text>
+
+  <rect x="315" y="198" width="115" height="52" fill="#fff3e0" stroke="#f26f21" stroke-dasharray="4 3"/>
+  <text x="372" y="216" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">DID #m (LSB)</text>
+  <text x="372" y="230" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="372" y="243" text-anchor="middle" font-size="8" fill="#607d8b">DID_LB · U</text>
+
+  <rect x="440" y="198" width="470" height="52" fill="#e8f5e9" stroke="#2e7d32" stroke-dasharray="4 3"/>
+  <text x="675" y="216" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataRecord #m — o bytes</text>
+  <text x="675" y="230" text-anchor="middle" font-size="9.5" fill="#263238">DREC_DATA1 … DREC_DATAo, each 0x00 – 0xFF</text>
+  <text x="675" y="243" text-anchor="middle" font-size="8" fill="#607d8b">n = total A_Data length; the last dataRecord ends the message</text>
+
+  <!-- Note -->
+  <text x="20" y="272" font-size="10" fill="#263238">No length byte separates the blocks: the client must already know how many bytes each DID returns (Table 145 — content of dataRecord is not defined by this document).</text>
+
+  <!-- Connector down to the example -->
+  <line x1="480" y1="282" x2="480" y2="298" stroke="#2e7d32"/>
+  <polygon points="476,298 484,298 480,306" fill="#2e7d32"/>
+
+  <text x="480" y="322" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">Worked example — read dataIdentifiers 0x010A and 0x0110 in one request (Clause 10.2.5.3, Table 150)</text>
+
+  <!-- Group labels over the byte strip -->
+  <text x="65" y="342" text-anchor="middle" font-size="8.5" fill="#607d8b">SID</text>
+  <text x="142" y="342" text-anchor="middle" font-size="8.5" fill="#607d8b">DID#1 = 0x010A</text>
+  <text x="473" y="342" text-anchor="middle" font-size="8.5" fill="#607d8b">dataRecord #1 — 11 bytes (DREC_DATA1 … DREC_DATA11)</text>
+  <text x="805" y="342" text-anchor="middle" font-size="8.5" fill="#607d8b">DID#2 = 0x0110</text>
+  <text x="881" y="342" text-anchor="middle" font-size="8.5" fill="#607d8b">DREC #2</text>
+
+  <!-- Byte strip -->
+  <rect x="40" y="348" width="51" height="38" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="65" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">62</text>
+  <rect x="91" y="348" width="51" height="38" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="116" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">01</text>
+  <rect x="142" y="348" width="51" height="38" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="167" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0A</text>
+  <rect x="193" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="218" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">A6</text>
+  <rect x="244" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="269" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">66</text>
+  <rect x="295" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="320" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">07</text>
+  <rect x="346" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="371" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">50</text>
+  <rect x="397" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="422" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">20</text>
+  <rect x="448" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="473" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">1A</text>
+  <rect x="499" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="524" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">00</text>
+  <rect x="550" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="575" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">63</text>
+  <rect x="601" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="626" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">4A</text>
+  <rect x="652" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="677" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">82</text>
+  <rect x="703" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="728" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">7E</text>
+  <rect x="754" y="348" width="51" height="38" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="779" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">01</text>
+  <rect x="805" y="348" width="51" height="38" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="830" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">10</text>
+  <rect x="856" y="348" width="51" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="881" y="372" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">8C</text>
+
+  <!-- Byte index labels -->
+  <text x="65" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#1</text>
+  <text x="116" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#2</text>
+  <text x="167" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#3</text>
+  <text x="218" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#4</text>
+  <text x="269" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#5</text>
+  <text x="320" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#6</text>
+  <text x="371" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#7</text>
+  <text x="422" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#8</text>
+  <text x="473" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#9</text>
+  <text x="524" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#10</text>
+  <text x="575" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#11</text>
+  <text x="626" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#12</text>
+  <text x="677" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#13</text>
+  <text x="728" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#14</text>
+  <text x="779" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#15</text>
+  <text x="830" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#16</text>
+  <text x="881" y="398" text-anchor="middle" font-size="8" fill="#90a4ae">#17</text>
+
+  <!-- Footer notes -->
+  <text x="20" y="424" font-size="10" fill="#263238">Here k = 11 and o = 1, so n = 17. Each dataIdentifier is echoed immediately before its own dataRecord, and the dataRecord lengths differ per DID (Table 144).</text>
+  <text x="20" y="442" font-size="10" fill="#263238">If the assembled response would not fit the transport protocol, the server answers NRC 0x14 responseTooLong instead (Table 146).</text>
+</svg>

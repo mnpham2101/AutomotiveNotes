@@ -15,6 +15,9 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
+/* sidebar links are plain anchors; without this they jump instead of gliding */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{background:var(--wash);color:var(--ink);font-family:var(--font);
      font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
@@ -50,10 +53,20 @@ main{padding:0}
 .slide li{position:relative;padding:0 0 0 30px;margin:0 0 14px;font-size:19px;line-height:1.5}
 .slide li::before{content:"";position:absolute;left:6px;top:.62em;width:8px;height:8px;
                   background:var(--accent);border-radius:50%}
+/* nested levels: indent, shrink, and fade the marker so hierarchy reads on a projector */
+.slide li ul{margin:12px 0 0;padding-left:14px}
+.slide li li{font-size:16.5px;margin-bottom:9px}
+.slide li li::before{width:6px;height:6px;background:var(--faint)}
+.slide li li li::before{background:transparent;border:1.5px solid var(--faint)}
+.slide li blockquote{margin:12px 0 0;padding:2px 0 2px 16px;border-left:3px solid var(--rule-soft)}
+.slide li blockquote p{font-size:17px;margin:0;color:var(--ink-2)}
 .slide li strong{color:var(--navy)}
 .slide p{font-size:18px}
 .slide code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
             color:var(--blue);padding:2px 6px;border-radius:3px}
+.slide a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--accent);
+         padding-bottom:1px}
+.slide a:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark)}
 
 figure{margin:0 0 26px;text-align:center}
 figure img{max-width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:4px;
@@ -123,50 +136,52 @@ td strong{color:var(--accent-dark)}
 <a href="#s1" data-i="1">Overview</a>
 <a href="#s2" data-i="2">Introduction</a>
 <a href="#s3" data-i="3">Session — Key Concepts</a>
-<a href="#s4" data-i="4">Session Transition Behavior (Server-Side) [Clause 9.2.1, Figure 7]</a>
+<a href="#s4" data-i="4">Session Transition Behavior</a>
 <a href="#s5" data-i="5">Non-default Session Expiry</a>
-<a href="#s6" data-i="6">Session List — Overview [Clause 9.2.2.2, Table 25]</a>
+<a href="#s6" data-i="6">Session List — Overview</a>
 <a href="#s7" data-i="7">Session Info in UDS Request</a>
-<a href="#s8" data-i="8">Special Notes: programmingSession Exit [Clause 9.2.2.2, Table 25 — 0x02 programmingSession]</a>
+<a href="#s8" data-i="8">Session Info in UDS Request ( Cont )</a>
+<a href="#s9" data-i="9">Special Notes: programmingSession Exit</a>
 <div class="grp">Section 2 — ECU Reset Service</div>
-<a href="#s9" data-i="9">Overview</a>
-<div class="grp">Section 3 — Security Access</div>
 <a href="#s10" data-i="10">Overview</a>
+<div class="grp">Section 3 — Security Access</div>
+<a href="#s11" data-i="11">Overview</a>
 <div class="grp">Section 4 — Communication Control</div>
-<a href="#s11" data-i="11">Overview</a></nav>
+<a href="#s12" data-i="12">Overview</a></nav>
 <main><section class="slide title" id="s0"><div class="slide-inner">
 <h1>Diagnostic and Communication Management functional unit</h1>
 <div class="bar"></div>
 <div class="sub">ISO 14229-1:2013 — Service 0x10</div>
 </div></section>
 <section class="slide divider" id="s1"><div class="slide-inner"><div class="kicker">Section</div>
-<h2>Section 1 — Diagnostic Session Control service</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">1 / 11</span></div></section>
+<h2>Section 1 — Diagnostic Session Control service</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">1 / 12</span></div></section>
 <section class="slide" id="s2"><div class="slide-inner"><h2>Introduction</h2>
 <ul>
 <li><strong>Service:</strong> <code>DiagnosticSessionControl</code> (SID <strong>0x10</strong>) [Clause 9.2]</li>
-<li><strong>Owner unit:</strong> Diagnostic &amp; Communication Management (DCM) functional unit [Clause 9.1, Table 22]</li>
-<li><strong>Purpose:</strong> enables different <strong>diagnostic sessions</strong> in the server (ECU) [Clause 9.2.1]</li>
-<li>A diagnostic session enables a <strong>specific set of services / functionality</strong> in the server [Clause 9.2.1]</li>
+<li><strong>Purpose:</strong> enables different <em>diagnostic sessions</em> in the server (ECU) [Clause 9.2.1]</li>
+<li>A diagnostic session enables a <em>specific set of services / functionality</em> in the server [Clause 9.2.1]</li>
 <li>Server may also report data-link timing parameters valid for the active session [Clause 9.2.1]</li>
-</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">2 / 11</span></div></section>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">2 / 12</span></div></section>
 <section class="slide" id="s3"><div class="slide-inner"><h2>Session — Key Concepts</h2>
 <ul>
-<li><strong>One session at a time</strong></li>
+<li>
+<p><strong>One session at a time</strong></p>
+<ul>
 <li>There shall <strong>always be exactly one</strong> diagnostic session active in a server [Clause 9.2.1]</li>
 <li>Server <strong>always starts in <code>defaultSession</code></strong> on power-up [Clause 9.2.1]</li>
-<li>
-<p>Stays in <code>defaultSession</code> unless another session is explicitly requested [Clause 9.2.1]</p>
+<li>Stays in <code>defaultSession</code> unless another session is explicitly requested [Clause 9.2.1]</li>
+</ul>
 </li>
 <li>
 <p><strong>Identifying field</strong></p>
-</li>
+<ul>
 <li>Sub-function byte <strong><code>diagnosticSessionType</code></strong> (request byte #2, range <code>0x00–0xFF</code>) [Clause 9.2.2.1, Table 24]</li>
-<li>
-<p>This value both <strong>selects</strong> and <strong>reports back</strong> (in the positive response) the active session [Clause 9.2.2.2, Table 25; Clause 9.2.3.1, Table 26]</p>
+<li>This value both <strong>selects</strong> and <strong>reports back</strong> (in the positive response) the active session [Clause 9.2.2.2, Table 25; Clause 9.2.3.1, Table 26]</li>
+</ul>
 </li>
 <li>
 <p><strong>How to enter a session</strong></p>
-</li>
+<ul>
 <li>Client sends request: <code>0x10 &lt;diagnosticSessionType&gt;</code> [Clause 9.2.2.1, Table 24]</li>
 <li>Server replies positive: <code>0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord]</code> [Clause 9.2.3.1, Table 26]</li>
 <li>Server may impose entry conditions (examples from the standard) [Clause 9.2.1]:<ul>
@@ -174,17 +189,19 @@ td strong{color:var(--accent-dark)}
 <li><strong>Safety conditions</strong> (e.g. vehicle not moving, engine off)</li>
 </ul>
 </li>
-<li>
-<p>If conditions aren't met → <strong>negative response</strong>, current session continues unchanged [Clause 9.2.1]</p>
+<li>If conditions aren't met → <strong>negative response</strong>, current session continues unchanged [Clause 9.2.1]</li>
+</ul>
 </li>
 <li>
 <p><strong>Non-default sessions are supersets</strong></p>
-</li>
+<ul>
 <li>Functionality of <code>defaultSession</code> is included in every non-default session (<strong>except <code>programmingSession</code></strong>) [Clause 9.2.1]</li>
 <li>Non-default sessions require an active <strong>session timer</strong>, kept alive by <code>TesterPresent</code> (0x3E) [Clause 9.2.1, Table 23]</li>
-</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">3 / 11</span></div></section>
-<section class="slide" id="s4"><div class="slide-inner"><h2>Session Transition Behavior (Server-Side) [Clause 9.2.1, Figure 7]</h2>
-<figure><img alt="Figure 7 — Server diagnostic session state diagram" src="uds-figure7-session-state-diagram.svg" /></figure>
+</ul>
+</li>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">3 / 12</span></div></section>
+<section class="slide" id="s4"><div class="slide-inner"><h2>Session Transition Behavior</h2>
+<figure><img alt="Clause 9.2.1, Figure 7 — Server diagnostic session state diagram" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDIwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI4MDAiIGhlaWdodD0iNDIwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDxkZWZzPgogICAgPG1hcmtlciBpZD0iZmlnN2Fycm93LWdyZWVuIiBtYXJrZXJXaWR0aD0iMTAiIG1hcmtlckhlaWdodD0iMTAiIHJlZlg9IjciIHJlZlk9IjMiIG9yaWVudD0iYXV0byI+CiAgICAgIDxwYXRoIGQ9Ik0wLDAgTDcsMyBMMCw2IFoiIGZpbGw9IiMyZTdkMzIiLz4KICAgIDwvbWFya2VyPgogICAgPG1hcmtlciBpZD0iZmlnN2Fycm93LWJsdWUiIG1hcmtlcldpZHRoPSIxMCIgbWFya2VySGVpZ2h0PSIxMCIgcmVmWD0iNyIgcmVmWT0iMyIgb3JpZW50PSJhdXRvIj4KICAgICAgPHBhdGggZD0iTTAsMCBMNywzIEwwLDYgWiIgZmlsbD0iIzE1NjVjMCIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJmaWc3YXJyb3ctZ3JheSIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI3IiByZWZZPSIzIiBvcmllbnQ9ImF1dG8iPgogICAgICA8cGF0aCBkPSJNMCwwIEw3LDMgTDAsNiBaIiBmaWxsPSIjNDU1YTY0Ii8+CiAgICA8L21hcmtlcj4KICA8L2RlZnM+CgogIDwhLS0gVGl0bGUgLS0+CiAgPHRleHQgeD0iNDAwIiB5PSIyNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNDMzN2EiPkZpZ3VyZSA3IOKAlCBTZXJ2ZXIgZGlhZ25vc3RpYyBzZXNzaW9uIHN0YXRlIGRpYWdyYW0gKENsYXVzZSA5LjIuMSk8L3RleHQ+CgogIDwhLS0gU3RhdGVzIC0tPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIyMDAiIHJ4PSIxMDAiIHJ5PSI1MCIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjIwMCIgeT0iMTk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+ZGVmYXVsdDwvdGV4dD4KICA8dGV4dCB4PSIyMDAiIHk9IjIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPnNlc3Npb248L3RleHQ+CgogIDxlbGxpcHNlIGN4PSI2MDAiIGN5PSIyMDAiIHJ4PSIxMDAiIHJ5PSI1MCIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjYwMCIgeT0iMTkwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+YW55PC90ZXh0PgogIDx0ZXh0IHg9IjYwMCIgeT0iMjA1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+b3RoZXI8L3RleHQ+CiAgPHRleHQgeD0iNjAwIiB5PSIyMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5zZXNzaW9uPC90ZXh0PgoKICA8IS0tIFNlbGYtbG9vcCAxOiBkZWZhdWx0IC0+IGRlZmF1bHQgKGJ1bGdlIGxlZnQpIC0tPgogIDxwYXRoIGQ9Ik0gMTA4LDE3MCBDIDIwLDE4MCAyMCwyMjAgMTA4LDIzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmU3ZDMyIiBzdHJva2Utd2lkdGg9IjEuNSIgbWFya2VyLWVuZD0idXJsKCNmaWc3YXJyb3ctZ3JlZW4pIi8+CiAgPHRleHQgeD0iMzAiIHk9IjIwNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyZTdkMzIiPjE8L3RleHQ+CgogIDwhLS0gU2VsZi1sb29wIDM6IG90aGVyIC0+IG90aGVyIChidWxnZSByaWdodCkgLS0+CiAgPHBhdGggZD0iTSA2OTIsMTcwIEMgNzgwLDE4MCA3ODAsMjIwIDY5MiwyMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE1NjVjMCIgc3Ryb2tlLXdpZHRoPSIxLjUiIG1hcmtlci1lbmQ9InVybCgjZmlnN2Fycm93LWJsdWUpIi8+CiAgPHRleHQgeD0iNzcwIiB5PSIyMDUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTU2NWMwIj4zPC90ZXh0PgoKICA8IS0tIFRyYW5zaXRpb24gMjogZGVmYXVsdCAtPiBvdGhlciAodG9wIGFyYykgLS0+CiAgPHBhdGggZD0iTSAyNzUsMTU3IFEgNDAwLDgwIDUyNSwxNTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQ1NWE2NCIgc3Ryb2tlLXdpZHRoPSIxLjUiIG1hcmtlci1lbmQ9InVybCgjZmlnN2Fycm93LWdyYXkpIi8+CiAgPHRleHQgeD0iNDAwIiB5PSI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiM0NTVhNjQiPjI8L3RleHQ+CgogIDwhLS0gVHJhbnNpdGlvbiA0OiBvdGhlciAtPiBkZWZhdWx0IChib3R0b20gYXJjKSAtLT4KICA8cGF0aCBkPSJNIDUyNSwyNDMgUSA0MDAsMzIwIDI3NSwyNDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQ1NWE2NCIgc3Ryb2tlLXdpZHRoPSIxLjUiIG1hcmtlci1lbmQ9InVybCgjZmlnN2Fycm93LWdyYXkpIi8+CiAgPHRleHQgeD0iNDAwIiB5PSIzMzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjNDU1YTY0Ij40PC90ZXh0PgoKICA8IS0tIEZvb3RlciAtLT4KICA8dGV4dCB4PSI0MDAiIHk9IjQwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPlRyYW5zaXRpb24gbGFiZWxzIDEtNCBjb3JyZXNwb25kIHRvIHRoZSByb3dzIG9mIHRoZSBTZXNzaW9uIFRyYW5zaXRpb24gQmVoYXZpb3IgdGFibGUuPC90ZXh0Pgo8L3N2Zz4=" /></figure>
 <table>
 <thead>
 <tr>
@@ -215,7 +232,7 @@ td strong{color:var(--accent-dark)}
 <td><br> Stop all events configured via <code>ResponseOnEvent</code> (0x86); <br> terminate/reset functionality not supported in defaultSession (e.g. restore normal communication, DTC setting); <br> no changes to non-volative memory</td>
 </tr>
 </tbody>
-</table></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">4 / 11</span></div></section>
+</table></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">4 / 12</span></div></section>
 <section class="slide" id="s5"><div class="slide-inner"><h2>Non-default Session Expiry</h2>
 <ul>
 <li>per Table 23 note (Clause 9.2.1):</li>
@@ -228,8 +245,12 @@ td strong{color:var(--accent-dark)}
 <li>The client keeps the timer from expiring either by:</li>
 <li>sending other diagnostic service requests, or</li>
 <li>sending TesterPresent (0x3E) periodically when no other diagnostic traffic is happening (Clause 9.6.1)</li>
-</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">5 / 11</span></div></section>
-<section class="slide" id="s6"><div class="slide-inner"><h2>Session List — Overview [Clause 9.2.2.2, Table 25]</h2>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">5 / 12</span></div></section>
+<section class="slide" id="s6"><div class="slide-inner"><h2>Session List — Overview</h2>
+<ul>
+<li>sub-function param on diagnosticSessionType req msg indicates the requested session type.</li>
+<li>available session types listed on Clause 9.2.2.2, Table 25: </li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -310,30 +331,40 @@ td strong{color:var(--accent-dark)}
 <ul>
 <li>Clause 9.2.1, Table 23 maps the services to allowable defaultSession and non-defaultSession.</li>
 </ul>
-<div class="note"><b>Note — </b>The session value above is embedded in **bits 6-0** of the sub-function byte of the UDS request (bit 7 is the separate SPRMIB flag). Further detail of the message structure is in the next slide.</div></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">6 / 11</span></div></section>
+<div class="note"><b>Note — </b>The session value above is embedded in **bits 6-0** of the sub-function byte of the UDS request (bit 7 is the separate SPRMIB flag). Further detail of the message structure is in the next slide.</div></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">6 / 12</span></div></section>
 <section class="slide" id="s7"><div class="slide-inner"><h2>Session Info in UDS Request</h2>
-<figure><img alt="Request message A_Data structure" src="uds-request-message-structure.svg" /></figure>
+<figure><img alt="Request message A_Data structure" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgNTIwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iNTIwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDwhLS0gVGl0bGUgLyBzdWJ0aXRsZSAtLT4KICA8dGV4dCB4PSI0ODAiIHk9IjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzE0MzM3YSI+UmVxdWVzdCBtZXNzYWdlIOKAlCBBX0RhdGEgc3RydWN0dXJlIChDbGF1c2UgOS4yLjIuMSwgVGFibGUgMjQpPC90ZXh0PgogIDx0ZXh0IHg9IjIwIiB5PSI0OCIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNjA3ZDhiIj5EaWFnbm9zdGljU2Vzc2lvbkNvbnRyb2wgcmVxdWVzdCA9IDIgYnl0ZXMgb2YgQV9EYXRhOiBTZXJ2aWNlIElEIChTSUQpIGZvbGxvd2VkIGJ5IHRoZSBzdWItZnVuY3Rpb24gYnl0ZS48L3RleHQ+CgogIDwhLS0gQnl0ZS1sZXZlbCBsYWJlbHMgLS0+CiAgPHRleHQgeD0iMzI1IiB5PSI3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPkFfRGF0YSBieXRlICMxPC90ZXh0PgogIDx0ZXh0IHg9IjYyNSIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj5BX0RhdGEgYnl0ZSAjMjwvdGV4dD4KCiAgPCEtLSBCeXRlLWxldmVsIGJveGVzIC0tPgogIDxyZWN0IHg9IjI1MCIgeT0iNzgiIHdpZHRoPSIxNTAiIGhlaWdodD0iNDgiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIvPgogIDx0ZXh0IHg9IjMyNSIgeT0iOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij4weDEwPC90ZXh0PgogIDx0ZXh0IHg9IjMyNSIgeT0iMTEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+U0lEOiBEaWFnbm9zdGljU2Vzc2lvbkNvbnRyb2wgKERTQyk8L3RleHQ+CgogIDxyZWN0IHg9IjQ1MCIgeT0iNzgiIHdpZHRoPSIzNTAiIGhlaWdodD0iNDgiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjYyNSIgeT0iOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5zdWItZnVuY3Rpb24gPSBbIGRpYWdub3N0aWNTZXNzaW9uVHlwZSBdPC90ZXh0PgogIDx0ZXh0IHg9IjYyNSIgeT0iMTEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+MHgwMCDigJMgMHhGRjwvdGV4dD4KCiAgPCEtLSBDb25uZWN0b3JzIGZyb20gYnl0ZSAjMiBkb3duIHRvIGJpdC1sZXZlbCBleHBhbnNpb24gLS0+CiAgPGxpbmUgeDE9IjQ3MiIgeTE9IjEyNiIgeDI9IjQ3MiIgeTI9IjE2MiIgc3Ryb2tlPSIjZjI2ZjIxIiBzdHJva2UtZGFzaGFycmF5PSI0LDMiLz4KICA8bGluZSB4MT0iNjQ3IiB5MT0iMTI2IiB4Mj0iNjQ3IiB5Mj0iMTYyIiBzdHJva2U9IiNmMjZmMjEiIHN0cm9rZS1kYXNoYXJyYXk9IjQsMyIvPgogIDx0ZXh0IHg9IjYyNSIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZmlsbD0iI2YyNmYyMSI+Ynl0ZSAjMiBleHBhbmRlZCBpbnRvIGJpdHM8L3RleHQ+CgogIDwhLS0gQml0LWxldmVsIGxhYmVscyAtLT4KICA8dGV4dCB4PSI0NzIiIHk9IjE3NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPmJpdCA3PC90ZXh0PgogIDx0ZXh0IHg9IjY0NyIgeT0iMTc2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzkwYTRhZSI+Yml0cyA2IOKAkyAwPC90ZXh0PgoKICA8IS0tIEJpdC1sZXZlbCBib3hlcyAtLT4KICA8cmVjdCB4PSI0NTAiIHk9IjE4MCIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjQ0IiBmaWxsPSIjZWNlZmYxIiBzdHJva2U9IiM5MGE0YWUiLz4KICA8dGV4dCB4PSI0NzIiIHk9IjE5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5TUFJNSUI8L3RleHQ+CiAgPHRleHQgeD0iNDcyIiB5PSIyMTEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+MHg4MDwvdGV4dD4KCiAgPHJlY3QgeD0iNDk0IiB5PSIxODAiIHdpZHRoPSIzMDYiIGhlaWdodD0iNDQiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjY0NyIgeT0iMTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+ZGlhZ25vc3RpY1Nlc3Npb25UeXBlPC90ZXh0PgogIDx0ZXh0IHg9IjY0NyIgeT0iMjEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+b25lIDctYml0IGZpZWxkLCAweDAwIOKAkyAweDdGPC90ZXh0PgoKICA8IS0tIE5vdGUgLS0+CiAgPHRleHQgeD0iMjAiIHk9IjI0MCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+Qml0IDcgPSBTUFJNSUIgKHNpbmdsZSBmbGFnIGJpdCkuIEJpdHMgNi0wIHRvZ2V0aGVyIGZvcm0gT05FIDctYml0IG51bWJlciDigJQgYSBzZXNzaW9uIGlzIGEgdmFsdWUgb2YgdGhhdCB3aG9sZSBmaWVsZCAoVGFibGUgMjUpLCBub3QgYW4gaW5kaXZpZHVhbCBiaXQuPC90ZXh0PgoKICA8IS0tIENvbm5lY3RvciBkb3duIHRvIHJlZmVyZW5jZSB0YWJsZSAtLT4KICA8bGluZSB4MT0iNjQ3IiB5MT0iMjU0IiB4Mj0iNjQ3IiB5Mj0iMjY4IiBzdHJva2U9IiMyZTdkMzIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+CiAgPGRlZnM+CiAgICA8bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjgiIG1hcmtlckhlaWdodD0iOCIgcmVmWD0iNCIgcmVmWT0iNCIgb3JpZW50PSJhdXRvIj4KICAgICAgPHBhdGggZD0iTTAsMCBMOCw0IEwwLDggWiIgZmlsbD0iIzJlN2QzMiIvPgogICAgPC9tYXJrZXI+CiAgPC9kZWZzPgoKICA8dGV4dCB4PSI0ODAiIHk9IjI4NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPmRpYWdub3N0aWNTZXNzaW9uVHlwZSBmaWVsZCB2YWx1ZXMgKENsYXVzZSA5LjIuMi4yLCBUYWJsZSAyNSk8L3RleHQ+CgogIDwhLS0gUmVmZXJlbmNlIHRhYmxlOiBjb2x1bW4gMSAtLT4KICA8cmVjdCB4PSIyMCIgeT0iMjk2IiB3aWR0aD0iOTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjMwIiB5PSIzMTYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weDAwPC90ZXh0PgogIDxyZWN0IHg9IjExMCIgeT0iMjk2IiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNjZmQ4ZGMiLz4KICA8dGV4dCB4PSIxMjAiIHk9IjMxNiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzI2MzIzOCI+SVNPU0FFUmVzZXJ2ZWQ8L3RleHQ+CgogIDxyZWN0IHg9IjIwIiB5PSIzMzIiIHdpZHRoPSI5MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIi8+CiAgPHRleHQgeD0iMzAiIHk9IjM1MiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjB4MDE8L3RleHQ+CiAgPHJlY3QgeD0iMTEwIiB5PSIzMzIiIHdpZHRoPSIzNjAiIGhlaWdodD0iMzIiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjEyMCIgeT0iMzUyIiBmb250LXNpemU9IjExIiBmaWxsPSIjMjYzMjM4Ij5kZWZhdWx0U2Vzc2lvbiAoRFMpPC90ZXh0PgoKICA8cmVjdCB4PSIyMCIgeT0iMzY4IiB3aWR0aD0iOTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjMwIiB5PSIzODgiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weDAyPC90ZXh0PgogIDxyZWN0IHg9IjExMCIgeT0iMzY4IiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSIxMjAiIHk9IjM4OCIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzI2MzIzOCI+cHJvZ3JhbW1pbmdTZXNzaW9uIChQUkdTKTwvdGV4dD4KCiAgPHJlY3QgeD0iMjAiIHk9IjQwNCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSIzMCIgeT0iNDI0IiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MHgwMzwvdGV4dD4KICA8cmVjdCB4PSIxMTAiIHk9IjQwNCIgd2lkdGg9IjM2MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iMTIwIiB5PSI0MjQiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyNjMyMzgiPmV4dGVuZGVkRGlhZ25vc3RpY1Nlc3Npb24gKEVYVERTKTwvdGV4dD4KCiAgPHJlY3QgeD0iMjAiIHk9IjQ0MCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmNlNGVjIiBzdHJva2U9IiNjMjE4NWIiLz4KICA8dGV4dCB4PSIzMCIgeT0iNDYwIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MHgwNDwvdGV4dD4KICA8cmVjdCB4PSIxMTAiIHk9IjQ0MCIgd2lkdGg9IjM2MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZjZTRlYyIgc3Ryb2tlPSIjYzIxODViIi8+CiAgPHRleHQgeD0iMTIwIiB5PSI0NjAiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyNjMyMzgiPnNhZmV0eVN5c3RlbURpYWdub3N0aWNTZXNzaW9uIChTU0RTKTwvdGV4dD4KCiAgPCEtLSBSZWZlcmVuY2UgdGFibGU6IGNvbHVtbiAyIC0tPgogIDxyZWN0IHg9IjUwMCIgeT0iMjk2IiB3aWR0aD0iOTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjUxMCIgeT0iMzE2IiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MHgwNeKAkzB4M0Y8L3RleHQ+CiAgPHJlY3QgeD0iNTkwIiB5PSIyOTYiIHdpZHRoPSIzNTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjYwMCIgeT0iMzE2IiBmb250LXNpemU9IjExIiBmaWxsPSIjMjYzMjM4Ij5JU09TQUVSZXNlcnZlZDwvdGV4dD4KCiAgPHJlY3QgeD0iNTAwIiB5PSIzMzIiIHdpZHRoPSI5MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2VkZTdmNiIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPHRleHQgeD0iNTEwIiB5PSIzNTIiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weDQw4oCTMHg1RjwvdGV4dD4KICA8cmVjdCB4PSI1OTAiIHk9IjMzMiIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2VkZTdmNiIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPHRleHQgeD0iNjAwIiB5PSIzNTIiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyNjMyMzgiPnZlaGljbGVNYW51ZmFjdHVyZXJTcGVjaWZpYyAoVk1TKTwvdGV4dD4KCiAgPHJlY3QgeD0iNTAwIiB5PSIzNjgiIHdpZHRoPSI5MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZmZjljNCIgc3Ryb2tlPSIjZjlhODI1Ii8+CiAgPHRleHQgeD0iNTEwIiB5PSIzODgiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weDYw4oCTMHg3RTwvdGV4dD4KICA8cmVjdCB4PSI1OTAiIHk9IjM2OCIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZmZjljNCIgc3Ryb2tlPSIjZjlhODI1Ii8+CiAgPHRleHQgeD0iNjAwIiB5PSIzODgiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyNjMyMzgiPnN5c3RlbVN1cHBsaWVyU3BlY2lmaWMgKFNTUyk8L3RleHQ+CgogIDxyZWN0IHg9IjUwMCIgeT0iNDA0IiB3aWR0aD0iOTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjUxMCIgeT0iNDI0IiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MHg3RjwvdGV4dD4KICA8cmVjdCB4PSI1OTAiIHk9IjQwNCIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjY2ZkOGRjIi8+CiAgPHRleHQgeD0iNjAwIiB5PSI0MjQiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyNjMyMzgiPklTT1NBRVJlc2VydmVkPC90ZXh0PgoKICA8IS0tIEZvb3RlciBub3RlcyAtLT4KICA8dGV4dCB4PSIyMCIgeT0iNDg2IiBmb250LXNpemU9IjEwIiBmaWxsPSIjMjYzMjM4Ij5FYWNoIHJvdyBpcyBhIHZhbHVlIChvciByYW5nZSBvZiB2YWx1ZXMpIG9mIHRoZSBzYW1lIDctYml0IGZpZWxkIOKAlCB0aGUgcmFuZ2VzIGFyZSBub3QgdGllZCB0byBhbnkgc2luZ2xlIGJpdCBwb3NpdGlvbi48L3RleHQ+CiAgPHRleHQgeD0iMjAiIHk9IjUwNiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+UG9zaXRpdmUgcmVzcG9uc2UgZWNob2VzIHRoZSBzYW1lIGRpYWdub3N0aWNTZXNzaW9uVHlwZSB2YWx1ZTogMHg1MCAmbHQ7ZGlhZ25vc3RpY1Nlc3Npb25UeXBlJmd0OyBbc2Vzc2lvblBhcmFtZXRlclJlY29yZF0gKFRhYmxlIDI2KS48L3RleHQ+Cjwvc3ZnPg==" /></figure></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">7 / 12</span></div></section>
+<section class="slide" id="s8"><div class="slide-inner"><h2>Session Info in UDS Request ( Cont )</h2>
 <ul>
-<li><strong>A_Data byte #1</strong> — Service ID: <code>0x10</code> (DiagnosticSessionControl / DSC) [Clause 9.2.2.1, Table 24]</li>
-<li><strong>A_Data byte #2</strong> — the sub-function byte, <code>sub-function = [diagnosticSessionType]</code> [Clause 9.2.2.1, Table 24]</li>
+<li>
+<p><strong>A_Data byte #1</strong> — Service ID: <code>0x10</code> (DiagnosticSessionControl / DSC) [Clause 9.2.2.1, Table 24]</p>
+</li>
+<li>
+<p><strong>A_Data byte #2</strong> — the sub-function byte, <code>sub-function = [diagnosticSessionType]</code> [Clause 9.2.2.1, Table 24]</p>
+<ul>
 <li><strong>Bit 7</strong> — <code>SPRMIB</code> (suppressPosRspMsgIndicationBit), <code>0x80</code></li>
 <li><strong>Bits 6-0</strong> — together form <strong>one 7-bit field</strong>, <code>diagnosticSessionType</code>, range <code>0x00 – 0x7F</code>; a session is a <em>value</em> of that whole field, not a single bit [Clause 9.2.2.2, Table 25]</li>
-<li>The positive response echoes the same value: <code>0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord]</code> [Clause 9.2.3.1, Table 26]</li>
-</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">7 / 11</span></div></section>
-<section class="slide" id="s8"><div class="slide-inner"><h2>Special Notes: programmingSession Exit [Clause 9.2.2.2, Table 25 — 0x02 programmingSession]</h2>
+</ul>
+</li>
+<li>
+<p>The positive response echoes the same value: <code>0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord]</code> [Clause 9.2.3.1, Table 26]</p>
+</li>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">8 / 12</span></div></section>
+<section class="slide" id="s9"><div class="slide-inner"><h2>Special Notes: programmingSession Exit</h2>
+<p>Clause 9.2.2.2, Table 25 — 0x02 programmingSession:</p>
 <ul>
 <li>Only exit routes when <code>programmingSession</code> runs in <strong>boot software</strong>:
   1. <code>ECUReset</code> (0x11) initiated by client
   2. <code>DiagnosticSessionControl</code> with <code>sessionType = defaultSession</code>
   3. Session layer timeout</li>
 <li>On exit (defaultSession request or timeout), if valid application software exists → server <strong>restarts the application</strong></li>
-</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">8 / 11</span></div></section>
-<section class="slide divider" id="s9"><div class="slide-inner"><div class="kicker">Section</div>
-<h2>Section 2 — ECU Reset Service</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">9 / 11</span></div></section>
+</ul></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">9 / 12</span></div></section>
 <section class="slide divider" id="s10"><div class="slide-inner"><div class="kicker">Section</div>
-<h2>Section 3 — Security Access</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">10 / 11</span></div></section>
+<h2>Section 2 — ECU Reset Service</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">10 / 12</span></div></section>
 <section class="slide divider" id="s11"><div class="slide-inner"><div class="kicker">Section</div>
-<h2>Section 4 — Communication Control</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">11 / 11</span></div></section></main>
+<h2>Section 3 — Security Access</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">11 / 12</span></div></section>
+<section class="slide divider" id="s12"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 4 — Communication Control</h2></div><div class="foot"><span>Diagnostic and Communication Management functional unit</span><span class="n">12 / 12</span></div></section></main>
 </div>
 <script>
 (function(){

@@ -1,0 +1,98 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-rdbi-response-message-structure" id="uds-rdbi-response-message-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="460" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title / subtitle -->
+        <mxCell id="p1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="ReadDataByIdentifier positive response — A_Data structure (Clause 10.2.3.1, Table 144)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="p2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Response = 0x62 followed by, for every requested dataIdentifier, the 2-byte DID echo immediately followed by that DID's dataRecord."><mxGeometry x="20" y="40" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Byte-level labels, first block -->
+        <mxCell id="p3" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #1"><mxGeometry x="40" y="62" width="130" height="14" as="geometry" /></mxCell>
+        <mxCell id="p4" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#2"><mxGeometry x="190" y="62" width="115" height="14" as="geometry" /></mxCell>
+        <mxCell id="p5" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#3"><mxGeometry x="315" y="62" width="115" height="14" as="geometry" /></mxCell>
+        <mxCell id="p6" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#4 … #(k-1)+4"><mxGeometry x="440" y="62" width="470" height="14" as="geometry" /></mxCell>
+
+        <!-- Byte-level boxes, first block -->
+        <mxCell id="p7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Response SID&#10;0x62&#10;RDBIPR · M"><mxGeometry x="40" y="80" width="130" height="52" as="geometry" /></mxCell>
+        <mxCell id="p8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DID #1 (MSB)&#10;0x00 – 0xFF&#10;DID_HB · M"><mxGeometry x="190" y="80" width="115" height="52" as="geometry" /></mxCell>
+        <mxCell id="p9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DID #1 (LSB)&#10;0x00 – 0xFF&#10;DID_LB · M"><mxGeometry x="315" y="80" width="115" height="52" as="geometry" /></mxCell>
+        <mxCell id="p10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataRecord #1 — k bytes&#10;DREC_DATA1 … DREC_DATAk, each 0x00 – 0xFF&#10;first data byte M, the rest U — length and content are vehicle manufacturer specific"><mxGeometry x="440" y="80" width="470" height="52" as="geometry" /></mxCell>
+
+        <!-- Repeating-block bracket -->
+        <mxCell id="p11" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#5e35b1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="190" y="140" as="sourcePoint" /><mxPoint x="910" y="140" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="p12" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#5e35b1;fontFamily=DejaVu Sans;fontStyle=2;" value="one DID-echo + dataRecord block per requested dataIdentifier — repeated m times, in request order"><mxGeometry x="190" y="146" width="720" height="14" as="geometry" /></mxCell>
+        <mxCell id="p13" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="⋮"><mxGeometry x="440" y="164" width="80" height="14" as="geometry" /></mxCell>
+
+        <!-- Byte-level labels, last block -->
+        <mxCell id="p14" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#n-(o-1)-2"><mxGeometry x="190" y="180" width="115" height="14" as="geometry" /></mxCell>
+        <mxCell id="p15" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#n-(o-1)-1"><mxGeometry x="315" y="180" width="115" height="14" as="geometry" /></mxCell>
+        <mxCell id="p16" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#n-(o-1) … #n"><mxGeometry x="440" y="180" width="470" height="14" as="geometry" /></mxCell>
+
+        <!-- Byte-level boxes, last block -->
+        <mxCell id="p17" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;dashed=1;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DID #m (MSB)&#10;0x00 – 0xFF&#10;DID_HB · U"><mxGeometry x="190" y="198" width="115" height="52" as="geometry" /></mxCell>
+        <mxCell id="p18" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;dashed=1;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DID #m (LSB)&#10;0x00 – 0xFF&#10;DID_LB · U"><mxGeometry x="315" y="198" width="115" height="52" as="geometry" /></mxCell>
+        <mxCell id="p19" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;dashed=1;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataRecord #m — o bytes&#10;DREC_DATA1 … DREC_DATAo, each 0x00 – 0xFF&#10;n = total A_Data length; the last dataRecord ends the message"><mxGeometry x="440" y="198" width="470" height="52" as="geometry" /></mxCell>
+
+        <!-- Note -->
+        <mxCell id="p20" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="No length byte separates the blocks: the client must already know how many bytes each DID returns (Table 145 — content of dataRecord is not defined by this document)."><mxGeometry x="20" y="264" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Connector down to the example -->
+        <mxCell id="p21" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#2e7d32;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="480" y="282" as="sourcePoint" /><mxPoint x="480" y="306" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="p22" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Worked example — read dataIdentifiers 0x010A and 0x0110 in one request (Clause 10.2.5.3, Table 150)"><mxGeometry x="20" y="314" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Group labels over the byte strip -->
+        <mxCell id="p23" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="SID"><mxGeometry x="40" y="334" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="p24" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DID#1 = 0x010A"><mxGeometry x="91" y="334" width="102" height="12" as="geometry" /></mxCell>
+        <mxCell id="p25" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="dataRecord #1 — 11 bytes (DREC_DATA1 … DREC_DATA11)"><mxGeometry x="193" y="334" width="561" height="12" as="geometry" /></mxCell>
+        <mxCell id="p26" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DID#2 = 0x0110"><mxGeometry x="754" y="334" width="102" height="12" as="geometry" /></mxCell>
+        <mxCell id="p27" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DREC #2"><mxGeometry x="856" y="334" width="51" height="12" as="geometry" /></mxCell>
+
+        <!-- Byte strip -->
+        <mxCell id="b1" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="62"><mxGeometry x="40" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b2" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="01"><mxGeometry x="91" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b3" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="0A"><mxGeometry x="142" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="A6"><mxGeometry x="193" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="66"><mxGeometry x="244" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="07"><mxGeometry x="295" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="50"><mxGeometry x="346" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="20"><mxGeometry x="397" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="1A"><mxGeometry x="448" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="00"><mxGeometry x="499" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b11" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="63"><mxGeometry x="550" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b12" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="4A"><mxGeometry x="601" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b13" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="82"><mxGeometry x="652" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b14" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="7E"><mxGeometry x="703" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b15" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="01"><mxGeometry x="754" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b16" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="10"><mxGeometry x="805" y="348" width="51" height="38" as="geometry" /></mxCell>
+        <mxCell id="b17" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="8C"><mxGeometry x="856" y="348" width="51" height="38" as="geometry" /></mxCell>
+
+        <!-- Byte index labels -->
+        <mxCell id="i1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#1"><mxGeometry x="40" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i2" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#2"><mxGeometry x="91" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i3" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#3"><mxGeometry x="142" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i4" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#4"><mxGeometry x="193" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i5" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#5"><mxGeometry x="244" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i6" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#6"><mxGeometry x="295" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i7" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#7"><mxGeometry x="346" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i8" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#8"><mxGeometry x="397" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i9" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#9"><mxGeometry x="448" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i10" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#10"><mxGeometry x="499" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i11" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#11"><mxGeometry x="550" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i12" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#12"><mxGeometry x="601" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i13" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#13"><mxGeometry x="652" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i14" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#14"><mxGeometry x="703" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i15" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#15"><mxGeometry x="754" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i16" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#16"><mxGeometry x="805" y="390" width="51" height="12" as="geometry" /></mxCell>
+        <mxCell id="i17" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="#17"><mxGeometry x="856" y="390" width="51" height="12" as="geometry" /></mxCell>
+
+        <!-- Footer notes -->
+        <mxCell id="p28" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Here k = 11 and o = 1, so n = 17. Each dataIdentifier is echoed immediately before its own dataRecord, and the dataRecord lengths differ per DID (Table 144)."><mxGeometry x="20" y="416" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="p29" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="If the assembled response would not fit the transport protocol, the server answers NRC 0x14 responseTooLong instead (Table 146)."><mxGeometry x="20" y="434" width="920" height="16" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

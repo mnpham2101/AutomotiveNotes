@@ -40,6 +40,9 @@ CSS = """
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
+/* sidebar links are plain anchors; without this they jump instead of gliding */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{background:var(--wash);color:var(--ink);font-family:var(--font);
      font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
@@ -75,10 +78,20 @@ main{padding:0}
 .slide li{position:relative;padding:0 0 0 30px;margin:0 0 14px;font-size:19px;line-height:1.5}
 .slide li::before{content:"";position:absolute;left:6px;top:.62em;width:8px;height:8px;
                   background:var(--accent);border-radius:50%}
+/* nested levels: indent, shrink, and fade the marker so hierarchy reads on a projector */
+.slide li ul{margin:12px 0 0;padding-left:14px}
+.slide li li{font-size:16.5px;margin-bottom:9px}
+.slide li li::before{width:6px;height:6px;background:var(--faint)}
+.slide li li li::before{background:transparent;border:1.5px solid var(--faint)}
+.slide li blockquote{margin:12px 0 0;padding:2px 0 2px 16px;border-left:3px solid var(--rule-soft)}
+.slide li blockquote p{font-size:17px;margin:0;color:var(--ink-2)}
 .slide li strong{color:var(--navy)}
 .slide p{font-size:18px}
 .slide code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
             color:var(--blue);padding:2px 6px;border-radius:3px}
+.slide a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--accent);
+         padding-bottom:1px}
+.slide a:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark)}
 
 figure{margin:0 0 26px;text-align:center}
 figure img{max-width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:4px;

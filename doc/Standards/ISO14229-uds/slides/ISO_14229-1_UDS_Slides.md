@@ -53,7 +53,8 @@
 | 14     | Upload Download                         |
 
 - Each functional unit may provide one or several services.
-
+- refer to [presentation](UDS_DCM_functional_unit.html) for details on Diagnostic and Communication Management.
+- refer to [presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
 `[Clause 9.1, Table 22]`
 
 ### Diagnostic and Communication Management — the 10 services

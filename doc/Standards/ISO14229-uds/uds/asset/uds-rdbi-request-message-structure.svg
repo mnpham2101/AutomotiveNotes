@@ -1,0 +1,120 @@
+<svg viewBox="0 0 960 530" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="530" fill="#ffffff"/>
+
+  <!-- Title / subtitle -->
+  <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">ReadDataByIdentifier request — A_Data structure (Clause 10.2.2.1, Table 142)</text>
+  <text x="20" y="48" font-size="10.5" fill="#607d8b">Request = 1 byte Service ID followed by one or more 2-byte dataIdentifiers. This service has no sub-function byte (Clause 10.2.2.2).</text>
+
+  <!-- Byte-level labels -->
+  <text x="115" y="72" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #1</text>
+  <text x="275" y="72" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #2</text>
+  <text x="435" y="72" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #3</text>
+  <text x="675" y="72" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #n-1</text>
+  <text x="835" y="72" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #n</text>
+
+  <!-- Byte-level boxes -->
+  <rect x="40" y="78" width="150" height="52" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="115" y="96" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">ReadDataByIdentifier SID</text>
+  <text x="115" y="110" text-anchor="middle" font-size="9.5" fill="#263238">0x22</text>
+  <text x="115" y="123" text-anchor="middle" font-size="8" fill="#607d8b">RDBI · M (mandatory)</text>
+
+  <rect x="200" y="78" width="150" height="52" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="275" y="96" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataIdentifier #1 (MSB)</text>
+  <text x="275" y="110" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="275" y="123" text-anchor="middle" font-size="8" fill="#607d8b">DID_HB · M</text>
+
+  <rect x="360" y="78" width="150" height="52" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="435" y="96" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataIdentifier #1 (LSB)</text>
+  <text x="435" y="110" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="435" y="123" text-anchor="middle" font-size="8" fill="#607d8b">DID_LB · M</text>
+
+  <text x="555" y="110" text-anchor="middle" font-size="18" fill="#90a4ae">···</text>
+
+  <rect x="600" y="78" width="150" height="52" fill="#fff3e0" stroke="#f26f21" stroke-dasharray="4 3"/>
+  <text x="675" y="96" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataIdentifier #m (MSB)</text>
+  <text x="675" y="110" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="675" y="123" text-anchor="middle" font-size="8" fill="#607d8b">DID_HB · U (optional)</text>
+
+  <rect x="760" y="78" width="150" height="52" fill="#fff3e0" stroke="#f26f21" stroke-dasharray="4 3"/>
+  <text x="835" y="96" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataIdentifier #m (LSB)</text>
+  <text x="835" y="110" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="835" y="123" text-anchor="middle" font-size="8" fill="#607d8b">DID_LB · U (optional)</text>
+
+  <!-- Connectors from bytes #2/#3 down to the 16-bit expansion -->
+  <line x1="200" y1="130" x2="200" y2="166" stroke="#f26f21" stroke-dasharray="4 3"/>
+  <line x1="510" y1="130" x2="510" y2="166" stroke="#f26f21" stroke-dasharray="4 3"/>
+  <text x="355" y="152" text-anchor="middle" font-size="9" font-style="italic" fill="#f26f21">bytes #2 and #3 taken together</text>
+
+  <!-- 16-bit expansion -->
+  <rect x="200" y="168" width="310" height="46" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="355" y="187" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">dataIdentifier #1 — ONE 16-bit field</text>
+  <text x="355" y="203" text-anchor="middle" font-size="10" fill="#263238">0x0000 – 0xFFFF, high byte first</text>
+
+  <text x="530" y="184" font-size="10" fill="#263238">A DID is a value of the whole 16-bit field — it names an object</text>
+  <text x="530" y="199" font-size="10" fill="#263238">(e.g. VIN), never a bit position. Ranges are assigned in Table C.1.</text>
+
+  <!-- Note -->
+  <text x="20" y="234" font-size="10" fill="#263238">Each requested DID costs exactly 2 bytes; the client may repeat the same DID, and the server shall answer it as often as requested (Clause 10.2.2.1).</text>
+
+  <!-- Connector down to reference table -->
+  <line x1="355" y1="244" x2="355" y2="262" stroke="#2e7d32"/>
+  <polygon points="351,262 359,262 355,270" fill="#2e7d32"/>
+
+  <text x="480" y="286" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">dataIdentifier value assignment — extract of Table C.1 (Annex C, normative)</text>
+
+  <!-- Reference table: column 1 -->
+  <rect x="40" y="296" width="110" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="50" y="316" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x0000–0x00FF</text>
+  <rect x="150" y="296" width="350" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="160" y="316" font-size="11" fill="#263238">ISOSAEReserved (M)</text>
+
+  <rect x="40" y="332" width="110" height="32" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="50" y="352" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x0100–0xA5FF</text>
+  <rect x="150" y="332" width="350" height="32" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="160" y="352" font-size="11" fill="#263238">VehicleManufacturerSpecific (VMS)</text>
+
+  <rect x="40" y="368" width="110" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="50" y="388" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xA600–0xA7FF</text>
+  <rect x="150" y="368" width="350" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="160" y="388" font-size="11" fill="#263238">ReservedForLegislativeUse (RFLU)</text>
+
+  <rect x="40" y="404" width="110" height="32" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="50" y="424" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xF180–0xF18F</text>
+  <rect x="150" y="404" width="350" height="32" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="160" y="424" font-size="11" fill="#263238">boot / application software ID and fingerprint</text>
+
+  <rect x="40" y="440" width="110" height="32" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="50" y="460" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xF190</text>
+  <rect x="150" y="440" width="350" height="32" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="160" y="460" font-size="11" fill="#263238">VINDataIdentifier (VINDID)</text>
+
+  <!-- Reference table: column 2 -->
+  <rect x="520" y="296" width="110" height="32" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="530" y="316" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xF1A0–0xF1EF</text>
+  <rect x="630" y="296" width="290" height="32" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="640" y="316" font-size="11" fill="#263238">identificationOption, VM specific</text>
+
+  <rect x="520" y="332" width="110" height="32" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="530" y="352" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xF200–0xF2FF</text>
+  <rect x="630" y="332" width="290" height="32" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="640" y="352" font-size="11" fill="#263238">periodicDataIdentifier (PDID)</text>
+
+  <rect x="520" y="368" width="110" height="32" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="530" y="388" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xF300–0xF3FF</text>
+  <rect x="630" y="368" width="290" height="32" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="640" y="388" font-size="11" fill="#263238">DynamicallyDefinedDataIdentifier (DDDDI)</text>
+
+  <rect x="520" y="404" width="110" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="530" y="424" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xF400–0xF8FF</text>
+  <rect x="630" y="404" width="290" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="640" y="424" font-size="11" fill="#263238">OBD / OBD monitor / info type (ISO 15031-5)</text>
+
+  <rect x="520" y="440" width="110" height="32" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="530" y="460" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0xFF00</text>
+  <rect x="630" y="440" width="290" height="32" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="640" y="460" font-size="11" fill="#263238">UDSVersionDataIdentifier (UDSVDID)</text>
+
+  <!-- Footer notes -->
+  <text x="20" y="494" font-size="10" fill="#263238">Figure 15 keys the length checks as 3 bytes minimum and 1 + 2×n — n is unbounded, so this is a format test: SID + whole 2-byte DIDs, an odd byte count ≥ 3.</text>
+  <text x="20" y="512" font-size="10" fill="#263238">The server may cap how many dataIdentifiers one request may carry — the limit is agreed between vehicle manufacturer and system supplier (Clause 10.2.1).</text>
+</svg>

@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-rdbi-request-message-structure" id="uds-rdbi-request-message-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="530" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title / subtitle -->
+        <mxCell id="r1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="ReadDataByIdentifier request — A_Data structure (Clause 10.2.2.1, Table 142)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="r2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Request = 1 byte Service ID followed by one or more 2-byte dataIdentifiers. This service has no sub-function byte (Clause 10.2.2.2)."><mxGeometry x="20" y="40" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Byte-level labels -->
+        <mxCell id="r3" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #1"><mxGeometry x="40" y="60" width="150" height="14" as="geometry" /></mxCell>
+        <mxCell id="r4" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #2"><mxGeometry x="200" y="60" width="150" height="14" as="geometry" /></mxCell>
+        <mxCell id="r5" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #3"><mxGeometry x="360" y="60" width="150" height="14" as="geometry" /></mxCell>
+        <mxCell id="r6" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #n-1"><mxGeometry x="600" y="60" width="150" height="14" as="geometry" /></mxCell>
+        <mxCell id="r7" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #n"><mxGeometry x="760" y="60" width="150" height="14" as="geometry" /></mxCell>
+
+        <!-- Byte-level boxes -->
+        <mxCell id="r8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="ReadDataByIdentifier SID&#10;0x22&#10;RDBI · M (mandatory)"><mxGeometry x="40" y="78" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="r9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataIdentifier #1 (MSB)&#10;0x00 – 0xFF&#10;DID_HB · M"><mxGeometry x="200" y="78" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="r10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataIdentifier #1 (LSB)&#10;0x00 – 0xFF&#10;DID_LB · M"><mxGeometry x="360" y="78" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="r11" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="···"><mxGeometry x="520" y="78" width="70" height="52" as="geometry" /></mxCell>
+        <mxCell id="r12" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;dashed=1;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataIdentifier #m (MSB)&#10;0x00 – 0xFF&#10;DID_HB · U (optional)"><mxGeometry x="600" y="78" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="r13" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;dashed=1;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataIdentifier #m (LSB)&#10;0x00 – 0xFF&#10;DID_LB · U (optional)"><mxGeometry x="760" y="78" width="150" height="52" as="geometry" /></mxCell>
+
+        <!-- Connectors down to the 16-bit expansion -->
+        <mxCell id="r14" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="200" y="130" as="sourcePoint" /><mxPoint x="200" y="166" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="r15" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="510" y="130" as="sourcePoint" /><mxPoint x="510" y="166" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="r16" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#f26f21;fontFamily=DejaVu Sans;fontStyle=2;" value="bytes #2 and #3 taken together"><mxGeometry x="200" y="144" width="310" height="14" as="geometry" /></mxCell>
+
+        <!-- 16-bit expansion -->
+        <mxCell id="r17" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=10.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataIdentifier #1 — ONE 16-bit field&#10;0x0000 – 0xFFFF, high byte first"><mxGeometry x="200" y="168" width="310" height="46" as="geometry" /></mxCell>
+        <mxCell id="r18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="A DID is a value of the whole 16-bit field — it names an object&#10;(e.g. VIN), never a bit position. Ranges are assigned in Table C.1."><mxGeometry x="530" y="168" width="410" height="46" as="geometry" /></mxCell>
+
+        <!-- Note -->
+        <mxCell id="r19" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Each requested DID costs exactly 2 bytes; the client may repeat the same DID, and the server shall answer it as often as requested (Clause 10.2.2.1)."><mxGeometry x="20" y="226" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Connector down to reference table -->
+        <mxCell id="r20" parent="1" edge="1" style="endArrow=block;html=1;strokeColor=#2e7d32;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="355" y="244" as="sourcePoint" /><mxPoint x="355" y="270" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="r21" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="dataIdentifier value assignment — extract of Table C.1 (Annex C, normative)"><mxGeometry x="20" y="278" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Reference table: column 1 -->
+        <mxCell id="r22" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x0000–0x00FF"><mxGeometry x="40" y="296" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r23" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="ISOSAEReserved (M)"><mxGeometry x="150" y="296" width="350" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r24" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0x0100–0xA5FF"><mxGeometry x="40" y="332" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r25" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="VehicleManufacturerSpecific (VMS)"><mxGeometry x="150" y="332" width="350" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r26" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xA600–0xA7FF"><mxGeometry x="40" y="368" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r27" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="ReservedForLegislativeUse (RFLU)"><mxGeometry x="150" y="368" width="350" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r28" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xF180–0xF18F"><mxGeometry x="40" y="404" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r29" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="boot / application software ID and fingerprint"><mxGeometry x="150" y="404" width="350" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r30" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xF190"><mxGeometry x="40" y="440" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r31" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="VINDataIdentifier (VINDID)"><mxGeometry x="150" y="440" width="350" height="32" as="geometry" /></mxCell>
+
+        <!-- Reference table: column 2 -->
+        <mxCell id="r32" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xF1A0–0xF1EF"><mxGeometry x="520" y="296" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r33" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="identificationOption, VM specific"><mxGeometry x="630" y="296" width="290" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r34" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f9a825;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xF200–0xF2FF"><mxGeometry x="520" y="332" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r35" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f9a825;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="periodicDataIdentifier (PDID)"><mxGeometry x="630" y="332" width="290" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r36" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xF300–0xF3FF"><mxGeometry x="520" y="368" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r37" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="DynamicallyDefinedDataIdentifier (DDDDI)"><mxGeometry x="630" y="368" width="290" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r38" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xF400–0xF8FF"><mxGeometry x="520" y="404" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r39" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="OBD / OBD monitor / info type (ISO 15031-5)"><mxGeometry x="630" y="404" width="290" height="32" as="geometry" /></mxCell>
+
+        <mxCell id="r40" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="0xFF00"><mxGeometry x="520" y="440" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="r41" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=11;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="UDSVersionDataIdentifier (UDSVDID)"><mxGeometry x="630" y="440" width="290" height="32" as="geometry" /></mxCell>
+
+        <!-- Footer notes -->
+        <mxCell id="r42" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Minimum request length is 3 bytes (SID + one DID); maximum is 1 + 2×n. A wrong length gives NRC 0x13 incorrectMessageLengthOrInvalidFormat (Figure 15)."><mxGeometry x="20" y="486" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="r43" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="The server may cap how many dataIdentifiers one request may carry — the limit is agreed between vehicle manufacturer and system supplier (Clause 10.2.1)."><mxGeometry x="20" y="504" width="920" height="16" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

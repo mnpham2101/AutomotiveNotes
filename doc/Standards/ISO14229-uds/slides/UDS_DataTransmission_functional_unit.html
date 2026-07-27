@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Transmission functional unit</title>
+<style>
+:root{
+  --ink:#263238; --ink-2:#37474f; --muted:#607d8b; --faint:#90a4ae;
+  --rule:#b0bec5; --rule-soft:#cfd8dc; --wash:#eceff1; --page:#f7f9fb;
+  --navy:#14337a; --blue:#1565c0; --blue-wash:#e3f2fd;
+  --accent:#f26f21; --accent-dark:#e65100; --accent-wash:#fff3e0;
+  --green:#2e7d32; --green-wash:#e8f5e9; --red:#c62828;
+  --font:"DejaVu Sans",Verdana,Geneva,sans-serif;
+  --mono:"DejaVu Sans Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* sidebar links are plain anchors; without this they jump instead of gliding */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--wash);color:var(--ink);font-family:var(--font);
+     font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ---------------------------------------------------------------- shell */
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+nav{background:var(--ink);color:#fff;padding:26px 0 40px;position:sticky;top:0;
+    height:100vh;overflow-y:auto}
+nav .brand{padding:0 22px 18px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:14px}
+nav .brand b{display:block;font-size:15px;line-height:1.35}
+nav .brand span{display:block;color:var(--faint);font-size:11.5px;margin-top:6px}
+nav .grp{color:var(--accent);font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;
+         padding:16px 22px 6px;font-weight:700}
+nav a{display:block;color:#cfd8dc;text-decoration:none;font-size:13px;
+      padding:6px 22px 6px 26px;border-left:3px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav a.on{color:#fff;border-left-color:var(--accent);background:rgba(242,111,33,.14)}
+
+main{padding:0}
+.rail{position:fixed;top:0;left:264px;right:0;height:3px;background:transparent;z-index:20}
+.rail i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* ---------------------------------------------------------------- slides */
+.slide{min-height:100vh;padding:64px 76px 92px;display:flex;flex-direction:column;
+       justify-content:center;background:var(--page);border-bottom:1px solid var(--rule-soft);
+       position:relative;scroll-margin-top:0}
+.slide-inner{max-width:1080px;width:100%;margin:0 auto}
+.slide h2{margin:0 0 30px;font-size:34px;line-height:1.2;color:var(--navy);font-weight:700;
+          letter-spacing:-.01em}
+.slide h2::after{content:"";display:block;width:64px;height:4px;background:var(--accent);
+                 margin-top:16px;border-radius:2px}
+
+.slide ul{margin:0;padding-left:0;list-style:none}
+.slide li{position:relative;padding:0 0 0 30px;margin:0 0 14px;font-size:19px;line-height:1.5}
+.slide li::before{content:"";position:absolute;left:6px;top:.62em;width:8px;height:8px;
+                  background:var(--accent);border-radius:50%}
+/* nested levels: indent, shrink, and fade the marker so hierarchy reads on a projector */
+.slide li ul{margin:12px 0 0;padding-left:14px}
+.slide li li{font-size:16.5px;margin-bottom:9px}
+.slide li li::before{width:6px;height:6px;background:var(--faint)}
+.slide li li li::before{background:transparent;border:1.5px solid var(--faint)}
+.slide li blockquote{margin:12px 0 0;padding:2px 0 2px 16px;border-left:3px solid var(--rule-soft)}
+.slide li blockquote p{font-size:17px;margin:0;color:var(--ink-2)}
+.slide li strong{color:var(--navy)}
+.slide p{font-size:18px}
+.slide code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
+            color:var(--blue);padding:2px 6px;border-radius:3px}
+.slide a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--accent);
+         padding-bottom:1px}
+.slide a:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark)}
+
+figure{margin:0 0 26px;text-align:center}
+figure img{max-width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:4px;
+           background:#fff}
+
+table{border-collapse:collapse;width:100%;margin:0 0 22px;font-size:16px;background:#fff}
+th{background:var(--ink);color:#fff;text-align:left;padding:11px 14px;font-weight:700;font-size:14px}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:nth-child(even) td{background:var(--page)}
+td strong{color:var(--accent-dark)}
+
+.ref{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.ref::before{content:"▸ ";color:var(--accent)}
+.note{display:none}
+
+.foot{position:absolute;left:76px;right:76px;bottom:26px;display:flex;
+      justify-content:space-between;align-items:center;font-size:11.5px;color:var(--faint);
+      border-top:1px solid var(--rule-soft);padding-top:10px}
+.foot .n{font-family:var(--mono)}
+
+/* ------------------------------------------------------- title & divider */
+.slide.title{background:var(--ink);color:#fff;text-align:center}
+.slide.title h1{margin:0;font-size:50px;line-height:1.15;color:#fff;font-weight:700;
+                letter-spacing:-.02em}
+.slide.title .bar{width:96px;height:5px;background:var(--accent);margin:26px auto;border-radius:3px}
+.slide.title .sub{font-size:21px;color:var(--rule)}
+.slide.title .meta{margin-top:44px;font-size:12.5px;color:var(--faint);font-family:var(--mono)}
+.slide.title .foot{display:none}
+
+.slide.divider{background:var(--navy);color:#fff}
+.slide.divider .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+                       color:var(--accent);font-weight:700;margin-bottom:14px}
+.slide.divider h2{color:#fff;font-size:42px}
+.slide.divider h2::after{background:var(--accent)}
+.slide.divider ol{margin:26px 0 0;padding-left:20px;color:var(--rule);font-size:17px}
+.slide.divider li{font-size:17px}
+.slide.divider li::before{background:var(--rule)}
+
+/* ---------------------------------------------------------------- print */
+@media print{
+  nav,.rail{display:none}
+  .shell{display:block}
+  body{background:#fff}
+  .slide{min-height:auto;height:19.0cm;page-break-after:always;break-after:page;
+         padding:36px 44px 60px;border:0}
+  .slide h2{font-size:26px}.slide li{font-size:15px;margin-bottom:9px}
+  .slide.title h1{font-size:38px}
+  .note{display:block;margin-top:18px;padding:10px 14px;background:var(--wash);
+        border-left:3px solid var(--faint);font-size:12px;color:var(--ink-2)}
+  .foot{left:44px;right:44px;bottom:16px}
+  @page{size:A4 landscape;margin:8mm}
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav{position:static;height:auto}
+  .rail{left:0}
+  .slide{padding:44px 26px 80px;min-height:auto}
+  .slide h2{font-size:26px}.slide li{font-size:16px}
+  .foot{left:26px;right:26px}
+}
+</style>
+</head><body>
+<div class="rail"><i></i></div>
+<div class="shell">
+<nav><div class="brand"><b>Data Transmission functional unit</b><span>ISO 14229-1:2013 — Clause 10, Services 0x22 / 0x23</span></div><a href="#s0" data-i="0">Title</a>
+<a href="#s1" data-i="1">The Data Transmission functional unit</a>
+<div class="grp">Section 1 — Data Identifier</div>
+<a href="#s2" data-i="2">Overview</a>
+<a href="#s3" data-i="3">Data Identifier (DID) — Key Concepts</a>
+<div class="grp">Section 2 — ReadDataByIdentifier service</div>
+<a href="#s4" data-i="4">Overview</a>
+<a href="#s5" data-i="5">Introduction</a>
+<a href="#s6" data-i="6">DID in UDS Request</a>
+<a href="#s7" data-i="7">DID in UDS Request (Cont)</a>
+<a href="#s8" data-i="8">DID in UDS Response</a>
+<a href="#s9" data-i="9">DID in UDS Response (Cont)</a>
+<div class="grp">Section 3 — ReadMemoryByAddress service</div>
+<a href="#s10" data-i="10">Overview</a></nav>
+<main><section class="slide title" id="s0"><div class="slide-inner">
+<h1>Data Transmission functional unit</h1>
+<div class="bar"></div>
+<div class="sub">ISO 14229-1:2013 — Clause 10, Services 0x22 / 0x23</div>
+</div></section>
+<section class="slide" id="s1"><div class="slide-inner"><h2>The Data Transmission functional unit</h2>
+<ul>
+<li>
+<p><strong>What it is:</strong> the functional unit grouping the services that move <em>dataRecord</em> values between client (tester) and server (ECU) [Clause 10.1, Table 141]</p>
+</li>
+<li>
+<p><strong>What it does:</strong> reads and writes current <em>dataRecord</em> values, addressed in two ways:</p>
+<ul>
+<li>by <em>dataIdentifier (DID)</em> — a 16-bit label for a data record the ECU publishes</li>
+<li>by <em>memory address</em> — a raw address + size range in the server's memory map</li>
+</ul>
+</li>
+<li>
+<p><strong>Seven services</strong> in the unit — this presentation covers <strong><code>0x22</code></strong> and <strong><code>0x23</code></strong></p>
+<ul>
+<li>the seven services of the unit presented in Clause 10.1, Table 141</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Note: diagnostic fault information (DTCs, captured data) is not in this unit — it belongs to <strong>Stored Data Transmission</strong> [Clause 10.1, Table 141; Clause 11.1, Table 249]</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>SID</th>
+<th>Service</th>
+<th>What the client asks for</th>
+<th style="text-align: center;">In this deck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>0x22</code></strong></td>
+<td><strong>ReadDataByIdentifier</strong></td>
+<td>current value of a record identified by a <strong>dataIdentifier</strong></td>
+<td style="text-align: center;"><strong>Section 1</strong></td>
+</tr>
+<tr>
+<td><strong><code>0x23</code></strong></td>
+<td><strong>ReadMemoryByAddress</strong></td>
+<td>current value of a provided <em>memory range</em></td>
+<td style="text-align: center;"><strong>Section 2</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="ref">Clause 10.1, Table 141</div></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">1 / 10</span></div></section>
+<section class="slide divider" id="s2"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 1 — Data Identifier</h2></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">2 / 10</span></div></section>
+<section class="slide" id="s3"><div class="slide-inner"><h2>Data Identifier (DID) — Key Concepts</h2>
+<ul>
+<li>
+<p><strong>What a DID is</strong></p>
+<ul>
+<li>A <em>16-bit value</em>, <em>2-byte</em> that logically represents <strong>one object</strong> (e.g. Air Inlet Door Position) or a <em>collection of objects</em> or <em>dataRecord</em> [Clause C.1]</li>
+<li>The content of the <em>dataRecord</em> is not defined in this document and is vehicle manufacturer specifics.</li>
+<li>The referenced data shall be <em>available in the server's memory</em> — fixed, or in RAM when defined dynamically by <code>DynamicallyDefineDataIdentifier</code> (0x2C) [Clause C.1]</li>
+</ul>
+</li>
+<li>
+<p><strong>A DID transmission</strong></p>
+<ul>
+<li>Range <code>0x0000 – 0xFFFF</code>, transmitted <strong>high byte first</strong>; allowed values are assigned in <strong>Table C.1</strong> (Annex C, <em>normative</em>) [Clause C.1, Table C.1]</li>
+<li>The same DID number is used across <strong>0x22 (read)</strong>, <strong>0x2E (write)</strong> and <strong>0x2F (IO control)</strong>, and appears in responses such as <code>ReadDTCInformation</code> snapshot records [Clause C.1]</li>
+</ul>
+</li>
+<li>
+<p><strong>Consistency rule</strong> <em>(IMPORTANT note in Clause C.1)</em></p>
+<blockquote>
+<p>"Regardless of which service a dataIdentifier is used with, it shall consistently represent the same thing (i.e., a given object with a given size / meaning / etc.) on a given ECU."</p>
+</blockquote>
+<ul>
+<li>Only exception: <strong>dynamically defined DIDs</strong> (<code>0xF300–0xF3FF</code>), which are not predefined in the ECU but built by the client via 0x2C [Clause C.1]</li>
+</ul>
+</li>
+</ul>
+<div class="note"><b>Note — </b>Annex C is normative. Table C.1 reserves the ISOSAEReserved and ReservedForLegislativeUse ranges, and assigns vehicle-manufacturer DIDs to the VehicleManufacturerSpecific ranges and system-supplier DIDs to 0xFD00–0xFEFF.</div></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">3 / 10</span></div></section>
+<section class="slide divider" id="s4"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 2 — ReadDataByIdentifier service</h2></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">4 / 10</span></div></section>
+<section class="slide" id="s5"><div class="slide-inner"><h2>Introduction</h2>
+<ul>
+<li><strong>Service:</strong> <code>ReadDataByIdentifier</code> (SID <strong>0x22</strong>) [Clause 10.2]</li>
+<li><strong>Purpose:</strong> lets the client request <em>dataRecord</em> from the server, identified by one or more <em>dataIdentifiers (DIDs)</em> [Clause 10.2.1]</li>
+<li>The client may request a <em>dataIdentifier</em> at any time, independent of the status of the server. [Clause 10.2.5.1]</li>
+<li>The server may limit the number of DIDs requested by OEM specs.</li>
+<li>The client may request the DIDs in the same request.</li>
+<li>The server shall treat each DID as a separate param and respond with data for each.</li>
+</ul>
+<div class="ref">Clause 10.2.1–10.2.3</div></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">5 / 10</span></div></section>
+<section class="slide" id="s6"><div class="slide-inner"><h2>DID in UDS Request</h2>
+<figure><img alt="ReadDataByIdentifier request message A_Data structure" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgNTMwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iNTMwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDwhLS0gVGl0bGUgLyBzdWJ0aXRsZSAtLT4KICA8dGV4dCB4PSI0ODAiIHk9IjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzE0MzM3YSI+UmVhZERhdGFCeUlkZW50aWZpZXIgcmVxdWVzdCDigJQgQV9EYXRhIHN0cnVjdHVyZSAoQ2xhdXNlIDEwLjIuMi4xLCBUYWJsZSAxNDIpPC90ZXh0PgogIDx0ZXh0IHg9IjIwIiB5PSI0OCIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNjA3ZDhiIj5SZXF1ZXN0ID0gMSBieXRlIFNlcnZpY2UgSUQgZm9sbG93ZWQgYnkgb25lIG9yIG1vcmUgMi1ieXRlIGRhdGFJZGVudGlmaWVycy4gVGhpcyBzZXJ2aWNlIGhhcyBubyBzdWItZnVuY3Rpb24gYnl0ZSAoQ2xhdXNlIDEwLjIuMi4yKS48L3RleHQ+CgogIDwhLS0gQnl0ZS1sZXZlbCBsYWJlbHMgLS0+CiAgPHRleHQgeD0iMTE1IiB5PSI3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPkFfRGF0YSBieXRlICMxPC90ZXh0PgogIDx0ZXh0IHg9IjI3NSIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj5BX0RhdGEgYnl0ZSAjMjwvdGV4dD4KICA8dGV4dCB4PSI0MzUiIHk9IjcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzkwYTRhZSI+QV9EYXRhIGJ5dGUgIzM8L3RleHQ+CiAgPHRleHQgeD0iNjc1IiB5PSI3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPkFfRGF0YSBieXRlICNuLTE8L3RleHQ+CiAgPHRleHQgeD0iODM1IiB5PSI3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPkFfRGF0YSBieXRlICNuPC90ZXh0PgoKICA8IS0tIEJ5dGUtbGV2ZWwgYm94ZXMgLS0+CiAgPHJlY3QgeD0iNDAiIHk9Ijc4IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjUyIiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSIxMTUiIHk9Ijk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPlJlYWREYXRhQnlJZGVudGlmaWVyIFNJRDwvdGV4dD4KICA8dGV4dCB4PSIxMTUiIHk9IjExMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiMyNjMyMzgiPjB4MjI8L3RleHQ+CiAgPHRleHQgeD0iMTE1IiB5PSIxMjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+UkRCSSDCtyBNIChtYW5kYXRvcnkpPC90ZXh0PgoKICA8cmVjdCB4PSIyMDAiIHk9Ijc4IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjUyIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSIyNzUiIHk9Ijk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPmRhdGFJZGVudGlmaWVyICMxIChNU0IpPC90ZXh0PgogIDx0ZXh0IHg9IjI3NSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzI2MzIzOCI+MHgwMCDigJMgMHhGRjwvdGV4dD4KICA8dGV4dCB4PSIyNzUiIHk9IjEyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjNjA3ZDhiIj5ESURfSEIgwrcgTTwvdGV4dD4KCiAgPHJlY3QgeD0iMzYwIiB5PSI3OCIgd2lkdGg9IjE1MCIgaGVpZ2h0PSI1MiIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIi8+CiAgPHRleHQgeD0iNDM1IiB5PSI5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5kYXRhSWRlbnRpZmllciAjMSAoTFNCKTwvdGV4dD4KICA8dGV4dCB4PSI0MzUiIHk9IjExMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiMyNjMyMzgiPjB4MDAg4oCTIDB4RkY8L3RleHQ+CiAgPHRleHQgeD0iNDM1IiB5PSIxMjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+RElEX0xCIMK3IE08L3RleHQ+CgogIDx0ZXh0IHg9IjU1NSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjOTBhNGFlIj7Ct8K3wrc8L3RleHQ+CgogIDxyZWN0IHg9IjYwMCIgeT0iNzgiIHdpZHRoPSIxNTAiIGhlaWdodD0iNTIiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCAzIi8+CiAgPHRleHQgeD0iNjc1IiB5PSI5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5kYXRhSWRlbnRpZmllciAjbSAoTVNCKTwvdGV4dD4KICA8dGV4dCB4PSI2NzUiIHk9IjExMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiMyNjMyMzgiPjB4MDAg4oCTIDB4RkY8L3RleHQ+CiAgPHRleHQgeD0iNjc1IiB5PSIxMjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+RElEX0hCIMK3IFUgKG9wdGlvbmFsKTwvdGV4dD4KCiAgPHJlY3QgeD0iNzYwIiB5PSI3OCIgd2lkdGg9IjE1MCIgaGVpZ2h0PSI1MiIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIiBzdHJva2UtZGFzaGFycmF5PSI0IDMiLz4KICA8dGV4dCB4PSI4MzUiIHk9Ijk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPmRhdGFJZGVudGlmaWVyICNtIChMU0IpPC90ZXh0PgogIDx0ZXh0IHg9IjgzNSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzI2MzIzOCI+MHgwMCDigJMgMHhGRjwvdGV4dD4KICA8dGV4dCB4PSI4MzUiIHk9IjEyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjNjA3ZDhiIj5ESURfTEIgwrcgVSAob3B0aW9uYWwpPC90ZXh0PgoKICA8IS0tIENvbm5lY3RvcnMgZnJvbSBieXRlcyAjMi8jMyBkb3duIHRvIHRoZSAxNi1iaXQgZXhwYW5zaW9uIC0tPgogIDxsaW5lIHgxPSIyMDAiIHkxPSIxMzAiIHgyPSIyMDAiIHkyPSIxNjYiIHN0cm9rZT0iI2YyNmYyMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCAzIi8+CiAgPGxpbmUgeDE9IjUxMCIgeTE9IjEzMCIgeDI9IjUxMCIgeTI9IjE2NiIgc3Ryb2tlPSIjZjI2ZjIxIiBzdHJva2UtZGFzaGFycmF5PSI0IDMiLz4KICA8dGV4dCB4PSIzNTUiIHk9IjE1MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXN0eWxlPSJpdGFsaWMiIGZpbGw9IiNmMjZmMjEiPmJ5dGVzICMyIGFuZCAjMyB0YWtlbiB0b2dldGhlcjwvdGV4dD4KCiAgPCEtLSAxNi1iaXQgZXhwYW5zaW9uIC0tPgogIDxyZWN0IHg9IjIwMCIgeT0iMTY4IiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjQ2IiBmaWxsPSIjZThmNWU5IiBzdHJva2U9IiMyZTdkMzIiLz4KICA8dGV4dCB4PSIzNTUiIHk9IjE4NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMC41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+ZGF0YUlkZW50aWZpZXIgIzEg4oCUIE9ORSAxNi1iaXQgZmllbGQ8L3RleHQ+CiAgPHRleHQgeD0iMzU1IiB5PSIyMDMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMyNjMyMzgiPjB4MDAwMCDigJMgMHhGRkZGLCBoaWdoIGJ5dGUgZmlyc3Q8L3RleHQ+CgogIDx0ZXh0IHg9IjUzMCIgeT0iMTg0IiBmb250LXNpemU9IjEwIiBmaWxsPSIjMjYzMjM4Ij5BIERJRCBpcyBhIHZhbHVlIG9mIHRoZSB3aG9sZSAxNi1iaXQgZmllbGQg4oCUIGl0IG5hbWVzIGFuIG9iamVjdDwvdGV4dD4KICA8dGV4dCB4PSI1MzAiIHk9IjE5OSIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+KGUuZy4gVklOKSwgbmV2ZXIgYSBiaXQgcG9zaXRpb24uIFJhbmdlcyBhcmUgYXNzaWduZWQgaW4gVGFibGUgQy4xLjwvdGV4dD4KCiAgPCEtLSBOb3RlIC0tPgogIDx0ZXh0IHg9IjIwIiB5PSIyMzQiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMyNjMyMzgiPkVhY2ggcmVxdWVzdGVkIERJRCBjb3N0cyBleGFjdGx5IDIgYnl0ZXM7IHRoZSBjbGllbnQgbWF5IHJlcGVhdCB0aGUgc2FtZSBESUQsIGFuZCB0aGUgc2VydmVyIHNoYWxsIGFuc3dlciBpdCBhcyBvZnRlbiBhcyByZXF1ZXN0ZWQgKENsYXVzZSAxMC4yLjIuMSkuPC90ZXh0PgoKICA8IS0tIENvbm5lY3RvciBkb3duIHRvIHJlZmVyZW5jZSB0YWJsZSAtLT4KICA8bGluZSB4MT0iMzU1IiB5MT0iMjQ0IiB4Mj0iMzU1IiB5Mj0iMjYyIiBzdHJva2U9IiMyZTdkMzIiLz4KICA8cG9seWdvbiBwb2ludHM9IjM1MSwyNjIgMzU5LDI2MiAzNTUsMjcwIiBmaWxsPSIjMmU3ZDMyIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMjg2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+ZGF0YUlkZW50aWZpZXIgdmFsdWUgYXNzaWdubWVudCDigJQgZXh0cmFjdCBvZiBUYWJsZSBDLjEgKEFubmV4IEMsIG5vcm1hdGl2ZSk8L3RleHQ+CgogIDwhLS0gUmVmZXJlbmNlIHRhYmxlOiBjb2x1bW4gMSAtLT4KICA8cmVjdCB4PSI0MCIgeT0iMjk2IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNjZmQ4ZGMiLz4KICA8dGV4dCB4PSI1MCIgeT0iMzE2IiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjB4MDAwMOKAkzB4MDBGRjwvdGV4dD4KICA8cmVjdCB4PSIxNTAiIHk9IjI5NiIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjY2ZkOGRjIi8+CiAgPHRleHQgeD0iMTYwIiB5PSIzMTYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyNjMyMzgiPklTT1NBRVJlc2VydmVkIChNKTwvdGV4dD4KCiAgPHJlY3QgeD0iNDAiIHk9IjMzMiIgd2lkdGg9IjExMCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2VkZTdmNiIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPHRleHQgeD0iNTAiIHk9IjM1MiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBDb25zb2xhcywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weDAxMDDigJMweEE1RkY8L3RleHQ+CiAgPHJlY3QgeD0iMTUwIiB5PSIzMzIiIHdpZHRoPSIzNTAiIGhlaWdodD0iMzIiIGZpbGw9IiNlZGU3ZjYiIHN0cm9rZT0iIzVlMzViMSIvPgogIDx0ZXh0IHg9IjE2MCIgeT0iMzUyIiBmb250LXNpemU9IjExIiBmaWxsPSIjMjYzMjM4Ij5WZWhpY2xlTWFudWZhY3R1cmVyU3BlY2lmaWMgKFZNUyk8L3RleHQ+CgogIDxyZWN0IHg9IjQwIiB5PSIzNjgiIHdpZHRoPSIxMTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjUwIiB5PSIzODgiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgQ29uc29sYXMsIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MHhBNjAw4oCTMHhBN0ZGPC90ZXh0PgogIDxyZWN0IHg9IjE1MCIgeT0iMzY4IiB3aWR0aD0iMzUwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNjZmQ4ZGMiLz4KICA8dGV4dCB4PSIxNjAiIHk9IjM4OCIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzI2MzIzOCI+UmVzZXJ2ZWRGb3JMZWdpc2xhdGl2ZVVzZSAoUkZMVSk8L3RleHQ+CgogIDxyZWN0IHg9IjQwIiB5PSI0MDQiIHdpZHRoPSIxMTAiIGhlaWdodD0iMzIiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIvPgogIDx0ZXh0IHg9IjUwIiB5PSI0MjQiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgQ29uc29sYXMsIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MHhGMTgw4oCTMHhGMThGPC90ZXh0PgogIDxyZWN0IHg9IjE1MCIgeT0iNDA0IiB3aWR0aD0iMzUwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSIxNjAiIHk9IjQyNCIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzI2MzIzOCI+Ym9vdCAvIGFwcGxpY2F0aW9uIHNvZnR3YXJlIElEIGFuZCBmaW5nZXJwcmludDwvdGV4dD4KCiAgPHJlY3QgeD0iNDAiIHk9IjQ0MCIgd2lkdGg9IjExMCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIi8+CiAgPHRleHQgeD0iNTAiIHk9IjQ2MCIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBDb25zb2xhcywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weEYxOTA8L3RleHQ+CiAgPHJlY3QgeD0iMTUwIiB5PSI0NDAiIHdpZHRoPSIzNTAiIGhlaWdodD0iMzIiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjE2MCIgeT0iNDYwIiBmb250LXNpemU9IjExIiBmaWxsPSIjMjYzMjM4Ij5WSU5EYXRhSWRlbnRpZmllciAoVklORElEKTwvdGV4dD4KCiAgPCEtLSBSZWZlcmVuY2UgdGFibGU6IGNvbHVtbiAyIC0tPgogIDxyZWN0IHg9IjUyMCIgeT0iMjk2IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZWRlN2Y2IiBzdHJva2U9IiM1ZTM1YjEiLz4KICA8dGV4dCB4PSI1MzAiIHk9IjMxNiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBDb25zb2xhcywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weEYxQTDigJMweEYxRUY8L3RleHQ+CiAgPHJlY3QgeD0iNjMwIiB5PSIyOTYiIHdpZHRoPSIyOTAiIGhlaWdodD0iMzIiIGZpbGw9IiNlZGU3ZjYiIHN0cm9rZT0iIzVlMzViMSIvPgogIDx0ZXh0IHg9IjY0MCIgeT0iMzE2IiBmb250LXNpemU9IjExIiBmaWxsPSIjMjYzMjM4Ij5pZGVudGlmaWNhdGlvbk9wdGlvbiwgVk0gc3BlY2lmaWM8L3RleHQ+CgogIDxyZWN0IHg9IjUyMCIgeT0iMzMyIiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmOWM0IiBzdHJva2U9IiNmOWE4MjUiLz4KICA8dGV4dCB4PSI1MzAiIHk9IjM1MiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBDb25zb2xhcywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weEYyMDDigJMweEYyRkY8L3RleHQ+CiAgPHJlY3QgeD0iNjMwIiB5PSIzMzIiIHdpZHRoPSIyOTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmY5YzQiIHN0cm9rZT0iI2Y5YTgyNSIvPgogIDx0ZXh0IHg9IjY0MCIgeT0iMzUyIiBmb250LXNpemU9IjExIiBmaWxsPSIjMjYzMjM4Ij5wZXJpb2RpY0RhdGFJZGVudGlmaWVyIChQRElEKTwvdGV4dD4KCiAgPHJlY3QgeD0iNTIwIiB5PSIzNjgiIHdpZHRoPSIxMTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjUzMCIgeT0iMzg4IiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjB4RjMwMOKAkzB4RjNGRjwvdGV4dD4KICA8cmVjdCB4PSI2MzAiIHk9IjM2OCIgd2lkdGg9IjI5MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIi8+CiAgPHRleHQgeD0iNjQwIiB5PSIzODgiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyNjMyMzgiPkR5bmFtaWNhbGx5RGVmaW5lZERhdGFJZGVudGlmaWVyIChERERESSk8L3RleHQ+CgogIDxyZWN0IHg9IjUyMCIgeT0iNDA0IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNjZmQ4ZGMiLz4KICA8dGV4dCB4PSI1MzAiIHk9IjQyNCIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBDb25zb2xhcywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij4weEY0MDDigJMweEY4RkY8L3RleHQ+CiAgPHJlY3QgeD0iNjMwIiB5PSI0MDQiIHdpZHRoPSIyOTAiIGhlaWdodD0iMzIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjY0MCIgeT0iNDI0IiBmb250LXNpemU9IjExIiBmaWxsPSIjMjYzMjM4Ij5PQkQgLyBPQkQgbW9uaXRvciAvIGluZm8gdHlwZSAoSVNPIDE1MDMxLTUpPC90ZXh0PgoKICA8cmVjdCB4PSI1MjAiIHk9IjQ0MCIgd2lkdGg9IjExMCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZjZTRlYyIgc3Ryb2tlPSIjYzIxODViIi8+CiAgPHRleHQgeD0iNTMwIiB5PSI0NjAiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgQ29uc29sYXMsIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MHhGRjAwPC90ZXh0PgogIDxyZWN0IHg9IjYzMCIgeT0iNDQwIiB3aWR0aD0iMjkwIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmNlNGVjIiBzdHJva2U9IiNjMjE4NWIiLz4KICA8dGV4dCB4PSI2NDAiIHk9IjQ2MCIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzI2MzIzOCI+VURTVmVyc2lvbkRhdGFJZGVudGlmaWVyIChVRFNWRElEKTwvdGV4dD4KCiAgPCEtLSBGb290ZXIgbm90ZXMgLS0+CiAgPHRleHQgeD0iMjAiIHk9IjQ5NCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+RmlndXJlIDE1IGtleXMgdGhlIGxlbmd0aCBjaGVja3MgYXMgMyBieXRlcyBtaW5pbXVtIGFuZCAxICsgMsOXbiDigJQgbiBpcyB1bmJvdW5kZWQsIHNvIHRoaXMgaXMgYSBmb3JtYXQgdGVzdDogU0lEICsgd2hvbGUgMi1ieXRlIERJRHMsIGFuIG9kZCBieXRlIGNvdW50IOKJpSAzLjwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iNTEyIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMjYzMjM4Ij5UaGUgc2VydmVyIG1heSBjYXAgaG93IG1hbnkgZGF0YUlkZW50aWZpZXJzIG9uZSByZXF1ZXN0IG1heSBjYXJyeSDigJQgdGhlIGxpbWl0IGlzIGFncmVlZCBiZXR3ZWVuIHZlaGljbGUgbWFudWZhY3R1cmVyIGFuZCBzeXN0ZW0gc3VwcGxpZXIgKENsYXVzZSAxMC4yLjEpLjwvdGV4dD4KPC9zdmc+" /></figure></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">6 / 10</span></div></section>
+<section class="slide" id="s7"><div class="slide-inner"><h2>DID in UDS Request (Cont)</h2>
+<ul>
+<li><strong>A_Data byte #1</strong> — Service ID: <code>0x22</code> (ReadDataByIdentifier / RDBI), mandatory [Clause 10.2.2.1, Table 142]</li>
+<li>
+<p><strong>A_Data bytes #2–#n</strong> — <code>dataIdentifier</code>,[Clause 10.2.2.1, Table 142]</p>
+</li>
+<li>
+<p><strong>Request length</strong> — SID + <em>whole 2-byte DIDs</em>, i.e. an <em>odd byte count ≥ 3</em>; anything else is malformed → <strong>NRC 0x13</strong> [Figure 15]</p>
+</li>
+<li><strong>No sub-function byte</strong> — unlike <code>DiagnosticSessionControl</code> (0x10), this service carries data parameters only [Clause 10.2.2.2]</li>
+</ul>
+<div class="ref">Clause 10.2.2, Tables 142–143; Annex C, Table C.1</div>
+<div class="note"><b>Note — </b>Figure 15 keys the two checks as "minimum length is 3 byte (SI + DID)" and "maximum length is 1 byte (SI) + 2*n bytes (DID(s))". But n is unbounded there, so 1 + 2*n caps nothing — it is a format test, which is why the flowchart pairs the minimum-length check with a modulo 2 division. Since 1 + 2*n is always odd, an even-length request is malformed and answered with NRC 0x13.</div>
+<div class="note"><b>Note — </b>What actually bounds a request: the dataIdentifier field is 16-bit, so DID values run 0x0000-0xFFFF. Beyond that the limits are practical, not arithmetic — the server may cap how many dataIdentifiers can be requested simultaneously, as agreed between vehicle manufacturer and system supplier (Clause 10.2.1), and exceeding that cap is an NRC 0x13 case alongside an invalid length (Table 146). A response too large for the transport protocol gives NRC 0x14.</div></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">7 / 10</span></div></section>
+<section class="slide" id="s8"><div class="slide-inner"><h2>DID in UDS Response</h2>
+<figure><img alt="ReadDataByIdentifier positive response message A_Data structure" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgNDYwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iNDYwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDwhLS0gVGl0bGUgLyBzdWJ0aXRsZSAtLT4KICA8dGV4dCB4PSI0ODAiIHk9IjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzE0MzM3YSI+UmVhZERhdGFCeUlkZW50aWZpZXIgcG9zaXRpdmUgcmVzcG9uc2Ug4oCUIEFfRGF0YSBzdHJ1Y3R1cmUgKENsYXVzZSAxMC4yLjMuMSwgVGFibGUgMTQ0KTwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iNDgiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzYwN2Q4YiI+UmVzcG9uc2UgPSAweDYyIGZvbGxvd2VkIGJ5LCBmb3IgZXZlcnkgcmVxdWVzdGVkIGRhdGFJZGVudGlmaWVyLCB0aGUgMi1ieXRlIERJRCBlY2hvIGltbWVkaWF0ZWx5IGZvbGxvd2VkIGJ5IHRoYXQgRElEJ3MgZGF0YVJlY29yZC48L3RleHQ+CgogIDwhLS0gQnl0ZS1sZXZlbCBsYWJlbHMsIGZpcnN0IGJsb2NrIC0tPgogIDx0ZXh0IHg9IjEwNSIgeT0iNzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj5BX0RhdGEgYnl0ZSAjMTwvdGV4dD4KICA8dGV4dCB4PSIyNDciIHk9Ijc0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzkwYTRhZSI+IzI8L3RleHQ+CiAgPHRleHQgeD0iMzcyIiB5PSI3NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPiMzPC90ZXh0PgogIDx0ZXh0IHg9IjY3NSIgeT0iNzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj4jNCDigKYgIyhrLTEpKzQ8L3RleHQ+CgogIDwhLS0gQnl0ZS1sZXZlbCBib3hlcywgZmlyc3QgYmxvY2sgLS0+CiAgPHJlY3QgeD0iNDAiIHk9IjgwIiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjUyIiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSIxMDUiIHk9Ijk4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPlJlc3BvbnNlIFNJRDwvdGV4dD4KICA8dGV4dCB4PSIxMDUiIHk9IjExMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiMyNjMyMzgiPjB4NjI8L3RleHQ+CiAgPHRleHQgeD0iMTA1IiB5PSIxMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+UkRCSVBSIMK3IE08L3RleHQ+CgogIDxyZWN0IHg9IjE5MCIgeT0iODAiIHdpZHRoPSIxMTUiIGhlaWdodD0iNTIiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjI0NyIgeT0iOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+RElEICMxIChNU0IpPC90ZXh0PgogIDx0ZXh0IHg9IjI0NyIgeT0iMTEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzI2MzIzOCI+MHgwMCDigJMgMHhGRjwvdGV4dD4KICA8dGV4dCB4PSIyNDciIHk9IjEyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjNjA3ZDhiIj5ESURfSEIgwrcgTTwvdGV4dD4KCiAgPHJlY3QgeD0iMzE1IiB5PSI4MCIgd2lkdGg9IjExNSIgaGVpZ2h0PSI1MiIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIi8+CiAgPHRleHQgeD0iMzcyIiB5PSI5OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5ESUQgIzEgKExTQik8L3RleHQ+CiAgPHRleHQgeD0iMzcyIiB5PSIxMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjMjYzMjM4Ij4weDAwIOKAkyAweEZGPC90ZXh0PgogIDx0ZXh0IHg9IjM3MiIgeT0iMTI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPkRJRF9MQiDCtyBNPC90ZXh0PgoKICA8cmVjdCB4PSI0NDAiIHk9IjgwIiB3aWR0aD0iNDcwIiBoZWlnaHQ9IjUyIiBmaWxsPSIjZThmNWU5IiBzdHJva2U9IiMyZTdkMzIiLz4KICA8dGV4dCB4PSI2NzUiIHk9Ijk4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPmRhdGFSZWNvcmQgIzEg4oCUIGsgYnl0ZXM8L3RleHQ+CiAgPHRleHQgeD0iNjc1IiB5PSIxMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjMjYzMjM4Ij5EUkVDX0RBVEExIOKApiBEUkVDX0RBVEFrLCBlYWNoIDB4MDAg4oCTIDB4RkY8L3RleHQ+CiAgPHRleHQgeD0iNjc1IiB5PSIxMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+Zmlyc3QgZGF0YSBieXRlIE0sIHRoZSByZXN0IFUg4oCUIGxlbmd0aCBhbmQgY29udGVudCBhcmUgdmVoaWNsZSBtYW51ZmFjdHVyZXIgc3BlY2lmaWM8L3RleHQ+CgogIDwhLS0gUmVwZWF0aW5nLWJsb2NrIGJyYWNrZXQgLS0+CiAgPGxpbmUgeDE9IjE5MCIgeTE9IjE0MCIgeDI9IjkxMCIgeTI9IjE0MCIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPGxpbmUgeDE9IjE5MCIgeTE9IjE0MCIgeDI9IjE5MCIgeTI9IjEzNCIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPGxpbmUgeDE9IjkxMCIgeTE9IjE0MCIgeDI9IjkxMCIgeTI9IjEzNCIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPHRleHQgeD0iNTUwIiB5PSIxNTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC1zdHlsZT0iaXRhbGljIiBmaWxsPSIjNWUzNWIxIj5vbmUgRElELWVjaG8gKyBkYXRhUmVjb3JkIGJsb2NrIHBlciByZXF1ZXN0ZWQgZGF0YUlkZW50aWZpZXIg4oCUIHJlcGVhdGVkIG0gdGltZXMsIGluIHJlcXVlc3Qgb3JkZXI8L3RleHQ+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMTc0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTBhNGFlIj7ii648L3RleHQ+CgogIDwhLS0gQnl0ZS1sZXZlbCBsYWJlbHMsIGxhc3QgYmxvY2sgLS0+CiAgPHRleHQgeD0iMjQ3IiB5PSIxOTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj4jbi0oby0xKS0yPC90ZXh0PgogIDx0ZXh0IHg9IjM3MiIgeT0iMTkyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzkwYTRhZSI+I24tKG8tMSktMTwvdGV4dD4KICA8dGV4dCB4PSI2NzUiIHk9IjE5MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPiNuLShvLTEpIOKApiAjbjwvdGV4dD4KCiAgPCEtLSBCeXRlLWxldmVsIGJveGVzLCBsYXN0IGJsb2NrIC0tPgogIDxyZWN0IHg9IjE5MCIgeT0iMTk4IiB3aWR0aD0iMTE1IiBoZWlnaHQ9IjUyIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPgogIDx0ZXh0IHg9IjI0NyIgeT0iMjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPkRJRCAjbSAoTVNCKTwvdGV4dD4KICA8dGV4dCB4PSIyNDciIHk9IjIzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiMyNjMyMzgiPjB4MDAg4oCTIDB4RkY8L3RleHQ+CiAgPHRleHQgeD0iMjQ3IiB5PSIyNDMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+RElEX0hCIMK3IFU8L3RleHQ+CgogIDxyZWN0IHg9IjMxNSIgeT0iMTk4IiB3aWR0aD0iMTE1IiBoZWlnaHQ9IjUyIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPgogIDx0ZXh0IHg9IjM3MiIgeT0iMjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPkRJRCAjbSAoTFNCKTwvdGV4dD4KICA8dGV4dCB4PSIzNzIiIHk9IjIzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiMyNjMyMzgiPjB4MDAg4oCTIDB4RkY8L3RleHQ+CiAgPHRleHQgeD0iMzcyIiB5PSIyNDMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+RElEX0xCIMK3IFU8L3RleHQ+CgogIDxyZWN0IHg9IjQ0MCIgeT0iMTk4IiB3aWR0aD0iNDcwIiBoZWlnaHQ9IjUyIiBmaWxsPSIjZThmNWU5IiBzdHJva2U9IiMyZTdkMzIiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPgogIDx0ZXh0IHg9IjY3NSIgeT0iMjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPmRhdGFSZWNvcmQgI20g4oCUIG8gYnl0ZXM8L3RleHQ+CiAgPHRleHQgeD0iNjc1IiB5PSIyMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjMjYzMjM4Ij5EUkVDX0RBVEExIOKApiBEUkVDX0RBVEFvLCBlYWNoIDB4MDAg4oCTIDB4RkY8L3RleHQ+CiAgPHRleHQgeD0iNjc1IiB5PSIyNDMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+biA9IHRvdGFsIEFfRGF0YSBsZW5ndGg7IHRoZSBsYXN0IGRhdGFSZWNvcmQgZW5kcyB0aGUgbWVzc2FnZTwvdGV4dD4KCiAgPCEtLSBOb3RlIC0tPgogIDx0ZXh0IHg9IjIwIiB5PSIyNzIiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMyNjMyMzgiPk5vIGxlbmd0aCBieXRlIHNlcGFyYXRlcyB0aGUgYmxvY2tzOiB0aGUgY2xpZW50IG11c3QgYWxyZWFkeSBrbm93IGhvdyBtYW55IGJ5dGVzIGVhY2ggRElEIHJldHVybnMgKFRhYmxlIDE0NSDigJQgY29udGVudCBvZiBkYXRhUmVjb3JkIGlzIG5vdCBkZWZpbmVkIGJ5IHRoaXMgZG9jdW1lbnQpLjwvdGV4dD4KCiAgPCEtLSBDb25uZWN0b3IgZG93biB0byB0aGUgZXhhbXBsZSAtLT4KICA8bGluZSB4MT0iNDgwIiB5MT0iMjgyIiB4Mj0iNDgwIiB5Mj0iMjk4IiBzdHJva2U9IiMyZTdkMzIiLz4KICA8cG9seWdvbiBwb2ludHM9IjQ3NiwyOTggNDg0LDI5OCA0ODAsMzA2IiBmaWxsPSIjMmU3ZDMyIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMzIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+V29ya2VkIGV4YW1wbGUg4oCUIHJlYWQgZGF0YUlkZW50aWZpZXJzIDB4MDEwQSBhbmQgMHgwMTEwIGluIG9uZSByZXF1ZXN0IChDbGF1c2UgMTAuMi41LjMsIFRhYmxlIDE1MCk8L3RleHQ+CgogIDwhLS0gR3JvdXAgbGFiZWxzIG92ZXIgdGhlIGJ5dGUgc3RyaXAgLS0+CiAgPHRleHQgeD0iNjUiIHk9IjM0MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiM2MDdkOGIiPlNJRDwvdGV4dD4KICA8dGV4dCB4PSIxNDIiIHk9IjM0MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiM2MDdkOGIiPkRJRCMxID0gMHgwMTBBPC90ZXh0PgogIDx0ZXh0IHg9IjQ3MyIgeT0iMzQyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjguNSIgZmlsbD0iIzYwN2Q4YiI+ZGF0YVJlY29yZCAjMSDigJQgMTEgYnl0ZXMgKERSRUNfREFUQTEg4oCmIERSRUNfREFUQTExKTwvdGV4dD4KICA8dGV4dCB4PSI4MDUiIHk9IjM0MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiM2MDdkOGIiPkRJRCMyID0gMHgwMTEwPC90ZXh0PgogIDx0ZXh0IHg9Ijg4MSIgeT0iMzQyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjguNSIgZmlsbD0iIzYwN2Q4YiI+RFJFQyAjMjwvdGV4dD4KCiAgPCEtLSBCeXRlIHN0cmlwIC0tPgogIDxyZWN0IHg9IjQwIiB5PSIzNDgiIHdpZHRoPSI1MSIgaGVpZ2h0PSIzOCIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iNjUiIHk9IjM3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBDb25zb2xhcywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij42MjwvdGV4dD4KICA8cmVjdCB4PSI5MSIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjExNiIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjAxPC90ZXh0PgogIDxyZWN0IHg9IjE0MiIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjE2NyIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjBBPC90ZXh0PgogIDxyZWN0IHg9IjE5MyIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjIxOCIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPkE2PC90ZXh0PgogIDxyZWN0IHg9IjI0NCIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjI2OSIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjY2PC90ZXh0PgogIDxyZWN0IHg9IjI5NSIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjMyMCIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjA3PC90ZXh0PgogIDxyZWN0IHg9IjM0NiIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjM3MSIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjUwPC90ZXh0PgogIDxyZWN0IHg9IjM5NyIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjQyMiIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjIwPC90ZXh0PgogIDxyZWN0IHg9IjQ0OCIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjQ3MyIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjFBPC90ZXh0PgogIDxyZWN0IHg9IjQ5OSIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjUyNCIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjAwPC90ZXh0PgogIDxyZWN0IHg9IjU1MCIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjU3NSIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjYzPC90ZXh0PgogIDxyZWN0IHg9IjYwMSIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjYyNiIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjRBPC90ZXh0PgogIDxyZWN0IHg9IjY1MiIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjY3NyIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjgyPC90ZXh0PgogIDxyZWN0IHg9IjcwMyIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjcyOCIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjdFPC90ZXh0PgogIDxyZWN0IHg9Ijc1NCIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9Ijc3OSIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjAxPC90ZXh0PgogIDxyZWN0IHg9IjgwNSIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjgzMCIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjEwPC90ZXh0PgogIDxyZWN0IHg9Ijg1NiIgeT0iMzQ4IiB3aWR0aD0iNTEiIGhlaWdodD0iMzgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9Ijg4MSIgeT0iMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPjhDPC90ZXh0PgoKICA8IS0tIEJ5dGUgaW5kZXggbGFiZWxzIC0tPgogIDx0ZXh0IHg9IjY1IiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzE8L3RleHQ+CiAgPHRleHQgeD0iMTE2IiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzI8L3RleHQ+CiAgPHRleHQgeD0iMTY3IiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzM8L3RleHQ+CiAgPHRleHQgeD0iMjE4IiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzQ8L3RleHQ+CiAgPHRleHQgeD0iMjY5IiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzU8L3RleHQ+CiAgPHRleHQgeD0iMzIwIiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzY8L3RleHQ+CiAgPHRleHQgeD0iMzcxIiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+Izc8L3RleHQ+CiAgPHRleHQgeD0iNDIyIiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+Izg8L3RleHQ+CiAgPHRleHQgeD0iNDczIiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+Izk8L3RleHQ+CiAgPHRleHQgeD0iNTI0IiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzEwPC90ZXh0PgogIDx0ZXh0IHg9IjU3NSIgeT0iMzk4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM5MGE0YWUiPiMxMTwvdGV4dD4KICA8dGV4dCB4PSI2MjYiIHk9IjM5OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjOTBhNGFlIj4jMTI8L3RleHQ+CiAgPHRleHQgeD0iNjc3IiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzEzPC90ZXh0PgogIDx0ZXh0IHg9IjcyOCIgeT0iMzk4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM5MGE0YWUiPiMxNDwvdGV4dD4KICA8dGV4dCB4PSI3NzkiIHk9IjM5OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjOTBhNGFlIj4jMTU8L3RleHQ+CiAgPHRleHQgeD0iODMwIiB5PSIzOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzkwYTRhZSI+IzE2PC90ZXh0PgogIDx0ZXh0IHg9Ijg4MSIgeT0iMzk4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM5MGE0YWUiPiMxNzwvdGV4dD4KCiAgPCEtLSBGb290ZXIgbm90ZXMgLS0+CiAgPHRleHQgeD0iMjAiIHk9IjQyNCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+SGVyZSBrID0gMTEgYW5kIG8gPSAxLCBzbyBuID0gMTcuIEVhY2ggZGF0YUlkZW50aWZpZXIgaXMgZWNob2VkIGltbWVkaWF0ZWx5IGJlZm9yZSBpdHMgb3duIGRhdGFSZWNvcmQsIGFuZCB0aGUgZGF0YVJlY29yZCBsZW5ndGhzIGRpZmZlciBwZXIgRElEIChUYWJsZSAxNDQpLjwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iNDQyIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMjYzMjM4Ij5JZiB0aGUgYXNzZW1ibGVkIHJlc3BvbnNlIHdvdWxkIG5vdCBmaXQgdGhlIHRyYW5zcG9ydCBwcm90b2NvbCwgdGhlIHNlcnZlciBhbnN3ZXJzIE5SQyAweDE0IHJlc3BvbnNlVG9vTG9uZyBpbnN0ZWFkIChUYWJsZSAxNDYpLjwvdGV4dD4KPC9zdmc+" /></figure></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">8 / 10</span></div></section>
+<section class="slide" id="s9"><div class="slide-inner"><h2>DID in UDS Response (Cont)</h2>
+<ul>
+<li><strong>A_Data byte #1</strong> — Response SID <code>0x62</code> (<code>RDBIPR</code> = 0x22 + 0x40), mandatory [Clause 10.2.3.1, Table 144]</li>
+<li><strong>Blocks repeat</strong>: each DID echo  is followed by its own dataRecord </li>
+</ul>
+<p>worked example — read a single DID <code>0xF190</code> (VIN) [Clause 10.2.5.2, Tables 147–148]:</p>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>A_Data bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client → server</td>
+<td><code>22 F1 90</code></td>
+</tr>
+<tr>
+<td>server → client</td>
+<td><code>62 F1 90</code> + 17 data bytes <code>57 30 4C 30 30 30 30 34 33 4D 42 35 34 31 33 32 36</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>negative responses</strong> for this service is defined in Clause 10.2.4, Table 146<ul>
+<li>sample err code (NRC): incorrectMessageLengthOrInvalidFormat, conditionsNotCorrect</li>
+<li>the NRC code should be queried agains Clause 10.2.4 Fig 15 for scenario leading to the error code.</li>
+</ul>
+</li>
+</ul></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">9 / 10</span></div></section>
+<section class="slide divider" id="s10"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 3 — ReadMemoryByAddress service</h2></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">10 / 10</span></div></section></main>
+</div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var bar=document.querySelector('.rail i');
+  function current(){
+    var best=0,bd=1e9;
+    slides.forEach(function(s,i){var d=Math.abs(s.getBoundingClientRect().top);
+      if(d<bd){bd=d;best=i}});
+    return best;
+  }
+  function sync(){
+    var i=current();
+    links.forEach(function(a){a.classList.toggle('on',a.dataset.i===String(i))});
+    if(bar)bar.style.width=(slides.length<2?100:(i/(slides.length-1))*100)+'%';
+  }
+  addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync);
+  addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    var i=current(),t=null;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')t=i+1;
+    if(e.key==='ArrowUp'||e.key==='ArrowLeft'||e.key==='PageUp')t=i-1;
+    if(e.key==='Home')t=0;
+    if(e.key==='End')t=slides.length-1;
+    if(t===null)return;
+    e.preventDefault();
+    slides[Math.max(0,Math.min(slides.length-1,t))].scrollIntoView({behavior:'smooth'});
+  });
+  sync();
+})();
+</script>
+</body></html>
