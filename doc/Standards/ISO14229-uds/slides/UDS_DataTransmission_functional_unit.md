@@ -57,7 +57,7 @@
 
 ### ReadDataByIdentifier Request
 
-![ReadDataByIdentifier request message A_Data structure](../uds/asset/uds-rdbi-request-message-structure.svg)
+![ReadDataByIdentifier request message A_Data structure](../asset/uds-rdbi-request-message-structure.svg)
 
 ### ReadDataByIdentifier Request (Cont)
 
@@ -71,7 +71,7 @@
 
 ### ReadDataByIdentifier Response
 
-![ReadDataByIdentifier positive response message A_Data structure](../uds/asset/uds-rdbi-response-message-structure.svg)
+![ReadDataByIdentifier positive response message A_Data structure](../asset/uds-rdbi-response-message-structure.svg)
 
 ### ReadDataByIdentifier Response (Cont)
 
@@ -111,7 +111,7 @@ worked example — read a single DID `0xF190` (VIN) [Clause 10.2.5.2, Tables 147
 
 ### WriteDataByIdentifier Request
 
-![WriteDataByIdentifier request message A_Data structure](../uds/asset/uds-wdbi-request-message-structure.svg)
+![WriteDataByIdentifier request message A_Data structure](../asset/uds-wdbi-request-message-structure.svg)
 
 ### WriteDataByIdentifier Request (Cont)
 - **A_Data byte #1** — Service ID `0x2E` (`WDBI`), mandatory [Clause 10.7.2.1, Table 231]

@@ -12,10 +12,9 @@ differently (its Diagnostic and Communication Management functional unit is Clau
 
 ```
 ISO14229-uds/
-├── uds/
-│   ├── official docs/    the standards themselves, as PDFs — reference only, never edited
-│   ├── markdowns/        knowledge notes — hand-written, the source of truth
-│   └── asset/            diagrams — each .drawio source beside its rendered .svg
+├── official docs/        the standards themselves, as PDFs — reference only, never edited
+├── markdowns/            knowledge notes — hand-written, the source of truth
+├── asset/                diagrams — each .drawio source beside its rendered .svg
 │
 ├── slides/               presentation decks — markdown source and the HTML built from it
 │
@@ -29,7 +28,7 @@ Two rules keep this tidy:
 
 ## The markdown notes
 
-### `uds/markdowns/ISO_14229-1_UDS_Overview.md`
+### `markdowns/ISO_14229-1_UDS_Overview.md`
 
 The main note. Written as concise conclusions with a clause reference after each claim, rather
 than prose explanation — the intent is that any statement can be traced back to the PDF in one
@@ -118,7 +117,7 @@ own so you can see the styling before writing content.
 | `> subtitle:` / `> footer:`  | Title-slide subtitle / footer repeated on every slide. Put under the `#`. |
 | `> note: …`                  | Speaker note. Hidden on screen, printed in the handout.                   |
 | `` `[Clause 9.2.1]` ``       | Source reference, rendered small at the bottom of the slide.              |
-| `![alt](../uds/asset/x.svg)` | A figure. Paths are relative to the markdown file.                        |
+| `![alt](../asset/x.svg)` | A figure. Paths are relative to the markdown file.                        |
 
 Guidance that keeps slides readable:
 

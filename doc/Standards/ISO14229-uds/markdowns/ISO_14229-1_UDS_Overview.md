@@ -132,7 +132,7 @@ Positive response: request SID + `0x40`, echoed parameters, data record. Negativ
 
 #### 1.3.2.1. The sub-function byte
 
-![Sub-function byte structure — bit 7 is SPRMIB, bits 6–0 carry the sub-function value](../uds/asset/uds-slide-subfunction.svg)
+![Sub-function byte structure — bit 7 is SPRMIB, bits 6–0 carry the sub-function value](../asset/uds-slide-subfunction.svg)
 
 - Present only in services that define one — always **exactly 1 byte, 8 bits**.
 - Bit 7 = **SPRMIB**, suppressPosRspMsgIndicationBit; bits 6–0 = the sub-function value, 0x00–0x7F.

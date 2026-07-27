@@ -36,7 +36,7 @@
 
 ### Session Transition Behavior 
 
-![Clause 9.2.1, Figure 7 — Server diagnostic session state diagram](../uds/asset/uds-figure7-session-state-diagram.svg)
+![Clause 9.2.1, Figure 7 — Server diagnostic session state diagram](../asset/uds-figure7-session-state-diagram.svg)
 
 | Label | Transition | Server Action |
 |:---:|---|---|
@@ -81,7 +81,7 @@
 
 ### DiagnosticSessionControl UDS Request
 
-![Request message A_Data structure](../uds/asset/uds-request-message-structure.svg)
+![Request message A_Data structure](../asset/uds-request-message-structure.svg)
 
 ### DiagnosticSessionControl UDS Request ( Cont )
 - **A_Data byte #1** — Service ID: `0x10` (DiagnosticSessionControl / DSC) [Clause 9.2.2.1, Table 24]
@@ -94,7 +94,7 @@
 
 ### DiagnosticSessionControl UDS Response
 
-![DiagnosticSessionControl positive response message A_Data structure](../uds/asset/uds-dsc-response-message-structure.svg)
+![DiagnosticSessionControl positive response message A_Data structure](../asset/uds-dsc-response-message-structure.svg)
 
 ### DiagnosticSessionControl UDS Response (Cont)
 
@@ -142,7 +142,7 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 
 ### ECUReset UDS Message
 
-![ECUReset request and positive response A_Data structure](../uds/asset/uds-ecureset-message-structure.svg)
+![ECUReset request and positive response A_Data structure](../asset/uds-ecureset-message-structure.svg)
 
 ### ECUReset UDS Message (Cont)
 
@@ -204,7 +204,7 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 
 ### SecurityAccess UDS Message
 
-![SecurityAccess seed and key exchange A_Data structure](../uds/asset/uds-securityaccess-message-structure.svg)
+![SecurityAccess seed and key exchange A_Data structure](../asset/uds-securityaccess-message-structure.svg)
 
 ### SecurityAccess UDS Message (Cont)
 
@@ -249,7 +249,7 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 
 ### CommunicationControl UDS Message
 
-![CommunicationControl request and positive response A_Data structure](../uds/asset/uds-commcontrol-message-structure.svg)
+![CommunicationControl request and positive response A_Data structure](../asset/uds-commcontrol-message-structure.svg)
 
 ### CommunicationControl UDS Message (Cont)
 
