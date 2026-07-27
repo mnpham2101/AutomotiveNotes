@@ -245,8 +245,9 @@ td strong{color:var(--accent-dark)}
 </table>
 <ul>
 <li>Each functional unit may provide one or several services.</li>
-</ul>
-<div class="ref">Clause 9.1, Table 22</div></div><div class="foot"><span>Source — ISO 14229-1:2013(E)</span><span class="n">6 / 25</span></div></section>
+<li>refer to <a href="UDS_DCM_functional_unit.html">DCM presentation</a> for details on Diagnostic and Communication Management</li>
+<li>refer to <a href="UDS_DataTransmission_functional_unit.html">Data Transmission presentation</a> for details on Data Transmission.</li>
+</ul></div><div class="foot"><span>Source — ISO 14229-1:2013(E)</span><span class="n">6 / 25</span></div></section>
 <section class="slide" id="s7"><div class="slide-inner"><h2>Diagnostic and Communication Management — the 10 services</h2>
 <ul>
 <li>Provide 10 services:</li>
@@ -307,9 +308,8 @@ td strong{color:var(--accent-dark)}
 <li>A service provided by DCM functional unit</li>
 <li>A <strong>session</strong> — a server state that enables a specific set of diagnostic services and functionality. Four are defined: default, programming, extended, safetySystem.</li>
 <li>Switches the server between diagnostic <strong>sessions</strong> — exactly one active at a time; the server powers up in defaultSession.</li>
-<li><strong>Provides to the client</strong> — a different set of enabled services and functionality per <strong>session</strong>, plus the timing values valid for it; <strong>the OEM defines which</strong>.</li>
 <li>
-<p><strong>Typical use</strong> — extendedDiagnosticSession before routines or writes, programmingSession before a reflash, defaultSession once finished.</p>
+<p><strong>Provides to the client</strong> — a different set of enabled services and functionality per <strong>session</strong>, plus the timing values valid for it; <strong>the OEM defines which</strong>.</p>
 </li>
 <li>
 <p>refer to <a href="UDS_DCM_functional_unit.html">DCM presentation</a> for details on Diagnostic and Communication Management and its DiagnosticSessionControl service</p>
@@ -319,7 +319,7 @@ td strong{color:var(--accent-dark)}
 <section class="slide" id="s9"><div class="slide-inner"><h2>Data Transmission function unit</h2>
 <ul>
 <li>the functional unit grouping the services that reads/writes <em>dataRecord</em> values between client and server (ECU). </li>
-<li>refer to <a href="UDS_DataTransmission_functional_unit.html">presentation</a> for details on Data Transmission.</li>
+<li>refer to <a href="UDS_DataTransmission_functional_unit.html">Data Transmission presentation</a> for details on Data Transmission.</li>
 </ul></div><div class="foot"><span>Source — ISO 14229-1:2013(E)</span><span class="n">9 / 25</span></div></section>
 <section class="slide" id="s10"><div class="slide-inner"><h2>Routine Control function unit</h2>
 <ul>

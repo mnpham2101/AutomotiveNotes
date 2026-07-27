@@ -43,17 +43,20 @@
 
 - 6 functional units are described in ISO14229-2013, one clause per function unit from Clause 9->14
 
-| Clause | Functional unit                         | What it's for                                                    |
-| ------ | ---------------------------------------- | ----------------------------------------------------------------- |
-| 9      | Diagnostic and Communication Management  | Manages the diagnostic conversation — session, security, connection, DTC recording |
-| 10     | Data Transmission                        | Reads and writes manufacture data, by identifier or by memory address |
-| 11     | Stored Data Transmission                 | Reads and clears stored fault information (DTCs, snapshots)       |
-| 12     | InputOutput Control                      | Overrides an input signal or forces an actuator output            |
-| 13     | Routine                                  | Starts/stops a server-resident routine and fetches its results    |
-| 14     | Upload Download                          | Negotiates and executes bulk data/file transfer — the basis of flash programming |
+| Clause | Functional unit                         | What it's for                                                                      |
+| ------ | --------------------------------------- | ---------------------------------------------------------------------------------- |
+| 9      | Diagnostic and Communication Management | Manages the diagnostic conversation — session, security, connection, DTC recording |
+| 10     | Data Transmission                       | Reads and writes manufacture data, by identifier or by memory address              |
+| 11     | Stored Data Transmission                | Reads and clears stored fault information (DTCs, snapshots)                        |
+| 12     | InputOutput Control                     | Overrides an input signal or forces an actuator output                             |
+| 13     | Routine                                 | Starts/stops a server-resident routine and fetches its results                     |
+| 14     | Upload Download                         | Negotiates and executes bulk data/file transfer — the basis of flash programming   |
 
 - Each functional unit may provide one or several services.
-`[Clause 9.1, Table 22]`
+- refer to [DCM presentation](UDS_DCM_functional_unit.html) for details on Diagnostic and Communication Management
+- refer to [Data Transmission presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
+
+
 
 ### Diagnostic and Communication Management — the 10 services
 
@@ -79,7 +82,6 @@
 - A **session** — a server state that enables a specific set of diagnostic services and functionality. Four are defined: default, programming, extended, safetySystem.
 - Switches the server between diagnostic **sessions** — exactly one active at a time; the server powers up in defaultSession.
 - **Provides to the client** — a different set of enabled services and functionality per **session**, plus the timing values valid for it; **the OEM defines which**.
-- **Typical use** — extendedDiagnosticSession before routines or writes, programmingSession before a reflash, defaultSession once finished.
 
 - refer to [DCM presentation](UDS_DCM_functional_unit.html) for details on Diagnostic and Communication Management and its DiagnosticSessionControl service
 
@@ -88,7 +90,7 @@
 ### Data Transmission function unit
 
 - the functional unit grouping the services that reads/writes *dataRecord* values between client and server (ECU). 
-- refer to [presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
+- refer to [Data Transmission presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
 
 ### Routine Control function unit
 
