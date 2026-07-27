@@ -1,0 +1,68 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-dsc-response-message-structure" id="uds-dsc-response-message-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="410" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title / subtitle -->
+        <mxCell id="d1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="DiagnosticSessionControl positive response — A_Data structure (Clause 9.2.3.1, Table 26)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="d2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Response = 0x50, the echoed diagnosticSessionType, then a 4-byte sessionParameterRecord carrying the timing parameters of the session just entered."><mxGeometry x="20" y="40" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Byte-level labels -->
+        <mxCell id="d3" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #1"><mxGeometry x="40" y="62" width="150" height="14" as="geometry" /></mxCell>
+        <mxCell id="d4" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data byte #2"><mxGeometry x="200" y="62" width="190" height="14" as="geometry" /></mxCell>
+        <mxCell id="d5" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="A_Data bytes #3 … #6"><mxGeometry x="400" y="62" width="510" height="14" as="geometry" /></mxCell>
+
+        <!-- Byte-level boxes -->
+        <mxCell id="d6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DiagnosticSessionControl SID&#10;0x50&#10;DSCPR · M (mandatory)"><mxGeometry x="40" y="80" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="d7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="diagnosticSessionType&#10;0x00 – 0xFF&#10;LEV_DS_ · M — echo of bits 6-0 of the request"><mxGeometry x="200" y="80" width="190" height="52" as="geometry" /></mxCell>
+        <mxCell id="d8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="sessionParameterRecord — 4 bytes&#10;SPREC_DATA_1 … DATA_m, each 0x00 – 0xFF&#10;M — session-specific parameter values reported by the server (Table 27)"><mxGeometry x="400" y="80" width="510" height="52" as="geometry" /></mxCell>
+
+        <!-- Connectors down to the record expansion -->
+        <mxCell id="d9" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#2e7d32;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="400" y="132" as="sourcePoint" /><mxPoint x="400" y="164" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="d10" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#2e7d32;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="910" y="132" as="sourcePoint" /><mxPoint x="910" y="164" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="d11" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=2;" value="sessionParameterRecord expanded (Clause 9.2.3.2, Table 28)"><mxGeometry x="400" y="144" width="510" height="14" as="geometry" /></mxCell>
+
+        <!-- Record byte boxes -->
+        <mxCell id="d12" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="record byte #1&#10;P2Server_max&#10;high byte · SPREC_P2SMH"><mxGeometry x="400" y="166" width="124" height="48" as="geometry" /></mxCell>
+        <mxCell id="d13" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="record byte #2&#10;P2Server_max&#10;low byte · SPREC_P2SML"><mxGeometry x="528" y="166" width="124" height="48" as="geometry" /></mxCell>
+        <mxCell id="d14" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="record byte #3&#10;P2*Server_max&#10;high byte · SPREC_P2ESMH"><mxGeometry x="656" y="166" width="124" height="48" as="geometry" /></mxCell>
+        <mxCell id="d15" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="record byte #4&#10;P2*Server_max&#10;low byte · SPREC_P2ESML"><mxGeometry x="784" y="166" width="124" height="48" as="geometry" /></mxCell>
+
+        <!-- Note -->
+        <mxCell id="d16" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Both parameters are 2-byte unsigned values, high byte first. They are response-timing budgets for the session just activated — not the session lifetime."><mxGeometry x="20" y="228" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="d17" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="sessionParameterRecord content (Clause 9.2.3.2, Table 29)"><mxGeometry x="20" y="244" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Table header -->
+        <mxCell id="h1" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;strokeColor=#263238;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#ffffff;fontFamily=DejaVu Sans;fontStyle=1;spacingLeft=10;" value="Parameter"><mxGeometry x="40" y="260" width="110" height="24" as="geometry" /></mxCell>
+        <mxCell id="h2" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;strokeColor=#263238;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#ffffff;fontFamily=DejaVu Sans;fontStyle=1;spacingLeft=10;" value="Description"><mxGeometry x="150" y="260" width="430" height="24" as="geometry" /></mxCell>
+        <mxCell id="h3" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;strokeColor=#263238;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#ffffff;fontFamily=DejaVu Sans;fontStyle=1;spacingLeft=10;" value="# bytes"><mxGeometry x="580" y="260" width="70" height="24" as="geometry" /></mxCell>
+        <mxCell id="h4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;strokeColor=#263238;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#ffffff;fontFamily=DejaVu Sans;fontStyle=1;spacingLeft=10;" value="Resolution"><mxGeometry x="650" y="260" width="90" height="24" as="geometry" /></mxCell>
+        <mxCell id="h5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;strokeColor=#263238;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#ffffff;fontFamily=DejaVu Sans;fontStyle=1;spacingLeft=10;" value="min"><mxGeometry x="740" y="260" width="70" height="24" as="geometry" /></mxCell>
+        <mxCell id="h6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;strokeColor=#263238;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#ffffff;fontFamily=DejaVu Sans;fontStyle=1;spacingLeft=10;" value="max"><mxGeometry x="810" y="260" width="100" height="24" as="geometry" /></mxCell>
+
+        <!-- Row 1 -->
+        <mxCell id="t1" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="P2Server_max"><mxGeometry x="40" y="286" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="t2" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="Default P2Server_max timing supported by the server for the activated diagnostic session"><mxGeometry x="150" y="286" width="430" height="32" as="geometry" /></mxCell>
+        <mxCell id="t3" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="2"><mxGeometry x="580" y="286" width="70" height="32" as="geometry" /></mxCell>
+        <mxCell id="t4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="1 ms"><mxGeometry x="650" y="286" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="t5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="0 ms"><mxGeometry x="740" y="286" width="70" height="32" as="geometry" /></mxCell>
+        <mxCell id="t6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="65 535 ms"><mxGeometry x="810" y="286" width="100" height="32" as="geometry" /></mxCell>
+
+        <!-- Row 2 -->
+        <mxCell id="u1" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;spacingLeft=10;" value="P2*Server_max"><mxGeometry x="40" y="320" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="u2" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="Enhanced (NRC 0x78) P2*Server_max supported by the server for the activated session"><mxGeometry x="150" y="320" width="430" height="32" as="geometry" /></mxCell>
+        <mxCell id="u3" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="2"><mxGeometry x="580" y="320" width="70" height="32" as="geometry" /></mxCell>
+        <mxCell id="u4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="10 ms"><mxGeometry x="650" y="320" width="90" height="32" as="geometry" /></mxCell>
+        <mxCell id="u5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="0 ms"><mxGeometry x="740" y="320" width="70" height="32" as="geometry" /></mxCell>
+        <mxCell id="u6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;spacingLeft=10;" value="655 350 ms"><mxGeometry x="810" y="320" width="100" height="32" as="geometry" /></mxCell>
+
+        <!-- Footer notes -->
+        <mxCell id="d18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Total positive response = 6 bytes: 0x50 + diagnosticSessionType + 4 record bytes (Table 26). The request that triggered it was only 2 bytes."><mxGeometry x="20" y="368" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="d19" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Table 29 refers to ISO 14229-2 for the full definition of P2Server and P2*Server."><mxGeometry x="20" y="386" width="920" height="16" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

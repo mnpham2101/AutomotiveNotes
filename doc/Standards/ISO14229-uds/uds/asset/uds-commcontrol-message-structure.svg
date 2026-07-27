@@ -1,0 +1,111 @@
+<svg viewBox="0 0 960 510" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="510" fill="#ffffff"/>
+
+  <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">CommunicationControl — request and positive response A_Data structure (Clause 9.5.2.1 / 9.5.3.1, Tables 53 and 56)</text>
+  <text x="20" y="48" font-size="10.5" fill="#607d8b">Request = 0x28, controlType, communicationType — plus a 2-byte nodeIdentificationNumber only when controlType is 0x04 or 0x05.</text>
+
+  <!-- Request -->
+  <text x="40" y="76" font-size="9.5" font-weight="bold" fill="#f26f21">Request — client → server (Table 53)</text>
+  <rect x="40" y="82" width="150" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="115" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">CommunicationControl SID</text>
+  <text x="115" y="113" text-anchor="middle" font-size="9.5" fill="#263238">0x28</text>
+  <text x="115" y="125" text-anchor="middle" font-size="8" fill="#607d8b">CC · M — byte #1</text>
+
+  <rect x="200" y="82" width="200" height="50" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="300" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">sub-function = controlType</text>
+  <text x="300" y="113" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="300" y="125" text-anchor="middle" font-size="8" fill="#607d8b">LEV_CTRLTP · M — byte #2</text>
+
+  <rect x="410" y="82" width="180" height="50" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="500" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">communicationType</text>
+  <text x="500" y="113" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="500" y="125" text-anchor="middle" font-size="8" fill="#607d8b">CTP · M — byte #3, bit-coded</text>
+
+  <rect x="600" y="82" width="310" height="50" fill="#ede7f6" stroke="#5e35b1" stroke-dasharray="4 3"/>
+  <text x="755" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">nodeIdentificationNumber (high, low)</text>
+  <text x="755" y="113" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF each</text>
+  <text x="755" y="125" text-anchor="middle" font-size="8" fill="#607d8b">NIN · C — bytes #4–#5, only if controlType = 0x04 or 0x05</text>
+
+  <!-- Response -->
+  <text x="40" y="158" font-size="9.5" font-weight="bold" fill="#2e7d32">Positive response — server → client (Table 56)</text>
+  <rect x="40" y="164" width="150" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="115" y="181" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">CommunicationControl SID</text>
+  <text x="115" y="195" text-anchor="middle" font-size="9.5" fill="#263238">0x68</text>
+  <text x="115" y="207" text-anchor="middle" font-size="8" fill="#607d8b">CCPR · M — byte #1</text>
+
+  <rect x="200" y="164" width="200" height="50" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="300" y="181" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">controlType — echo of bits 6-0</text>
+  <text x="300" y="195" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0x7F</text>
+  <text x="300" y="207" text-anchor="middle" font-size="8" fill="#607d8b">LEV_CTRLTP · M — byte #2 (Table 57)</text>
+
+  <rect x="410" y="164" width="500" height="50" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="660" y="185" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">nothing further</text>
+  <text x="660" y="200" text-anchor="middle" font-size="8.5" fill="#607d8b">the positive response is 2 bytes — neither communicationType nor nodeIdentificationNumber is echoed (Table 56)</text>
+
+  <!-- communicationType expansion -->
+  <line x1="410" y1="132" x2="410" y2="150" stroke="#2e7d32" stroke-dasharray="4 3"/>
+  <line x1="590" y1="132" x2="590" y2="150" stroke="#2e7d32" stroke-dasharray="4 3"/>
+  <text x="480" y="238" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">communicationType byte expanded (Annex B.1, Table B.1)</text>
+
+  <rect x="200" y="246" width="350" height="56" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="375" y="264" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">bits 7 – 4 — subnetNumber</text>
+  <text x="375" y="279" text-anchor="middle" font-size="8.5" fill="#263238">0x0 = the receiving node and all its connected networks</text>
+  <text x="375" y="292" text-anchor="middle" font-size="8.5" fill="#263238">0xF = the network the request arrived on · 0x1–0xE = a specific subnet</text>
+
+  <rect x="560" y="246" width="110" height="56" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="615" y="270" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">bits 3 – 2</text>
+  <text x="615" y="285" text-anchor="middle" font-size="8.5" fill="#607d8b">ISOSAEReserved</text>
+
+  <rect x="680" y="246" width="230" height="56" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="795" y="264" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">bits 1 – 0 — message class</text>
+  <text x="795" y="279" text-anchor="middle" font-size="8.5" fill="#263238">0x1 normalCommunicationMessages (NCM)</text>
+  <text x="795" y="292" text-anchor="middle" font-size="8.5" fill="#263238">0x2 networkManagement… (NWMCM) · 0x3 both</text>
+
+  <text x="480" y="326" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">controlType sub-function values (Clause 9.5.2.2, Table 54) — bits 6-0, SPRMIB not shown</text>
+
+  <!-- controlType table, column 1 -->
+  <rect x="40" y="334" width="80" height="28" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="50" y="352" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x00</text>
+  <rect x="120" y="334" width="330" height="28" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="130" y="352" font-size="10" fill="#263238">enableRxAndTx (ERXTX)</text>
+
+  <rect x="40" y="366" width="80" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="50" y="384" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x01</text>
+  <rect x="120" y="366" width="330" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="130" y="384" font-size="10" fill="#263238">enableRxAndDisableTx (ERXDTX)</text>
+
+  <rect x="40" y="398" width="80" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="50" y="416" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x02</text>
+  <rect x="120" y="398" width="330" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="130" y="416" font-size="10" fill="#263238">disableRxAndEnableTx (DRXETX)</text>
+
+  <rect x="40" y="430" width="80" height="28" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="50" y="448" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x03</text>
+  <rect x="120" y="430" width="330" height="28" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="130" y="448" font-size="10" fill="#263238">disableRxAndTx (DRXTX)</text>
+
+  <!-- controlType table, column 2 -->
+  <rect x="470" y="334" width="80" height="28" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="480" y="352" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x04</text>
+  <rect x="550" y="334" width="360" height="28" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="560" y="352" font-size="9.5" fill="#263238">enableRxAndDisableTxWithEnhancedAddressInformation</text>
+
+  <rect x="470" y="366" width="80" height="28" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="480" y="384" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x05</text>
+  <rect x="550" y="366" width="360" height="28" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="560" y="384" font-size="9.5" fill="#263238">enableRxAndTxWithEnhancedAddressInformation</text>
+
+  <rect x="470" y="398" width="80" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="480" y="416" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x40–0x5F</text>
+  <rect x="550" y="398" width="360" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="560" y="416" font-size="10" fill="#263238">vehicleManufacturerSpecific (VMS)</text>
+
+  <rect x="470" y="430" width="80" height="28" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="480" y="448" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x60–0x7E</text>
+  <rect x="550" y="430" width="360" height="28" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="560" y="448" font-size="10" fill="#263238">systemSupplierSpecific (SSS)</text>
+
+  <!-- Footers -->
+  <text x="20" y="478" font-size="10" fill="#263238">0x04 and 0x05 address a bus master: 0x04 switches the sub-bus segment to diagnostic-only scheduling, 0x05 back to application scheduling (Table 54).</text>
+  <text x="20" y="496" font-size="10" fill="#263238">Example (Tables 59–60): 28 01 02 — enableRxAndDisableTx for network management messages → positive response 68 01.</text>
+</svg>

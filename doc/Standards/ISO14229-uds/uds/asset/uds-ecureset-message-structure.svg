@@ -1,0 +1,95 @@
+<svg viewBox="0 0 960 475" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="475" fill="#ffffff"/>
+
+  <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">ECUReset — request and positive response A_Data structure (Clause 9.3.2.1 / 9.3.3.1, Tables 33 and 35)</text>
+  <text x="20" y="48" font-size="10.5" fill="#607d8b">Request = 0x11 plus the resetType sub-function; there are no data-parameters (Clause 9.3.2.3). The response echoes resetType and adds powerDownTime only for 0x04.</text>
+
+  <!-- Request -->
+  <text x="40" y="76" font-size="9.5" font-weight="bold" fill="#f26f21">Request — client → server (Table 33)</text>
+  <rect x="40" y="82" width="200" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="140" y="100" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">ECUReset Request SID</text>
+  <text x="140" y="114" text-anchor="middle" font-size="9.5" fill="#263238">0x11</text>
+  <text x="140" y="126" text-anchor="middle" font-size="8" fill="#607d8b">ER · M — A_Data byte #1</text>
+
+  <rect x="250" y="82" width="330" height="50" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="415" y="100" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">sub-function = resetType</text>
+  <text x="415" y="114" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="415" y="126" text-anchor="middle" font-size="8" fill="#607d8b">LEV_RT_ · M — A_Data byte #2, bit 7 is SPRMIB</text>
+
+  <!-- Response -->
+  <text x="40" y="158" font-size="9.5" font-weight="bold" fill="#2e7d32">Positive response — server → client (Table 35)</text>
+  <rect x="40" y="164" width="200" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="140" y="182" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">ECUReset Response SID</text>
+  <text x="140" y="196" text-anchor="middle" font-size="9.5" fill="#263238">0x51</text>
+  <text x="140" y="208" text-anchor="middle" font-size="8" fill="#607d8b">ERPR · M — A_Data byte #1</text>
+
+  <rect x="250" y="164" width="330" height="50" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="415" y="182" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">resetType — echo of bits 6-0 of the request</text>
+  <text x="415" y="196" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0x7F</text>
+  <text x="415" y="208" text-anchor="middle" font-size="8" fill="#607d8b">LEV_RT_ · M — A_Data byte #2 (Table 36)</text>
+
+  <rect x="590" y="164" width="320" height="50" fill="#e8f5e9" stroke="#2e7d32" stroke-dasharray="4 3"/>
+  <text x="750" y="182" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">powerDownTime</text>
+  <text x="750" y="196" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="750" y="208" text-anchor="middle" font-size="8" fill="#607d8b">PDT · C — byte #3, present only if resetType = 0x04</text>
+
+  <text x="20" y="234" font-size="10" fill="#263238">powerDownTime is the minimum stand-by time the server will remain in the power-down sequence: 0x00–0xFE = 0–254 s at 1 s per count, 0xFF = failure or time not available (Table 36).</text>
+
+  <text x="480" y="254" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">resetType sub-function values (Clause 9.3.2.2, Table 34) — bits 6-0, SPRMIB not shown</text>
+
+  <!-- resetType table, column 1 -->
+  <rect x="40" y="262" width="100" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="50" y="280" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x00</text>
+  <rect x="140" y="262" width="340" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="150" y="280" font-size="10.5" fill="#263238">ISOSAEReserved (M)</text>
+
+  <rect x="40" y="294" width="100" height="28" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="50" y="312" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x01</text>
+  <rect x="140" y="294" width="340" height="28" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="150" y="312" font-size="10.5" fill="#263238">hardReset (HR) — simulates the power-on start-up</text>
+
+  <rect x="40" y="326" width="100" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="50" y="344" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x02</text>
+  <rect x="140" y="326" width="340" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="150" y="344" font-size="10.5" fill="#263238">keyOffOnReset (KOFFONR) — simulates key off / on</text>
+
+  <rect x="40" y="358" width="100" height="28" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="50" y="376" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x03</text>
+  <rect x="140" y="358" width="340" height="28" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="150" y="376" font-size="10.5" fill="#263238">softReset (SR) — restart the application program</text>
+
+  <rect x="40" y="390" width="100" height="28" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="50" y="408" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x04</text>
+  <rect x="140" y="390" width="340" height="28" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="150" y="408" font-size="10.5" fill="#263238">enableRapidPowerShutDown (ERPSD)</text>
+
+  <!-- resetType table, column 2 -->
+  <rect x="500" y="262" width="100" height="28" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="510" y="280" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x05</text>
+  <rect x="600" y="262" width="310" height="28" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="610" y="280" font-size="10.5" fill="#263238">disableRapidPowerShutDown (DRPSD)</text>
+
+  <rect x="500" y="294" width="100" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="510" y="312" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x06–0x3F</text>
+  <rect x="600" y="294" width="310" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="610" y="312" font-size="10.5" fill="#263238">ISOSAEReserved (M)</text>
+
+  <rect x="500" y="326" width="100" height="28" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="510" y="344" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x40–0x5F</text>
+  <rect x="600" y="326" width="310" height="28" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="610" y="344" font-size="10.5" fill="#263238">vehicleManufacturerSpecific (VMS)</text>
+
+  <rect x="500" y="358" width="100" height="28" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="510" y="376" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x60–0x7E</text>
+  <rect x="600" y="358" width="310" height="28" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="610" y="376" font-size="10.5" fill="#263238">systemSupplierSpecific (SSS)</text>
+
+  <rect x="500" y="390" width="100" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="510" y="408" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0x7F</text>
+  <rect x="600" y="390" width="310" height="28" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="610" y="408" font-size="10.5" fill="#263238">ISOSAEReserved (M)</text>
+
+  <!-- Footers -->
+  <text x="20" y="442" font-size="10" fill="#263238">The positive response, if required, is sent BEFORE the reset is executed. After a successful reset the server activates the defaultSession (Clause 9.3.1).</text>
+  <text x="20" y="460" font-size="10" fill="#263238">Example (Tables 38–39): 11 01 — hardReset with SPRMIB = FALSE → positive response 51 01.</text>
+</svg>

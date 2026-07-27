@@ -1,0 +1,118 @@
+<svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="400" fill="#ffffff"/>
+
+  <!-- Title / subtitle -->
+  <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">WriteDataByIdentifier request — A_Data structure (Clause 10.7.2.1, Table 231)</text>
+  <text x="20" y="48" font-size="10.5" fill="#607d8b">Request = 0x2E, then exactly one 2-byte dataIdentifier, then the dataRecord to be written into the server. No sub-function byte (Clause 10.7.2.2).</text>
+
+  <!-- Byte-level labels -->
+  <text x="115" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #1</text>
+  <text x="275" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #2</text>
+  <text x="435" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #3</text>
+  <text x="715" y="74" text-anchor="middle" font-size="9.5" fill="#90a4ae">A_Data byte #4 … #m+3</text>
+
+  <!-- Byte-level boxes -->
+  <rect x="40" y="80" width="150" height="52" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="115" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">WriteDataByIdentifier SID</text>
+  <text x="115" y="112" text-anchor="middle" font-size="9.5" fill="#263238">0x2E</text>
+  <text x="115" y="125" text-anchor="middle" font-size="8" fill="#607d8b">WDBI · M (mandatory)</text>
+
+  <rect x="200" y="80" width="150" height="52" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="275" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataIdentifier (MSB)</text>
+  <text x="275" y="112" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="275" y="125" text-anchor="middle" font-size="8" fill="#607d8b">DID_HB · M</text>
+
+  <rect x="360" y="80" width="150" height="52" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="435" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataIdentifier (LSB)</text>
+  <text x="435" y="112" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="435" y="125" text-anchor="middle" font-size="8" fill="#607d8b">DID_LB · M</text>
+
+  <rect x="520" y="80" width="390" height="52" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="715" y="98" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">dataRecord — m bytes, the value being written</text>
+  <text x="715" y="112" text-anchor="middle" font-size="9.5" fill="#263238">DREC_DATA1 … DREC_DATAm, each 0x00 – 0xFF</text>
+  <text x="715" y="125" text-anchor="middle" font-size="8" fill="#607d8b">first data byte M, the rest U — content and length are vehicle manufacturer specific (Table 232)</text>
+
+  <!-- Note -->
+  <text x="20" y="152" font-size="10" fill="#263238">Exactly ONE dataIdentifier per request — unlike ReadDataByIdentifier (0x22), Table 231 defines a single DID followed by its dataRecord. Dynamically defined DIDs shall not be used (Clause 10.7.1).</text>
+
+  <!-- Figure 21 length key -->
+  <rect x="40" y="164" width="870" height="42" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="52" y="181" font-size="10" font-weight="bold" fill="#263238">Figure 21 key — ① minimum length is 4 byte (SI + DID + DREC)   ② total length is 1 byte (SI + 2 byte DID + nth byte DREC)</text>
+  <text x="52" y="197" font-size="10" fill="#37474f">m is fixed by whatever that DID is defined to hold on the ECU, so the expected total is ECU-specific; a wrong length gives NRC 0x13.</text>
+
+  <!-- Connector down to the example -->
+  <line x1="475" y1="214" x2="475" y2="230" stroke="#2e7d32"/>
+  <polygon points="471,230 479,230 475,238" fill="#2e7d32"/>
+
+  <text x="480" y="254" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">Worked example — write dataIdentifier 0xF190 (VIN) (Clause 10.7.5.2, Table 236)</text>
+
+  <!-- Group labels over the byte strip -->
+  <text x="61" y="272" text-anchor="middle" font-size="8.5" fill="#607d8b">SID</text>
+  <text x="126" y="272" text-anchor="middle" font-size="8.5" fill="#607d8b">DID = 0xF190</text>
+  <text x="534" y="272" text-anchor="middle" font-size="8.5" fill="#607d8b">dataRecord — 17 bytes, the VIN as ASCII</text>
+
+  <!-- Byte strip -->
+  <rect x="40" y="278" width="43" height="38" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="61.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">2E</text>
+  <rect x="83" y="278" width="43" height="38" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="104.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">F1</text>
+  <rect x="126" y="278" width="43" height="38" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="147.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">90</text>
+  <rect x="169" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="190.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">57</text>
+  <rect x="212" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="233.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">30</text>
+  <rect x="255" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="276.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">4C</text>
+  <rect x="298" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="319.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">30</text>
+  <rect x="341" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="362.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">30</text>
+  <rect x="384" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="405.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">30</text>
+  <rect x="427" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="448.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">30</text>
+  <rect x="470" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="491.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">34</text>
+  <rect x="513" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="534.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">33</text>
+  <rect x="556" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="577.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">4D</text>
+  <rect x="599" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="620.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">42</text>
+  <rect x="642" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="663.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">35</text>
+  <rect x="685" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="706.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">34</text>
+  <rect x="728" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="749.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">31</text>
+  <rect x="771" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="792.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">33</text>
+  <rect x="814" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="835.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">32</text>
+  <rect x="857" y="278" width="43" height="38" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="878.5" y="302" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">36</text>
+
+  <!-- ASCII decode of the dataRecord -->
+  <text x="190.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">W</text>
+  <text x="233.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">0</text>
+  <text x="276.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">L</text>
+  <text x="319.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">0</text>
+  <text x="362.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">0</text>
+  <text x="405.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">0</text>
+  <text x="448.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">0</text>
+  <text x="491.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">4</text>
+  <text x="534.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">3</text>
+  <text x="577.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">M</text>
+  <text x="620.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">B</text>
+  <text x="663.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">5</text>
+  <text x="706.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">4</text>
+  <text x="749.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">1</text>
+  <text x="792.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">3</text>
+  <text x="835.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">2</text>
+  <text x="878.5" y="330" text-anchor="middle" font-size="10" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#2e7d32">6</text>
+
+  <!-- Footer notes -->
+  <text x="20" y="358" font-size="10" fill="#263238">Here m = 17, so the request is 20 bytes: 1 (SID) + 2 (DID) + 17 (dataRecord). The same VIN is what ReadDataByIdentifier returns for 0xF190 (Table 148).</text>
+  <text x="20" y="376" font-size="10" fill="#263238">Positive response is only 3 bytes — 0x6E plus the DID echo, no data (Clause 10.7.3.1, Table 233).</text>
+</svg>
