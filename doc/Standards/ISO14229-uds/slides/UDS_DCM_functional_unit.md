@@ -7,9 +7,11 @@
 ### Introduction
 
 - **Service:** `DiagnosticSessionControl` (SID **0x10**) [Clause 9.2]
-- **Purpose:** enables different *diagnostic sessions* in the server (ECU) [Clause 9.2.1]
-- A diagnostic session enables a *specific set of services / functionality* in the server [Clause 9.2.1]
-- Server may also report data-link timing parameters valid for the active session [Clause 9.2.1]
+- **Purpose:** enables different *diagnostic sessions* in the server (ECU)
+- A diagnostic session enables a *specific set of services / functionality* in the server
+- Server may also report data-link timing parameters valid for the active session
+
+`[Clause 9.2.1]`
 
 ### Session — Key Concepts
 
@@ -28,7 +30,7 @@
     - Server may impose entry conditions (examples from the standard) [Clause 9.2.1]:
         - Restricted to a specific **client diagnostic address**
         - **Safety conditions** (e.g. vehicle not moving, engine off)
-    - If conditions aren't met → **negative response**, current session continues unchanged [Clause 9.2.1]
+    - If conditions aren't met → **Negative response**, current session continues unchanged [Clause 9.2.1]
 
 - **Non-default sessions are supersets**
     - Functionality of `defaultSession` is included in every non-default session (**except `programmingSession`**) [Clause 9.2.1]
@@ -127,12 +129,12 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 ### Introduction
 
 - **Service:** `ECUReset` (SID **0x11**) [Clause 9.3]
-- **Purpose:** the client requests a *server reset* [Clause 9.3.1]
-- The server performs the reset based on the **`resetType`** value carried in the request [Clause 9.3.1]
-- The positive response, *if required*, is sent **before** the reset is executed [Clause 9.3.1]
-- After a successful reset the server **activates the `defaultSession`** [Clause 9.3.1]
+- **Purpose:** the client requests a *server reset*
+- The server performs the reset based on the **`resetType`** value carried in the request
+- The positive response, *if required*, is sent **before** the reset is executed
+- After a successful reset the server **activates the `defaultSession`**
 
-- **Behaviour during the reset is not defined by this document** [Clause 9.3.1]
+- **Behaviour during the reset is not defined by this document**
     - the standard says nothing about the ECU from the positive response until the reset completes
     - it *recommends* that during this time the ECU accepts no request messages and sends no response messages
 
@@ -151,7 +153,7 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 - **Positive response** — SID `0x51` (`ERPR`), then `resetType` as an *echo of bits 6-0* of the request sub-function [Clause 9.3.3.1, Table 35; Clause 9.3.3.2, Table 36]
     - **`powerDownTime`** (`PDT`) is a *conditional* third byte, present **only** when `resetType = 0x04` [Clause 9.3.3.1, Table 35]
     - it reports the *minimum* stand-by time the server will stay in the power-down sequence: `0x00–0xFE` = 0–254 s at **1 s per count**, `0xFF` = failure or time not available [Clause 9.3.3.2, Table 36]
-- **negative responses** for this service [Clause 9.3.4, Table 37]
+- **Negative responses** for this service [Clause 9.3.4, Table 37]
 
 ### ECUReset UDS Message Example
 
@@ -169,38 +171,45 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 ### Introduction
 
 - **Service:** `SecurityAccess` (SID **0x27**) [Clause 9.4]
-- **Purpose:** provide a means to access data and/or diagnostic services that have *restricted access* for **security, emissions or safety** reasons [Clause 9.4.1]
-- Typical situations needing it: downloading/uploading routines or data, and reading specific memory locations — improper data could damage electronics or risk compliance [Clause 9.4.1]
-- **The security concept uses a *seed and key* relationship** [Clause 9.4.1]
-
-- **The exchange** [Clause 9.4.1]
-    - client requests the *seed* → server sends the *seed*
-    - client sends the *key* appropriate for that seed → server confirms the key was valid and unlocks itself
-    - the server compares the key against one internally stored or calculated; a mismatch is a **false access attempt**
-    - an invalid key requires the client to **start over** from `requestSeed` (see Annex I)
+- **Purpose:** provide a means to access data and/or diagnostic services that have *restricted access* for **security, emissions or safety** reasons
+- Typical situations needing it: downloading/uploading routines or data, and reading specific memory locations — improper data could damage electronics or risk compliance
+- **The security concept uses a *seed and key* relationship**
+- **Delay timer** *(vehicle manufacturer optional)*
+    - a delay may be required before the server can positively respond to `requestSeed` after power up/reset and after a number of false access attempts
+    - the delay is only required if the server is *locked* when powered up/reset; the vehicle manufacturer selects whether it is supported
 
 `[Clause 9.4.1]`
 
 ### Security Access — Key Concepts
 
 - **Sub-function numbering is a fixed pair**
-    - `requestSeed` values are **always odd**; the `sendKey` value for the same level is **`requestSeed` + 1** [Clause 9.4.1, Clause 9.4.2.2]
-    - `0x01` ↔ `0x02`, `0x03` ↔ `0x04`, and so on [Clause 9.4.2.2]
-    - level numbering is *arbitrary* and implies **no relationship between levels** [Clause 9.4.1]
+    - the `securityAccessType` sub-function value used with `requestSeed` is *always odd*; the `securityAccessType` used with the matching `sendKey` is formalized **`yy = xx + 1`** [Clause 9.4.2.2; Annex I, Table I.2 note c]
+        - Example: `0x01` ↔ `0x02`, `0x03` ↔ `0x04`, and so on [Clause 9.4.2.2]
+    - level numbering is *arbitrary* and implies *no relationship between levels*
+
+- **Seed → key value is a separate, manufacturer-specific algorithm**
+    - the `securityKey` data (bytes after the sub-function) is *not* derived by any rule this document defines — it's computed from the `securitySeed` data by a vehicle-manufacturer-specific algorithm
+    - Clause 9.4.5.1's worked example uses *2's complement of the seed* purely as an illustration: `securitySeed = 0x3657` → `securityKey = 0xC9A9`
 
 - **Only one level active at a time**
-    - if the level for `requestSeed 0x03` is active and the client then unlocks `requestSeed 0x01`, only `0x01`'s functionality is unlocked — `0x03`'s is **no longer active** [Clause 9.4.1]
+    - if the level for `requestSeed 0x0 3` is active and the client then unlocks `requestSeed 0x01`, only `0x01`'s functionality is unlocked — `0x03`'s is **no longer active**
 
 - **A zero seed means "already unlocked"**
-    - if the requested level is *already unlocked*, the server answers with a seed value **equal to zero** [Clause 9.4.1]
-    - the server **shall never** send an all-zero seed for a level that is currently *locked* [Clause 9.4.1]
-    - the client uses this to *determine whether a level is locked* — by checking for a non-zero seed [Clause 9.4.1]
+    - if the requested level is *already unlocked*, the server answers with a seed value **equal to zero**
+    - the server **shall never** send an all-zero seed for a level that is currently *locked*
+    - the client uses this to *determine whether a level is locked* — by checking for a non-zero seed
 
-- **Delay timer** *(vehicle manufacturer optional)*
-    - a delay may be required before the server can positively respond to `requestSeed` after power up/reset and after a number of false access attempts [Clause 9.4.1]
-    - the delay is only required if the server is **locked** when powered up/reset; the vehicle manufacturer selects whether it is supported [Clause 9.4.1]
+`[Clause 9.4.1]`
+
+> note: Traced on the worked example below — `27 01` (sub-function `xx=0x01`) → `67 01 36 57` (`securitySeed=0x3657`) → `27 02 C9 A9` (sub-function `yy=0x02`, `securityKey=0xC9A9`): the server checks `0x02==0x01+1` on the sub-function bytes only; the seed/key data bytes are never part of that comparison.
 
 > note: Clause 9.4.1 also says attempts to access security shall not prevent normal vehicle communication or other diagnostic communication, and that servers providing security shall reject a secure service requested while the server is locked.
+
+### Server-client security exchange
+
+![Server-client security exchange — SecurityAccess seed/key sequence](../asset/uds-securityaccess-exchange-sequence.svg)
+
+`[Clause 9.4.1]`
 
 ### SecurityAccess UDS Message
 
@@ -219,7 +228,7 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 
 - **unlock response** — SID `0x67` plus the echoed `securityAccessType`; **no seed bytes** [Clause 9.4.3.1, Table 44]
 
-- **negative responses** for this service [Clause 9.4.4, Table 46]:
+- **Negative responses** for this service [Clause 9.4.4, Table 46]:
 
 ### SecurityAccess UDS Message example
 
@@ -254,12 +263,12 @@ Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 ### CommunicationControl UDS Message (Cont)
 
 - **A_Data byte #1** — SID `0x28` (`CC`), mandatory [Clause 9.5.2.1, Table 53]
-- **A_Data byte #2** — sub-function `controlType` (`LEV_CTRLTP`), mandatory, `0x00 – 0xFF` [Clause 9.5.2.1, Table 53]
+- **A_Data byte #2** — sub-function `controlType` (`LEV_CTRLTP`), mandatory, `0x00 – 0xFF`, contains the info how the server shall modify the `communicationType` [Clause 9.5.2.1, Table 53]
 - **A_Data byte #3** — `communicationType` (`CTP`), mandatory, bit-coded per Annex B.1 [Clause 9.5.2.1, Table 53; Clause 9.5.2.3, Table 55]
 - **A_Data bytes #4–#5** — `nodeIdentificationNumber` (`NIN`), **conditional**: present *only* when `controlType` is `0x04` or `0x05` [Clause 9.5.2.1, Table 53]
-    - a 2-byte parameter identifying a node on a sub-network that **cannot be addressed** by OSI layers 1 to 6 [Clause 9.5.2.3, Table 55; Annex B.4]
+    - a 2-byte parameter identifying a node on a sub-network that *cannot be addressed* by OSI layers 1 to 6 [Clause 9.5.2.3, Table 55; Annex B.4]
 
-- **Positive response** — SID `0x68` (`CCPR`) plus `controlType` as an *echo of bits 6-0*; **2 bytes**, nothing else is echoed [Clause 9.5.3.1, Table 56; Clause 9.5.3.2, Table 57]
+- **Positive response** — SID `0x68` (`CCPR`) plus `controlType` as an *echo of bits 6-0*; **2 bytes**, bit 7th is *not* echoed [Clause 9.5.3.1, Table 56; Clause 9.5.3.2, Table 57]
 
 - **Negative responses** for this service [Clause 9.5.4, Table 58]
 

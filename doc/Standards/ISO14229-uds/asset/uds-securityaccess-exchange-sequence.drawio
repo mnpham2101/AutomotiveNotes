@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-securityaccess-exchange-sequence" id="uds-securityaccess-exchange-sequence">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="t1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="Server-client security exchange — SecurityAccess seed/key sequence (Clause 9.4.1)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="t2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Two request/response pairs unlock one security level; an invalid key requires the client to restart from requestSeed (Annex I)."><mxGeometry x="20" y="34" width="900" height="16" as="geometry" /></mxCell>
+
+        <!-- Lifeline heads -->
+        <mxCell id="cHead" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=12;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#263238;align=center;verticalAlign=middle;" value="Client (tester)"><mxGeometry x="40" y="62" width="170" height="36" as="geometry" /></mxCell>
+        <mxCell id="sHead" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=12;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#263238;align=center;verticalAlign=middle;" value="Server (ECU)"><mxGeometry x="620" y="62" width="170" height="36" as="geometry" /></mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="cLine" parent="1" edge="1" style="endArrow=none;html=1;dashed=1;strokeColor=#90a4ae;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="125" y="98" as="sourcePoint" />
+            <mxPoint x="125" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sLine" parent="1" edge="1" style="endArrow=none;html=1;dashed=1;strokeColor=#90a4ae;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="705" y="98" as="sourcePoint" />
+            <mxPoint x="705" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 1: requestSeed -->
+        <mxCell id="m1lbl" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#1565c0;" value="1  requestSeed"><mxGeometry x="135" y="106" width="300" height="16" as="geometry" /></mxCell>
+        <mxCell id="m1sub" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontFamily=DejaVu Sans;fontColor=#607d8b;" value="client → server · SID 0x27, sub-function = securityAccessType (odd) [Clause 9.4.2.1, Table 40]"><mxGeometry x="135" y="120" width="560" height="14" as="geometry" /></mxCell>
+        <mxCell id="m1" parent="1" edge="1" style="endArrow=block;endFill=1;html=1;strokeColor=#1565c0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="125" y="142" as="sourcePoint" />
+            <mxPoint x="705" y="142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 2: seed positive response -->
+        <mxCell id="m2lbl" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#2e7d32;" value="2  positive response — seed"><mxGeometry x="135" y="156" width="300" height="16" as="geometry" /></mxCell>
+        <mxCell id="m2sub" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontFamily=DejaVu Sans;fontColor=#607d8b;" value="server → client · SID 0x67 &lt;type&gt; &lt;securitySeed&gt; [Clause 9.4.3.1, Table 44]"><mxGeometry x="135" y="170" width="560" height="14" as="geometry" /></mxCell>
+        <mxCell id="m2" parent="1" edge="1" style="endArrow=block;endFill=1;html=1;dashed=1;strokeColor=#2e7d32;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="705" y="192" as="sourcePoint" />
+            <mxPoint x="125" y="192" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 3: sendKey -->
+        <mxCell id="m3lbl" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#5e35b1;" value="3  sendKey"><mxGeometry x="135" y="206" width="300" height="16" as="geometry" /></mxCell>
+        <mxCell id="m3sub" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontFamily=DejaVu Sans;fontColor=#607d8b;" value="client → server · SID 0x27 &lt;type+1&gt; &lt;securityKey&gt; [Clause 9.4.2.1, Table 41]"><mxGeometry x="135" y="220" width="560" height="14" as="geometry" /></mxCell>
+        <mxCell id="m3" parent="1" edge="1" style="endArrow=block;endFill=1;html=1;strokeColor=#5e35b1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="125" y="242" as="sourcePoint" />
+            <mxPoint x="705" y="242" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 4: self compare on server -->
+        <mxCell id="m4" parent="1" edge="1" source="sHead" target="sHead" style="edgeStyle=none;curved=1;html=1;endArrow=block;endFill=1;strokeColor=#455a64;exitX=1;exitY=0.55;exitDx=0;exitDy=0;entryX=1;entryY=0.95;entryDx=0;entryDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="279" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4lbl" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#455a64;" value="4  [self] compare key"><mxGeometry x="770" y="256" width="180" height="16" as="geometry" /></mxCell>
+        <mxCell id="m4sub" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontFamily=DejaVu Sans;fontColor=#607d8b;" value="vs. internally stored / calculated value;&#10;confirm validity and unlock client's&#10;access for that security level"><mxGeometry x="770" y="270" width="180" height="40" as="geometry" /></mxCell>
+
+        <!-- alt frame -->
+        <mxCell id="altFrame" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#90a4ae;dashed=1;verticalAlign=top;align=left;" value=""><mxGeometry x="40" y="320" width="880" height="220" as="geometry" /></mxCell>
+        <mxCell id="altTab" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;fontSize=10;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#455a64;align=center;verticalAlign=middle;" value="alt"><mxGeometry x="40" y="320" width="54" height="20" as="geometry" /></mxCell>
+        <mxCell id="altCond1" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontFamily=DejaVu Sans;fontStyle=2;fontColor=#c62828;" value="[key invalid — false access attempt]"><mxGeometry x="104" y="322" width="400" height="16" as="geometry" /></mxCell>
+
+        <!-- 5a: negative response -->
+        <mxCell id="m5alb" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#c62828;" value="5a  negative response"><mxGeometry x="135" y="346" width="300" height="16" as="geometry" /></mxCell>
+        <mxCell id="m5asub" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontFamily=DejaVu Sans;fontColor=#607d8b;" value="server → client · NRC 0x7F 0x27 &lt;NRC&gt; [Clause 9.4.4, Table 46]"><mxGeometry x="135" y="360" width="560" height="14" as="geometry" /></mxCell>
+        <mxCell id="m5a" parent="1" edge="1" style="endArrow=block;endFill=1;html=1;dashed=1;strokeColor=#c62828;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="705" y="382" as="sourcePoint" />
+            <mxPoint x="125" y="382" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- divider -->
+        <mxCell id="altDiv" parent="1" edge="1" style="endArrow=none;html=1;dashed=1;strokeColor=#90a4ae;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="406" as="sourcePoint" />
+            <mxPoint x="920" y="406" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="altCond2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontFamily=DejaVu Sans;fontStyle=2;fontColor=#2e7d32;" value="[else — key confirmed valid]"><mxGeometry x="104" y="392" width="400" height="16" as="geometry" /></mxCell>
+
+        <!-- 5b: positive response, unlocked -->
+        <mxCell id="m5blb" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#2e7d32;" value="5b  positive response (posRes)"><mxGeometry x="135" y="412" width="300" height="16" as="geometry" /></mxCell>
+        <mxCell id="m5bsub" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontFamily=DejaVu Sans;fontColor=#607d8b;" value="server → client · SID 0x67 &lt;type&gt;, no seed bytes [Clause 9.4.3.1, Table 44]"><mxGeometry x="135" y="426" width="560" height="14" as="geometry" /></mxCell>
+        <mxCell id="m5b" parent="1" edge="1" style="endArrow=block;endFill=1;html=1;dashed=1;strokeColor=#2e7d32;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="705" y="450" as="sourcePoint" />
+            <mxPoint x="125" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- note -->
+        <mxCell id="note" parent="1" vertex="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;size=20;fontSize=9.5;fontFamily=DejaVu Sans;fontColor=#263238;align=left;spacingLeft=10;spacingTop=6;verticalAlign=top;" value="&lt;b style=&quot;color:#e65100&quot;&gt;seed value = 0x00 00&lt;/b&gt;&lt;br&gt;embedded in posRes, for the security&lt;br&gt;level now unlocked [Clause 9.4.1]"><mxGeometry x="580" y="465" width="300" height="60" as="geometry" /></mxCell>
+
+        <mxCell id="foot" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontFamily=DejaVu Sans;fontColor=#263238;" value="An invalid key requires the client to restart the whole sequence from requestSeed (Clause 9.4.1, Annex I). Only one security level is&#10;active at a time — unlocking a new level deactivates whichever level was unlocked before (Clause 9.4.1)."><mxGeometry x="20" y="550" width="900" height="34" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

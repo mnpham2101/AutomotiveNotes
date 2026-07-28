@@ -208,16 +208,16 @@ td strong{color:var(--accent-dark)}
 <li>
 <p><strong>What a DID is</strong></p>
 <ul>
-<li>A <em>16-bit value</em>, <em>2-byte</em> that logically represents <strong>one object</strong> (e.g. Air Inlet Door Position) or a <em>collection of objects</em> or <em>dataRecord</em> [Clause C.1]</li>
+<li>A <em>16-bit value</em>, <em>2-byte</em> that logically represents <strong>one object</strong> (e.g. Air Inlet Door Position) or a <em>collection of objects</em> or <em>dataRecord</em></li>
 <li>The content of the <em>dataRecord</em> is not defined in this document and is vehicle manufacturer specifics.</li>
-<li>The referenced data shall be <em>available in the server's memory</em> — fixed, or in RAM when defined dynamically by <code>DynamicallyDefineDataIdentifier</code> (0x2C) [Clause C.1]</li>
+<li>The referenced data shall be <em>available in the server's memory</em> — fixed, or in RAM when defined dynamically by <code>DynamicallyDefineDataIdentifier</code> (0x2C)</li>
 </ul>
 </li>
 <li>
 <p><strong>A DID transmission</strong></p>
 <ul>
-<li>Range <code>0x0000 – 0xFFFF</code>, transmitted <strong>high byte first</strong>; allowed values are assigned in <strong>Table C.1</strong> (Annex C, <em>normative</em>) [Clause C.1, Table C.1]</li>
-<li>The same DID number is used across <strong>0x22 (read)</strong>, <strong>0x2E (write)</strong> and <strong>0x2F (IO control)</strong>, and appears in responses such as <code>ReadDTCInformation</code> snapshot records [Clause C.1]</li>
+<li>Range <code>0x0000 – 0xFFFF</code>, transmitted <strong>high byte first</strong>; allowed values are assigned in <strong>Table C.1</strong> (Annex C, <em>normative</em>) [Table C.1]</li>
+<li>The same DID number is used across <strong>0x22 (read)</strong>, <strong>0x2E (write)</strong> and <strong>0x2F (IO control)</strong>, and appears in responses such as <code>ReadDTCInformation</code> snapshot records</li>
 </ul>
 </li>
 <li>
@@ -226,10 +226,11 @@ td strong{color:var(--accent-dark)}
 <p>"Regardless of which service a dataIdentifier is used with, it shall consistently represent the same thing (i.e., a given object with a given size / meaning / etc.) on a given ECU."</p>
 </blockquote>
 <ul>
-<li>Only exception: <strong>dynamically defined DIDs</strong> (<code>0xF300–0xF3FF</code>), which are not predefined in the ECU but built by the client via 0x2C [Clause C.1]</li>
+<li>Only exception: <strong>dynamically defined DIDs</strong> (<code>0xF300–0xF3FF</code>), which are not predefined in the ECU but built by the client via 0x2C</li>
 </ul>
 </li>
 </ul>
+<div class="ref">Clause C.1</div>
 <div class="note"><b>Note — </b>Annex C is normative. Table C.1 reserves the ISOSAEReserved and ReservedForLegislativeUse ranges, and assigns vehicle-manufacturer DIDs to the VehicleManufacturerSpecific ranges and system-supplier DIDs to 0xFD00–0xFEFF.</div></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">3 / 14</span></div></section>
 <section class="slide divider" id="s4"><div class="slide-inner"><div class="kicker">Section</div>
 <h2>Section 2 — ReadDataByIdentifier service</h2></div><div class="foot"><span>Data Transmission functional unit</span><span class="n">4 / 14</span></div></section>
@@ -295,14 +296,14 @@ td strong{color:var(--accent-dark)}
 <section class="slide" id="s11"><div class="slide-inner"><h2>Introduction</h2>
 <ul>
 <li><strong>Service:</strong> <code>WriteDataByIdentifier</code> (SID <strong>0x2E</strong>) [Clause 10.7]</li>
-<li><strong>Purpose:</strong> writes a <em>dataRecord</em> into the server at an internal location identified by a <em>dataIdentifier</em> [Clause 10.7.1]</li>
-<li>The write <strong>may or may not be secured</strong> [Clause 10.7.1]</li>
-<li><em>Dynamically defined dataIdentifiers</em> <strong>shall not be used</strong> with this service [Clause 10.7.1]</li>
+<li><strong>Purpose:</strong> writes a <em>dataRecord</em> into the server at an internal location identified by a <em>dataIdentifier</em></li>
+<li>The write <strong>may or may not be secured</strong></li>
+<li><em>Dynamically defined dataIdentifiers</em> <strong>shall not be used</strong> with this service</li>
 <li>
-<p>It is the <strong>vehicle manufacturer's responsibility</strong> to assure the server conditions are met when performing this service [Clause 10.7.1]</p>
+<p>It is the <strong>vehicle manufacturer's responsibility</strong> to assure the server conditions are met when performing this service</p>
 </li>
 <li>
-<p><strong>Possible uses</strong> listed by the standard [Clause 10.7.1]</p>
+<p><strong>Possible uses</strong> listed by the standard</p>
 <ul>
 <li>programming configuration information into the server (e.g. <em>VIN number</em>)</li>
 <li>resetting learned values</li>

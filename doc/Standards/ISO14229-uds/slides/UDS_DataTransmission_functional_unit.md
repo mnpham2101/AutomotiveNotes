@@ -26,19 +26,21 @@
 ### Data Identifier (DID) — Key Concepts
 
 - **What a DID is**
-    - A *16-bit value*, *2-byte* that logically represents **one object** (e.g. Air Inlet Door Position) or a *collection of objects* or *dataRecord* [Clause C.1]
+    - A *16-bit value*, *2-byte* that logically represents **one object** (e.g. Air Inlet Door Position) or a *collection of objects* or *dataRecord*
     - The content of the *dataRecord* is not defined in this document and is vehicle manufacturer specifics.
-    - The referenced data shall be *available in the server's memory* — fixed, or in RAM when defined dynamically by `DynamicallyDefineDataIdentifier` (0x2C) [Clause C.1]
+    - The referenced data shall be *available in the server's memory* — fixed, or in RAM when defined dynamically by `DynamicallyDefineDataIdentifier` (0x2C)
 
 - **A DID transmission**
-    - Range `0x0000 – 0xFFFF`, transmitted **high byte first**; allowed values are assigned in **Table C.1** (Annex C, *normative*) [Clause C.1, Table C.1]
-    - The same DID number is used across **0x22 (read)**, **0x2E (write)** and **0x2F (IO control)**, and appears in responses such as `ReadDTCInformation` snapshot records [Clause C.1]
+    - Range `0x0000 – 0xFFFF`, transmitted **high byte first**; allowed values are assigned in **Table C.1** (Annex C, *normative*) [Table C.1]
+    - The same DID number is used across **0x22 (read)**, **0x2E (write)** and **0x2F (IO control)**, and appears in responses such as `ReadDTCInformation` snapshot records
 
 - **Consistency rule** *(IMPORTANT note in Clause C.1)*
 
     > "Regardless of which service a dataIdentifier is used with, it shall consistently represent the same thing (i.e., a given object with a given size / meaning / etc.) on a given ECU."
 
-    - Only exception: **dynamically defined DIDs** (`0xF300–0xF3FF`), which are not predefined in the ECU but built by the client via 0x2C [Clause C.1]
+    - Only exception: **dynamically defined DIDs** (`0xF300–0xF3FF`), which are not predefined in the ECU but built by the client via 0x2C
+
+`[Clause C.1]`
 
 > note: Annex C is normative. Table C.1 reserves the ISOSAEReserved and ReservedForLegislativeUse ranges, and assigns vehicle-manufacturer DIDs to the VehicleManufacturerSpecific ranges and system-supplier DIDs to 0xFD00–0xFEFF.
 
@@ -94,12 +96,12 @@ worked example — read a single DID `0xF190` (VIN) [Clause 10.2.5.2, Tables 147
 ### Introduction
 
 - **Service:** `WriteDataByIdentifier` (SID **0x2E**) [Clause 10.7]
-- **Purpose:** writes a *dataRecord* into the server at an internal location identified by a *dataIdentifier* [Clause 10.7.1]
-- The write **may or may not be secured** [Clause 10.7.1]
-- *Dynamically defined dataIdentifiers* **shall not be used** with this service [Clause 10.7.1]
-- It is the **vehicle manufacturer's responsibility** to assure the server conditions are met when performing this service [Clause 10.7.1]
+- **Purpose:** writes a *dataRecord* into the server at an internal location identified by a *dataIdentifier*
+- The write **may or may not be secured**
+- *Dynamically defined dataIdentifiers* **shall not be used** with this service
+- It is the **vehicle manufacturer's responsibility** to assure the server conditions are met when performing this service
 
-- **Possible uses** listed by the standard [Clause 10.7.1]
+- **Possible uses** listed by the standard
     - programming configuration information into the server (e.g. *VIN number*)
     - resetting learned values
     - clearing non-volatile memory
