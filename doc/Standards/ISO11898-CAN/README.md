@@ -31,13 +31,13 @@ Eight sections, 44 slides:
 
 | Section | Covers |
 | --- | --- |
-| 1 — What CAN is | Bosch 1983–86, who uses it, and CAN against SPI / I²C / UART |
+| 1 — What CAN is | Bosch 1983–86, application domains, and CAN compared with SPI / I²C / UART |
 | 2 — Two protocols, two standards | ISO 11898-1 vs -2, high-speed vs low-speed FT, and **ISO 15765-2** for UDS |
-| 3 — Layer 1 | what the physical layer defines, bus topology, why CAN_H and CAN_L |
+| 3 — Layer 1 | the scope of layer 1, bus topology and termination, differential signalling |
 | 4 — Recessive and dominant | the termination as a *pull-together*, Kirchhoff, the 0.9 V / 0.5 V thresholds |
 | 5 — The frame | standard and extended field maps, the four frame types, bit stuffing |
-| 6 — Arbitration | bitwise, non-destructive, and what it costs |
-| 7 — Acknowledgement | the ACK slot, and what it does **not** prove |
+| 6 — Arbitration | bitwise, non-destructive, and its advantages and disadvantages |
+| 7 — Acknowledgement | the ACK slot, and the limits of what it proves |
 | 8 — Takeaways | six things worth remembering, plus references |
 
 The recurring theme is that almost everything in CAN follows from one asymmetry — **dominant
