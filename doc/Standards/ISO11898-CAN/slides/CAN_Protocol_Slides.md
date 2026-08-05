@@ -5,6 +5,8 @@
 
 ## Section 1 — What CAN is, and where it came from
 
+**L1 and L2 — background, not mechanics.** History, motivation and positioning against other buses. The two standards being introduced are **ISO 11898-1** (data link) and **ISO 11898-2** (physical); the split between them is Section 2.
+
 ### What these slides cover
 
 - **CAN is the wire UDS rides on.** Everything in the ISO 14229 material assumes the bus below it works.
@@ -62,6 +64,8 @@
 
 ## Section 2 — Two protocols, two standards
 
+**L1 and L2 — where the line is drawn.** **ISO 11898-1** governs L2, the data link layer, plus the physical signalling sublayer; **ISO 11898-2** governs L1, the physical medium. **ISO 15765-2** sits above both, at the transport layer, and is what carries UDS.
+
 ### CAN is not one standard
 
 - The name "CAN" covers **two separate things**, standardised separately — this is the split people get wrong.
@@ -104,6 +108,8 @@
 
 ## Section 3 — Layer 1: the wire
 
+**L1 — physical layer.** Governed by **ISO 11898-2**: the medium, the linear topology, the driver and receiver levels, and the common-mode range. The transceiver's half of CAN.
+
 ### What layer 1 defines
 
 - The **medium**: a twisted pair with nominal **120 Ω characteristic impedance**. No shield required.
@@ -139,6 +145,8 @@
 `[ISO 11898-2]`
 
 ## Section 4 — Recessive, dominant, and what the resistor pulls
+
+**L1 — physical layer, and the hook L2 hangs on.** The voltages and the 0.9 V / 0.5 V thresholds come from **ISO 11898-2**; the dominant-beats-recessive bus value they encode is **ISO 11898-1**, and is what arbitration and the ACK slot are built from.
 
 ### What the termination actually pulls
 
@@ -201,6 +209,8 @@
 
 ## Section 5 — The frame
 
+**L2 — data link layer.** Governed by **ISO 11898-1**: frame formats, field order, DLC, CRC and bit stuffing. This is what the CAN controller implements, whatever the wire below it looks like.
+
 ### CAN frame structure
 
 ![Standard and extended CAN data frame field maps with bit counts and field groups](../asset/can-frame-structure.svg)
@@ -246,6 +256,8 @@
 
 ## Section 6 — Arbitration
 
+**L2 — data link layer, medium access.** Priority and bus access are **ISO 11898-1**, but the rule only holds because a bit reaches every node within one bit time — a propagation budget set at L1 by **ISO 11898-2**.
+
 ### The problem arbitration solves
 
 - Any node may start transmitting at any bus-idle. Sooner or later **two start in the same bit**.
@@ -276,6 +288,8 @@
 
 ## Section 7 — Acknowledgement
 
+**L2 — data link layer.** The ACK slot, the error frame and the TEC/REC counters are all **ISO 11898-1**. End-to-end delivery is not a CAN layer at all: it belongs to UDS, above **ISO 15765-2**.
+
 ### The ACK slot
 
 ![The ACK slot: the transmitter sends recessive and receivers overwrite it with dominant](../asset/can-ack-slot.svg)
@@ -297,6 +311,8 @@
 > note: The reason it stalls at error-passive rather than going bus-off is an explicit exception in the error-counting rules: an error-passive transmitter that sees an ACK error, and detects no dominant bit while sending its passive error flag, does not increment TEC. Worth knowing — it explains a symptom that otherwise looks like a broken controller.
 
 ## Section 8 — Takeaways
+
+**L1 and L2 together.** **ISO 11898-2** is the wire, **ISO 11898-1** is the controller, and **ISO 15765-2** is the transport layer that carries UDS across both.
 
 ### Takeaways
 
