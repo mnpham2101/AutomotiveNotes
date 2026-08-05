@@ -1,0 +1,143 @@
+<svg viewBox="0 0 980 512" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="980" height="512" fill="#ffffff"/>
+
+  <text x="490" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">CAN data frame structure</text>
+
+  <!-- ==================== STANDARD FRAME ==================== -->
+  <text x="40" y="58" font-size="12" font-weight="bold" fill="#37474f">Standard data frame — 11-bit identifier (base format)</text>
+
+  <!-- group brackets -->
+  <path d="M78,94 L78,88 L258,88 L258,94" fill="none" stroke="#90a4ae" stroke-width="1.2"/>
+  <text x="168" y="82" text-anchor="middle" font-size="10" font-weight="bold" fill="#37474f">Arbitration field</text>
+  <path d="M258,94 L258,88 L407,88 L407,94" fill="none" stroke="#90a4ae" stroke-width="1.2"/>
+  <text x="332" y="82" text-anchor="middle" font-size="10" font-weight="bold" fill="#37474f">Control field</text>
+  <path d="M407,94 L407,88 L553,88 L553,94" fill="none" stroke="#90a4ae" stroke-width="1.2"/>
+  <text x="480" y="82" text-anchor="middle" font-size="10" font-weight="bold" fill="#37474f">Data field</text>
+  <path d="M553,94 L553,88 L712,88 L712,94" fill="none" stroke="#90a4ae" stroke-width="1.2"/>
+  <text x="632" y="82" text-anchor="middle" font-size="10" font-weight="bold" fill="#37474f">CRC field</text>
+  <path d="M712,94 L712,88 L822,88 L822,94" fill="none" stroke="#90a4ae" stroke-width="1.2"/>
+  <text x="767" y="82" text-anchor="middle" font-size="10" font-weight="bold" fill="#37474f">ACK field</text>
+  <path d="M822,94 L822,88 L890,88 L890,94" fill="none" stroke="#90a4ae" stroke-width="1.2"/>
+  <text x="856" y="82" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#37474f">End of frame</text>
+
+  <!-- fields -->
+  <rect x="40" y="96" width="38" height="50" fill="#eceff1" stroke="#607d8b" stroke-width="1.3"/>
+  <text x="59" y="120" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">SOF</text>
+  <text x="59" y="138" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="78" y="96" width="135" height="50" fill="#fff3e0" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="145" y="120" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#e65100">Identifier</text>
+  <text x="145" y="138" text-anchor="middle" font-size="9" fill="#607d8b">11</text>
+
+  <rect x="213" y="96" width="45" height="50" fill="#fff3e0" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="235" y="120" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#e65100">RTR</text>
+  <text x="235" y="138" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="258" y="96" width="43" height="50" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+  <text x="279" y="120" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#14337a">IDE</text>
+  <text x="279" y="138" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="301" y="96" width="38" height="50" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+  <text x="320" y="120" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#14337a">r0</text>
+  <text x="320" y="138" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="339" y="96" width="68" height="50" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+  <text x="373" y="120" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#14337a">DLC</text>
+  <text x="373" y="138" text-anchor="middle" font-size="9" fill="#607d8b">4</text>
+
+  <rect x="407" y="96" width="146" height="50" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="480" y="120" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e7d32">Data</text>
+  <text x="480" y="138" text-anchor="middle" font-size="9" fill="#607d8b">0–64 (0–8 bytes)</text>
+
+  <rect x="553" y="96" width="101" height="50" fill="#ffffff" stroke="#37474f" stroke-width="1.3"/>
+  <text x="603" y="120" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">CRC sequence</text>
+  <text x="603" y="138" text-anchor="middle" font-size="9" fill="#607d8b">15</text>
+
+  <rect x="654" y="96" width="58" height="50" fill="#ffffff" stroke="#37474f" stroke-width="1.3"/>
+  <text x="683" y="114" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#263238">CRC</text>
+  <text x="683" y="125" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#263238">delimiter</text>
+  <text x="683" y="139" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="712" y="96" width="52" height="50" fill="#ffebee" stroke="#c62828" stroke-width="1.5"/>
+  <text x="738" y="114" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#c62828">ACK</text>
+  <text x="738" y="125" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#c62828">slot</text>
+  <text x="738" y="139" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="764" y="96" width="58" height="50" fill="#ffebee" stroke="#c62828" stroke-width="1.5"/>
+  <text x="793" y="114" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#c62828">ACK</text>
+  <text x="793" y="125" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#c62828">delimiter</text>
+  <text x="793" y="139" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="822" y="96" width="68" height="50" fill="#eceff1" stroke="#90a4ae" stroke-width="1.3"/>
+  <text x="856" y="120" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">EOF</text>
+  <text x="856" y="138" text-anchor="middle" font-size="9" fill="#607d8b">7</text>
+
+  <rect x="890" y="96" width="50" height="50" fill="#eceff1" stroke="#90a4ae" stroke-width="1.3"/>
+  <text x="915" y="120" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">IFS</text>
+  <text x="915" y="138" text-anchor="middle" font-size="9" fill="#607d8b">3</text>
+
+  <!-- bit stuffing span -->
+  <path d="M40,152 L40,160 L654,160 L654,152" fill="none" stroke="#f26f21" stroke-width="1.3"/>
+  <text x="347" y="174" text-anchor="middle" font-size="10" font-weight="bold" fill="#e65100">bit stuffing applies over this span</text>
+
+  <!-- annotations -->
+  <text x="40" y="200" font-size="10.5" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">SOF</tspan> — one dominant bit: it ends bus-idle and hard-synchronises every receiver's bit clock to the transmitter.</text>
+  <text x="40" y="220" font-size="10.5" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">Identifier</tspan> — names the message, never the node. Its numeric value is also the priority: the lowest value wins arbitration.</text>
+  <text x="40" y="240" font-size="10.5" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">RTR</tspan> dominant = data frame, recessive = remote frame. <tspan font-weight="bold">IDE</tspan> dominant = 11-bit format. <tspan font-weight="bold">DLC</tspan> = how many data bytes follow.</text>
+  <text x="40" y="260" font-size="10.5" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">CRC</tspan> — 15 bits over SOF…data, then a recessive delimiter that gives every receiver a slot to react in.</text>
+  <text x="40" y="280" font-size="10.5" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">ACK slot</tspan> — the transmitter sends recessive and lets any receiver overwrite it with dominant. <tspan font-weight="bold">EOF</tspan> 7 + <tspan font-weight="bold">IFS</tspan> 3 recessive bits close it.</text>
+
+  <!-- ==================== EXTENDED FRAME ==================== -->
+  <text x="40" y="318" font-size="12" font-weight="bold" fill="#37474f">Extended data frame — 29-bit identifier</text>
+
+  <path d="M78,352 L78,346 L486,346 L486,352" fill="none" stroke="#90a4ae" stroke-width="1.2"/>
+  <text x="282" y="340" text-anchor="middle" font-size="10" font-weight="bold" fill="#37474f">Arbitration field — 32 bits</text>
+
+  <rect x="40" y="354" width="38" height="46" fill="#eceff1" stroke="#607d8b" stroke-width="1.3"/>
+  <text x="59" y="376" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">SOF</text>
+  <text x="59" y="392" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="78" y="354" width="120" height="46" fill="#fff3e0" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="138" y="376" text-anchor="middle" font-size="10" font-weight="bold" fill="#e65100">Base identifier</text>
+  <text x="138" y="392" text-anchor="middle" font-size="9" fill="#607d8b">11</text>
+
+  <rect x="198" y="354" width="46" height="46" fill="#fff3e0" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="221" y="376" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#e65100">SRR</text>
+  <text x="221" y="392" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="244" y="354" width="46" height="46" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+  <text x="267" y="376" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#14337a">IDE</text>
+  <text x="267" y="392" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="290" y="354" width="150" height="46" fill="#fff3e0" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="365" y="376" text-anchor="middle" font-size="10" font-weight="bold" fill="#e65100">Identifier extension</text>
+  <text x="365" y="392" text-anchor="middle" font-size="9" fill="#607d8b">18</text>
+
+  <rect x="440" y="354" width="46" height="46" fill="#fff3e0" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="463" y="376" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#e65100">RTR</text>
+  <text x="463" y="392" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="486" y="354" width="38" height="46" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+  <text x="505" y="376" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#14337a">r1</text>
+  <text x="505" y="392" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="524" y="354" width="38" height="46" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+  <text x="543" y="376" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#14337a">r0</text>
+  <text x="543" y="392" text-anchor="middle" font-size="9" fill="#607d8b">1</text>
+
+  <rect x="562" y="354" width="62" height="46" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+  <text x="593" y="376" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#14337a">DLC</text>
+  <text x="593" y="392" text-anchor="middle" font-size="9" fill="#607d8b">4</text>
+
+  <rect x="624" y="354" width="316" height="46" fill="#fafafa" stroke="#b0bec5" stroke-width="1.3" stroke-dasharray="5 3"/>
+  <text x="782" y="376" text-anchor="middle" font-size="10.5" fill="#607d8b">Data · CRC · ACK · EOF · IFS</text>
+  <text x="782" y="392" text-anchor="middle" font-size="9" font-style="italic" fill="#90a4ae">identical to the standard frame</text>
+
+  <text x="40" y="424" font-size="10.5" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">IDE recessive</tspan> selects the 29-bit format — and because IDE sits inside the arbitration field, the format itself is arbitrated.</text>
+  <text x="40" y="444" font-size="10.5" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">SRR</tspan> is a recessive placeholder in the standard frame's RTR position, so a standard frame with the same base ID always wins.</text>
+
+  <!-- bit stuffing box -->
+  <rect x="40" y="458" width="900" height="46" rx="4" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="52" y="478" font-size="10.5" fill="#e65100"><tspan font-weight="bold">Bit stuffing</tspan> — after 5 consecutive bits of the same value the transmitter inserts one bit of the opposite value, from SOF through the CRC sequence.</text>
+  <text x="52" y="495" font-size="10.5" fill="#e65100">It guarantees edges for resynchronisation. Receivers strip the stuff bits, so 6 identical bits in that span is by definition an error — how an error flag signals.</text>
+</svg>

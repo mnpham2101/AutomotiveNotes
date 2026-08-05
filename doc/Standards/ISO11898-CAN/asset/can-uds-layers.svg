@@ -1,0 +1,70 @@
+<svg viewBox="0 0 940 516" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="940" height="516" fill="#ffffff"/>
+
+  <text x="470" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">Which ISO standard owns which layer — and where UDS plugs into CAN</text>
+
+  <text x="320" y="58" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#607d8b">OSI layer and the standard that defines it</text>
+  <text x="765" y="58" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#607d8b">AUTOSAR Classic module</text>
+
+  <!-- ===== layer 7 ===== -->
+  <rect x="40" y="70" width="70" height="82" fill="#14337a"/>
+  <text x="75" y="107" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffffff">7</text>
+  <text x="75" y="124" text-anchor="middle" font-size="8.5" fill="#b0bec5">layer</text>
+  <rect x="110" y="70" width="490" height="82" fill="#fff3e0" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="124" y="90" font-size="12" font-weight="bold" fill="#e65100">Application</text>
+  <text x="124" y="112" font-size="10.5" fill="#37474f"><tspan font-weight="bold">ISO 14229-1</tspan> — UDS services: 0x22 ReadDataByIdentifier, 0x2E, 0x27 …</text>
+  <text x="124" y="130" font-size="10.5" fill="#37474f"><tspan font-weight="bold">ISO 14229-3</tspan> — UDSonCAN: which UDS services run over CAN, and how</text>
+  <text x="124" y="146" font-size="9.5" font-style="italic" fill="#90a4ae">the diagnostic conversation itself — request, positive response, NRC</text>
+  <rect x="630" y="70" width="270" height="82" rx="4" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="765" y="102" text-anchor="middle" font-size="12" font-weight="bold" fill="#263238">Dcm</text>
+  <text x="765" y="122" text-anchor="middle" font-size="9.5" fill="#607d8b">(+ Dem for fault memory)</text>
+
+  <!-- ===== layer 4-3 ===== -->
+  <rect x="40" y="160" width="70" height="94" fill="#1565c0"/>
+  <text x="75" y="200" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffffff">4–3</text>
+  <text x="75" y="218" text-anchor="middle" font-size="8.5" fill="#bbdefb">layers</text>
+  <rect x="110" y="160" width="490" height="94" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="124" y="180" font-size="12" font-weight="bold" fill="#14337a">Transport + Network</text>
+  <text x="124" y="202" font-size="10.5" fill="#37474f"><tspan font-weight="bold">ISO 15765-2</tspan> — DoCAN. Splits a UDS message of up to 4 095 bytes</text>
+  <text x="124" y="219" font-size="10.5" fill="#37474f">into 8-byte CAN frames: SF, FF, CF, paced by FC (block size, STmin)</text>
+  <text x="124" y="238" font-size="10.5" fill="#37474f"><tspan font-weight="bold">ISO 15765-4</tspan> — the restricted subset legislated OBD must use</text>
+  <text x="124" y="251" font-size="9.5" font-style="italic" fill="#90a4ae">this is the standard number to quote for "UDS over CAN"</text>
+  <rect x="630" y="160" width="270" height="94" rx="4" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="765" y="192" text-anchor="middle" font-size="12" font-weight="bold" fill="#263238">PduR → CanTp</text>
+  <text x="765" y="212" text-anchor="middle" font-size="9.5" fill="#607d8b">segmentation and reassembly</text>
+  <text x="765" y="230" text-anchor="middle" font-size="9.5" fill="#607d8b">N_As / N_Bs / N_Cr timers</text>
+
+  <!-- ===== layer 2 ===== -->
+  <rect x="40" y="262" width="70" height="82" fill="#2e7d32"/>
+  <text x="75" y="299" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffffff">2</text>
+  <text x="75" y="316" text-anchor="middle" font-size="8.5" fill="#c8e6c9">layer</text>
+  <rect x="110" y="262" width="490" height="82" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="124" y="282" font-size="12" font-weight="bold" fill="#2e7d32">Data link</text>
+  <text x="124" y="304" font-size="10.5" fill="#37474f"><tspan font-weight="bold">ISO 11898-1</tspan> — frame formats, bitwise arbitration, bit stuffing,</text>
+  <text x="124" y="321" font-size="10.5" fill="#37474f">CRC, acknowledgement, error detection and error confinement</text>
+  <text x="124" y="338" font-size="9.5" font-style="italic" fill="#90a4ae">the protocol the CAN controller implements in silicon</text>
+  <rect x="630" y="262" width="270" height="82" rx="4" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="765" y="294" text-anchor="middle" font-size="12" font-weight="bold" fill="#263238">CanIf → Can</text>
+  <text x="765" y="314" text-anchor="middle" font-size="9.5" fill="#607d8b">Can is the MCAL driver for the</text>
+  <text x="765" y="330" text-anchor="middle" font-size="9.5" fill="#607d8b">on-chip CAN controller</text>
+
+  <!-- ===== layer 1 ===== -->
+  <rect x="40" y="352" width="70" height="82" fill="#e65100"/>
+  <text x="75" y="389" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffffff">1</text>
+  <text x="75" y="406" text-anchor="middle" font-size="8.5" fill="#ffe0b2">layer</text>
+  <rect x="110" y="352" width="490" height="82" fill="#ffebee" stroke="#c62828" stroke-width="1.5"/>
+  <text x="124" y="372" font-size="12" font-weight="bold" fill="#c62828">Physical</text>
+  <text x="124" y="394" font-size="10.5" fill="#37474f"><tspan font-weight="bold">ISO 11898-2</tspan> — high-speed CAN: differential levels, 120 Ω, ≤ 1 Mbit/s</text>
+  <text x="124" y="411" font-size="10.5" fill="#37474f"><tspan font-weight="bold">ISO 11898-3</tspan> — low-speed fault-tolerant CAN: ≤ 125 kbit/s, survives a broken wire</text>
+  <text x="124" y="428" font-size="9.5" font-style="italic" fill="#90a4ae">two different physical protocols — this is the "CAN is two standards" split</text>
+  <rect x="630" y="352" width="270" height="82" rx="4" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="765" y="384" text-anchor="middle" font-size="12" font-weight="bold" fill="#263238">CanTrcv</text>
+  <text x="765" y="404" text-anchor="middle" font-size="9.5" fill="#607d8b">MCAL driver for the transceiver IC,</text>
+  <text x="765" y="420" text-anchor="middle" font-size="9.5" fill="#607d8b">plus the wiring and terminations</text>
+
+  <!-- banner -->
+  <rect x="40" y="442" width="860" height="64" rx="4" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="52" y="461" font-size="10.8" fill="#e65100">A 17-byte VIN read (<tspan font-family="DejaVu Sans Mono, Consolas, monospace">62 F1 90</tspan> + 17 bytes) does not fit in one 8-byte CAN frame.</text>
+  <text x="52" y="478" font-size="10.8" fill="#e65100"><tspan font-weight="bold">ISO 15765-2</tspan> is the glue: it turns that one UDS response into a First Frame plus Consecutive Frames, paced by the tester's Flow Control.</text>
+  <text x="52" y="495" font-size="10.8" fill="#e65100">CAN carries bytes; ISO 15765-2 makes them a message; ISO 14229-1 gives them meaning.</text>
+</svg>

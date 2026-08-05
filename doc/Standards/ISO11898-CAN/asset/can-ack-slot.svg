@@ -1,0 +1,68 @@
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="900" height="470" fill="#ffffff"/>
+  <defs>
+    <marker id="ackarrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#f26f21"/>
+    </marker>
+  </defs>
+
+  <text x="450" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">The ACK slot — the transmitter leaves a hole for the receivers to fill</text>
+  <text x="450" y="45" text-anchor="middle" font-size="11" fill="#607d8b">one bit, driven by everyone who liked the CRC</text>
+
+  <!-- highlight band on the ACK slot column -->
+  <rect x="486" y="62" width="118" height="234" fill="#fff3e0"/>
+
+  <!-- column headers -->
+  <text x="309" y="76" text-anchor="middle" font-size="10" font-weight="bold" fill="#607d8b">last CRC bit</text>
+  <text x="427" y="76" text-anchor="middle" font-size="10" font-weight="bold" fill="#607d8b">CRC delimiter</text>
+  <text x="545" y="76" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">ACK slot</text>
+  <text x="663" y="76" text-anchor="middle" font-size="10" font-weight="bold" fill="#607d8b">ACK delimiter</text>
+  <text x="781" y="76" text-anchor="middle" font-size="10" font-weight="bold" fill="#607d8b">EOF bit 1</text>
+
+  <!-- ===== transmitter ===== -->
+  <text x="242" y="106" text-anchor="end" font-size="11" font-weight="bold" fill="#263238">Transmitter</text>
+  <text x="242" y="119" text-anchor="end" font-size="9" fill="#607d8b">drives</text>
+  <rect x="250" y="88" width="118" height="38" fill="#fafafa" stroke="#b0bec5"/><text x="309" y="112" text-anchor="middle" font-size="12" fill="#90a4ae">0 / 1</text>
+  <rect x="368" y="88" width="118" height="38" fill="#ffffff" stroke="#b0bec5"/><text x="427" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#607d8b">1</text>
+  <rect x="486" y="88" width="118" height="38" fill="#ffffff" stroke="#f26f21" stroke-width="2.6"/><text x="545" y="107" text-anchor="middle" font-size="15" font-weight="bold" fill="#e65100">1</text><text x="545" y="120" text-anchor="middle" font-size="8.5" fill="#e65100">recessive — released</text>
+  <rect x="604" y="88" width="118" height="38" fill="#ffffff" stroke="#b0bec5"/><text x="663" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#607d8b">1</text>
+  <rect x="722" y="88" width="118" height="38" fill="#ffffff" stroke="#b0bec5"/><text x="781" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#607d8b">1</text>
+
+  <!-- ===== receiver 1 ===== -->
+  <text x="242" y="154" text-anchor="end" font-size="11" font-weight="bold" fill="#263238">Receiver 1</text>
+  <text x="242" y="167" text-anchor="end" font-size="9" fill="#2e7d32">CRC OK</text>
+  <rect x="250" y="136" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="309" y="160" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+  <rect x="368" y="136" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="427" y="160" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+  <rect x="486" y="136" width="118" height="38" fill="#37474f" stroke="#f26f21" stroke-width="2.6"/><text x="545" y="155" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">0</text><text x="545" y="168" text-anchor="middle" font-size="8.5" fill="#cfd8dc">dominant</text>
+  <rect x="604" y="136" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="663" y="160" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+  <rect x="722" y="136" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="781" y="160" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+
+  <!-- ===== receiver 2 ===== -->
+  <text x="242" y="202" text-anchor="end" font-size="11" font-weight="bold" fill="#263238">Receiver 2</text>
+  <text x="242" y="215" text-anchor="end" font-size="9" fill="#2e7d32">CRC OK</text>
+  <rect x="250" y="184" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="309" y="208" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+  <rect x="368" y="184" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="427" y="208" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+  <rect x="486" y="184" width="118" height="38" fill="#37474f" stroke="#f26f21" stroke-width="2.6"/><text x="545" y="203" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">0</text><text x="545" y="216" text-anchor="middle" font-size="8.5" fill="#cfd8dc">dominant</text>
+  <rect x="604" y="184" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="663" y="208" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+  <rect x="722" y="184" width="118" height="38" fill="#eceff1" stroke="#cfd8dc" stroke-dasharray="3 3"/><text x="781" y="208" text-anchor="middle" font-size="9" fill="#b0bec5">not driving</text>
+
+  <!-- ===== bus ===== -->
+  <text x="242" y="268" text-anchor="end" font-size="11.5" font-weight="bold" fill="#e65100">Resulting bus level</text>
+  <text x="242" y="281" text-anchor="end" font-size="9" fill="#607d8b">wired-AND</text>
+  <rect x="250" y="250" width="118" height="38" fill="#fafafa" stroke="#f26f21" stroke-width="1.8"/><text x="309" y="274" text-anchor="middle" font-size="12" fill="#90a4ae">0 / 1</text>
+  <rect x="368" y="250" width="118" height="38" fill="#ffffff" stroke="#f26f21" stroke-width="1.8"/><text x="427" y="274" text-anchor="middle" font-size="15" font-weight="bold" fill="#607d8b">1</text>
+  <rect x="486" y="250" width="118" height="38" fill="#37474f" stroke="#f26f21" stroke-width="2.6"/><text x="545" y="269" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">0</text><text x="545" y="282" text-anchor="middle" font-size="8.5" fill="#cfd8dc">acknowledged</text>
+  <rect x="604" y="250" width="118" height="38" fill="#ffffff" stroke="#f26f21" stroke-width="1.8"/><text x="663" y="274" text-anchor="middle" font-size="15" font-weight="bold" fill="#607d8b">1</text>
+  <rect x="722" y="250" width="118" height="38" fill="#ffffff" stroke="#f26f21" stroke-width="1.8"/><text x="781" y="274" text-anchor="middle" font-size="15" font-weight="bold" fill="#607d8b">1</text>
+
+  <!-- read-back arrow -->
+  <line x1="545" y1="322" x2="545" y2="292" stroke="#f26f21" stroke-width="2" marker-end="url(#ackarrow)"/>
+  <text x="545" y="340" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">the transmitter samples the bus here — it reads dominant, so someone received the frame</text>
+
+  <!-- notes -->
+  <text x="30" y="374" font-size="11" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan>The transmitter <tspan font-weight="bold">deliberately sends recessive</tspan> in the ACK slot, so any receiver can overwrite it — dominant always wins.</text>
+  <text x="30" y="396" font-size="11" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan>Every node that computed a matching CRC drives that one bit dominant. Ten receivers or one — the bus looks the same.</text>
+  <text x="30" y="418" font-size="11" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan><tspan font-weight="bold">It is a bus-level ACK, not end-to-end</tspan>: it proves somebody heard the frame, never that the intended ECU did — that guarantee is UDS's job.</text>
+  <text x="30" y="440" font-size="11" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan>No dominant bit ⇒ <tspan font-weight="bold">ACK error</tspan>: the transmitter raises an error frame, adds 8 to its transmit error counter, and retransmits the frame automatically.</text>
+  <text x="30" y="462" font-size="11" fill="#37474f"><tspan fill="#f26f21" font-weight="bold">▸ </tspan>A node alone on a bench bus never gets an ACK — it retries until it turns error-passive, then stays there rather than reaching bus-off.</text>
+</svg>

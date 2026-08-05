@@ -1,0 +1,122 @@
+<svg viewBox="0 0 940 500" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="940" height="500" fill="#ffffff"/>
+  <defs>
+    <marker id="ck-acc" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#f26f21"/>
+    </marker>
+  </defs>
+
+  <text x="470" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">What the 120 Ω terminations actually pull — Kirchhoff on the CAN driver</text>
+
+  <!-- ============ PANEL A : DOMINANT ============ -->
+  <rect x="25" y="42" width="440" height="318" rx="5" fill="#ffffff" stroke="#cfd8dc"/>
+  <rect x="25" y="42" width="440" height="26" rx="5" fill="#ffebee" stroke="#c62828"/>
+  <text x="245" y="60" text-anchor="middle" font-size="12" font-weight="bold" fill="#c62828">DOMINANT — driver on, sending a 0</text>
+
+  <line x1="70" y1="110" x2="130" y2="110" stroke="#263238" stroke-width="2"/>
+  <text x="100" y="102" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">V_CC = 5 V</text>
+  <line x1="100" y1="110" x2="100" y2="138" stroke="#263238" stroke-width="1.8"/>
+  <rect x="78" y="138" width="44" height="26" rx="3" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="100" y="156" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e7d32">ON</text>
+  <line x1="100" y1="164" x2="100" y2="200" stroke="#263238" stroke-width="1.8"/>
+
+  <line x1="100" y1="200" x2="430" y2="200" stroke="#c62828" stroke-width="2.6"/>
+  <line x1="100" y1="280" x2="430" y2="280" stroke="#1565c0" stroke-width="2.6"/>
+  <text x="118" y="193" font-size="10" font-weight="bold" fill="#c62828">CAN_H</text>
+  <text x="118" y="294" font-size="10" font-weight="bold" fill="#1565c0">CAN_L</text>
+
+  <line x1="100" y1="280" x2="100" y2="306" stroke="#263238" stroke-width="1.8"/>
+  <rect x="78" y="306" width="44" height="26" rx="3" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="100" y="324" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e7d32">ON</text>
+  <line x1="100" y1="332" x2="100" y2="340" stroke="#263238" stroke-width="1.8"/>
+  <line x1="87" y1="340" x2="113" y2="340" stroke="#263238" stroke-width="2"/>
+  <line x1="91" y1="345" x2="109" y2="345" stroke="#263238" stroke-width="2"/>
+  <line x1="95" y1="350" x2="105" y2="350" stroke="#263238" stroke-width="2"/>
+
+  <!-- terminators -->
+  <line x1="270" y1="200" x2="270" y2="226" stroke="#263238" stroke-width="1.8"/>
+  <rect x="262" y="226" width="16" height="30" fill="#eceff1" stroke="#263238" stroke-width="1.6"/>
+  <line x1="270" y1="256" x2="270" y2="280" stroke="#263238" stroke-width="1.8"/>
+  <text x="286" y="245" font-size="10.5" font-weight="bold" fill="#263238">120 Ω</text>
+  <line x1="400" y1="200" x2="400" y2="226" stroke="#263238" stroke-width="1.8"/>
+  <rect x="392" y="226" width="16" height="30" fill="#eceff1" stroke="#263238" stroke-width="1.6"/>
+  <line x1="400" y1="256" x2="400" y2="280" stroke="#263238" stroke-width="1.8"/>
+  <text x="418" y="245" font-size="10.5" font-weight="bold" fill="#263238">120 Ω</text>
+
+  <!-- current loop -->
+  <line x1="150" y1="212" x2="240" y2="212" stroke="#f26f21" stroke-width="1.8" marker-end="url(#ck-acc)"/>
+  <line x1="240" y1="268" x2="150" y2="268" stroke="#f26f21" stroke-width="1.8" marker-end="url(#ck-acc)"/>
+  <text x="195" y="245" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">I ≈ 33 mA</text>
+  <line x1="340" y1="228" x2="340" y2="254" stroke="#f26f21" stroke-width="1.5" marker-end="url(#ck-acc)"/>
+  <text x="350" y="246" font-size="9.5" fill="#e65100">I/2</text>
+
+  <text x="335" y="193" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">≈ 3.5 V</text>
+  <text x="335" y="294" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1565c0">≈ 1.5 V</text>
+
+  <!-- ============ PANEL B : RECESSIVE ============ -->
+  <rect x="480" y="42" width="435" height="318" rx="5" fill="#ffffff" stroke="#cfd8dc"/>
+  <rect x="480" y="42" width="435" height="26" rx="5" fill="#eceff1" stroke="#607d8b"/>
+  <text x="697" y="60" text-anchor="middle" font-size="12" font-weight="bold" fill="#37474f">RECESSIVE — driver off, output high-impedance</text>
+
+  <line x1="525" y1="110" x2="585" y2="110" stroke="#263238" stroke-width="2"/>
+  <text x="555" y="102" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">V_CC = 5 V</text>
+  <line x1="555" y1="110" x2="555" y2="138" stroke="#263238" stroke-width="1.8"/>
+  <rect x="533" y="138" width="44" height="26" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="555" y="156" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#607d8b">OFF</text>
+  <line x1="555" y1="164" x2="555" y2="200" stroke="#b0bec5" stroke-width="1.8" stroke-dasharray="4 4"/>
+
+  <line x1="555" y1="200" x2="885" y2="200" stroke="#c62828" stroke-width="2.6"/>
+  <line x1="555" y1="280" x2="885" y2="280" stroke="#1565c0" stroke-width="2.6"/>
+  <text x="565" y="193" font-size="10" font-weight="bold" fill="#c62828">CAN_H</text>
+  <text x="565" y="294" font-size="10" font-weight="bold" fill="#1565c0">CAN_L</text>
+
+  <line x1="555" y1="280" x2="555" y2="306" stroke="#b0bec5" stroke-width="1.8" stroke-dasharray="4 4"/>
+  <rect x="533" y="306" width="44" height="26" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="555" y="324" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#607d8b">OFF</text>
+  <line x1="555" y1="332" x2="555" y2="340" stroke="#263238" stroke-width="1.8"/>
+  <line x1="542" y1="340" x2="568" y2="340" stroke="#263238" stroke-width="2"/>
+  <line x1="546" y1="345" x2="564" y2="345" stroke="#263238" stroke-width="2"/>
+  <line x1="550" y1="350" x2="560" y2="350" stroke="#263238" stroke-width="2"/>
+
+  <!-- internal bias divider -->
+  <line x1="625" y1="200" x2="625" y2="212" stroke="#2e7d32" stroke-width="1.6"/>
+  <rect x="617" y="212" width="16" height="22" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.4"/>
+  <line x1="625" y1="234" x2="625" y2="248" stroke="#2e7d32" stroke-width="1.6"/>
+  <rect x="617" y="248" width="16" height="22" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.4"/>
+  <line x1="625" y1="270" x2="625" y2="280" stroke="#2e7d32" stroke-width="1.6"/>
+  <circle cx="625" cy="241" r="3" fill="#2e7d32"/>
+  <line x1="625" y1="241" x2="645" y2="241" stroke="#2e7d32" stroke-width="1.4"/>
+  <text x="650" y="238" font-size="9.5" fill="#2e7d32">2.5 V bias,</text>
+  <text x="650" y="250" font-size="9.5" fill="#2e7d32">inside the transceiver</text>
+
+  <!-- terminators -->
+  <line x1="790" y1="200" x2="790" y2="226" stroke="#263238" stroke-width="1.8"/>
+  <rect x="782" y="226" width="16" height="30" fill="#eceff1" stroke="#263238" stroke-width="1.6"/>
+  <line x1="790" y1="256" x2="790" y2="280" stroke="#263238" stroke-width="1.8"/>
+  <text x="790" y="306" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">120 Ω</text>
+  <line x1="870" y1="200" x2="870" y2="226" stroke="#263238" stroke-width="1.8"/>
+  <rect x="862" y="226" width="16" height="30" fill="#eceff1" stroke="#263238" stroke-width="1.6"/>
+  <line x1="870" y1="256" x2="870" y2="280" stroke="#263238" stroke-width="1.8"/>
+  <text x="870" y="306" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">120 Ω</text>
+
+  <text x="830" y="245" text-anchor="middle" font-size="12" font-weight="bold" fill="#e65100">I = 0</text>
+
+  <text x="720" y="193" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">≈ 2.5 V</text>
+  <text x="720" y="294" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1565c0">≈ 2.5 V</text>
+
+  <!-- ============ maths ============ -->
+  <text x="35" y="384" font-size="10.8" fill="#37474f"><tspan font-weight="bold" fill="#14337a">KCL</tspan> at CAN_H: the driver current splits between the two terminators,</text>
+  <text x="35" y="400" font-size="10.8" fill="#37474f">so they sit in parallel — the driver sees <tspan font-weight="bold">120 Ω / 2 = 60 Ω</tspan>.</text>
+  <text x="35" y="420" font-size="10.8" fill="#37474f"><tspan font-weight="bold" fill="#14337a">KVL</tspan> round the loop: 5 V = V(high-side) + I × 60 Ω + V(low-side).</text>
+  <text x="35" y="436" font-size="10.8" fill="#37474f">About 2 V lands on the 60 Ω ⇒ I ≈ 33 mA, and the wires split</text>
+  <text x="35" y="452" font-size="10.8" fill="#37474f">symmetrically about 2.5 V: CAN_H ≈ 3.5 V, CAN_L ≈ 1.5 V.</text>
+
+  <text x="490" y="384" font-size="10.8" fill="#37474f">The output stage is high-impedance, so <tspan font-weight="bold" fill="#14337a">KCL</tspan> forces I = 0 through</text>
+  <text x="490" y="400" font-size="10.8" fill="#37474f">the terminators. Ohm's law then gives the differential voltage:</text>
+  <text x="490" y="420" font-size="10.8" fill="#e65100" font-weight="bold">V(CAN_H) − V(CAN_L) = I × 60 Ω = 0 × 60 = 0 V</text>
+  <text x="490" y="440" font-size="10.8" fill="#37474f">The 60 Ω is what pulls the pair back together onto the 2.5 V bias —</text>
+  <text x="490" y="456" font-size="10.8" fill="#37474f">and it drains the cable capacitance, so the recessive edge is fast.</text>
+
+  <rect x="25" y="468" width="890" height="26" rx="4" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="470" y="486" text-anchor="middle" font-size="11" fill="#e65100">CAN has no I²C-style pull-up to V_CC. The termination is a <tspan font-weight="bold">pull-together</tspan>: it restores V_diff = 0 V, which is what "recessive" means.</text>
+</svg>
