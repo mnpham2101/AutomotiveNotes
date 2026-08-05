@@ -16,7 +16,7 @@ ISO14229-uds/
 ├── markdowns/            knowledge notes — hand-written, the source of truth
 ├── asset/                diagrams — each .drawio source beside its rendered .svg
 │
-├── slides/               presentation decks — markdown source and the HTML built from it
+├── slides/               presentations — markdown source and the HTML built from it
 │
 └── tools/                build tooling
 ```
@@ -55,7 +55,7 @@ reading — see the ResponseOnEvent caveat at the end of the DiagnosticSessionCo
 
 ### `slides/ISO_14229-1_UDS_Slides.md`
 
-The same material as a deck: one-line bullets, four sections, a diagram per structural topic.
+The same material as slides: one-line bullets, four sections, a diagram per structural topic.
 It mirrors the overview note but does not replace it — the note keeps the detail and the full
 citations.
 
@@ -91,9 +91,9 @@ python tools/build_slides.py slides/ISO_14229-1_UDS_Slides.md slides/SLIDE_TEMPL
 Output goes to `slides/`, one `.html` per input `.md`. Then just **open the `.html` file** —
 double-click it, or drag it into a browser. No server, no local web host, no build watcher.
 
-Each deck is a **single self-contained file**: CSS, JavaScript and every diagram are embedded
+Each build is a **single self-contained file**: CSS, JavaScript and every diagram are embedded
 (images as base64 `data:` URIs), so there are no sibling assets to keep together and nothing is
-fetched from the network. That makes the UDS deck ~3 MB. If you would rather keep it small, use:
+fetched from the network. That makes the UDS slides ~3 MB. If you would rather keep it small, use:
 
 ```
 python tools/build_slides.py slides/ISO_14229-1_UDS_Slides.md --no-inline
@@ -104,7 +104,7 @@ travel as a unit.
 
 Other options: `-o OUTDIR` to write somewhere else.
 
-### Editing a deck
+### Editing a presentation
 
 Start from `slides/SLIDE_TEMPLATE.md`, which documents the conventions inline and builds on its
 own so you can see the styling before writing content.

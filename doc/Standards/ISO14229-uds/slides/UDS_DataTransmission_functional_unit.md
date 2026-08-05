@@ -15,7 +15,7 @@
 
 > Note: diagnostic fault information (DTCs, captured data) is not in this unit — it belongs to **Stored Data Transmission** [Clause 10.1, Table 141; Clause 11.1, Table 249]
 
-| SID | Service | What the client asks for | In this deck |
+| SID | Service | What the client asks for | In these slides |
 |---|---|---|:---:|
 | **`0x22`** | **ReadDataByIdentifier** | read the current value of a record identified by a **dataIdentifier** | **Section 2** |
 | **`0x2E`** | **WriteDataByIdentifier** | write a record specified by a **dataIdentifier** | **Section 3** |

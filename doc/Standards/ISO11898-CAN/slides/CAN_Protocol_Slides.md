@@ -5,10 +5,10 @@
 
 ## Section 1 — What CAN is, and where it came from
 
-### What this deck covers
+### What these slides cover
 
-- **CAN is the wire UDS rides on.** Everything in the ISO 14229 deck assumes the bus below it works.
-- This deck goes **bottom-up**: the wire, the voltages, the frame, then arbitration and acknowledgement.
+- **CAN is the wire UDS rides on.** Everything in the ISO 14229 material assumes the bus below it works.
+- These slides go **bottom-up**: the wire, the voltages, the frame, then arbitration and acknowledgement.
 - Written against **ISO 11898-1** (data link) and **ISO 11898-2** (high-speed physical layer).
 - The link to diagnostics is **ISO 15765-2** — the last section shows exactly where it sits.
 

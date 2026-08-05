@@ -3,7 +3,7 @@
 Self-study material on **CAN, the Controller Area Network** — the bus every automotive ECU sits on,
 and the layer underneath the UDS diagnostics covered in [`../ISO14229-UDS`](../ISO14229-UDS).
 
-The deck goes bottom-up: the wire, the voltages, the frame, arbitration, acknowledgement — then
+The slides go bottom-up: the wire, the voltages, the frame, arbitration, acknowledgement — then
 the hand-off to UDS. Notes are written against **ISO 11898-1** (data link layer and physical
 signalling) and **ISO 11898-2** (high-speed physical layer), with **ISO 15765-2** as the transport
 layer that carries UDS over CAN.
@@ -14,7 +14,7 @@ layer that carries UDS over CAN.
 ISO11898-CAN/
 ├── official docs/        the standards themselves, as PDFs — reference only, never edited
 ├── asset/                diagrams — each .drawio source beside its rendered .svg
-├── slides/               presentation decks — markdown source and the HTML built from it
+├── slides/               presentations — markdown source and the HTML built from it
 └── tools/                build tooling
 ```
 
@@ -23,7 +23,7 @@ Two rules keep this tidy, same as the UDS folder:
 - **`official docs/` is read-only.** Everything else is derived from it.
 - **`*.html` under `slides/` is generated.** Edit the `.md` and rebuild; never edit the HTML.
 
-## The deck
+## The slides
 
 ### `slides/CAN_Protocol_Slides.md`
 
@@ -85,7 +85,7 @@ python tools/build_slides.py slides/CAN_Protocol_Slides.md
 
 Then just **open the `.html`** — double-click it, or drag it into a browser. No server needed.
 
-The deck is a **single self-contained file**: CSS, JavaScript and every diagram are embedded
+The build is a **single self-contained file**: CSS, JavaScript and every diagram are embedded
 (images as base64 `data:` URIs), so nothing is fetched from the network and there are no sibling
 assets to keep together. Use `--no-inline` to copy the SVGs beside the HTML instead, and
 `-o OUTDIR` to write somewhere else.

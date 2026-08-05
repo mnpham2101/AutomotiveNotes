@@ -1,15 +1,15 @@
-# Deck Title Goes Here
+# Presentation Title Goes Here
 
-> subtitle: One line describing the deck
+> subtitle: One line describing the presentation
 > footer: Source / author / date — shown on every slide
 
 <!--
-  SLIDE DECK TEMPLATE
+  SLIDE TEMPLATE
   Build:  python tools/build_slides.py <this-file.md> [more.md ...]
   Style:  colours and fonts derived from BTC_phan_hoi_V2X_team.pdf
 
   CONVENTIONS
-    #   H1      Deck title. Exactly one, at the top. Becomes the title slide.
+    #   H1      Presentation title. Exactly one, at the top. Becomes the title slide.
     ##  H2      Section. Groups the slides under it; becomes a divider slide
                 and one entry in the side navigation.
     ### H3      One slide. Everything until the next ### or ## is its body.
@@ -67,5 +67,5 @@
 
 ### Takeaways
 
-- Close every deck with the three or four things worth remembering.
+- Close every presentation with the three or four things worth remembering.
 - One line each.
