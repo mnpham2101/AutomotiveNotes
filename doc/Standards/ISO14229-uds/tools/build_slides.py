@@ -107,6 +107,35 @@ td strong{color:var(--accent-dark)}
 .ref::before{content:"▸ ";color:var(--accent)}
 .note{display:none}
 
+/* ---------------------------------------------------------------- maths */
+/* $…$ inline and $$…$$ display, rendered at build time to HTML+CSS.
+   No KaTeX, no MathJax, no webfont: the deck must stay a single offline file. */
+.math{font-family:"DejaVu Serif",Cambria,Georgia,"Times New Roman",serif;
+      font-style:normal;line-height:1.3;white-space:nowrap;color:var(--ink)}
+.math i{font-style:italic}
+.math .mo{margin:0 .2em}
+.math .mo.un{margin:0 .02em 0 0}       /* unary sign: hugs its operand */
+.math sub,.math sup{font-size:.64em;line-height:0}
+.math sub{vertical-align:-.3em}
+.math sup{vertical-align:.52em}
+.math .msp{display:inline-block;width:.24em}
+.math .mtxt{font-family:var(--font);font-size:.84em;font-style:normal}
+.math .frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 .2em}
+.math .frac .fn{display:block;padding:0 .45em .16em}
+.math .frac .fd{display:block;padding:.16em .45em 0;border-top:1.7px solid currentColor}
+/* radical: flex so the vinculum meets the top of the sign at any radicand height */
+.math .sqrt{display:inline-flex;align-items:stretch;white-space:nowrap;
+            vertical-align:middle}
+.math .sqrt .sr{display:flex;align-items:center;font-size:1.25em;line-height:.85;
+                margin-right:-.04em}
+.math .sqrt.tall .sr{font-size:2.5em;line-height:.78}
+.math .sqrt .rad{display:flex;align-items:center;align-self:stretch;
+                 border-top:1.6px solid currentColor;padding:0 .3em 0 .06em}
+.math-display{display:block;text-align:center;font-size:30px;margin:26px 0 24px;
+              color:var(--navy)}
+.slide li .math-display{font-size:25px;margin:15px 0 13px}
+th .math,td .math{font-size:.95em}
+
 .foot{position:absolute;left:76px;right:76px;bottom:26px;display:flex;
       justify-content:space-between;align-items:center;font-size:11.5px;color:var(--faint);
       border-top:1px solid var(--rule-soft);padding-top:10px}
@@ -139,6 +168,8 @@ td strong{color:var(--accent-dark)}
          padding:36px 44px 60px;border:0}
   .slide h2{font-size:26px}.slide li{font-size:15px;margin-bottom:9px}
   .slide.title h1{font-size:38px}
+  .math-display{font-size:21px;margin:16px 0 14px}
+  .slide li .math-display{font-size:18px;margin:10px 0 9px}
   .note{display:block;margin-top:18px;padding:10px 14px;background:var(--wash);
         border-left:3px solid var(--faint);font-size:12px;color:var(--ink-2)}
   .foot{left:44px;right:44px;bottom:16px}
@@ -200,6 +231,150 @@ def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
 
+# --- maths -------------------------------------------------------------------
+# A deliberately small LaTeX subset, rendered to HTML+CSS at build time so the
+# deck needs no maths library and no webfont. Supported:
+#   \frac{}{}  \sqrt{}  \text{}  _{} ^{}  greek names  relation/operator names
+# Anything else falls through as literal text.
+GREEK = {
+    "Gamma": "Γ", "Delta": "Δ", "Theta": "Θ", "Lambda": "Λ",
+    "Sigma": "Σ", "Phi": "Φ", "Psi": "Ψ", "Omega": "Ω",
+    "alpha": "α", "beta": "β", "gamma": "γ", "delta": "δ",
+    "epsilon": "ε", "varepsilon": "ε", "zeta": "ζ", "eta": "η",
+    "theta": "θ", "kappa": "κ", "lambda": "λ", "mu": "μ",
+    "nu": "ν", "pi": "π", "rho": "ρ", "sigma": "σ",
+    "tau": "τ", "phi": "φ", "omega": "ω",
+}
+OPS = {
+    "approx": "≈", "times": "×", "cdot": "·", "div": "÷",
+    "le": "≤", "leq": "≤", "ge": "≥", "geq": "≥",
+    "ne": "≠", "neq": "≠", "pm": "±", "mp": "∓",
+    "ll": "≪", "gg": "≫", "equiv": "≡", "propto": "∝",
+    "to": "→", "rightarrow": "→", "Rightarrow": "⇒",
+    "infty": "∞", "sim": "∼",
+}
+# characters that read as binary operators and therefore want breathing room
+BIN = set("=+<>")
+
+
+def _grp(s, i):
+    """Read a {...} group, a \\macro, or one character at s[i]. -> (text, next_i)"""
+    while i < len(s) and s[i] == " ":
+        i += 1
+    if i >= len(s):
+        return "", i
+    if s[i] == "{":
+        depth, j = 1, i + 1
+        while j < len(s) and depth:
+            depth += {"{": 1, "}": -1}.get(s[j], 0)
+            j += 1
+        return s[i + 1:j - 1], j
+    if s[i] == "\\":
+        j = i + 1
+        while j < len(s) and s[j].isalpha():
+            j += 1
+        return s[i:max(j, i + 2)], max(j, i + 2)
+    return s[i], i + 1
+
+
+def render_math(s):
+    """LaTeX subset -> HTML. Variables italic, digits and operators upright."""
+    out, i, n = [], 0, len(s)
+    # a +/- is unary at the start of an expression or right after another
+    # operator, and then it hugs its operand instead of taking binary spacing
+    unary = True
+    while i < n:
+        c = s[i]
+        if c == "\\":
+            j = i + 1
+            while j < n and s[j].isalpha():
+                j += 1
+            name = s[i + 1:j]
+            if not name:                                  # \, \; \: \! or escape
+                nxt = s[i + 1:i + 2]
+                out.append('<span class="msp"></span>' if nxt in ",;:! " else esc(nxt))
+                i += 2
+                continue
+            if name == "frac":
+                a, i = _grp(s, j)
+                b, i = _grp(s, i)
+                out.append('<span class="frac"><span class="fn">%s</span>'
+                           '<span class="fd">%s</span></span>'
+                           % (render_math(a), render_math(b)))
+                continue
+            if name == "sqrt":
+                a, i = _grp(s, j)
+                # a radical over a fraction needs a taller sign to look right
+                tall = " tall" if "\\frac" in a else ""
+                out.append('<span class="sqrt%s"><span class="sr">√</span>'
+                           '<span class="rad">%s</span></span>' % (tall, render_math(a)))
+                continue
+            if name == "text":
+                a, i = _grp(s, j)
+                out.append('<span class="mtxt">%s</span>' % esc(a))
+                continue
+            if name in GREEK:
+                # capital greek upright, lowercase italic — the ISO 80000 convention
+                out.append(GREEK[name] if name[0].isupper() else "<i>%s</i>" % GREEK[name])
+                i = j
+                continue
+            if name in OPS:
+                out.append('<span class="mo">%s</span>' % OPS[name])
+                unary = True
+                i = j
+                continue
+            out.append(esc(name))
+            unary = False
+            i = j
+            continue
+        if c in "_^":
+            a, i = _grp(s, i + 1)
+            tag = "sub" if c == "_" else "sup"
+            out.append("<%s>%s</%s>" % (tag, render_math(a), tag))
+            unary = False
+            continue
+        if c.isalpha():
+            out.append("<i>%s</i>" % c)
+            unary = False
+        elif c in "-+":
+            sign = "−" if c == "-" else "+"     # true minus, not hyphen
+            out.append('<span class="mo%s">%s</span>' % (" un" if unary else "", sign))
+            unary = True
+        elif c in BIN:
+            out.append('<span class="mo">%s</span>' % esc(c))
+            unary = True
+        elif c == " ":
+            out.append(" ")
+        else:
+            out.append(esc(c))
+            unary = False
+        i += 1
+    return "".join(out)
+
+
+MATH_D_RE = re.compile(r"\$\$(.+?)\$\$", re.S)
+MATH_I_RE = re.compile(r"\$([^$\n]+?)\$")
+MATH_SLOT_RE = re.compile(r"xmathslot(\d+)x")
+
+
+def extract_math(text):
+    """Pull $…$ / $$…$$ out before markdown runs, so it cannot mangle backslashes
+    or read _subscripts_ as emphasis. -> (text with placeholders, rendered list)"""
+    store = []
+
+    def take(expr, cls):
+        store.append('<span class="math %s">%s</span>' % (cls, render_math(expr.strip())))
+        return "xmathslot%dx" % (len(store) - 1)
+
+    text = MATH_D_RE.sub(lambda m: take(m.group(1), "math-display"), text)
+    text = MATH_I_RE.sub(lambda m: take(m.group(1), "math-inline"), text)
+    return text, store
+
+
+def restore_math(html, store):
+    return MATH_SLOT_RE.sub(lambda m: store[int(m.group(1))], html)
+
+
 def data_uri(path):
     """Read an asset and return a base64 data: URI.
 
@@ -253,7 +428,9 @@ def render_slide(s, idx, total, footer, deck_title):
     refs = REF_RE.findall(body)
     body = REF_RE.sub("", body)
 
+    body, math = extract_math(body)
     html = markdown.markdown(body.strip(), extensions=MD_EXT)
+    html = restore_math(html, math)
     html = re.sub(r"<p>(<img [^>]+>)</p>", r"<figure>\1</figure>", html)
 
     cls, inner = "slide", []

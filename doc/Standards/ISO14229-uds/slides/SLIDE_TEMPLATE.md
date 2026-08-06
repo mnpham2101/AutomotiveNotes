@@ -25,6 +25,13 @@
     - If a figure already shows the structure, do NOT also table its fields.
     - Tables only when the content is genuinely tabular and the slide has no figure.
     - `[Clause 9.2.1]` in backticks at the end = source reference, rendered small.
+
+  MATHS
+    $x$        inline maths
+    $$…$$      centred display equation, on its own paragraph
+    Supported subset: \frac{a}{b}  \sqrt{x}  \text{words}  _{sub}  ^{sup}
+      greek by name (\Gamma \Phi \mu …) and relations (\approx \times \cdot \le \pm …).
+    Rendered to HTML+CSS at build time — no KaTeX, no webfont, still one offline file.
 -->
 
 ## Section — First Topic

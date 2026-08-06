@@ -1,0 +1,158 @@
+<svg viewBox="0 0 1000 578" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="1000" height="578" fill="#ffffff"/>
+
+  <text x="500" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">Where UDS data sits inside a CAN frame</text>
+  <text x="500" y="41" text-anchor="middle" font-size="11" fill="#607d8b">a diagnostic request and the first frame of its response — the payload never leaves the 8-byte data field</text>
+
+  <!-- ==================== FRAME 1 ==================== -->
+  <text x="40" y="66" font-size="12" font-weight="bold" fill="#e65100">Frame 1 — tester → ECU · request</text>
+
+  <rect x="40" y="74" width="34" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="57" y="101" text-anchor="middle" font-size="9" fill="#37474f">SOF</text>
+  <rect x="74" y="74" width="150" height="44" fill="#eceff1" stroke="#607d8b" stroke-width="1.4"/>
+  <text x="149" y="96" text-anchor="middle" font-size="11" font-weight="bold" fill="#263238">Identifier</text>
+  <text x="149" y="110" text-anchor="middle" font-size="10.5" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">0x7E0</text>
+  <rect x="224" y="74" width="70" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="259" y="101" text-anchor="middle" font-size="8.5" fill="#37474f">RTR IDE r0</text>
+  <rect x="294" y="74" width="60" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="324" y="101" text-anchor="middle" font-size="9.5" fill="#37474f">DLC = 8</text>
+  <rect x="354" y="74" width="380" height="44" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="544" y="101" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32">Data field — 8 bytes</text>
+  <rect x="734" y="74" width="90" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="779" y="101" text-anchor="middle" font-size="10" fill="#37474f">CRC-15</text>
+  <rect x="824" y="74" width="60" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="854" y="101" text-anchor="middle" font-size="10" fill="#37474f">ACK</text>
+  <rect x="884" y="74" width="76" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="922" y="101" text-anchor="middle" font-size="9" fill="#37474f">EOF + IFS</text>
+
+  <polygon points="354,118 734,118 900,150 180,150" fill="#e8f5e9" opacity="0.5"/>
+  <line x1="354" y1="118" x2="180" y2="150" stroke="#2e7d32" stroke-width="1.2"/>
+  <line x1="734" y1="118" x2="900" y2="150" stroke="#2e7d32" stroke-width="1.2"/>
+
+  <rect x="180" y="150" width="90" height="56" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="225" y="164" text-anchor="middle" font-size="8" fill="#90a4ae">byte 0</text>
+  <text x="225" y="184" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">03</text>
+  <text x="225" y="199" text-anchor="middle" font-size="8.5" fill="#1565c0">PCI: SF, 3 bytes</text>
+
+  <rect x="270" y="150" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="315" y="164" text-anchor="middle" font-size="8" fill="#90a4ae">byte 1</text>
+  <text x="315" y="184" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">22</text>
+  <text x="315" y="199" text-anchor="middle" font-size="8.5" fill="#e65100">SID</text>
+
+  <rect x="360" y="150" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="405" y="164" text-anchor="middle" font-size="8" fill="#90a4ae">byte 2</text>
+  <text x="405" y="184" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">F1</text>
+  <text x="405" y="199" text-anchor="middle" font-size="8.5" fill="#e65100">DID high</text>
+
+  <rect x="450" y="150" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="495" y="164" text-anchor="middle" font-size="8" fill="#90a4ae">byte 3</text>
+  <text x="495" y="184" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">90</text>
+  <text x="495" y="199" text-anchor="middle" font-size="8.5" fill="#e65100">DID low</text>
+
+  <rect x="540" y="150" width="90" height="56" fill="#f5f5f5" stroke="#cfd8dc"/>
+  <text x="585" y="164" text-anchor="middle" font-size="8" fill="#b0bec5">byte 4</text>
+  <text x="585" y="184" text-anchor="middle" font-size="16" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#b0bec5">AA</text>
+  <text x="585" y="199" text-anchor="middle" font-size="8.5" fill="#b0bec5">padding</text>
+
+  <rect x="630" y="150" width="90" height="56" fill="#f5f5f5" stroke="#cfd8dc"/>
+  <text x="675" y="164" text-anchor="middle" font-size="8" fill="#b0bec5">byte 5</text>
+  <text x="675" y="184" text-anchor="middle" font-size="16" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#b0bec5">AA</text>
+  <text x="675" y="199" text-anchor="middle" font-size="8.5" fill="#b0bec5">padding</text>
+
+  <rect x="720" y="150" width="90" height="56" fill="#f5f5f5" stroke="#cfd8dc"/>
+  <text x="765" y="164" text-anchor="middle" font-size="8" fill="#b0bec5">byte 6</text>
+  <text x="765" y="184" text-anchor="middle" font-size="16" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#b0bec5">AA</text>
+  <text x="765" y="199" text-anchor="middle" font-size="8.5" fill="#b0bec5">padding</text>
+
+  <rect x="810" y="150" width="90" height="56" fill="#f5f5f5" stroke="#cfd8dc"/>
+  <text x="855" y="164" text-anchor="middle" font-size="8" fill="#b0bec5">byte 7</text>
+  <text x="855" y="184" text-anchor="middle" font-size="16" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#b0bec5">AA</text>
+  <text x="855" y="199" text-anchor="middle" font-size="8.5" fill="#b0bec5">padding</text>
+
+  <path d="M270,214 L270,222 L540,222 L540,214" fill="none" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="405" y="238" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">UDS request — 3 bytes: ReadDataByIdentifier, DID 0xF190</text>
+
+  <!-- ==================== FRAME 2 ==================== -->
+  <text x="40" y="288" font-size="12" font-weight="bold" fill="#e65100">Frame 2 — ECU → tester · first frame of a 20-byte response</text>
+
+  <rect x="40" y="296" width="34" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="57" y="323" text-anchor="middle" font-size="9" fill="#37474f">SOF</text>
+  <rect x="74" y="296" width="150" height="44" fill="#eceff1" stroke="#607d8b" stroke-width="1.4"/>
+  <text x="149" y="318" text-anchor="middle" font-size="11" font-weight="bold" fill="#263238">Identifier</text>
+  <text x="149" y="332" text-anchor="middle" font-size="10.5" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">0x7E8</text>
+  <rect x="224" y="296" width="70" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="259" y="323" text-anchor="middle" font-size="8.5" fill="#37474f">RTR IDE r0</text>
+  <rect x="294" y="296" width="60" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="324" y="323" text-anchor="middle" font-size="9.5" fill="#37474f">DLC = 8</text>
+  <rect x="354" y="296" width="380" height="44" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="544" y="323" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32">Data field — 8 bytes</text>
+  <rect x="734" y="296" width="90" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="779" y="323" text-anchor="middle" font-size="10" fill="#37474f">CRC-15</text>
+  <rect x="824" y="296" width="60" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="854" y="323" text-anchor="middle" font-size="10" fill="#37474f">ACK</text>
+  <rect x="884" y="296" width="76" height="44" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="922" y="323" text-anchor="middle" font-size="9" fill="#37474f">EOF + IFS</text>
+
+  <polygon points="354,340 734,340 900,372 180,372" fill="#e8f5e9" opacity="0.5"/>
+  <line x1="354" y1="340" x2="180" y2="372" stroke="#2e7d32" stroke-width="1.2"/>
+  <line x1="734" y1="340" x2="900" y2="372" stroke="#2e7d32" stroke-width="1.2"/>
+
+  <rect x="180" y="372" width="90" height="56" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="225" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 0</text>
+  <text x="225" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">10</text>
+  <text x="225" y="421" text-anchor="middle" font-size="8.5" fill="#1565c0">PCI: First Frame</text>
+
+  <rect x="270" y="372" width="90" height="56" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="315" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 1</text>
+  <text x="315" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">14</text>
+  <text x="315" y="421" text-anchor="middle" font-size="8.5" fill="#1565c0">total length 20</text>
+
+  <rect x="360" y="372" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="405" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 2</text>
+  <text x="405" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">62</text>
+  <text x="405" y="421" text-anchor="middle" font-size="8.5" fill="#e65100">SID + 0x40</text>
+
+  <rect x="450" y="372" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="495" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 3</text>
+  <text x="495" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">F1</text>
+  <text x="495" y="421" text-anchor="middle" font-size="8.5" fill="#e65100">DID high</text>
+
+  <rect x="540" y="372" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="585" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 4</text>
+  <text x="585" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">90</text>
+  <text x="585" y="421" text-anchor="middle" font-size="8.5" fill="#e65100">DID low</text>
+
+  <rect x="630" y="372" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="675" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 5</text>
+  <text x="675" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">57</text>
+  <text x="675" y="421" text-anchor="middle" font-size="8.5" fill="#e65100">VIN[0]</text>
+
+  <rect x="720" y="372" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="765" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 6</text>
+  <text x="765" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">30</text>
+  <text x="765" y="421" text-anchor="middle" font-size="8.5" fill="#e65100">VIN[1]</text>
+
+  <rect x="810" y="372" width="90" height="56" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="855" y="386" text-anchor="middle" font-size="8" fill="#90a4ae">byte 7</text>
+  <text x="855" y="406" text-anchor="middle" font-size="16" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">4C</text>
+  <text x="855" y="421" text-anchor="middle" font-size="8.5" fill="#e65100">VIN[2]</text>
+
+  <path d="M360,436 L360,444 L900,444 L900,436" fill="none" stroke="#f26f21" stroke-width="1.5"/>
+  <text x="630" y="460" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">first 6 bytes of the UDS response — the remaining 14 follow in Consecutive Frames</text>
+
+  <!-- ==================== legend ==================== -->
+  <rect x="40" y="484" width="16" height="14" fill="#eceff1" stroke="#90a4ae"/>
+  <text x="62" y="495" font-size="10" fill="#37474f">CAN frame — ISO 11898-1</text>
+  <rect x="222" y="484" width="16" height="14" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.6"/>
+  <text x="244" y="495" font-size="10" fill="#37474f">data field, the only place payload may go</text>
+  <rect x="502" y="484" width="16" height="14" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.4"/>
+  <text x="524" y="495" font-size="10" fill="#37474f">PCI — ISO 15765-2</text>
+  <rect x="656" y="484" width="16" height="14" fill="#fff3e0" stroke="#f26f21" stroke-width="1.6"/>
+  <text x="678" y="495" font-size="10" fill="#37474f">UDS payload — ISO 14229-1</text>
+  <rect x="856" y="484" width="16" height="14" fill="#f5f5f5" stroke="#cfd8dc"/>
+  <text x="878" y="495" font-size="10" fill="#37474f">padding</text>
+
+  <rect x="40" y="514" width="920" height="48" rx="4" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="52" y="533" font-size="11" fill="#e65100">UDS never touches the identifier, the CRC or the ACK — it only ever occupies part of the 8-byte data field, and ISO 15765-2 takes the first byte or two of that</text>
+  <text x="52" y="551" font-size="11" fill="#e65100">field for its own protocol control information. A single frame therefore carries at most <tspan font-weight="bold">7 UDS bytes</tspan>; anything longer is segmented across further frames.</text>
+</svg>

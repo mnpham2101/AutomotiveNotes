@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Presentation Title Goes Here</title>
+<style>
+:root{
+  --ink:#263238; --ink-2:#37474f; --muted:#607d8b; --faint:#90a4ae;
+  --rule:#b0bec5; --rule-soft:#cfd8dc; --wash:#eceff1; --page:#f7f9fb;
+  --navy:#14337a; --blue:#1565c0; --blue-wash:#e3f2fd;
+  --accent:#f26f21; --accent-dark:#e65100; --accent-wash:#fff3e0;
+  --green:#2e7d32; --green-wash:#e8f5e9; --red:#c62828;
+  --font:"DejaVu Sans",Verdana,Geneva,sans-serif;
+  --mono:"DejaVu Sans Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* sidebar links are plain anchors; without this they jump instead of gliding */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--wash);color:var(--ink);font-family:var(--font);
+     font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ---------------------------------------------------------------- shell */
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+nav{background:var(--ink);color:#fff;padding:26px 0 40px;position:sticky;top:0;
+    height:100vh;overflow-y:auto}
+nav .brand{padding:0 22px 18px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:14px}
+nav .brand b{display:block;font-size:15px;line-height:1.35}
+nav .brand span{display:block;color:var(--faint);font-size:11.5px;margin-top:6px}
+nav .grp{color:var(--accent);font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;
+         padding:16px 22px 6px;font-weight:700}
+nav a{display:block;color:#cfd8dc;text-decoration:none;font-size:13px;
+      padding:6px 22px 6px 26px;border-left:3px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav a.on{color:#fff;border-left-color:var(--accent);background:rgba(242,111,33,.14)}
+
+main{padding:0}
+.rail{position:fixed;top:0;left:264px;right:0;height:3px;background:transparent;z-index:20}
+.rail i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* ---------------------------------------------------------------- slides */
+.slide{min-height:100vh;padding:64px 76px 92px;display:flex;flex-direction:column;
+       justify-content:center;background:var(--page);border-bottom:1px solid var(--rule-soft);
+       position:relative;scroll-margin-top:0}
+.slide-inner{max-width:1080px;width:100%;margin:0 auto}
+.slide h2{margin:0 0 30px;font-size:34px;line-height:1.2;color:var(--navy);font-weight:700;
+          letter-spacing:-.01em}
+.slide h2::after{content:"";display:block;width:64px;height:4px;background:var(--accent);
+                 margin-top:16px;border-radius:2px}
+
+.slide ul{margin:0;padding-left:0;list-style:none}
+.slide li{position:relative;padding:0 0 0 30px;margin:0 0 14px;font-size:19px;line-height:1.5}
+.slide li::before{content:"";position:absolute;left:6px;top:.62em;width:8px;height:8px;
+                  background:var(--accent);border-radius:50%}
+/* nested levels: indent, shrink, and fade the marker so hierarchy reads on a projector */
+.slide li ul{margin:12px 0 0;padding-left:14px}
+.slide li li{font-size:16.5px;margin-bottom:9px}
+.slide li li::before{width:6px;height:6px;background:var(--faint)}
+.slide li li li::before{background:transparent;border:1.5px solid var(--faint)}
+.slide li blockquote{margin:12px 0 0;padding:2px 0 2px 16px;border-left:3px solid var(--rule-soft)}
+.slide li blockquote p{font-size:17px;margin:0;color:var(--ink-2)}
+.slide li strong{color:var(--navy)}
+.slide p{font-size:18px}
+.slide code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
+            color:var(--blue);padding:2px 6px;border-radius:3px}
+.slide a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--accent);
+         padding-bottom:1px}
+.slide a:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark)}
+
+figure{margin:0 0 26px;text-align:center}
+figure img{max-width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:4px;
+           background:#fff}
+
+table{border-collapse:collapse;width:100%;margin:0 0 22px;font-size:16px;background:#fff}
+th{background:var(--ink);color:#fff;text-align:left;padding:11px 14px;font-weight:700;font-size:14px}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:nth-child(even) td{background:var(--page)}
+td strong{color:var(--accent-dark)}
+
+.ref{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.ref::before{content:"▸ ";color:var(--accent)}
+.note{display:none}
+
+/* ---------------------------------------------------------------- maths */
+/* $…$ inline and $$…$$ display, rendered at build time to HTML+CSS.
+   No KaTeX, no MathJax, no webfont: the deck must stay a single offline file. */
+.math{font-family:"DejaVu Serif",Cambria,Georgia,"Times New Roman",serif;
+      font-style:normal;line-height:1.3;white-space:nowrap;color:var(--ink)}
+.math i{font-style:italic}
+.math .mo{margin:0 .2em}
+.math .mo.un{margin:0 .02em 0 0}       /* unary sign: hugs its operand */
+.math sub,.math sup{font-size:.64em;line-height:0}
+.math sub{vertical-align:-.3em}
+.math sup{vertical-align:.52em}
+.math .msp{display:inline-block;width:.24em}
+.math .mtxt{font-family:var(--font);font-size:.84em;font-style:normal}
+.math .frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 .2em}
+.math .frac .fn{display:block;padding:0 .45em .16em}
+.math .frac .fd{display:block;padding:.16em .45em 0;border-top:1.7px solid currentColor}
+/* radical: flex so the vinculum meets the top of the sign at any radicand height */
+.math .sqrt{display:inline-flex;align-items:stretch;white-space:nowrap;
+            vertical-align:middle}
+.math .sqrt .sr{display:flex;align-items:center;font-size:1.25em;line-height:.85;
+                margin-right:-.04em}
+.math .sqrt.tall .sr{font-size:2.5em;line-height:.78}
+.math .sqrt .rad{display:flex;align-items:center;align-self:stretch;
+                 border-top:1.6px solid currentColor;padding:0 .3em 0 .06em}
+.math-display{display:block;text-align:center;font-size:30px;margin:26px 0 24px;
+              color:var(--navy)}
+.slide li .math-display{font-size:25px;margin:15px 0 13px}
+th .math,td .math{font-size:.95em}
+
+.foot{position:absolute;left:76px;right:76px;bottom:26px;display:flex;
+      justify-content:space-between;align-items:center;font-size:11.5px;color:var(--faint);
+      border-top:1px solid var(--rule-soft);padding-top:10px}
+.foot .n{font-family:var(--mono)}
+
+/* ------------------------------------------------------- title & divider */
+.slide.title{background:var(--ink);color:#fff;text-align:center}
+.slide.title h1{margin:0;font-size:50px;line-height:1.15;color:#fff;font-weight:700;
+                letter-spacing:-.02em}
+.slide.title .bar{width:96px;height:5px;background:var(--accent);margin:26px auto;border-radius:3px}
+.slide.title .sub{font-size:21px;color:var(--rule)}
+.slide.title .meta{margin-top:44px;font-size:12.5px;color:var(--faint);font-family:var(--mono)}
+.slide.title .foot{display:none}
+
+.slide.divider{background:var(--navy);color:#fff}
+.slide.divider .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+                       color:var(--accent);font-weight:700;margin-bottom:14px}
+.slide.divider h2{color:#fff;font-size:42px}
+.slide.divider h2::after{background:var(--accent)}
+.slide.divider ol{margin:26px 0 0;padding-left:20px;color:var(--rule);font-size:17px}
+.slide.divider li{font-size:17px}
+.slide.divider li::before{background:var(--rule)}
+
+/* ---------------------------------------------------------------- print */
+@media print{
+  nav,.rail{display:none}
+  .shell{display:block}
+  body{background:#fff}
+  .slide{min-height:auto;height:19.0cm;page-break-after:always;break-after:page;
+         padding:36px 44px 60px;border:0}
+  .slide h2{font-size:26px}.slide li{font-size:15px;margin-bottom:9px}
+  .slide.title h1{font-size:38px}
+  .math-display{font-size:21px;margin:16px 0 14px}
+  .slide li .math-display{font-size:18px;margin:10px 0 9px}
+  .note{display:block;margin-top:18px;padding:10px 14px;background:var(--wash);
+        border-left:3px solid var(--faint);font-size:12px;color:var(--ink-2)}
+  .foot{left:44px;right:44px;bottom:16px}
+  @page{size:A4 landscape;margin:8mm}
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav{position:static;height:auto}
+  .rail{left:0}
+  .slide{padding:44px 26px 80px;min-height:auto}
+  .slide h2{font-size:26px}.slide li{font-size:16px}
+  .foot{left:26px;right:26px}
+}
+</style>
+</head><body>
+<div class="rail"><i></i></div>
+<div class="shell">
+<nav><div class="brand"><b>Presentation Title Goes Here</b><span>One line describing the presentation</span></div><a href="#s0" data-i="0">Title</a>
+<div class="grp">Section — First Topic</div>
+<a href="#s1" data-i="1">Overview</a>
+<a href="#s2" data-i="2">A slide with bullets</a>
+<a href="#s3" data-i="3">A slide with a figure</a>
+<a href="#s4" data-i="4">A slide with a table</a>
+<div class="grp">Section — Second Topic</div>
+<a href="#s5" data-i="5">Overview</a>
+<a href="#s6" data-i="6">Another slide</a>
+<a href="#s7" data-i="7">Takeaways</a></nav>
+<main><section class="slide title" id="s0"><div class="slide-inner">
+<h1>Presentation Title Goes Here</h1>
+<div class="bar"></div>
+<div class="sub">One line describing the presentation</div>
+<div class="meta">Source / author / date — shown on every slide</div>
+</div></section>
+<section class="slide divider" id="s1"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section — First Topic</h2></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">1 / 7</span></div></section>
+<section class="slide" id="s2"><div class="slide-inner"><h2>A slide with bullets</h2>
+<ul>
+<li>Keep each bullet to one line.</li>
+<li>State the conclusion, not the reasoning.</li>
+<li>Bold the <strong>one term</strong> that matters most.</li>
+<li>Three to five bullets is the working limit.</li>
+</ul>
+<div class="ref">Source reference</div></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">2 / 7</span></div></section>
+<section class="slide" id="s3"><div class="slide-inner"><h2>A slide with a figure</h2>
+<figure><img alt="Describe the figure here — swap this for your own diagram" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NDAgNDQwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NDAiIGhlaWdodD0iNDQwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDx0ZXh0IHg9IjQ3MCIgeT0iMjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5DQU4gbmV0d29yayBsYXlvdXQg4oCUIG9uZSBsaW5lYXIgYnVzLCBvbmUgdHdpc3RlZCBwYWlyLCB0d28gdGVybWluYXRpb25zPC90ZXh0PgogIDx0ZXh0IHg9IjQ3MCIgeT0iNDciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTEuNSIgZmlsbD0iIzYwN2Q4YiI+SVNPIDExODk4LTEgZ2l2ZXMgdGhlIGNvbnRyb2xsZXIgaXRzIHJ1bGVzOyBJU08gMTE4OTgtMiBnaXZlcyB0aGUgdHJhbnNjZWl2ZXIgaXRzIHZvbHRhZ2VzPC90ZXh0PgoKICA8IS0tID09PT09PT09PT09PT09PT09IG5vZGVzID09PT09PT09PT09PT09PT09IC0tPgogIDwhLS0gbm9kZSAxIC0tPgogIDxyZWN0IHg9Ijk1IiB5PSI2MCIgd2lkdGg9IjE3MCIgaGVpZ2h0PSIxMjAiIHJ4PSI1IiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHRleHQgeD0iMTgwIiB5PSI3OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNDMzN2EiPkVDVSAxIOKAlCBFbmdpbmU8L3RleHQ+CiAgPHJlY3QgeD0iMTA1IiB5PSI4NiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIyNiIgcng9IjMiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzkwYTRhZSIvPgogIDx0ZXh0IHg9IjE4MCIgeT0iMTAzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiMyNjMyMzgiPk1DVSArIGFwcGxpY2F0aW9uPC90ZXh0PgogIDxyZWN0IHg9IjEwNSIgeT0iMTE2IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjI2IiByeD0iMyIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIi8+CiAgPHRleHQgeD0iMTgwIiB5PSIxMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzI2MzIzOCI+Q0FOIGNvbnRyb2xsZXI8L3RleHQ+CiAgPHJlY3QgeD0iMTA1IiB5PSIxNDYiIHdpZHRoPSIxNTAiIGhlaWdodD0iMjYiIHJ4PSIzIiBmaWxsPSIjZThmNWU5IiBzdHJva2U9IiMyZTdkMzIiLz4KICA8dGV4dCB4PSIxODAiIHk9IjE2MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjMjYzMjM4Ij5DQU4gdHJhbnNjZWl2ZXI8L3RleHQ+CiAgPGxpbmUgeDE9IjE3MCIgeTE9IjE4MCIgeDI9IjE3MCIgeTI9IjI1NSIgc3Ryb2tlPSIjYzYyODI4IiBzdHJva2Utd2lkdGg9IjEuNiIvPgogIDxjaXJjbGUgY3g9IjE3MCIgY3k9IjI1NSIgcj0iMy41IiBmaWxsPSIjYzYyODI4Ii8+CiAgPGxpbmUgeDE9IjE5MCIgeTE9IjE4MCIgeDI9IjE5MCIgeTI9IjI5MCIgc3Ryb2tlPSIjMTU2NWMwIiBzdHJva2Utd2lkdGg9IjEuNiIvPgogIDxjaXJjbGUgY3g9IjE5MCIgY3k9IjI5MCIgcj0iMy41IiBmaWxsPSIjMTU2NWMwIi8+CgogIDwhLS0gbm9kZSAyIC0tPgogIDxyZWN0IHg9IjMwMCIgeT0iNjAiIHdpZHRoPSIxNzAiIGhlaWdodD0iMTIwIiByeD0iNSIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjM4NSIgeT0iNzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5FQ1UgMiDigJQgR2F0ZXdheTwvdGV4dD4KICA8cmVjdCB4PSIzMTAiIHk9Ijg2IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjI2IiByeD0iMyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjOTBhNGFlIi8+CiAgPHRleHQgeD0iMzg1IiB5PSIxMDMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzI2MzIzOCI+TUNVICsgYXBwbGljYXRpb248L3RleHQ+CiAgPHJlY3QgeD0iMzEwIiB5PSIxMTYiIHdpZHRoPSIxNTAiIGhlaWdodD0iMjYiIHJ4PSIzIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSIzODUiIHk9IjEzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjMjYzMjM4Ij5DQU4gY29udHJvbGxlcjwvdGV4dD4KICA8cmVjdCB4PSIzMTAiIHk9IjE0NiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIyNiIgcng9IjMiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9IjM4NSIgeT0iMTYzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiMyNjMyMzgiPkNBTiB0cmFuc2NlaXZlcjwvdGV4dD4KICA8bGluZSB4MT0iMzc1IiB5MT0iMTgwIiB4Mj0iMzc1IiB5Mj0iMjU1IiBzdHJva2U9IiNjNjI4MjgiIHN0cm9rZS13aWR0aD0iMS42Ii8+CiAgPGNpcmNsZSBjeD0iMzc1IiBjeT0iMjU1IiByPSIzLjUiIGZpbGw9IiNjNjI4MjgiLz4KICA8bGluZSB4MT0iMzk1IiB5MT0iMTgwIiB4Mj0iMzk1IiB5Mj0iMjkwIiBzdHJva2U9IiMxNTY1YzAiIHN0cm9rZS13aWR0aD0iMS42Ii8+CiAgPGNpcmNsZSBjeD0iMzk1IiBjeT0iMjkwIiByPSIzLjUiIGZpbGw9IiMxNTY1YzAiLz4KCiAgPCEtLSBub2RlIDMgLS0+CiAgPHJlY3QgeD0iNTA1IiB5PSI2MCIgd2lkdGg9IjE3MCIgaGVpZ2h0PSIxMjAiIHJ4PSI1IiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHRleHQgeD0iNTkwIiB5PSI3OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNDMzN2EiPkVDVSAzIOKAlCBBQlM8L3RleHQ+CiAgPHJlY3QgeD0iNTE1IiB5PSI4NiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIyNiIgcng9IjMiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzkwYTRhZSIvPgogIDx0ZXh0IHg9IjU5MCIgeT0iMTAzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiMyNjMyMzgiPk1DVSArIGFwcGxpY2F0aW9uPC90ZXh0PgogIDxyZWN0IHg9IjUxNSIgeT0iMTE2IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjI2IiByeD0iMyIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIi8+CiAgPHRleHQgeD0iNTkwIiB5PSIxMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzI2MzIzOCI+Q0FOIGNvbnRyb2xsZXI8L3RleHQ+CiAgPHJlY3QgeD0iNTE1IiB5PSIxNDYiIHdpZHRoPSIxNTAiIGhlaWdodD0iMjYiIHJ4PSIzIiBmaWxsPSIjZThmNWU5IiBzdHJva2U9IiMyZTdkMzIiLz4KICA8dGV4dCB4PSI1OTAiIHk9IjE2MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjMjYzMjM4Ij5DQU4gdHJhbnNjZWl2ZXI8L3RleHQ+CiAgPGxpbmUgeDE9IjU4MCIgeTE9IjE4MCIgeDI9IjU4MCIgeTI9IjI1NSIgc3Ryb2tlPSIjYzYyODI4IiBzdHJva2Utd2lkdGg9IjEuNiIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjI1NSIgcj0iMy41IiBmaWxsPSIjYzYyODI4Ii8+CiAgPGxpbmUgeDE9IjYwMCIgeTE9IjE4MCIgeDI9IjYwMCIgeTI9IjI5MCIgc3Ryb2tlPSIjMTU2NWMwIiBzdHJva2Utd2lkdGg9IjEuNiIvPgogIDxjaXJjbGUgY3g9IjYwMCIgY3k9IjI5MCIgcj0iMy41IiBmaWxsPSIjMTU2NWMwIi8+CgogIDwhLS0gbm9kZSA0IDogdGhlIHRlc3RlciAtLT4KICA8cmVjdCB4PSI3MTAiIHk9IjYwIiB3aWR0aD0iMTcwIiBoZWlnaHQ9IjEyMCIgcng9IjUiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2U2NTEwMCIgc3Ryb2tlLXdpZHRoPSIxLjgiLz4KICA8dGV4dCB4PSI3OTUiIHk9Ijc4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2U2NTEwMCI+RGlhZ25vc3RpYyB0ZXN0ZXI8L3RleHQ+CiAgPHJlY3QgeD0iNzIwIiB5PSI4NiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIyNiIgcng9IjMiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzkwYTRhZSIvPgogIDx0ZXh0IHg9Ijc5NSIgeT0iMTAzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiMyNjMyMzgiPlVEUyBjbGllbnQgKElTTyAxNDIyOS0xKTwvdGV4dD4KICA8cmVjdCB4PSI3MjAiIHk9IjExNiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIyNiIgcng9IjMiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9Ijc5NSIgeT0iMTMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiMyNjMyMzgiPkNBTiBjb250cm9sbGVyPC90ZXh0PgogIDxyZWN0IHg9IjcyMCIgeT0iMTQ2IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjI2IiByeD0iMyIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIi8+CiAgPHRleHQgeD0iNzk1IiB5PSIxNjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzI2MzIzOCI+Q0FOIHRyYW5zY2VpdmVyPC90ZXh0PgogIDxsaW5lIHgxPSI3ODUiIHkxPSIxODAiIHgyPSI3ODUiIHkyPSIyNTUiIHN0cm9rZT0iI2M2MjgyOCIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KICA8Y2lyY2xlIGN4PSI3ODUiIGN5PSIyNTUiIHI9IjMuNSIgZmlsbD0iI2M2MjgyOCIvPgogIDxsaW5lIHgxPSI4MDUiIHkxPSIxODAiIHgyPSI4MDUiIHkyPSIyOTAiIHN0cm9rZT0iIzE1NjVjMCIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KICA8Y2lyY2xlIGN4PSI4MDUiIGN5PSIyOTAiIHI9IjMuNSIgZmlsbD0iIzE1NjVjMCIvPgoKICA8IS0tID09PT09PT09PT09PT09PT09IHRoZSBidXMgPT09PT09PT09PT09PT09PT0gLS0+CiAgPGxpbmUgeDE9IjU1IiB5MT0iMjU1IiB4Mj0iOTAwIiB5Mj0iMjU1IiBzdHJva2U9IiNjNjI4MjgiIHN0cm9rZS13aWR0aD0iMi41Ii8+CiAgPGxpbmUgeDE9IjU1IiB5MT0iMjkwIiB4Mj0iOTAwIiB5Mj0iMjkwIiBzdHJva2U9IiMxNTY1YzAiIHN0cm9rZS13aWR0aD0iMi41Ii8+CgogIDxyZWN0IHg9IjI0OCIgeT0iMjQ3IiB3aWR0aD0iNTYiIGhlaWdodD0iMTYiIGZpbGw9IiNmZmZmZmYiLz4KICA8dGV4dCB4PSIyNzYiIHk9IjI1OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNjNjI4MjgiPkNBTl9IPC90ZXh0PgogIDxyZWN0IHg9IjI0OCIgeT0iMjgyIiB3aWR0aD0iNTYiIGhlaWdodD0iMTYiIGZpbGw9IiNmZmZmZmYiLz4KICA8dGV4dCB4PSIyNzYiIHk9IjI5NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNTY1YzAiPkNBTl9MPC90ZXh0PgoKICA8IS0tIHRlcm1pbmF0aW9ucyAtLT4KICA8bGluZSB4MT0iNTUiIHkxPSIyNTUiIHgyPSI1NSIgeTI9IjI1OSIgc3Ryb2tlPSIjMjYzMjM4IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cmVjdCB4PSI0OCIgeT0iMjU5IiB3aWR0aD0iMTQiIGhlaWdodD0iMjciIGZpbGw9IiNlY2VmZjEiIHN0cm9rZT0iIzI2MzIzOCIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KICA8bGluZSB4MT0iNTUiIHkxPSIyODYiIHgyPSI1NSIgeTI9IjI5MCIgc3Ryb2tlPSIjMjYzMjM4IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSI1NSIgeT0iMjQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjExLjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij4xMjAgzqk8L3RleHQ+CiAgPHRleHQgeD0iNTUiIHk9IjMwOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzYwN2Q4YiI+dGVybWluYXRpb248L3RleHQ+CgogIDxsaW5lIHgxPSI5MDAiIHkxPSIyNTUiIHgyPSI5MDAiIHkyPSIyNTkiIHN0cm9rZT0iIzI2MzIzOCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHJlY3QgeD0iODkzIiB5PSIyNTkiIHdpZHRoPSIxNCIgaGVpZ2h0PSIyNyIgZmlsbD0iI2VjZWZmMSIgc3Ryb2tlPSIjMjYzMjM4IiBzdHJva2Utd2lkdGg9IjEuNiIvPgogIDxsaW5lIHgxPSI5MDAiIHkxPSIyODYiIHgyPSI5MDAiIHkyPSIyOTAiIHN0cm9rZT0iIzI2MzIzOCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iOTAwIiB5PSIyNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTEuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPjEyMCDOqTwvdGV4dD4KICA8dGV4dCB4PSI5MDAiIHk9IjMwOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzYwN2Q4YiI+dGVybWluYXRpb248L3RleHQ+CgogIDwhLS0gNjAgb2htIGNhbGxvdXQgLS0+CiAgPHRleHQgeD0iNDcwIiB5PSIzMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTEuNSIgZm9udC1zdHlsZT0iaXRhbGljIiBmaWxsPSIjZTY1MTAwIj50aGUgdHdvIHRlcm1pbmF0aW9ucyBhcmUgaW4gcGFyYWxsZWwgYWNyb3NzIHRoZSBwYWlyIOKGkiB0aGUgZHJpdmVyIHNlZXMgYSA2MCDOqSBkaWZmZXJlbnRpYWwgbG9hZDwvdGV4dD4KCiAgPCEtLSA9PT09PT09PT09PT09PT09PSBub3RlcyA9PT09PT09PT09PT09PT09PSAtLT4KICA8dGV4dCB4PSI1NSIgeT0iMzY1IiBmb250LXNpemU9IjExLjUiIGZpbGw9IiMzNzQ3NGYiPjx0c3BhbiBmaWxsPSIjZjI2ZjIxIiBmb250LXdlaWdodD0iYm9sZCI+4pa4IDwvdHNwYW4+QnVzLCBuZXZlciBhIHN0YXIgb3IgYSByaW5nIOKAlCBldmVyeSBub2RlIHNlZXMgZXZlcnkgYml0LCBhbmQgc2VlcyBpdCBhdCB0aGUgc2FtZSB0aW1lICh3aXRoaW4gdGhlIHByb3BhZ2F0aW9uIGRlbGF5KS48L3RleHQ+CiAgPHRleHQgeD0iNTUiIHk9IjM4NyIgZm9udC1zaXplPSIxMS41IiBmaWxsPSIjMzc0NzRmIj48dHNwYW4gZmlsbD0iI2YyNmYyMSIgZm9udC13ZWlnaHQ9ImJvbGQiPuKWuCA8L3RzcGFuPjEyMCDOqSBhdCBlYWNoIHBoeXNpY2FsIGVuZCBtYXRjaGVzIHRoZSB0d2lzdGVkIHBhaXIncyBjaGFyYWN0ZXJpc3RpYyBpbXBlZGFuY2UsIHNvIGFuIGVkZ2UgaXMgYWJzb3JiZWQgaW5zdGVhZCBvZiByZWZsZWN0ZWQuPC90ZXh0PgogIDx0ZXh0IHg9IjU1IiB5PSI0MDkiIGZvbnQtc2l6ZT0iMTEuNSIgZmlsbD0iIzM3NDc0ZiI+PHRzcGFuIGZpbGw9IiNmMjZmMjEiIGZvbnQtd2VpZ2h0PSJib2xkIj7ilrggPC90c3Bhbj5TdHVicyBzdGF5IHNob3J0ICgmbHQ7IDAuMyBtKSDigJQgYSBsb25nIHN0dWIgaXMgYW4gdW50ZXJtaW5hdGVkIHRyYW5zbWlzc2lvbiBsaW5lIGhhbmdpbmcgb2ZmIHRoZSBidXMuPC90ZXh0PgogIDx0ZXh0IHg9IjU1IiB5PSI0MzEiIGZvbnQtc2l6ZT0iMTEuNSIgZmlsbD0iIzM3NDc0ZiI+PHRzcGFuIGZpbGw9IiNmMjZmMjEiIGZvbnQtd2VpZ2h0PSJib2xkIj7ilrggPC90c3Bhbj5SZWFjaCB0cmFkZXMgYWdhaW5zdCBiaXQgcmF0ZTog4omIIDQwIG0gYXQgMSBNYml0L3MsIOKJiCA1MDAgbSBhdCAxMjUga2JpdC9zLCDiiYggMSBrbSBhdCA1MCBrYml0L3MuPC90ZXh0Pgo8L3N2Zz4=" /></figure>
+<ul>
+<li>One or two bullets that add what the figure cannot show.</li>
+<li>Do not restate the figure's labels.</li>
+</ul>
+<div class="ref">Source reference</div>
+<div class="note"><b>Note — </b>Speaker notes go here — the detail you say out loud but do not put on screen.</div></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">3 / 7</span></div></section>
+<section class="slide" id="s4"><div class="slide-inner"><h2>A slide with a table</h2>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Column</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value</td>
+<td>Value</td>
+</tr>
+<tr>
+<td>Value</td>
+<td>Value</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>One closing bullet drawing the conclusion from the table.</li>
+</ul></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">4 / 7</span></div></section>
+<section class="slide divider" id="s5"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section — Second Topic</h2></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">5 / 7</span></div></section>
+<section class="slide" id="s6"><div class="slide-inner"><h2>Another slide</h2>
+<ul>
+<li>Sections group slides on the same topic.</li>
+<li>Start a new <code>##</code> whenever the topic changes.</li>
+</ul></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">6 / 7</span></div></section>
+<section class="slide" id="s7"><div class="slide-inner"><h2>Takeaways</h2>
+<ul>
+<li>Close every presentation with the three or four things worth remembering.</li>
+<li>One line each.</li>
+</ul></div><div class="foot"><span>Source / author / date — shown on every slide</span><span class="n">7 / 7</span></div></section></main>
+</div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var bar=document.querySelector('.rail i');
+  function current(){
+    var best=0,bd=1e9;
+    slides.forEach(function(s,i){var d=Math.abs(s.getBoundingClientRect().top);
+      if(d<bd){bd=d;best=i}});
+    return best;
+  }
+  function sync(){
+    var i=current();
+    links.forEach(function(a){a.classList.toggle('on',a.dataset.i===String(i))});
+    if(bar)bar.style.width=(slides.length<2?100:(i/(slides.length-1))*100)+'%';
+  }
+  addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync);
+  addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    var i=current(),t=null;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')t=i+1;
+    if(e.key==='ArrowUp'||e.key==='ArrowLeft'||e.key==='PageUp')t=i-1;
+    if(e.key==='Home')t=0;
+    if(e.key==='End')t=slides.length-1;
+    if(t===null)return;
+    e.preventDefault();
+    slides[Math.max(0,Math.min(slides.length-1,t))].scrollIntoView({behavior:'smooth'});
+  });
+  sync();
+})();
+</script>
+</body></html>

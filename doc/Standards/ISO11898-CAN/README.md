@@ -91,7 +91,22 @@ assets to keep together. Use `--no-inline` to copy the SVGs beside the HTML inst
 `-o OUTDIR` to write somewhere else.
 
 `tools/build_slides.py` is the same builder as `../ISO14229-UDS/tools/`, vendored here so this
-folder builds on its own. `slides/SLIDE_TEMPLATE.md` documents the markdown conventions inline.
+folder builds on its own — keep the two copies identical. `slides/SLIDE_TEMPLATE.md` documents
+the markdown conventions inline.
+
+### Maths
+
+Formulas are written as LaTeX between `$…$` (inline) or `$$…$$` (centred display) and are
+rendered to HTML and CSS **at build time**:
+
+```
+$$\Gamma = \frac{Z_L - Z_0}{Z_L + Z_0}$$
+```
+
+The supported subset is deliberately small — `\frac`, `\sqrt`, `\text`, sub- and superscripts,
+Greek letters by name, and the usual relation symbols. That is enough for the physics in these
+slides and it avoids pulling in KaTeX or MathJax, either of which would need a webfont and break
+the single-offline-file rule. Anything unrecognised falls through as literal text.
 
 ### Viewing and presenting
 

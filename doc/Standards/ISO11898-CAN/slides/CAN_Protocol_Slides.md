@@ -38,31 +38,51 @@
 - **Marine** (NMEA 2000), **medical**, **lifts**, **building automation**, **rail**.
 - Even in cars moving to Automotive Ethernet, CAN stays for **sensors, actuators and diagnostics** — it is cheaper per node and its worst-case latency is provable.
 
-### CAN compared with SPI, I²C and UART
+### Bus comparison — CAN, SPI, I²C, UART
 
 | | UART | I²C | SPI | **CAN** |
 |---|---|---|---|---|
-| Topology | point-to-point | multi-drop, master-driven | 1 master + N slaves | **multi-master bus** |
-| Wires | 2 | 2 | 4 + 1 select **per slave** | **2, whatever the node count** |
-| Signalling | single-ended | single-ended, open-drain | single-ended | **differential pair** |
-| Who is addressed | the node | the node | the pin | **the message** |
-| Two talkers at once | garbage | master backs off | not possible | **arbitration, no data lost** |
-| Error handling | optional parity | ACK bit | none | **CRC-15 + 4 more checks + confinement** |
-| Practical reach | ~15 m | ~1 m | centimetres | **40 m @ 1 Mbit/s, 1 km @ 50 kbit/s** |
+| **Topology** | point-to-point, 1:1 | 1 master – N slaves | 1 master – N slaves | **peer-to-peer, multi-master, N nodes** |
+| **Wires** | 2 — TX, RX | 2 — SDA, SCL | 3 + 1 per slave — SCLK, MOSI, MISO, SS | **2 — CAN_H, CAN_L** |
+| **Duplex** | full | half | full | **half** |
+| **Transmission** | serial | serial | serial | **serial** |
+| **Clock line** | none | SCL | SCLK | **none — bit-synchronous** |
+| **Clock source** | independent baud generators | master; slave may stretch | master only | **no single node; edge resynchronisation** |
+| **Bus drive** | one push-pull driver per line | open-drain, wired-AND | master; selected slave on MISO | **all nodes, wired-AND** |
+| **Addressing** | implicit — the link | 7/10-bit slave address | chip-select line | **11/29-bit message identifier** |
+| **Error handling** | parity, framing, overrun | ACK / NACK per byte | none defined | **CRC-15 + 4 checks, retransmit, bus-off** |
+| **Bus length** | ≈ 15 m (RS-232) | < 1 m | centimetres | **40 m @ 1 Mbit/s, 1 km @ 50 kbit/s** |
+| **Bit rate** | ≤ 1 Mbit/s | ≤ 3.4 Mbit/s | 10 – 50 Mbit/s | **1 Mbit/s; 5 Mbit/s FD data phase** |
 
 `[ISO 11898-1, ISO 11898-2]`
 
+> note: Qualifications the cells omit. I²C does define multi-master arbitration on SDA; it is simply rare in deployment. UART is asynchronous in the strict sense — no shared bit clock — whereas CAN has no clock line but is bit-synchronous: the whole network shares one bit time, hard-synchronised on SOF and resynchronised on the recessive-to-dominant edges bit stuffing guarantees. That distinction is what makes arbitration possible. The transmission row is uniform on purpose: none of the four is parallel, so the differences all sit in clocking, bus access and error handling.
+
 ### Advantages of CAN
 
-- **No bus master and no arbiter chip.** Any node may start at any bus-idle; the protocol resolves the clash itself.
-- **Message addressing** — add a data logger or a second consumer of the same signal and *not one transmitter changes*.
-- **Deterministic worst case.** The highest-priority frame's latency is provable, so CAN is usable in a safety argument. SPI and I²C have no such property.
-- **It confines its own faults.** A node with a broken transmitter counts its own errors and takes itself off the bus. Nothing on I²C does this.
-- **Two wires stay two wires.** SPI needs another chip select per device; CAN needs a connector.
+- **Distributed bus access.** No master and no arbiter chip. Any node transmits at bus idle; contention resolves bitwise and non-destructively.
+- **Message addressing.** The identifier labels the frame, not the node. Adding a receiver changes no transmitter — only that node's acceptance filter and the communication matrix.
+- **Analysable worst-case response time.** Frame latency is *boundable*, not constant, and the bound holds only under stated assumptions — next slide.
+- **Error detection in hardware.** CRC-15, form, stuff, bit-monitor and ACK checks, with automatic retransmission.
+- **Error confinement.** A transmitter that detects its own errors increments its transmit error counter and disconnects at bus-off, TEC > 255.
+- **Constant wiring cost.** Two wires whatever the node count; the ceiling is transceiver drive capability, not the protocol.
 
-> note: The honest counterpoint for an interview: CAN is slow and its payload is tiny — 8 bytes classical, 64 with FD. If you need bandwidth you use Ethernet. You choose CAN for robustness, determinism and cost per node, never for throughput.
+`[ISO 11898-1]`
 
-## Section 2 — Two protocols, two standards
+### Limitation of CANs
+
+- **Arbitration does not preempt.** A ready high-priority message waits for the frame already in transmission. Worst-case blocking is one maximum-length frame: `55 + 10n` bit times standard format, so **135 bits ≈ 270 µs at 500 kbit/s**.
+- **The original timing analysis was wrong for 12 years.** Tindell et al. (1995) was optimistic; Davis, Burns, Bril and Lukkien refuted and corrected it in 2007. Confirm which analysis a tool implements before trusting its numbers.
+- **FIFO transmit queues invalidate the analysis.** A driver that queues by arrival rather than priority inverts priority inside the node, before arbitration ever sees the frame *(Davis et al., ECRTS 2011)*.
+- **The bound assumes an error model.** Automatic retransmission ties latency to an assumed error rate. Unbounded errors, unbounded latency.
+- **Error confinement does not stop a babbling node.** Well-formed frames sent too often, or under the wrong identifier, raise no error counters at all. Containment needs a gateway or a bus guardian.
+- **Error detection is not a safety argument.** Residual error probability is non-zero, and bit stuffing interacts with the CRC to admit undetected multi-bit errors *(Tran and Koopman, CMU 1999)*. Safety-related signals carry E2E protection above the protocol.
+
+`[Davis et al. 2007; Tran & Koopman 1999 — see References]`
+
+> note: Correcting a common overstatement: CAN is not "more deterministic than SPI". Under a single master SPI has no contention at all, so its schedule is fixed and trivially predictable. What CAN offers is a latency bound for a bus with *many independent transmitters* — a problem SPI and I²C do not attempt to solve. The counterpoint on capability: 8 data bytes classical, 64 with FD. CAN is selected for robustness, analysability and cost per node, not for throughput.
+
+## Section 2 — Governing standards and rules
 
 **L1 and L2 — where the line is drawn.** **ISO 11898-1** governs L2, the data link layer, plus the physical signalling sublayer; **ISO 11898-2** governs L1, the physical medium. **ISO 15765-2** sits above both, at the transport layer, and is what carries UDS.
 
@@ -96,15 +116,36 @@
 
 ### UDS on CAN — the governing standards
 
-- **`ISO 15765-2`** — *Diagnostic communication over CAN (DoCAN), Part 2: transport protocol and network layer services*. **This is the answer** when someone asks how UDS runs on CAN.
-- It exists because a UDS message does not fit in a CAN frame: it segments up to **4 095 bytes** into 8-byte frames — SF, FF, CF — paced by the receiver's **Flow Control**.
-- **`ISO 15765-4`** — the restricted subset that legislated OBD must use (fixed bit rates, fixed IDs, the OBD connector pins).
-- **`ISO 14229-3`** — *UDSonCAN*: which UDS services are available over CAN and how they map onto ISO 15765-2.
-- In AUTOSAR that layer is **CanTp**, sitting between **PduR** and **CanIf**.
+- **ISO 14229-1 defines the services.** It specifies requests, positive responses and negative response codes, and says nothing about CAN.
+- **ISO 15765-2 defines the transport protocol.** It segments a UDS message of up to 4 095 bytes into 8-byte CAN frames — Single, First and Consecutive Frame — and paces them with the receiver's Flow Control frame.
+- **ISO 14229-3 defines the mapping.** It states which UDS services run over CAN and how each one uses ISO 15765-2.
+- **AUTOSAR implements ISO 15765-2 as CanTp**, between PduR and CanIf.
 
-`[ISO 15765-2:2016, ISO 15765-4, ISO 14229-3]`
+`[ISO 15765-2:2016, ISO 14229-3]`
 
-> note: A common interview trap: "which standard defines UDS over CAN?" — 14229-1 is the service catalogue and 11898 is the bus; neither answers the question. ISO 15765-2 is the transport protocol that makes the two meet, and 14229-3 is the formal mapping document.
+> note: ISO 14229-1 is the service catalogue and ISO 11898 is the bus; neither defines how one runs over the other. ISO 15765-2 supplies the transport protocol and ISO 14229-3 supplies the mapping. Quote 15765-2 when asked how UDS runs on CAN.
+
+### OBD — on-board diagnostics
+
+- **What it is:** a regulator-mandated diagnostic interface. Every road vehicle must expose its emissions-related fault data to *any* scan tool, not only to the manufacturer's equipment.
+- **Who mandates it:** the US EPA required OBD-II on light-duty vehicles from model year **1996**; the EU required EOBD on petrol vehicles from **2001** and on diesel from **2003**.
+- **What it does:** it monitors the emissions control systems while the engine runs, and lights the malfunction indicator lamp when a monitor fails.
+- **What it records:** a diagnostic trouble code, plus a freeze frame of the operating conditions at the moment the fault was confirmed.
+- **What it answers:** a fixed, public request set — live sensor values, stored and pending DTCs, readiness monitors, clear-codes, and the VIN.
+
+`[ISO 15031-5 / SAE J1979; ISO 15031-6 / SAE J2012]`
+
+### OBD on CAN — the fixed interface
+
+- **SAE J1962 fixes the connector**: a 16-pin socket within reach of the driver's seat, carrying **CAN_H on pin 6** and **CAN_L on pin 14**.
+- **ISO 15765-4 fixes the CAN layer**: 250 or 500 kbit/s, functional request identifier **`0x7DF`**, physical responses **`0x7E8`–`0x7EF`**.
+- **Fixing all of it is the point.** A generic scan tool connects and communicates without being configured for the vehicle.
+- **OBD uses the same transport as UDS** — ISO 15765-2 — on the same physical bus.
+- **OBD is not UDS.** OBD is a small legislated emissions-only service set with its own service identifiers; UDS is the manufacturer's full diagnostic protocol. A production ECU answers both.
+
+`[ISO 15765-4:2016; SAE J1962]`
+
+> note: The service sets differ as well as the scope. OBD uses the ten "modes" of ISO 15031-5 / SAE J1979 — mode 0x01 for live data, 0x03 for stored DTCs — not the UDS service identifiers of ISO 14229-1. A production ECU distinguishes the two by request identifier and service identifier.
 
 ## Section 3 — Layer 1: the physical medium
 
@@ -124,15 +165,36 @@
 
 ![Four nodes on a linear CAN bus, each with controller and transceiver, terminated 120 Ω at both ends](../asset/can-network-layout.svg)
 
-### Bus topology and termination — design rationale
+### Bus topology and termination placement
 
 - **Bus, not star or ring** — every node sees every bit at the same time, which is what makes bitwise arbitration possible at all.
-- Each node is three parts: **application → CAN controller (ISO 11898-1) → CAN transceiver (ISO 11898-2)**.
-- **120 Ω at each end** matches the cable's characteristic impedance, so an edge arriving at the end is *absorbed* instead of reflected back as ringing.
-- The two terminations are in parallel across the pair → a transmitter drives **60 Ω**.
-- **Stubs stay under ~0.3 m.** A long stub is an unterminated transmission line hanging off your bus.
+- **Terminate at both physical ends, and only there.** 120 Ω per end; the pair then presents 60 Ω to a transmitting driver.
+- **Stubs stay under ~0.3 m.** A stub is an unterminated line hanging off the bus.
+- **Field check:** measured across a powered-down bus, CAN_H to CAN_L reads ≈ 60 Ω. A reading near 120 Ω means one terminator is missing.
 
 > note: The two classic field faults: only one terminator fitted (bus works at low speed, fails intermittently at 500 kbit/s) and a terminator fitted in the middle rather than at the end. Measuring resistance across a powered-down bus should read ~60 Ω — that is the standard first check.
+
+### Impedance matching in three formulas
+
+**Inductance** — the magnetic flux a conductor links per unit current, in henries:
+
+$$L = \frac{N\Phi}{I}$$
+
+**Characteristic impedance** — what the cable presents to a travelling wave. Set by inductance and capacitance *per metre*, so it does not change with cable length:
+
+$$Z_0 = \sqrt{\frac{L}{C}}$$
+
+**Reflection coefficient** — the fraction of an edge that returns from a load $Z_L$:
+
+$$\Gamma = \frac{Z_L - Z_0}{Z_L + Z_0}$$
+
+$\Gamma = 0$ no reflection · $\Gamma = +1$ full reflection, in phase · $\Gamma = -1$ full reflection, inverted
+
+For CAN cable $L \approx 0.5$ µH/m and $C \approx 40$ pF/m give $Z_0 \approx 112$ Ω — hence the **nominal 120 Ω** of ISO 11898-2. **Set $Z_L = Z_0$ and the numerator vanishes: $\Gamma = 0$, and nothing reflects.**
+
+`[ISO 11898-2]`
+
+> note: This is why the terminator value is not arbitrary and why fitting only one, or fitting the wrong value, produces reflections that read downstream as stuff and CRC errors. An open end is Z_L = ∞, so Γ = +1 and the edge returns in full.
 
 ### CAN_H and CAN_L — rationale for differential signalling
 
@@ -152,60 +214,9 @@
 
 ![Dominant and recessive states of the CAN driver, with the Kirchhoff current loop and the 60 Ω differential load](../asset/can-termination-kirchhoff.svg)
 
-### Kirchhoff analysis of the two states
-
-- **Dominant.** The transceiver closes a high-side switch to V_CC and a low-side switch to ground.
-    - **KCL** at CAN_H: the driver's current splits between the two 120 Ω terminators — they are in parallel, so the driver sees **60 Ω**.
-    - **KVL** round the loop: `5 V = V(high-side) + I × 60 Ω + V(low-side)`. About **2 V** lands on the 60 Ω, so **I ≈ 33 mA**.
-    - The pair splits symmetrically about 2.5 V: **CAN_H ≈ 3.5 V, CAN_L ≈ 1.5 V**.
-
-- **Recessive.** Both switches open — the output is **high impedance**.
-    - **KCL** now forces **I = 0** through the terminators.
-    - Ohm's law finishes it: `V(CAN_H) − V(CAN_L) = I × 60 Ω = 0 × 60 = 0 V`.
-    - So the resistor **pulls the two wires back together**, onto the transceiver's internal 2.5 V bias.
-
-- **CAN has no I²C-style pull-up to V_CC.** The termination is a *pull-together*: what it restores is `V_diff = 0`, and that **is** the recessive state.
-
-> note: There is a second job people forget. Recessive is passive — nothing drives it — so the only thing that discharges the cable capacitance after a dominant bit is that 60 Ω. Remove the terminations and the recessive edge decays on an RC instead of being driven, the bit gets sampled before it has recovered, and you get stuff errors that look like noise. The 60 Ω is doing what a pull-up does in I²C, but differentially.
-
-### Split termination — the common implementation
-
-- Real ECUs often split each 120 Ω into **two 60 Ω in series**, with the midpoint tied to ground through **~4.7 nF**.
-- Differentially it is unchanged — still 120 Ω per end.
-- For **common-mode** noise it is now a low-impedance path to ground, which damps the common-mode resonance the twisted pair otherwise has.
-- Cheap EMC win: two resistors and a capacitor, no change to the protocol.
-
 ### Bit encoding on the bus
 
 ![CAN_H and CAN_L waveforms with the resulting differential voltage and the receiver thresholds](../asset/can-bus-levels.svg)
-
-### Signal levels and receiver thresholds
-
-| State | Bit | CAN_H | CAN_L | V_diff |
-|---|:---:|---|---|---|
-| **Recessive** | **1** | ≈ 2.5 V | ≈ 2.5 V | **≈ 0 V** |
-| **Dominant** | **0** | ≈ 3.5 V | ≈ 1.5 V | **≈ 2 V** |
-
-- Receiver decision: **above 0.9 V → dominant**, **below 0.5 V → recessive**. The gap between is deliberate hysteresis.
-- Note the inversion that trips people up: **logical 0 is the *active*, driven state**; logical 1 is nobody driving.
-- That is what makes the bus a **wired-AND** — and everything in the next two sections follows from it.
-
-`[ISO 11898-2]`
-
-### Transmission sequence — voltage behaviour
-
-- **Bus idle.** No driver is on. The 60 Ω holds both wires at ≈ 2.5 V, `V_diff ≈ 0`. Every receiver reads recessive.
-- **SOF, the first dominant bit.** The transmitter closes both switches. ≈ 33 mA leaves CAN_H, crosses the terminations, returns on CAN_L.
-- **The whole bus moves together.** CAN_H rises to ≈ 3.5 V, CAN_L falls to ≈ 1.5 V, `V_diff` snaps to ≈ 2 V — everywhere along the cable, within a fraction of a bit time.
-- **Back to recessive.** Both switches open. The 60 Ω drains the differential charge and the pair relaxes to 2.5 V.
-- **The transmitter reads its own bit back.** Anything other than what it drove — outside the arbitration field and the ACK slot — is a **bit error**.
-
-### Concurrent transmission by two nodes
-
-- Both driving **dominant**: the currents simply add. No contention, no damage — the transceivers are current-limited by design.
-- One **dominant**, one **recessive**: the recessive node is not driving anything, so the dominant node sets the bus alone.
-- **Dominant wins, always.** The node that sent recessive reads back dominant, and immediately knows it.
-- That single asymmetry is the whole basis of **arbitration** and of the **ACK slot**.
 
 ## Section 5 — The frame
 
@@ -223,9 +234,47 @@
 - **Data field** — **0 to 8 bytes** in classical CAN, up to 64 with CAN FD.
 - **CRC field** — a **15-bit CRC** over SOF…data, then a recessive delimiter that gives receivers a slot to react in.
 - **ACK field** — the slot the receivers fill (Section 7), then its delimiter.
-- **EOF** 7 recessive bits, then **IFS** 3 more before the bus may be claimed again.
+- **EOF** 7 recessive bits, then the **interframe space** separates this frame from the next.
 
 `[ISO 11898-1]`
+
+### CRC — coverage and computation
+
+- **CRC-15**, generator polynomial `0x4599` — x¹⁵ + x¹⁴ + x¹⁰ + x⁸ + x⁷ + x⁴ + x³ + 1, register starting at zero.
+- **Covers SOF, arbitration field, control field and data field.** Not the CRC itself, and not the ACK, EOF or IFS that follow it.
+- **Computed on the destuffed bit stream** — in classical CAN the stuff bits are not fed into the CRC. CAN FD reverses this and includes them, in CRC-17 or CRC-21.
+- **Strength:** Hamming distance 6 over a classical frame — it detects any 5 randomly distributed bit errors, and any burst shorter than 15 bits.
+- **Every receiver computes it independently** and compares its result against the 15 bits in the frame. The transmitter does not check its own CRC; it checks the bus by bit monitoring instead.
+
+`[ISO 11898-1]`
+
+### CRC result — ACK, error frame, no NACK
+
+| Receiver's comparison | ACK slot | What follows |
+|---|---|---|
+| **CRC matches** | that node drives it **dominant** | frame accepted; nothing further happens |
+| **CRC mismatches** | that node leaves it **recessive** | that node sends an **error frame**; its REC increases by 1; the transmitter retransmits |
+
+- **No CRC value means "reject".** The check is a comparison, not a magic number — your computed CRC either equals the 15 bits in the frame or it does not.
+- **CAN has no NACK frame.** The only negative signal is the **error frame**, sent at the bit after the ACK delimiter.
+- **The ACK slot alone cannot report failure.** It is wired-AND: one receiver with a good CRC drives it dominant, so the transmitter sees an ACK even when another node's CRC failed.
+- **The error frame is what actually protects the bus.** It destroys the frame for every node, so the failing receiver forces a retransmission that the ACK slot would have hidden.
+
+`[ISO 11898-1]`
+
+> note: This is the answer to "which CRC value gives a NACK" — none, because no such frame exists. Worth keeping straight against UDS, where a negative response 0x7F *is* a real message with a reason code. CAN's rejection is anonymous and carries no diagnosis: an error frame says only "this frame was bad", never which node objected or why.
+
+### IFS — the interframe space
+
+- **What it is:** the mandatory gap between one frame and the next. Every data and remote frame is separated from whatever preceded it — data, remote, error or overload frame — by this space.
+- **What it is for:** it gives every controller time to move the frame it just received into a receive buffer and finish its housekeeping before the next frame arrives.
+- **Intermission — 3 recessive bits.** No node may *start* a data or remote frame here. This is the "3 bits" quoted in frame-length arithmetic.
+- **Bus idle — any length, including none.** The bus is free; any node may start. A dominant bit here is a start-of-frame.
+- **Suspend transmission — 8 recessive bits, error-passive nodes only.** After transmitting, an error-passive node must wait this extra window before starting again.
+
+`[ISO 11898-1]`
+
+> note: Two details worth having. First, a dominant bit in the first or second intermission bit is an overload condition and triggers an overload frame; a dominant bit in the *third* intermission bit is instead read as a start-of-frame, and a node with a message pending will begin transmitting its identifier immediately without sending its own SOF. Second, suspend transmission is error confinement in action: it does not disconnect a faulty node, it just degrades its bus access, which means a busy error-active network can starve an error-passive node indefinitely.
 
 ### Standard and extended formats
 
@@ -239,11 +288,23 @@
 | Frame | Purpose |
 |---|---|
 | **Data frame** | carries data. The one that matters. |
-| **Remote frame** | RTR recessive — asks another node to send that ID. Largely avoided in modern designs. |
+| **Remote frame** | RTR recessive and **no data field** — asks whoever produces a given identifier to transmit it. Largely avoided in modern designs. |
 | **Error frame** | **6 dominant bits** — deliberately illegal, so every node sees it and discards the frame. |
 | **Overload frame** | a receiver asking for delay. Rare with modern controllers. |
 
 - The error frame's trick is worth remembering: it works **because** it violates bit stuffing.
+
+### The remote frame, and why it fell out of use
+
+- **It is a request for a message, not a request to a node.** The remote frame carries an identifier and no payload; the node configured to produce that identifier answers with a data frame carrying **the same identifier**.
+- **Identical to a data frame except for two things:** RTR is recessive rather than dominant, and the data field is absent entirely — the frame runs control field straight into CRC.
+- **Arbitration resolves the collision for free.** A remote frame and the data frame it is asking for are bit-identical up to RTR. Dominant beats recessive, so the data frame wins — the requester loses arbitration to the very answer it wanted, and simply receives it.
+- **Why designs avoid it:** DLC handling is inconsistent between controllers, and some answer remote frames automatically from a mailbox — shipping stale data with no software involvement.
+- **CAN FD removes it.** In FD frames the RTR position becomes **RRS**, always transmitted dominant. Remote frames exist only in classical CAN.
+
+`[ISO 11898-1]`
+
+> note: The standard states the remote frame has no data field regardless of what its DLC says, which is the root of the inconsistency — the DLC is meant to match the expected reply, but nothing enforces it. Modern designs replace the whole mechanism with either cyclic transmission or an explicit request/response message pair, which is also what UDS does over ISO 15765-2.
 
 ### Bit stuffing
 
@@ -310,7 +371,39 @@
 
 > note: The reason it stalls at error-passive rather than going bus-off is an explicit exception in the error-counting rules: an error-passive transmitter that sees an ACK error, and detects no dominant bit while sending its passive error flag, does not increment TEC. Worth knowing — it explains a symptom that otherwise looks like a broken controller.
 
-## Section 8 — Takeaways
+## Section 8 — Carrying UDS in CAN frames
+
+**Where the two worlds meet.** The CAN frame of Section 5 is the container; **ISO 15765-2** decides how a UDS message of arbitrary length is packed into a sequence of those containers. This section shows the byte-level result.
+
+### UDS data inside two CAN frames
+
+![Two CAN frames with their data fields expanded, showing ISO 15765-2 PCI bytes and the UDS payload](../asset/can-uds-in-frames.svg)
+
+### Reading the two frames
+
+- **The identifier is not an address for UDS.** `0x7E0` and `0x7E8` are a request/response pair fixed by ISO 15765-4; the UDS service identifier lives in the data field, not in the CAN ID.
+- **The first byte or two are never UDS.** They are the ISO 15765-2 **PCI**: frame type in the high nibble, length in the rest.
+- **Frame 1 is a Single Frame.** PCI `03` means "single frame, 3 payload bytes", so `22 F1 90` — ReadDataByIdentifier on DID `0xF190` — fits with four bytes of padding left over.
+- **Frame 2 is a First Frame.** PCI `10 14` means "first frame, 20 bytes total", leaving room for only the first 6 UDS bytes.
+- **A UDS message therefore has no natural frame boundary.** Its bytes are cut wherever the 8-byte field runs out.
+
+`[ISO 15765-2:2016]`
+
+### Payload arithmetic
+
+| Frame type | PCI bytes | UDS bytes carried |
+|---|:---:|:---:|
+| **Single Frame** (≤ 7 bytes total) | 1 | **up to 7** |
+| **First Frame** (start of a long message) | 2 | **6** |
+| **Consecutive Frame** (each continuation) | 1 | **7** |
+
+- The 20-byte VIN response above needs **one First Frame plus two Consecutive Frames** — 6 + 7 + 7 = 20.
+- **Overhead is not negligible.** Reading a 20-byte record costs three frames and roughly 400 bits on the wire.
+- Padding to a full 8 bytes is common but not universal; ISO 15765-4 requires it for OBD, and OEMs usually mandate it elsewhere.
+
+> note: The flow control frame is the fourth PCI type and carries no payload at all — the receiver sends it after a First Frame to state its block size and minimum separation time. That is why a long UDS transfer is paced by the *receiver*, not the sender, and why a tester that never sends flow control will stall an ECU mid-response.
+
+## Section 9 — Takeaways
 
 **L1 and L2 together.** **ISO 11898-2** is the wire, **ISO 11898-1** is the controller, and **ISO 15765-2** is the transport layer that carries UDS across both.
 
@@ -323,12 +416,21 @@
 - **ACK proves reception by somebody, not by the right somebody.** End-to-end delivery belongs to UDS.
 - **UDS meets CAN at ISO 15765-2.** That is the standard number to have ready.
 
-### References
+### References — standards
 
 - **ISO 11898-1** — Road vehicles, CAN: data link layer and physical signalling
 - **ISO 11898-2** — high-speed medium access unit
 - **ISO 11898-3** — low-speed, fault-tolerant medium-dependent interface *(withdrawn)*
 - **ISO 15765-2:2016** — Diagnostic communication over CAN (DoCAN): transport protocol and network layer services
-- **ISO 15765-4** — DoCAN requirements for emissions-related systems
+- **ISO 15765-4:2016** — DoCAN requirements for emissions-related systems
 - **ISO 14229-1 / ISO 14229-3** — UDS services, and UDSonCAN
-- **Bosch CAN Specification 2.0** (1991) — the original, still the clearest description of arbitration
+- **ISO 15031-5 / SAE J1979** — OBD services; **SAE J2012 / ISO 15031-6** — DTC format; **SAE J1962** — diagnostic connector
+- **Bosch CAN Specification 2.0** (1991) — the original description of arbitration
+
+### References — timing and error analysis
+
+- **Tindell, Burns, Wellings**, "Calculating Controller Area Network (CAN) message response times", *Control Engineering Practice* 3(8), 1163–1169, 1995 — the original analysis, **since superseded**
+- **Davis, Burns, Bril, Lukkien**, "Controller Area Network (CAN) schedulability analysis: Refuted, revisited and revised", *Real-Time Systems* 35(3), 239–272, 2007 — shows the 1995 analysis can guarantee messages that then miss their deadlines, and gives the corrected form
+- **Davis, Kollmann, Pollex, Slomka**, "Controller Area Network (CAN) schedulability analysis with FIFO queues", *ECRTS 2011*, 45–56 — analysis for drivers that queue FIFO rather than by priority
+- **Charzinski**, "Performance of the error detection mechanisms in CAN", *1st International CAN Conference*, 1994 — residual error probability; shows the quoted 4.7×10⁻¹¹ is optimistic at high bit error rates
+- **Tran, E.** (advisor Koopman), *Multi-Bit Error Vulnerabilities in the Controller Area Network Protocol*, MS thesis, Carnegie Mellon University, 1999 — bit stuffing interacting with the CRC gives a double-bit error a ≈1.3×10⁻⁷ probability of undetected corruption
