@@ -103,7 +103,7 @@
 | Bit rate | up to **1 Mbit/s** | up to **125 kbit/s** |
 | Termination | 120 Ω at **each end** | distributed, in every node |
 | One wire breaks | bus down | **keeps running single-wire** |
-| Typical use | powertrain, chassis, **diagnostics** | body / comfort |
+| Typical use | powertrain, chassis,**diagnostics** | body / comfort |
 
 - ISO 11898-3 has since been **withdrawn as a standard**, but low-speed CAN is still in service in vehicles built while it was current.
 - **Diagnostics always uses high-speed CAN** — assume ISO 11898-2 unless told otherwise.
@@ -375,6 +375,17 @@ For CAN cable $L \approx 0.5$ µH/m and $C \approx 40$ pF/m give $Z_0 \approx 11
 
 **Where the two worlds meet.** The CAN frame of Section 5 is the container; **ISO 15765-2** decides how a UDS message of arbitrary length is packed into a sequence of those containers. This section shows the byte-level result.
 
+### What ISO 15765-2 does
+
+- **It is the transport layer between UDS and CAN.** UDS produces messages of arbitrary length; CAN carries 8 bytes at a time. ISO 15765-2 is the only thing that reconciles the two.
+- **Segmentation and reassembly.** It splits an outgoing message across frames and puts it back together at the far end, so the layer above never sees a frame boundary.
+- **Four frame types**, identified by the high nibble of the first data byte: **`0`** Single Frame, **`1`** First Frame, **`2`** Consecutive Frame, **`3`** Flow Control.
+- **Flow control.** The receiver states how many frames it can accept and how fast, so a fast tester cannot overrun a slow ECU.
+- **Timeouts.** N_Bs and N_Cr bound how long each side waits for the next frame — typically 1 000 ms — so a broken transfer fails cleanly instead of hanging.
+- **It never interprets the payload.** It has no idea what `0x22` means. That is ISO 14229-1's job.
+
+`[ISO 15765-2:2016]`
+
 ### UDS data inside two CAN frames
 
 ![Two CAN frames with their data fields expanded, showing ISO 15765-2 PCI bytes and the UDS payload](../asset/can-uds-in-frames.svg)
@@ -403,6 +414,25 @@ For CAN cable $L \approx 0.5$ µH/m and $C \approx 40$ pF/m give $Z_0 \approx 11
 
 > note: The flow control frame is the fourth PCI type and carries no payload at all — the receiver sends it after a First Frame to state its block size and minimum separation time. That is why a long UDS transfer is paced by the *receiver*, not the sender, and why a tester that never sends flow control will stall an ECU mid-response.
 
+### One UDS message across three CAN frames
+
+![A 20-byte UDS response segmented into a First Frame and two Consecutive Frames, with the Flow Control frame between them](../asset/can-uds-segmentation.svg)
+
+### The PCI of each frame
+
+| Frame | PCI bytes | High nibble | Remaining bits | UDS bytes |
+|---|:---:|:---:|---|:---:|
+| **1 — First Frame** | `10 14` | `1` = FF | 12-bit length, `0x014` = 20 bytes total | **6** |
+| **2 — Flow Control** | `30 00 00` | `3` = FC | FS = continue, BlockSize 0, STmin 0 | **0** |
+| **3 — Consecutive Frame** | `21` | `2` = CF | SequenceNumber = 1 | **7** |
+| **4 — Consecutive Frame** | `22` | `2` = CF | SequenceNumber = 2 | **7** |
+
+- **Only three of the four frames carry UDS.** The Flow Control frame is pure protocol overhead — the receiver granting permission to continue.
+- **The sequence number counts 1, 2 … 15, 0, 1 …** so the receiver detects a lost or reordered frame.
+- **A gap aborts the whole transfer.** ISO 15765-2 has no retransmission of a single segment; the message fails and the layer above must retry it.
+
+`[ISO 15765-2:2016]`
+
 ## Section 9 — Takeaways
 
 **L1 and L2 together.** **ISO 11898-2** is the wire, **ISO 11898-1** is the controller, and **ISO 15765-2** is the transport layer that carries UDS across both.
@@ -427,10 +457,3 @@ For CAN cable $L \approx 0.5$ µH/m and $C \approx 40$ pF/m give $Z_0 \approx 11
 - **ISO 15031-5 / SAE J1979** — OBD services; **SAE J2012 / ISO 15031-6** — DTC format; **SAE J1962** — diagnostic connector
 - **Bosch CAN Specification 2.0** (1991) — the original description of arbitration
 
-### References — timing and error analysis
-
-- **Tindell, Burns, Wellings**, "Calculating Controller Area Network (CAN) message response times", *Control Engineering Practice* 3(8), 1163–1169, 1995 — the original analysis, **since superseded**
-- **Davis, Burns, Bril, Lukkien**, "Controller Area Network (CAN) schedulability analysis: Refuted, revisited and revised", *Real-Time Systems* 35(3), 239–272, 2007 — shows the 1995 analysis can guarantee messages that then miss their deadlines, and gives the corrected form
-- **Davis, Kollmann, Pollex, Slomka**, "Controller Area Network (CAN) schedulability analysis with FIFO queues", *ECRTS 2011*, 45–56 — analysis for drivers that queue FIFO rather than by priority
-- **Charzinski**, "Performance of the error detection mechanisms in CAN", *1st International CAN Conference*, 1994 — residual error probability; shows the quoted 4.7×10⁻¹¹ is optimistic at high bit error rates
-- **Tran, E.** (advisor Koopman), *Multi-Bit Error Vulnerabilities in the Controller Area Network Protocol*, MS thesis, Carnegie Mellon University, 1999 — bit stuffing interacting with the CRC gives a double-bit error a ≈1.3×10⁻⁷ probability of undetected corruption

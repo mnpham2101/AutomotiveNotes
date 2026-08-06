@@ -1,0 +1,157 @@
+<svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="1000" height="560" fill="#ffffff"/>
+  <defs>
+    <marker id="segarr" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto">
+      <path d="M0,0 L6.5,3 L0,6 Z" fill="#f26f21"/>
+    </marker>
+  </defs>
+
+  <text x="500" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">One UDS message across three CAN frames</text>
+  <text x="500" y="41" text-anchor="middle" font-size="11" fill="#607d8b">ISO 15765-2 segments a 20-byte response into 6 + 7 + 7 payload bytes, paced by the receiver</text>
+
+  <!-- ============ the UDS message ============ -->
+  <text x="60" y="64" font-size="11" font-weight="bold" fill="#e65100">UDS response as the application sees it — 20 bytes, one message</text>
+
+  <rect x="60" y="72" width="264" height="38" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="192" y="89" text-anchor="middle" font-size="11" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">62 F1 90 57 30 4C</text>
+  <text x="192" y="103" text-anchor="middle" font-size="8.5" fill="#90a4ae">bytes 1–6</text>
+
+  <rect x="324" y="72" width="308" height="38" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="478" y="89" text-anchor="middle" font-size="11" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">30 30 30 30 34 33 4D</text>
+  <text x="478" y="103" text-anchor="middle" font-size="8.5" fill="#90a4ae">bytes 7–13</text>
+
+  <rect x="632" y="72" width="308" height="38" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="786" y="89" text-anchor="middle" font-size="11" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">42 35 34 31 33 32 36</text>
+  <text x="786" y="103" text-anchor="middle" font-size="8.5" fill="#90a4ae">bytes 14–20</text>
+
+  <line x1="192" y1="112" x2="192" y2="132" stroke="#f26f21" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#segarr)"/>
+  <text x="200" y="128" font-size="8.5" fill="#e65100">into Frame 1</text>
+  <line x1="478" y1="112" x2="478" y2="132" stroke="#f26f21" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#segarr)"/>
+  <text x="486" y="128" font-size="8.5" fill="#e65100">into Frame 3</text>
+  <line x1="786" y1="112" x2="786" y2="132" stroke="#f26f21" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#segarr)"/>
+  <text x="794" y="128" font-size="8.5" fill="#e65100">into Frame 4</text>
+
+  <line x1="60" y1="142" x2="940" y2="142" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="160" font-size="11" font-weight="bold" fill="#2e7d32">as transmitted on the bus — each frame's 8-byte data field</text>
+
+  <!-- ============ FRAME 1 : First Frame ============ -->
+  <text x="40" y="184" font-size="10.5" font-weight="bold" fill="#263238">Frame 1 — First Frame</text>
+  <text x="40" y="197" font-size="8.5" fill="#607d8b">ECU → tester · 0x7E8</text>
+  <text x="40" y="209" font-size="8.5" font-weight="bold" fill="#e65100">6 UDS bytes</text>
+
+  <rect x="252" y="170" width="87" height="52" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="296" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">10</text>
+  <text x="296" y="210" text-anchor="middle" font-size="7.5" fill="#1565c0">FF, length hi</text>
+  <rect x="339" y="170" width="87" height="52" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="383" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">14</text>
+  <text x="383" y="210" text-anchor="middle" font-size="7.5" fill="#1565c0">total = 20</text>
+  <rect x="426" y="170" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="470" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">62</text>
+  <text x="470" y="210" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 1</text>
+  <rect x="513" y="170" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="557" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">F1</text>
+  <text x="557" y="210" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 2</text>
+  <rect x="600" y="170" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="644" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">90</text>
+  <text x="644" y="210" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 3</text>
+  <rect x="687" y="170" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="731" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">57</text>
+  <text x="731" y="210" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 4</text>
+  <rect x="774" y="170" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="818" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">30</text>
+  <text x="818" y="210" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 5</text>
+  <rect x="861" y="170" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="905" y="194" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">4C</text>
+  <text x="905" y="210" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 6</text>
+
+  <!-- ============ FRAME 2 : Flow Control ============ -->
+  <rect x="30" y="236" width="930" height="56" rx="4" fill="#eceff1"/>
+  <text x="40" y="256" font-size="10.5" font-weight="bold" fill="#263238">Frame 2 — Flow Control</text>
+  <text x="40" y="269" font-size="8.5" fill="#607d8b">tester → ECU · 0x7E0</text>
+  <text x="40" y="281" font-size="8.5" font-weight="bold" fill="#607d8b">no UDS payload</text>
+
+  <rect x="252" y="242" width="87" height="44" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="296" y="263" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">30</text>
+  <text x="296" y="278" text-anchor="middle" font-size="7.5" fill="#1565c0">FS = continue</text>
+  <rect x="339" y="242" width="87" height="44" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="383" y="263" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">00</text>
+  <text x="383" y="278" text-anchor="middle" font-size="7.5" fill="#1565c0">BlockSize</text>
+  <rect x="426" y="242" width="87" height="44" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="470" y="263" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">00</text>
+  <text x="470" y="278" text-anchor="middle" font-size="7.5" fill="#1565c0">STmin</text>
+  <rect x="513" y="242" width="435" height="44" fill="#f5f5f5" stroke="#cfd8dc" stroke-dasharray="4 3"/>
+  <text x="730" y="268" text-anchor="middle" font-size="10" fill="#b0bec5">padding — the receiver sends no data, it only grants permission to continue</text>
+
+  <!-- ============ FRAME 3 : CF SN=1 ============ -->
+  <text x="40" y="326" font-size="10.5" font-weight="bold" fill="#263238">Frame 3 — Consecutive Frame</text>
+  <text x="40" y="339" font-size="8.5" fill="#607d8b">ECU → tester · 0x7E8</text>
+  <text x="40" y="351" font-size="8.5" font-weight="bold" fill="#e65100">7 UDS bytes</text>
+
+  <rect x="252" y="312" width="87" height="52" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="296" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">21</text>
+  <text x="296" y="352" text-anchor="middle" font-size="7.5" fill="#1565c0">CF, SN = 1</text>
+  <rect x="339" y="312" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="383" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">30</text>
+  <text x="383" y="352" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 7</text>
+  <rect x="426" y="312" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="470" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">30</text>
+  <text x="470" y="352" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 8</text>
+  <rect x="513" y="312" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="557" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">30</text>
+  <text x="557" y="352" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 9</text>
+  <rect x="600" y="312" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="644" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">30</text>
+  <text x="644" y="352" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 10</text>
+  <rect x="687" y="312" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="731" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">34</text>
+  <text x="731" y="352" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 11</text>
+  <rect x="774" y="312" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="818" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">33</text>
+  <text x="818" y="352" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 12</text>
+  <rect x="861" y="312" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="905" y="336" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">4D</text>
+  <text x="905" y="352" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 13</text>
+
+  <!-- ============ FRAME 4 : CF SN=2 ============ -->
+  <text x="40" y="398" font-size="10.5" font-weight="bold" fill="#263238">Frame 4 — Consecutive Frame</text>
+  <text x="40" y="411" font-size="8.5" fill="#607d8b">ECU → tester · 0x7E8</text>
+  <text x="40" y="423" font-size="8.5" font-weight="bold" fill="#e65100">7 UDS bytes</text>
+
+  <rect x="252" y="384" width="87" height="52" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="296" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#1565c0">22</text>
+  <text x="296" y="424" text-anchor="middle" font-size="7.5" fill="#1565c0">CF, SN = 2</text>
+  <rect x="339" y="384" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="383" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">42</text>
+  <text x="383" y="424" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 14</text>
+  <rect x="426" y="384" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="470" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">35</text>
+  <text x="470" y="424" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 15</text>
+  <rect x="513" y="384" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="557" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">34</text>
+  <text x="557" y="424" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 16</text>
+  <rect x="600" y="384" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="644" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">31</text>
+  <text x="644" y="424" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 17</text>
+  <rect x="687" y="384" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="731" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">33</text>
+  <text x="731" y="424" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 18</text>
+  <rect x="774" y="384" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="818" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">32</text>
+  <text x="818" y="424" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 19</text>
+  <rect x="861" y="384" width="87" height="52" fill="#fff3e0" stroke="#f26f21" stroke-width="1.8"/>
+  <text x="905" y="408" text-anchor="middle" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#e65100">36</text>
+  <text x="905" y="424" text-anchor="middle" font-size="7.5" fill="#e65100">UDS 20</text>
+
+  <!-- ============ legend + banner ============ -->
+  <rect x="40" y="452" width="16" height="14" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.4"/>
+  <text x="62" y="463" font-size="10" fill="#37474f">ISO 15765-2 protocol control information</text>
+  <rect x="330" y="452" width="16" height="14" fill="#fff3e0" stroke="#f26f21" stroke-width="1.6"/>
+  <text x="352" y="463" font-size="10" fill="#37474f">UDS payload — ISO 14229-1</text>
+  <rect x="570" y="452" width="16" height="14" fill="#f5f5f5" stroke="#cfd8dc"/>
+  <text x="592" y="463" font-size="10" fill="#37474f">padding</text>
+
+  <rect x="40" y="482" width="920" height="64" rx="4" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="52" y="501" font-size="11" fill="#e65100"><tspan font-weight="bold">6 + 7 + 7 = 20.</tspan> The First Frame spends two bytes on the length field and carries 6; each Consecutive Frame spends one on its sequence number and carries 7.</text>
+  <text x="52" y="519" font-size="11" fill="#e65100">The <tspan font-weight="bold">sequence number counts 1, 2 … 15, 0, 1 …</tspan> so the receiver detects a lost or reordered frame. A gap aborts the transfer — no single segment is resent.</text>
+  <text x="52" y="537" font-size="11" fill="#e65100">The <tspan font-weight="bold">receiver</tspan> sets the pace: BlockSize is how many Consecutive Frames may follow before the next Flow Control, STmin the minimum gap between them.</text>
+</svg>
