@@ -82,6 +82,35 @@ td strong{color:var(--accent-dark)}
 .ref::before{content:"▸ ";color:var(--accent)}
 .note{display:none}
 
+/* ---------------------------------------------------------------- maths */
+/* $…$ inline and $$…$$ display, rendered at build time to HTML+CSS.
+   No KaTeX, no MathJax, no webfont: the deck must stay a single offline file. */
+.math{font-family:"DejaVu Serif",Cambria,Georgia,"Times New Roman",serif;
+      font-style:normal;line-height:1.3;white-space:nowrap;color:var(--ink)}
+.math i{font-style:italic}
+.math .mo{margin:0 .2em}
+.math .mo.un{margin:0 .02em 0 0}       /* unary sign: hugs its operand */
+.math sub,.math sup{font-size:.64em;line-height:0}
+.math sub{vertical-align:-.3em}
+.math sup{vertical-align:.52em}
+.math .msp{display:inline-block;width:.24em}
+.math .mtxt{font-family:var(--font);font-size:.84em;font-style:normal}
+.math .frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 .2em}
+.math .frac .fn{display:block;padding:0 .45em .16em}
+.math .frac .fd{display:block;padding:.16em .45em 0;border-top:1.7px solid currentColor}
+/* radical: flex so the vinculum meets the top of the sign at any radicand height */
+.math .sqrt{display:inline-flex;align-items:stretch;white-space:nowrap;
+            vertical-align:middle}
+.math .sqrt .sr{display:flex;align-items:center;font-size:1.25em;line-height:.85;
+                margin-right:-.04em}
+.math .sqrt.tall .sr{font-size:2.5em;line-height:.78}
+.math .sqrt .rad{display:flex;align-items:center;align-self:stretch;
+                 border-top:1.6px solid currentColor;padding:0 .3em 0 .06em}
+.math-display{display:block;text-align:center;font-size:30px;margin:26px 0 24px;
+              color:var(--navy)}
+.slide li .math-display{font-size:25px;margin:15px 0 13px}
+th .math,td .math{font-size:.95em}
+
 .foot{position:absolute;left:76px;right:76px;bottom:26px;display:flex;
       justify-content:space-between;align-items:center;font-size:11.5px;color:var(--faint);
       border-top:1px solid var(--rule-soft);padding-top:10px}
@@ -114,6 +143,8 @@ td strong{color:var(--accent-dark)}
          padding:36px 44px 60px;border:0}
   .slide h2{font-size:26px}.slide li{font-size:15px;margin-bottom:9px}
   .slide.title h1{font-size:38px}
+  .math-display{font-size:21px;margin:16px 0 14px}
+  .slide li .math-display{font-size:18px;margin:10px 0 9px}
   .note{display:block;margin-top:18px;padding:10px 14px;background:var(--wash);
         border-left:3px solid var(--faint);font-size:12px;color:var(--ink-2)}
   .foot{left:44px;right:44px;bottom:16px}
@@ -182,7 +213,8 @@ td strong{color:var(--accent-dark)}
 <li><strong>Client</strong> = diagnostic tester, usually off-board.</li>
 <li><strong>Server</strong> = a function inside an ECU, not the ECU itself.</li>
 <li>Client requests a service; the server validates, executes, then answers — positive response, negative response with an NRC, or nothing when the positive response is suppressed.</li>
-<li>Response behavior follows rules Figure 5, 6 Clause 7.5, followed by check on mandatory fields (ServiceId, Subfunction) in UDS request message.  </li>
+<li>Response behavior follows Figure 5 (Clause 7.5) — mandatory pre-requisite checks every request goes through: message format, mandatory fields (ServiceId, sub-function), session/security gating.</li>
+<li>Figure 6 (Clause 7.5) runs only after Figure 5, and only for services that carry a sub-function — it adds the <code>SPRMIB</code> check that decides whether the positive response is suppressed.</li>
 <li>One diagnostic protocol instance per server — <strong>one request at a time</strong>, held until the final response is sent. One diagnostic protocol instance can only handle one request at a time</li>
 <li>Roles are independent of the data link. Multiple clients may exist.</li>
 </ul>

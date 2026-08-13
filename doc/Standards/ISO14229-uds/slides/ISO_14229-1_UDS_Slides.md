@@ -19,7 +19,8 @@
 - **Client** = diagnostic tester, usually off-board.
 - **Server** = a function inside an ECU, not the ECU itself.
 - Client requests a service; the server validates, executes, then answers — positive response, negative response with an NRC, or nothing when the positive response is suppressed.
-- Response behavior follows rules Figure 5, 6 Clause 7.5, followed by check on mandatory fields (ServiceId, Subfunction) in UDS request message.  
+- Response behavior follows Figure 5 (Clause 7.5) — mandatory pre-requisite checks every request goes through: message format, mandatory fields (ServiceId, sub-function), session/security gating.
+- Figure 6 (Clause 7.5) runs only after Figure 5, and only for services that carry a sub-function — it adds the `SPRMIB` check that decides whether the positive response is suppressed.
 - One diagnostic protocol instance per server — **one request at a time**, held until the final response is sent. One diagnostic protocol instance can only handle one request at a time
 - Roles are independent of the data link. Multiple clients may exist.
 
