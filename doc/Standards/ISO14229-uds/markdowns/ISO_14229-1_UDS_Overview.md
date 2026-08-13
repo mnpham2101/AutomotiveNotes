@@ -126,7 +126,9 @@ Request = SID + optional sub-function + optional parameter + optional data recor
 - **Parameter** (1-3 bytes, optional) — DID, RID, or DTC group/mask
 - **Data record** (variable length, optional) — payload written, or option data
 
-Positive response: request SID + `0x40`, echoed parameters, data record. Negative response: fixed 3 bytes — `0x7F`, request SID, 1-byte NRC. [Clause 7.4, Table 3]
+Positive response: response SID = (request SID + `0x40`), echoed parameters, data record. For example, `0x10` (DiagnosticSessionControl) + 0x40 → `0x50`. 
+
+Negative response: fixed 3 bytes — `0x7F`, request SID, 1-byte NRC. [Clause 7.4, Table 3]
 
 ![Common UDS message format and field mapping to DCM/DEM services](../asset/full-UDS-msg-format.svg)
 
