@@ -1,0 +1,133 @@
+<svg viewBox="0 0 1360 1090" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="1360" height="1090" fill="#ffffff"/>
+
+  <defs>
+    <marker id="fig6arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7 Z" fill="#455a64"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="680" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">Figure 6 — Server Response Behaviour for Requests with a Sub-function</text>
+  <text x="680" y="46" text-anchor="middle" font-size="10.5" fill="#607d8b">Runs only after Figure 5's mandatory checks pass, and only for services that define a sub-function — picks up from Figure 5's connector 1.</text>
+
+  <!-- Swim-lane dividers + headers -->
+  <line x1="520" y1="96" x2="520" y2="970" stroke="#cfd8dc" stroke-dasharray="4 3"/>
+  <line x1="890" y1="96" x2="890" y2="970" stroke="#cfd8dc" stroke-dasharray="4 3"/>
+  <text x="270" y="108" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">mandatory</text>
+  <text x="705" y="108" text-anchor="middle" font-size="11" font-weight="bold" fill="#607d8b">optional</text>
+  <text x="1115" y="108" text-anchor="middle" font-size="11" font-weight="bold" fill="#5e35b1">manufacturer/supplier specific</text>
+
+  <!-- Entry connector "1" (from Figure 5) -->
+  <circle cx="220" cy="135" r="16" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="220" y="140" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565c0">1</text>
+  <line x1="220" y1="151" x2="220" y2="172" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+
+  <!-- Diamond 1: minimum length check (mandatory) -->
+  <text x="185" y="166" font-size="9.5" font-weight="bold" fill="#e65100">[1]</text>
+  <polygon points="220,172 295,200 220,228 145,200" fill="#fff3e0" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="220" y="196" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">minimum length</text>
+  <text x="220" y="209" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">check</text>
+  <text x="255" y="190" font-size="9" fill="#455a64">NO</text>
+  <line x1="295" y1="200" x2="335" y2="200" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <rect x="335" y="174" width="130" height="52" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="400" y="193" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x13</text>
+  <text x="400" y="204" text-anchor="middle" font-size="7.5" fill="#607d8b">incorrectMessageLength-</text>
+  <text x="400" y="214" text-anchor="middle" font-size="7.5" fill="#607d8b">OrInvalidFormat</text>
+
+  <text x="228" y="220" font-size="9" fill="#455a64">YES</text>
+  <line x1="220" y1="228" x2="220" y2="298" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+
+  <!-- Diamond 2: sub-function supported ever for the SID? (mandatory) -->
+  <polygon points="220,298 305,335 220,372 135,335" fill="#fff3e0" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="220" y="325" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">sub-function</text>
+  <text x="220" y="337" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">supported ever</text>
+  <text x="220" y="349" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">for the SID?</text>
+  <text x="240" y="320" font-size="9" fill="#455a64">NO</text>
+  <line x1="305" y1="335" x2="335" y2="335" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <rect x="335" y="313" width="130" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="400" y="330" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x12</text>
+  <text x="400" y="342" text-anchor="middle" font-size="7.5" fill="#607d8b">subFunctionNotSupported</text>
+
+  <text x="228" y="362" font-size="9" fill="#455a64">YES</text>
+  <line x1="220" y1="372" x2="220" y2="438" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+
+  <!-- Diamond 3: sub-function supported in active session for the SID? (mandatory) -->
+  <polygon points="220,438 315,475 220,512 125,475" fill="#fff3e0" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="220" y="465" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">sub-function</text>
+  <text x="220" y="477" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">supported in active</text>
+  <text x="220" y="489" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">session for the SID?</text>
+
+  <text x="322" y="468" font-size="9" fill="#455a64">YES</text>
+  <line x1="315" y1="475" x2="560" y2="475" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+
+  <text x="322" y="503" font-size="9" fill="#455a64">NO</text>
+  <path d="M 315,475 L 315,510 L 345,510" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <rect x="345" y="485" width="140" height="52" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="415" y="502" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x7E</text>
+  <text x="415" y="513" text-anchor="middle" font-size="7.5" fill="#607d8b">subFunctionNotSupported-</text>
+  <text x="415" y="523" text-anchor="middle" font-size="7.5" fill="#607d8b">InActiveSession</text>
+
+  <!-- Diamond 4: sub-function security check o.k.? (optional) -->
+  <polygon points="650,443 740,475 650,507 560,475" fill="#fff3e0" stroke="#607d8b" stroke-width="1.6"/>
+  <text x="650" y="471" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">sub-function security</text>
+  <text x="650" y="483" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">check o.k.?</text>
+  <text x="700" y="465" font-size="9" fill="#455a64">NO</text>
+  <line x1="740" y1="475" x2="765" y2="475" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <rect x="765" y="453" width="110" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="820" y="470" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x33</text>
+  <text x="820" y="482" text-anchor="middle" font-size="8" fill="#607d8b">securityAccessDenied</text>
+
+  <text x="655" y="522" font-size="9" fill="#455a64">YES</text>
+  <path d="M 650,507 L 650,540 L 220,540 L 220,610" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+
+  <!-- Diamond 5: request sequence respected for the sub-function? (optional) -->
+  <line x1="220" y1="610" x2="555" y2="610" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <text x="600" y="568" font-size="9.5" font-weight="bold" fill="#e65100">[2]</text>
+  <polygon points="650,573 745,610 650,647 555,610" fill="#fff3e0" stroke="#607d8b" stroke-width="1.6"/>
+  <text x="650" y="600" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">request sequence</text>
+  <text x="650" y="612" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">respected for the</text>
+  <text x="650" y="624" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">sub-function?</text>
+  <text x="700" y="600" font-size="9" fill="#455a64">NO</text>
+  <line x1="745" y1="610" x2="775" y2="610" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <rect x="775" y="588" width="105" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="827" y="605" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x24</text>
+  <text x="827" y="617" text-anchor="middle" font-size="7.5" fill="#607d8b">requestSequenceError</text>
+
+  <text x="655" y="657" font-size="9" fill="#455a64">YES</text>
+  <path d="M 650,647 L 650,680 L 220,680 L 220,745" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+
+  <!-- Diamond 6: manufacturer-/supplier-specific check (mfg) -->
+  <line x1="220" y1="745" x2="970" y2="745" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <text x="1030" y="708" font-size="9.5" font-weight="bold" fill="#e65100">[3]</text>
+  <polygon points="1080,713 1190,745 1080,777 970,745" fill="#fff3e0" stroke="#5e35b1" stroke-width="1.6"/>
+  <text x="1080" y="741" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">manufacturer-/supplier-</text>
+  <text x="1080" y="753" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">specific check</text>
+  <text x="1140" y="732" font-size="9" fill="#455a64">YES</text>
+  <line x1="1190" y1="745" x2="1225" y2="745" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <rect x="1225" y="723" width="115" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="1282" y="740" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0xXX</text>
+  <text x="1282" y="752" text-anchor="middle" font-size="7.5" fill="#607d8b">manufacturer-/supplier</text>
+
+  <text x="1085" y="797" font-size="9" fill="#455a64">NO</text>
+  <path d="M 1080,777 L 1080,805 L 220,805 L 220,838" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+
+  <!-- Terminal: specific SID checks -->
+  <line x1="220" y1="838" x2="220" y2="853" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <rect x="140" y="853" width="160" height="54" rx="6" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="220" y="876" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">specific SID</text>
+  <text x="220" y="890" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">checks</text>
+
+  <!-- End -->
+  <line x1="220" y1="907" x2="220" y2="930" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig6arrow)"/>
+  <circle cx="220" cy="945" r="14" fill="#ffffff" stroke="#263238" stroke-width="2"/>
+  <circle cx="220" cy="945" r="6" fill="#263238"/>
+
+  <!-- Key / footnotes -->
+  <text x="20" y="995" font-size="11" font-weight="bold" fill="#263238">Key</text>
+  <text x="20" y="1013" font-size="9.5" fill="#263238">1&#160;&#160;At least 2 (SID+SubFunction Parameter).</text>
+  <text x="20" y="1029" font-size="9.5" fill="#263238">2&#160;&#160;If sub-function is subject to sequence check, e.g. LinkControl or SecurityAccess.</text>
+  <text x="20" y="1045" font-size="9.5" fill="#263238">3&#160;&#160;Refer to the response behaviour (supported negative response codes) of each service.</text>
+
+  <text x="20" y="1071" font-size="9.5" font-family="DejaVu Sans Mono, monospace" fill="#607d8b">[ISO 14229-1:2013, Clause 7.5.3, Figure 6]</text>
+</svg>

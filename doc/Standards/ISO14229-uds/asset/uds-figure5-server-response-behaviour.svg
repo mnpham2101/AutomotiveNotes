@@ -1,0 +1,220 @@
+<svg viewBox="0 0 1360 1110" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="1360" height="1110" fill="#ffffff"/>
+
+  <defs>
+    <marker id="fig5arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7 Z" fill="#455a64"/>
+    </marker>
+  </defs>
+
+  <style>
+    <![CDATA[
+      .opt-btn { cursor: pointer; }
+      .opt-btn rect { transition: filter 0.15s; }
+      .opt-btn:hover rect { filter: brightness(0.94); }
+      .opt-btn text { pointer-events: none; }
+      .glow-diamond polygon { stroke-width: 4; stroke: #ff1744 !important; }
+      .glow-diamond { animation: fig5glow 1.3s ease-in-out infinite; }
+      @keyframes fig5glow {
+        0%, 100% { filter: drop-shadow(0 0 4px #ff1744) drop-shadow(0 0 9px #ff1744); }
+        50%      { filter: drop-shadow(0 0 13px #ff1744) drop-shadow(0 0 22px #ff1744); }
+      }
+    ]]>
+  </style>
+
+  <script>
+    <![CDATA[
+      function fig5SetGlow(id){
+        document.querySelectorAll('.glow-target').forEach(function(el){
+          el.classList.remove('glow-diamond');
+        });
+        if(id){
+          var el = document.getElementById(id);
+          if(el){ el.classList.add('glow-diamond'); }
+        }
+      }
+    ]]>
+  </script>
+
+  <!-- Title -->
+  <text x="680" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">Figure 5 — General Server Response Behaviour</text>
+  <text x="680" y="46" text-anchor="middle" font-size="10.5" fill="#607d8b">Mandatory pre-requisite checks every request undergoes, before the service's own response table (or Figure 6, for services with a sub-function).</text>
+
+  <!-- Control panel -->
+  <text x="20" y="66" font-size="10.5" font-weight="bold" fill="#263238">Highlight a check:</text>
+
+  <!-- Row 1 -->
+  <g class="opt-btn" onclick="fig5SetGlow(null)">
+    <rect x="20" y="72" width="310" height="28" rx="6" fill="#f7f9fb" stroke="#90a4ae"/>
+    <text x="175" y="90" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#455a64">Reset</text>
+  </g>
+  <g class="opt-btn" onclick="fig5SetGlow('dia-busy')">
+    <rect x="350" y="72" width="310" height="28" rx="6" fill="#eceff1" stroke="#607d8b"/>
+    <text x="505" y="90" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#455a64">Option 1 — Server is busy?</text>
+  </g>
+  <g class="opt-btn" onclick="fig5SetGlow('dia-mfg1')">
+    <rect x="680" y="72" width="310" height="28" rx="6" fill="#ede7f6" stroke="#5e35b1"/>
+    <text x="835" y="90" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#5e35b1">Option 2 — Manufacturer failure?</text>
+  </g>
+  <g class="opt-btn" onclick="fig5SetGlow('dia-sidsup')">
+    <rect x="1010" y="72" width="310" height="28" rx="6" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="1165" y="90" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1565c0">Option 3 — SID supported?</text>
+  </g>
+
+  <!-- Row 2 -->
+  <g class="opt-btn" onclick="fig5SetGlow('dia-sidactive')">
+    <rect x="20" y="106" width="310" height="28" rx="6" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="175" y="124" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1565c0">Option 4 — SID active in session?</text>
+  </g>
+  <g class="opt-btn" onclick="fig5SetGlow('dia-sec')">
+    <rect x="350" y="106" width="310" height="28" rx="6" fill="#eceff1" stroke="#607d8b"/>
+    <text x="505" y="124" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#455a64">Option 5 — SID security check?</text>
+  </g>
+  <g class="opt-btn" onclick="fig5SetGlow('dia-mfg2')">
+    <rect x="680" y="106" width="310" height="28" rx="6" fill="#ede7f6" stroke="#5e35b1"/>
+    <text x="835" y="124" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#5e35b1">Option 6 — Supplier failure?</text>
+  </g>
+  <g class="opt-btn" onclick="fig5SetGlow('dia-subfunc')">
+    <rect x="1010" y="106" width="310" height="28" rx="6" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="1165" y="124" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1565c0">Option 7 — Sub-function branch?</text>
+  </g>
+
+  <!-- Swim-lane dividers + headers -->
+  <line x1="520" y1="146" x2="520" y2="970" stroke="#cfd8dc" stroke-dasharray="4 3"/>
+  <line x1="890" y1="146" x2="890" y2="970" stroke="#cfd8dc" stroke-dasharray="4 3"/>
+  <text x="270" y="158" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">mandatory</text>
+  <text x="705" y="158" text-anchor="middle" font-size="11" font-weight="bold" fill="#607d8b">optional</text>
+  <text x="1115" y="158" text-anchor="middle" font-size="11" font-weight="bold" fill="#5e35b1">manufacturer/supplier specific</text>
+
+  <!-- Start -->
+  <circle cx="220" cy="185" r="13" fill="#263238"/>
+
+  <!-- Connector: start -> diamond1 -->
+  <line x1="233" y1="185" x2="565" y2="185" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+
+  <!-- Diamond 1: Server is busy? (optional) -->
+  <text x="600" y="150" font-size="9.5" font-weight="bold" fill="#e65100">[1]</text>
+  <g id="dia-busy" class="glow-target">
+    <polygon points="650,155 725,185 650,215 575,185" fill="#fff3e0" stroke="#607d8b" stroke-width="1.6"/>
+    <text x="650" y="181" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">Server is</text>
+    <text x="650" y="194" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">busy?</text>
+  </g>
+  <text x="700" y="172" font-size="9" fill="#455a64">YES</text>
+  <line x1="725" y1="185" x2="765" y2="185" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <rect x="765" y="163" width="120" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="825" y="180" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x21</text>
+  <text x="825" y="192" text-anchor="middle" font-size="8" fill="#607d8b">busyRepeatRequest</text>
+
+  <text x="655" y="230" font-size="9" fill="#455a64">NO</text>
+  <path d="M 650,215 L 650,245 L 220,245 L 220,300" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+
+  <!-- Diamond 2: manufacturer specific failure detected? (mfg) -->
+  <line x1="220" y1="300" x2="985" y2="300" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <g id="dia-mfg1" class="glow-target">
+    <polygon points="1080,263 1175,300 1080,337 985,300" fill="#fff3e0" stroke="#5e35b1" stroke-width="1.6"/>
+    <text x="1080" y="291" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">manufacturer</text>
+    <text x="1080" y="303" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">specific failure</text>
+    <text x="1080" y="315" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">detected?</text>
+  </g>
+  <text x="1130" y="287" font-size="9" fill="#455a64">YES</text>
+  <line x1="1175" y1="300" x2="1195" y2="300" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <rect x="1195" y="278" width="115" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="1252" y="295" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0xXX</text>
+  <text x="1252" y="307" text-anchor="middle" font-size="8" fill="#607d8b">manufacturer-specific</text>
+
+  <text x="1085" y="352" font-size="9" fill="#455a64">NO</text>
+  <path d="M 1080,337 L 1080,365 L 220,365 L 220,402" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+
+  <!-- Diamond 3: SID supported? (mandatory) -->
+  <g id="dia-sidsup" class="glow-target">
+    <polygon points="220,402 295,430 220,458 145,430" fill="#fff3e0" stroke="#1565c0" stroke-width="1.6"/>
+    <text x="220" y="434" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">SID supported?</text>
+  </g>
+  <text x="255" y="418" font-size="9" fill="#455a64">NO</text>
+  <line x1="295" y1="430" x2="335" y2="430" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <rect x="335" y="408" width="115" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="392" y="425" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x11</text>
+  <text x="392" y="437" text-anchor="middle" font-size="8" fill="#607d8b">serviceNotSupported</text>
+
+  <text x="228" y="475" font-size="9" fill="#455a64">YES</text>
+  <line x1="220" y1="458" x2="220" y2="528" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+
+  <!-- Diamond 4: SID supported in active session? (mandatory) -->
+  <g id="dia-sidactive" class="glow-target">
+    <polygon points="220,528 305,565 220,602 135,565" fill="#fff3e0" stroke="#1565c0" stroke-width="1.6"/>
+    <text x="220" y="555" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">SID supported</text>
+    <text x="220" y="567" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">in active</text>
+    <text x="220" y="579" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">session?</text>
+  </g>
+  <text x="312" y="558" font-size="9" fill="#455a64">YES</text>
+  <line x1="305" y1="565" x2="570" y2="565" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+
+  <text x="312" y="596" font-size="9" fill="#455a64">NO</text>
+  <path d="M 305,565 L 305,600 L 335,600" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <rect x="335" y="575" width="130" height="52" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="400" y="592" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x7F</text>
+  <text x="400" y="603" text-anchor="middle" font-size="7.5" fill="#607d8b">serviceNotSupported-</text>
+  <text x="400" y="613" text-anchor="middle" font-size="7.5" fill="#607d8b">InActiveSession</text>
+
+  <!-- Diamond 5: SID security check o.k.? (optional) -->
+  <g id="dia-sec" class="glow-target">
+    <polygon points="650,533 730,565 650,597 570,565" fill="#fff3e0" stroke="#607d8b" stroke-width="1.6"/>
+    <text x="650" y="561" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">SID security</text>
+    <text x="650" y="573" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">check o.k.?</text>
+  </g>
+  <text x="700" y="556" font-size="9" fill="#455a64">NO</text>
+  <line x1="730" y1="565" x2="765" y2="565" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <rect x="765" y="543" width="115" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="822" y="560" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0x33</text>
+  <text x="822" y="572" text-anchor="middle" font-size="8" fill="#607d8b">securityAccessDenied</text>
+
+  <text x="655" y="612" font-size="9" fill="#455a64">YES</text>
+  <path d="M 650,597 L 650,630 L 220,630 L 220,700" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+
+  <!-- Diamond 6: supplier specific failure detected? (mfg) -->
+  <line x1="220" y1="700" x2="985" y2="700" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <g id="dia-mfg2" class="glow-target">
+    <polygon points="1080,663 1175,700 1080,737 985,700" fill="#fff3e0" stroke="#5e35b1" stroke-width="1.6"/>
+    <text x="1080" y="691" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">supplier specific</text>
+    <text x="1080" y="703" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">failure</text>
+    <text x="1080" y="715" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">detected?</text>
+  </g>
+  <text x="1130" y="687" font-size="9" fill="#455a64">YES</text>
+  <line x1="1175" y1="700" x2="1195" y2="700" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <rect x="1195" y="678" width="115" height="44" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="1252" y="695" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#c62828">NRC 0xXX</text>
+  <text x="1252" y="707" text-anchor="middle" font-size="8" fill="#607d8b">supplier-specific</text>
+
+  <text x="1085" y="752" font-size="9" fill="#455a64">NO</text>
+  <path d="M 1080,737 L 1080,770 L 220,770 L 220,808" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+
+  <!-- Diamond 7: Service with sub-function, but not SID 0x31? (mandatory) -->
+  <g id="dia-subfunc" class="glow-target">
+    <polygon points="220,808 325,845 220,882 115,845" fill="#fff3e0" stroke="#1565c0" stroke-width="1.6"/>
+    <text x="220" y="828" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">Service with</text>
+    <text x="220" y="840" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">sub-function, but</text>
+    <text x="220" y="852" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">not SID 0x31?</text>
+  </g>
+
+  <text x="90" y="862" font-size="9" fill="#455a64">YES</text>
+  <line x1="115" y1="845" x2="115" y2="908" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <polygon points="80,908 150,908 150,935 115,962 80,935" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.6"/>
+  <text x="115" y="931" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565c0">1</text>
+  <text x="115" y="985" text-anchor="middle" font-size="8.5" fill="#607d8b">→ Figure 6</text>
+
+  <text x="228" y="895" font-size="9" fill="#455a64">NO</text>
+  <path d="M 220,882 L 220,905 L 340,905" fill="none" stroke="#455a64" stroke-width="1.4" marker-end="url(#fig5arrow)"/>
+  <rect x="280" y="905" width="160" height="54" rx="6" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="360" y="928" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">specific SID</text>
+  <text x="360" y="942" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">checks [2]</text>
+
+  <!-- Key / footnotes -->
+  <text x="20" y="1005" font-size="11" font-weight="bold" fill="#263238">Key</text>
+  <text x="20" y="1023" font-size="9.5" fill="#263238">1&#160;&#160;Diagnostic request cannot be accepted because another diagnostic task is already requested and in progress by a different client.</text>
+  <text x="20" y="1039" font-size="9.5" fill="#263238">2&#160;&#160;Refer to the response behaviour (supported negative response codes) of each service.</text>
+
+  <text x="20" y="1065" font-size="9" font-style="italic" fill="#90a4ae">Click an option above to glow (pulse red) the matching diamond. Interactivity requires opening this SVG directly in a browser — it will not</text>
+  <text x="20" y="1078" font-size="9" font-style="italic" fill="#90a4ae">animate when embedded as a static &lt;img&gt;, e.g. inside the built slide deck.</text>
+
+  <text x="20" y="1098" font-size="9.5" font-family="DejaVu Sans Mono, monospace" fill="#607d8b">[ISO 14229-1:2013, Clause 7.5.2, Figure 5]</text>
+</svg>

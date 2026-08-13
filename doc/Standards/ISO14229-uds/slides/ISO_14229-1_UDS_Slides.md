@@ -166,7 +166,22 @@
 
 - Identical message shape either way — only the data source differs.
 
-## Section 4 — UDS in AUTOSAR
+## Section 4 - UDS Service Response procedure
+
+### Mandatory procedure
+
+![Figure 5 — General server response behaviour](../asset/uds-figure5-server-response-behaviour-static.svg)
+
+`[Clause 7.5.2, Figure 5]`
+
+### Procedure when the requests has subfunction
+
+![Figure 6 — Server response behaviour for requests with a sub-function](../asset/uds-figure6-server-response-behaviour-static.svg)
+
+`[Clause 7.5.3, Figure 6]`
+
+
+## Section 5 — UDS in AUTOSAR
 
 ### Two BSW modules implement UDS
 
