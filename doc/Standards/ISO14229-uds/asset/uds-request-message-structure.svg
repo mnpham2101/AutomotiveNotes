@@ -1,5 +1,5 @@
-<svg viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
-  <rect x="0" y="0" width="960" height="520" fill="#ffffff"/>
+<svg viewBox="0 0 960 680" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="680" fill="#ffffff"/>
 
   <!-- Title / subtitle -->
   <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">Request message — A_Data structure (Clause 9.2.2.1, Table 24)</text>
@@ -15,8 +15,9 @@
   <text x="325" y="112" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">SID: DiagnosticSessionControl (DSC)</text>
 
   <rect x="450" y="78" width="350" height="48" fill="#fff3e0" stroke="#f26f21"/>
-  <text x="625" y="98" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">sub-function = [ diagnosticSessionType ]</text>
-  <text x="625" y="112" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">0x00 – 0xFF</text>
+  <text x="625" y="94" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">diagnosticSessionType</text>
+  <text x="625" y="108" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">0x00 – 0xFF</text>
+  <text x="625" y="120" text-anchor="middle" font-size="8.5" font-style="italic" fill="#607d8b">bit 7 = SPRMIB · bits 6–0 = session value</text>
 
   <!-- Connectors from byte #2 down to bit-level expansion -->
   <line x1="472" y1="126" x2="472" y2="162" stroke="#f26f21" stroke-dasharray="4,3"/>
@@ -29,74 +30,82 @@
 
   <!-- Bit-level boxes -->
   <rect x="450" y="180" width="44" height="44" fill="#eceff1" stroke="#90a4ae"/>
-  <text x="472" y="199" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">SPRMIB</text>
-  <text x="472" y="211" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">0x80</text>
+  <text x="472" y="206" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#263238">SPRMIB</text>
 
   <rect x="494" y="180" width="306" height="44" fill="#e8f5e9" stroke="#2e7d32"/>
-  <text x="647" y="199" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">diagnosticSessionType</text>
-  <text x="647" y="212" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">one 7-bit field, 0x00 – 0x7F</text>
+  <text x="647" y="206" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">bits 6 – 0</text>
 
   <!-- Note -->
-  <text x="20" y="240" font-size="10" fill="#263238">Bit 7 = SPRMIB (single flag bit). Bits 6-0 together form ONE 7-bit number — a session is a value of that whole field (Table 25), not an individual bit.</text>
+  <text x="20" y="240" font-size="10" fill="#263238">diagnosticSessionType (Table 24) is the whole sub-function byte. Bit 7 = SPRMIB toggles whether the positive response is</text>
+  <text x="20" y="254" font-size="10" fill="#263238">suppressed — it does not change which session is requested. Bits 6-0 carry the session value the client is requesting.</text>
+  <text x="20" y="267" font-size="10" fill="#263238">Table 25 (below) lists session values assuming SPRMIB = 0; with SPRMIB = 1, add 0x80 to get the actual byte, e.g. 0x81.</text>
 
-  <!-- Connector down to reference table -->
-  <line x1="647" y1="254" x2="647" y2="268" stroke="#2e7d32" marker-end="url(#arrow)"/>
-  <defs>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
-      <path d="M0,0 L8,4 L0,8 Z" fill="#2e7d32"/>
-    </marker>
-  </defs>
+  <!-- Worked example -->
+  <text x="480" y="292" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#263238">Worked example — composing diagnosticSessionType (SPRMIB | session value)</text>
 
-  <text x="480" y="284" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">diagnosticSessionType field values (Clause 9.2.2.2, Table 25)</text>
+  <rect x="20" y="302" width="190" height="28" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="115" y="320" text-anchor="middle" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0000 0001</text>
+  <text x="222" y="312" font-size="10.5" font-weight="bold" fill="#263238">= 0x01</text>
+  <text x="222" y="325" font-size="9" fill="#607d8b">SPRMIB=0 (positive response expected) · session value = 0x01 (defaultSession) → diagnosticSessionType = 0x01</text>
+
+  <rect x="20" y="336" width="190" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="115" y="354" text-anchor="middle" font-size="10.5" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">1000 0001</text>
+  <text x="222" y="346" font-size="10.5" font-weight="bold" fill="#263238">= 0x81</text>
+  <text x="222" y="359" font-size="9" fill="#607d8b">SPRMIB=1 (positive response suppressed) · session value = 0x01 (defaultSession) → diagnosticSessionType = 0x81</text>
+
+  <text x="20" y="382" font-size="10" fill="#263238">diagnosticSessionType is the full byte the client sends (Table 24) — the same name Table 25 uses for its 7-bit session values assumes SPRMIB = 0.</text>
+
+  <text x="480" y="406" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">diagnosticSessionType field values (Clause 9.2.2.2, Table 25)</text>
+  <text x="480" y="420" text-anchor="middle" font-size="9" font-style="italic" fill="#607d8b">— values below assume SPRMIB = 0; add 0x80 to each when SPRMIB = 1</text>
 
   <!-- Reference table: column 1 -->
-  <rect x="20" y="296" width="90" height="32" fill="#ffffff" stroke="#cfd8dc"/>
-  <text x="30" y="316" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x00</text>
-  <rect x="110" y="296" width="360" height="32" fill="#ffffff" stroke="#cfd8dc"/>
-  <text x="120" y="316" font-size="11" fill="#263238">ISOSAEReserved</text>
+  <rect x="20" y="436" width="90" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="30" y="456" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x00</text>
+  <rect x="110" y="436" width="360" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="120" y="456" font-size="11" fill="#263238">ISOSAEReserved</text>
 
-  <rect x="20" y="332" width="90" height="32" fill="#e8f5e9" stroke="#2e7d32"/>
-  <text x="30" y="352" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x01</text>
-  <rect x="110" y="332" width="360" height="32" fill="#e8f5e9" stroke="#2e7d32"/>
-  <text x="120" y="352" font-size="11" fill="#263238">defaultSession (DS)</text>
+  <rect x="20" y="472" width="90" height="32" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="30" y="492" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x01</text>
+  <rect x="110" y="472" width="360" height="32" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="120" y="492" font-size="11" fill="#263238">defaultSession (DS)</text>
 
-  <rect x="20" y="368" width="90" height="32" fill="#fff3e0" stroke="#f26f21"/>
-  <text x="30" y="388" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x02</text>
-  <rect x="110" y="368" width="360" height="32" fill="#fff3e0" stroke="#f26f21"/>
-  <text x="120" y="388" font-size="11" fill="#263238">programmingSession (PRGS)</text>
+  <rect x="20" y="508" width="90" height="32" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="30" y="528" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x02</text>
+  <rect x="110" y="508" width="360" height="32" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="120" y="528" font-size="11" fill="#263238">programmingSession (PRGS)</text>
 
-  <rect x="20" y="404" width="90" height="32" fill="#e3f2fd" stroke="#1565c0"/>
-  <text x="30" y="424" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x03</text>
-  <rect x="110" y="404" width="360" height="32" fill="#e3f2fd" stroke="#1565c0"/>
-  <text x="120" y="424" font-size="11" fill="#263238">extendedDiagnosticSession (EXTDS)</text>
+  <rect x="20" y="544" width="90" height="32" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="30" y="564" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x03</text>
+  <rect x="110" y="544" width="360" height="32" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="120" y="564" font-size="11" fill="#263238">extendedDiagnosticSession (EXTDS)</text>
 
-  <rect x="20" y="440" width="90" height="32" fill="#fce4ec" stroke="#c2185b"/>
-  <text x="30" y="460" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x04</text>
-  <rect x="110" y="440" width="360" height="32" fill="#fce4ec" stroke="#c2185b"/>
-  <text x="120" y="460" font-size="11" fill="#263238">safetySystemDiagnosticSession (SSDS)</text>
+  <rect x="20" y="580" width="90" height="32" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="30" y="600" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x04</text>
+  <rect x="110" y="580" width="360" height="32" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="120" y="600" font-size="11" fill="#263238">safetySystemDiagnosticSession (SSDS)</text>
 
   <!-- Reference table: column 2 -->
-  <rect x="500" y="296" width="90" height="32" fill="#ffffff" stroke="#cfd8dc"/>
-  <text x="510" y="316" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x05–0x3F</text>
-  <rect x="590" y="296" width="350" height="32" fill="#ffffff" stroke="#cfd8dc"/>
-  <text x="600" y="316" font-size="11" fill="#263238">ISOSAEReserved</text>
+  <rect x="500" y="436" width="90" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="510" y="456" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x05–0x3F</text>
+  <rect x="590" y="436" width="350" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="600" y="456" font-size="11" fill="#263238">ISOSAEReserved</text>
 
-  <rect x="500" y="332" width="90" height="32" fill="#ede7f6" stroke="#5e35b1"/>
-  <text x="510" y="352" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x40–0x5F</text>
-  <rect x="590" y="332" width="350" height="32" fill="#ede7f6" stroke="#5e35b1"/>
-  <text x="600" y="352" font-size="11" fill="#263238">vehicleManufacturerSpecific (VMS)</text>
+  <rect x="500" y="472" width="90" height="32" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="510" y="492" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x40–0x5F</text>
+  <rect x="590" y="472" width="350" height="32" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="600" y="492" font-size="11" fill="#263238">vehicleManufacturerSpecific (VMS)</text>
 
-  <rect x="500" y="368" width="90" height="32" fill="#fff9c4" stroke="#f9a825"/>
-  <text x="510" y="388" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x60–0x7E</text>
-  <rect x="590" y="368" width="350" height="32" fill="#fff9c4" stroke="#f9a825"/>
-  <text x="600" y="388" font-size="11" fill="#263238">systemSupplierSpecific (SSS)</text>
+  <rect x="500" y="508" width="90" height="32" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="510" y="528" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x60–0x7E</text>
+  <rect x="590" y="508" width="350" height="32" fill="#fff9c4" stroke="#f9a825"/>
+  <text x="600" y="528" font-size="11" fill="#263238">systemSupplierSpecific (SSS)</text>
 
-  <rect x="500" y="404" width="90" height="32" fill="#ffffff" stroke="#cfd8dc"/>
-  <text x="510" y="424" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x7F</text>
-  <rect x="590" y="404" width="350" height="32" fill="#ffffff" stroke="#cfd8dc"/>
-  <text x="600" y="424" font-size="11" fill="#263238">ISOSAEReserved</text>
+  <rect x="500" y="544" width="90" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="510" y="564" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#263238">0x7F</text>
+  <rect x="590" y="544" width="350" height="32" fill="#ffffff" stroke="#cfd8dc"/>
+  <text x="600" y="564" font-size="11" fill="#263238">ISOSAEReserved</text>
 
   <!-- Footer notes -->
-  <text x="20" y="486" font-size="10" fill="#263238">Each row is a value (or range of values) of the same 7-bit field — the ranges are not tied to any single bit position.</text>
-  <text x="20" y="506" font-size="10" fill="#263238">Positive response echoes the same diagnosticSessionType value: 0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord] (Table 26).</text>
+  <text x="20" y="626" font-size="10" fill="#263238">Each row is a value (or range of values) of the same 7-bit field — the ranges are not tied to any single bit position.</text>
+  <text x="20" y="646" font-size="10" fill="#263238">Positive response echoes the same session value: 0x50 &lt;diagnosticSessionType&gt; [sessionParameterRecord] (Table 26) — SPRMIB is not echoed.</text>
 </svg>
