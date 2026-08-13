@@ -1,5 +1,5 @@
-<svg viewBox="0 0 960 445" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
-  <rect x="0" y="0" width="960" height="445" fill="#ffffff"/>
+<svg viewBox="0 0 960 460" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="460" fill="#ffffff"/>
 
   <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">SecurityAccess — seed and key exchange, A_Data structure (Clause 9.4.2 / 9.4.3, Tables 40, 41 and 44)</text>
   <text x="20" y="48" font-size="10.5" fill="#607d8b">Two request/response pairs. requestSeed values are always odd; the matching sendKey value is requestSeed + 1 (Clause 9.4.2.2).</text>
@@ -35,7 +35,7 @@
 
   <rect x="480" y="148" width="430" height="46" fill="#e8f5e9" stroke="#2e7d32"/>
   <text x="695" y="165" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">securitySeed — seed#1 (high byte) … seed#m (low byte), bytes #3 … #n</text>
-  <text x="695" y="178" text-anchor="middle" font-size="9.5" fill="#263238">0x00 – 0xFF</text>
+  <text x="695" y="178" text-anchor="middle" font-size="9.5" fill="#263238">If locked: non-zero; if already unlocked: 0x00 0x00 ... (all zeros)</text>
   <text x="695" y="189" text-anchor="middle" font-size="8" fill="#607d8b">SECSEED_ · C — present when the request asked for the seed</text>
 
   <!-- Step 2: sendKey -->
@@ -71,25 +71,26 @@
   <text x="695" y="303" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">no securitySeed</text>
   <text x="695" y="318" text-anchor="middle" font-size="8.5" fill="#607d8b">the seed bytes appear only in the response to a requestSeed sub-function (Table 45)</text>
 
-  <text x="20" y="350" font-size="10" fill="#263238">A locked level always returns a NON-ZERO seed; an all-zero seed means that level is already unlocked. The server shall never send an all-zero seed for a locked level (Clause 9.4.1).</text>
+  <text x="20" y="350" font-size="10" fill="#263238">Seed interpretation: NON-ZERO seed = security level is locked and must be unlocked via sendKey. ALL-ZERO seed (0x00 00 00...) = security level is already unlocked (no key needed).</text>
+  <text x="20" y="364" font-size="10" fill="#263238">The server shall never send a non-zero seed for an already-unlocked level (Clause 9.4.1).</text>
 
-  <text x="480" y="370" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">Worked example — level 0x01, seed 0x3657, key 0xC9A9 (Clause 9.4.5.1)</text>
+  <text x="480" y="385" text-anchor="middle" font-size="10" font-weight="bold" fill="#263238">Worked example — level 0x01, seed 0x3657, key 0xC9A9 (Clause 9.4.5.1)</text>
 
-  <rect x="40" y="378" width="200" height="34" fill="#fff3e0" stroke="#f26f21"/>
-  <text x="140" y="393" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">27 01</text>
-  <text x="140" y="406" text-anchor="middle" font-size="8" fill="#607d8b">requestSeed</text>
+  <rect x="40" y="393" width="200" height="34" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="140" y="408" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">27 01</text>
+  <text x="140" y="421" text-anchor="middle" font-size="8" fill="#607d8b">requestSeed</text>
 
-  <rect x="260" y="378" width="200" height="34" fill="#e8f5e9" stroke="#2e7d32"/>
-  <text x="360" y="393" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">67 01 36 57</text>
-  <text x="360" y="406" text-anchor="middle" font-size="8" fill="#607d8b">seed = 0x3657</text>
+  <rect x="260" y="393" width="200" height="34" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="360" y="408" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">67 01 36 57</text>
+  <text x="360" y="421" text-anchor="middle" font-size="8" fill="#607d8b">seed = 0x3657</text>
 
-  <rect x="480" y="378" width="200" height="34" fill="#ede7f6" stroke="#5e35b1"/>
-  <text x="580" y="393" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">27 02 C9 A9</text>
-  <text x="580" y="406" text-anchor="middle" font-size="8" fill="#607d8b">sendKey, key = 0xC9A9</text>
+  <rect x="480" y="393" width="200" height="34" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="580" y="408" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">27 02 C9 A9</text>
+  <text x="580" y="421" text-anchor="middle" font-size="8" fill="#607d8b">sendKey, key = 0xC9A9</text>
 
-  <rect x="700" y="378" width="210" height="34" fill="#e8f5e9" stroke="#2e7d32"/>
-  <text x="805" y="393" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">67 02</text>
-  <text x="805" y="406" text-anchor="middle" font-size="8" fill="#607d8b">key valid — level unlocked</text>
+  <rect x="700" y="393" width="210" height="34" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="805" y="408" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">67 02</text>
+  <text x="805" y="421" text-anchor="middle" font-size="8" fill="#607d8b">key valid — level unlocked</text>
 
-  <text x="20" y="432" font-size="10" fill="#263238">Only one security level is active at a time: unlocking a new level deactivates whatever was unlocked before. An invalid key restarts the sequence from requestSeed (Clause 9.4.1, Annex I).</text>
+  <text x="20" y="447" font-size="10" fill="#263238">Only one security level is active at a time: unlocking a new level deactivates whatever was unlocked before. An invalid key restarts the sequence from requestSeed (Clause 9.4.1, Annex I).</text>
 </svg>
