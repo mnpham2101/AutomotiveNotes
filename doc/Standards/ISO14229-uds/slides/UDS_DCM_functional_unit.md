@@ -40,12 +40,19 @@
 
 ![Clause 9.2.1, Figure 7 — Server diagnostic session state diagram](../asset/uds-figure7-session-state-diagram.svg)
 
+### Session Transition Behavior (cont)
+
 | Label | Transition | Server Action |
 |:---:|---|---|
 | **1** | `default` → `default` (re-request) | <br> Full re-initialization of the session; <br> reset all activated/changed settings, <br>  no changes to non-volatile memory |
 | **2** | `default` → `other` | Stop all events configured via `ResponseOnEvent` (0x86) |
 | **3** | `other` → `other` (same or different) | <br>  Stop RoE events; <br>  **re-lock security** and reset any dependent active diagnostic functionality; <br>  keep other active functionality (e.g. periodic scheduler, CommunicationControl, ControlDTCSetting) |
 | **4** | `other` → `default` | <br> Stop all events configured via `ResponseOnEvent` (0x86); <br> terminate/reset functionality not supported in defaultSession (e.g. restore normal communication, DTC setting); <br> no changes to non-volative memory |
+
+Notes:
+
+* transition from session 2 to session 3 is not possible (return NRC)
+* transition from session 3 to session 2 is possilble
 
 ### Non-default Session Expiry
 
@@ -119,9 +126,9 @@
 Clause 9.2.2.2, Table 25 — 0x02 programmingSession:
 
 - Only exit routes when `programmingSession` runs in **boot software**:
-  1. `ECUReset` (0x11) initiated by client
-  2. `DiagnosticSessionControl` with `sessionType = defaultSession`
-  3. Session layer timeout
+    1. `ECUReset` (0x11) initiated by client
+    2. `DiagnosticSessionControl` with `sessionType = defaultSession`
+    3. Session layer timeout
 - On exit (defaultSession request or timeout), if valid application software exists → server **restarts the application**
 
 ## Section 2 — ECU Reset Service
