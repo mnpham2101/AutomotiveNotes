@@ -1,0 +1,34 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-rdtci-list-structure" id="uds-rdtci-list-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="320" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="ReadDTCInformation 0x02 — reportDTCByStatusMask (Clause 11.3.2 / 11.3.3, Table 272)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="&quot;List&quot; shape — shared with 0x0A–0x0E, 0x0F, 0x13, 0x15: same request as 0x01, but the response repeats one block per matching DTC."><mxGeometry x="20" y="40" width="920" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#f26f21;fontFamily=DejaVu Sans;fontStyle=1;" value="Request — client → server (Table 256) — identical shape to 0x01"><mxGeometry x="40" y="66" width="700" height="14" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="SID&#10;0x19"><mxGeometry x="40" y="82" width="90" height="42" as="geometry" /></mxCell>
+        <mxCell id="e5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="reportType&#10;0x02"><mxGeometry x="140" y="82" width="150" height="42" as="geometry" /></mxCell>
+        <mxCell id="e6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCStatusMask&#10;0x00 – 0xFF"><mxGeometry x="300" y="82" width="150" height="42" as="geometry" /></mxCell>
+
+        <mxCell id="e7" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;" value="Positive response — server → client (Table 272)"><mxGeometry x="40" y="144" width="540" height="14" as="geometry" /></mxCell>
+        <mxCell id="e8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="SID&#10;0x59"><mxGeometry x="40" y="160" width="90" height="42" as="geometry" /></mxCell>
+        <mxCell id="e9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="reportType echo&#10;0x02"><mxGeometry x="140" y="160" width="110" height="42" as="geometry" /></mxCell>
+        <mxCell id="e10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=8.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCStatusAvailabilityMask&#10;DTCSAM · M"><mxGeometry x="260" y="160" width="170" height="42" as="geometry" /></mxCell>
+
+        <mxCell id="e11" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#90a4ae;dashed=1;" value=""><mxGeometry x="450" y="160" width="470" height="42" as="geometry" /></mxCell>
+        <mxCell id="e12" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="repeats once per matching DTC — 0 or more times (C1/C2, Table 272)"><mxGeometry x="450" y="140" width="470" height="14" as="geometry" /></mxCell>
+        <mxCell id="e13" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=8.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="DTC [ HighByte, MiddleByte, LowByte ]"><mxGeometry x="458" y="166" width="220" height="30" as="geometry" /></mxCell>
+        <mxCell id="e14" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f7fa;strokeColor=#00838f;fontSize=8.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="statusOfDTC — SODTC"><mxGeometry x="686" y="166" width="220" height="30" as="geometry" /></mxCell>
+
+        <mxCell id="e15" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Each DTCAndStatusRecord is exactly 4 bytes: the 3-byte DTC number plus its 1-byte statusOfDTC. A given DTC never repeats within one response."><mxGeometry x="20" y="220" width="920" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e16" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Example (Clause 11.3.5.3, Tables 295–296) — request 19 02 84, two of three stored DTCs match:"><mxGeometry x="20" y="246" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="e17" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#cfd8dc;fontSize=9.5;align=left;verticalAlign=middle;spacingLeft=10;fontColor=#263238;fontFamily=DejaVu Sans Mono;" value="59 02 7F | 0A 9B 17 24 | 08 05 11 2F"><mxGeometry x="20" y="266" width="920" height="24" as="geometry" /></mxCell>
+        <mxCell id="e18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DTCSAM=0x7F, then DTC 0x0A9B17/status 0x24, then DTC 0x080511/status 0x2F. DTC 0x25221F (status 0x00) is dropped — it does not match mask 0x84."><mxGeometry x="20" y="292" width="920" height="16" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

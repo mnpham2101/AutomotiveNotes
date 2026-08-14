@@ -1,0 +1,52 @@
+<svg viewBox="0 0 960 320" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="320" fill="#ffffff"/>
+
+  <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">ReadDTCInformation 0x02 — reportDTCByStatusMask (Clause 11.3.2 / 11.3.3, Table 272)</text>
+  <text x="20" y="48" font-size="10.5" fill="#607d8b">"List" shape — shared with 0x0A–0x0E, 0x0F, 0x13, 0x15: same request as 0x01, but the response repeats one block per matching DTC.</text>
+
+  <!-- Request -->
+  <text x="40" y="76" font-size="9.5" font-weight="bold" fill="#f26f21">Request — client → server (Table 256) — identical shape to 0x01</text>
+  <rect x="40" y="82" width="90" height="42" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="85" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">SID</text>
+  <text x="85" y="111" text-anchor="middle" font-size="9" fill="#263238">0x19</text>
+
+  <rect x="140" y="82" width="150" height="42" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="215" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">reportType</text>
+  <text x="215" y="111" text-anchor="middle" font-size="9" fill="#263238">0x02</text>
+
+  <rect x="300" y="82" width="150" height="42" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="375" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">DTCStatusMask</text>
+  <text x="375" y="111" text-anchor="middle" font-size="9" fill="#263238">0x00 – 0xFF</text>
+
+  <!-- Response -->
+  <text x="40" y="154" font-size="9.5" font-weight="bold" fill="#2e7d32">Positive response — server → client (Table 272)</text>
+  <rect x="40" y="160" width="90" height="42" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="85" y="177" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">SID</text>
+  <text x="85" y="189" text-anchor="middle" font-size="9" fill="#263238">0x59</text>
+
+  <rect x="140" y="160" width="110" height="42" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="195" y="177" text-anchor="middle" font-size="9" fill="#263238">reportType echo</text>
+  <text x="195" y="189" text-anchor="middle" font-size="9" fill="#263238">0x02</text>
+
+  <rect x="260" y="160" width="170" height="42" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="345" y="174" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#263238">DTCStatusAvailabilityMask</text>
+  <text x="345" y="188" text-anchor="middle" font-size="9" fill="#263238">DTCSAM · M</text>
+
+  <!-- Repeating block -->
+  <rect x="450" y="160" width="470" height="42" fill="#ffffff" stroke="#90a4ae" stroke-dasharray="3 3"/>
+  <text x="685" y="150" text-anchor="middle" font-size="9" fill="#90a4ae">repeats once per matching DTC — 0 or more times (C1/C2, Table 272)</text>
+
+  <rect x="458" y="166" width="220" height="30" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="568" y="185" text-anchor="middle" font-size="8.5" fill="#263238">DTC [ HighByte, MiddleByte, LowByte ]</text>
+
+  <rect x="686" y="166" width="220" height="30" fill="#e0f7fa" stroke="#00838f"/>
+  <text x="796" y="185" text-anchor="middle" font-size="8.5" fill="#263238">statusOfDTC — SODTC</text>
+
+  <text x="20" y="232" font-size="10" fill="#263238">Each DTCAndStatusRecord is exactly 4 bytes: the 3-byte DTC number plus its 1-byte statusOfDTC. A given DTC never repeats within one response.</text>
+
+  <!-- Worked example -->
+  <text x="20" y="258" font-size="10" font-weight="bold" fill="#263238">Example (Clause 11.3.5.3, Tables 295–296) — request 19 02 84, two of three stored DTCs match:</text>
+  <rect x="20" y="266" width="920" height="24" fill="#f7f9fb" stroke="#cfd8dc"/>
+  <text x="30" y="282" font-size="9.5" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">59 02 7F | 0A 9B 17 24 | 08 05 11 2F</text>
+  <text x="20" y="306" font-size="9.5" fill="#607d8b">DTCSAM=0x7F, then DTC 0x0A9B17/status 0x24, then DTC 0x080511/status 0x2F. DTC 0x25221F (status 0x00) is dropped — it does not match mask 0x84.</text>
+</svg>

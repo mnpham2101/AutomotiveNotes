@@ -1,0 +1,27 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-cdi-message-structure" id="uds-cdi-message-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="260" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="ClearDiagnosticInformation (0x14) — request and positive response (Clause 11.2, Tables 250, 252)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Request = 0x14 plus a 3-byte groupOfDTC; there is no sub-function byte. The positive response is the SID alone — no data-parameters at all."><mxGeometry x="20" y="40" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Request -->
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#f26f21;fontFamily=DejaVu Sans;fontStyle=1;" value="Request — client → server (Table 250)"><mxGeometry x="40" y="66" width="540" height="14" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="ClearDiagnosticInformation&#10;0x14&#10;CDTCI · M — A_Data byte #1"><mxGeometry x="40" y="82" width="140" height="50" as="geometry" /></mxCell>
+        <mxCell id="e5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="groupOfDTC [ HighByte, MiddleByte, LowByte ]&#10;0x00 – 0xFF each&#10;GODTC_ · M — A_Data bytes #2–#4"><mxGeometry x="200" y="82" width="340" height="50" as="geometry" /></mxCell>
+
+        <!-- Response -->
+        <mxCell id="e6" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;" value="Positive response — server → client (Table 252)"><mxGeometry x="40" y="148" width="540" height="14" as="geometry" /></mxCell>
+        <mxCell id="e7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="ClearDiagnosticInformation&#10;0x54&#10;CDTCIPR · M — A_Data byte #1"><mxGeometry x="40" y="164" width="140" height="50" as="geometry" /></mxCell>
+        <mxCell id="e8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;dashed=1;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#607d8b;fontFamily=DejaVu Sans;fontStyle=1;" value="no data-parameters&#10;the SID alone is the whole response — 1 byte total"><mxGeometry x="200" y="164" width="340" height="50" as="geometry" /></mxCell>
+
+        <!-- Footer -->
+        <mxCell id="e9" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="The server answers positively even when no DTCs are stored, and clears only the status copy used by ReadDTCInformation — the optional DTC mirror memory (11.3) is untouched (Clause 11.2.1)."><mxGeometry x="20" y="228" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="e10" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Example (Tables 254–255): 14 FF FF 33 — clear the &quot;Emissions-related systems&quot; group → positive response 54."><mxGeometry x="20" y="242" width="920" height="16" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

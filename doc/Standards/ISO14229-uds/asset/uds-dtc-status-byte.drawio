@@ -1,0 +1,52 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-dtc-status-byte" id="uds-dtc-status-byte">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="340" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="statusOfDTC / DTCStatusMask — the 8-bit DTC status byte (Annex D.2, Table 270)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Same byte layout for both directions: DTCStatusMask filters a request, statusOfDTC reports a DTC's actual state. A match occurs if (mask AND status) ≠ 0."><mxGeometry x="20" y="40" width="920" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="b7l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 7"><mxGeometry x="20" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="warningIndicatorRequested&#10;&#10;WIR"><mxGeometry x="20" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="b6l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 6"><mxGeometry x="134" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="testNotCompletedThisOperationCycle&#10;&#10;TNCTOC"><mxGeometry x="134" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="b5l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 5"><mxGeometry x="248" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="testFailedSinceLastClear&#10;&#10;TFSLC"><mxGeometry x="248" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="b4l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 4"><mxGeometry x="362" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="testNotCompletedSinceLastClear&#10;&#10;TNCSLC"><mxGeometry x="362" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="b3l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 3"><mxGeometry x="476" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b3" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="confirmedDTC&#10;&#10;CDTC"><mxGeometry x="476" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="b2l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 2"><mxGeometry x="590" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b2" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="pendingDTC&#10;&#10;PDTC"><mxGeometry x="590" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="b1l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 1"><mxGeometry x="704" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b1" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="testFailedThisOperationCycle&#10;&#10;TFTOC"><mxGeometry x="704" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="b0l" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="bit 0"><mxGeometry x="818" y="60" width="108" height="14" as="geometry" /></mxCell>
+        <mxCell id="b0" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="testFailed&#10;&#10;TF"><mxGeometry x="818" y="76" width="108" height="56" as="geometry" /></mxCell>
+
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="If the client's DTCStatusMask requests bits the server does not support, the server evaluates the match using only the bits it supports (Table 270)."><mxGeometry x="20" y="144" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Every count/list response also carries DTCStatusAvailabilityMask — which of these 8 bits this server actually implements (Tables 271–272)."><mxGeometry x="20" y="160" width="920" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e5" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Example (11.3.5.2, Table 289)"><mxGeometry x="20" y="190" width="260" height="16" as="geometry" /></mxCell>
+        <mxCell id="e6" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DTC P2522-1F &quot;A/C Request B — circuit intermittent&quot;, statusOfDTC = 0x2F"><mxGeometry x="280" y="190" width="600" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=11;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans Mono;fontStyle=1;" value="0010 1111"><mxGeometry x="20" y="210" width="150" height="28" as="geometry" /></mxCell>
+        <mxCell id="e8" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="= 0x2F → bits 5,3,2,1,0 set: TFSLC, CDTC, PDTC, TFTOC, TF all &quot;1&quot; — a confirmed, currently-failing DTC"><mxGeometry x="190" y="214" width="750" height="20" as="geometry" /></mxCell>
+
+        <mxCell id="e9" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="A client mask of 0x08 (confirmedDTC only) matches this DTC: (0x08 AND 0x2F) = 0x08 ≠ 0."><mxGeometry x="20" y="248" width="900" height="16" as="geometry" /></mxCell>
+        <mxCell id="e10" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="A client mask of 0x84 (warningIndicatorRequested OR confirmedDTC) also matches: (0x84 AND 0x2F) = 0x04 ≠ 0."><mxGeometry x="20" y="264" width="900" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e11" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Bit-state definitions and reset conditions for each bit are given individually in Annex D.2.3 (Table D.3 – D.10, Figures D.1 – D.8)."><mxGeometry x="20" y="296" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="e12" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DTCSeverityMask / DTCSeverity is a separate 1-byte field (bits 7-5 severity, bits 4-0 class) — see Annex D.3."><mxGeometry x="20" y="312" width="920" height="16" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

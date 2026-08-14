@@ -1,0 +1,72 @@
+<svg viewBox="0 0 960 460" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="460" fill="#ffffff"/>
+
+  <text x="480" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">ReadDTCInformation — snapshot family: 0x03 catalog vs 0x04 record data (Tables 257, 273, 274)</text>
+  <text x="20" y="44" font-size="10.5" fill="#607d8b">0x03 tells the client WHICH DTCSnapshot records exist; 0x04 fetches the DATA for ONE of them. Recommended: call 0x03 first, then 0x04 per record.</text>
+
+  <!-- Panel 1: 0x03 -->
+  <text x="20" y="66" font-size="10" font-weight="bold" fill="#f26f21">reportDTCSnapshotIdentification (0x03) — Request (Table 257) — 2 bytes, no DTC filter</text>
+  <rect x="20" y="72" width="80" height="36" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="60" y="94" text-anchor="middle" font-size="9" fill="#263238">SID 0x19</text>
+  <rect x="110" y="72" width="130" height="36" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="175" y="94" text-anchor="middle" font-size="9" fill="#263238">reportType 0x03</text>
+
+  <text x="20" y="126" font-size="10" font-weight="bold" fill="#2e7d32">Positive response (Table 273)</text>
+  <rect x="20" y="132" width="70" height="36" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="55" y="154" text-anchor="middle" font-size="9" fill="#263238">0x59</text>
+  <rect x="96" y="132" width="90" height="36" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="141" y="154" text-anchor="middle" font-size="9" fill="#263238">0x03 echo</text>
+
+  <text x="422" y="126" text-anchor="middle" font-size="9" fill="#90a4ae">repeats once per stored snapshot record — 0..n times</text>
+  <rect x="192" y="132" width="440" height="36" fill="#ffffff" stroke="#90a4ae" stroke-dasharray="3 3"/>
+  <rect x="200" y="138" width="210" height="24" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="305" y="154" text-anchor="middle" font-size="8.5" fill="#263238">DTC [ HighByte, MiddleByte, LowByte ]</text>
+  <rect x="418" y="138" width="206" height="24" fill="#e0f7fa" stroke="#00838f"/>
+  <text x="521" y="154" text-anchor="middle" font-size="8.5" fill="#263238">DTCSnapshotRecordNumber</text>
+
+  <rect x="20" y="180" width="920" height="24" fill="#f7f9fb" stroke="#cfd8dc"/>
+  <text x="28" y="196" font-size="9" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">Example (11.3.5.5): 19 03  →  59 03 | 12 34 56 01 | 12 34 56 02 | 78 9A BC 01</text>
+
+  <text x="20" y="222" font-size="9.5" fill="#607d8b">DTC + record number ONLY — no status, no data. Three records here: DTC 0x123456 has two (#1, #2), DTC 0x789ABC has one (#1).</text>
+
+  <line x1="20" y1="238" x2="940" y2="238" stroke="#cfd8dc" stroke-width="1"/>
+
+  <!-- Panel 2: 0x04 -->
+  <text x="20" y="260" font-size="10" font-weight="bold" fill="#f26f21">reportDTCSnapshotRecordByDTCNumber (0x04) — Request (Table 257) — targets one DTC + one record</text>
+  <rect x="20" y="266" width="70" height="36" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="55" y="288" text-anchor="middle" font-size="9" fill="#263238">0x19</text>
+  <rect x="96" y="266" width="90" height="36" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="141" y="288" text-anchor="middle" font-size="9" fill="#263238">reportType 0x04</text>
+  <rect x="192" y="266" width="180" height="36" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="282" y="288" text-anchor="middle" font-size="8.5" fill="#263238">DTCMaskRecord [ HB, MB, LB ]</text>
+  <rect x="378" y="266" width="200" height="36" fill="#e0f7fa" stroke="#00838f"/>
+  <text x="478" y="282" text-anchor="middle" font-size="8" fill="#263238">DTCSnapshotRecordNumber</text>
+  <text x="478" y="294" text-anchor="middle" font-size="7.5" fill="#607d8b">0xFF = all records for this DTC</text>
+
+  <text x="20" y="326" font-size="10" font-weight="bold" fill="#2e7d32">Positive response (Table 274)</text>
+  <rect x="20" y="332" width="60" height="40" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="50" y="354" text-anchor="middle" font-size="9" fill="#263238">0x59</text>
+  <rect x="84" y="332" width="80" height="40" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="124" y="354" text-anchor="middle" font-size="9" fill="#263238">0x04</text>
+  <rect x="168" y="332" width="150" height="40" fill="#fce4ec" stroke="#c2185b"/>
+  <text x="243" y="350" text-anchor="middle" font-size="8" fill="#263238">DTC +</text>
+  <text x="243" y="362" text-anchor="middle" font-size="8" fill="#263238">statusOfDTC</text>
+  <rect x="322" y="332" width="80" height="40" fill="#e0f7fa" stroke="#00838f"/>
+  <text x="362" y="354" text-anchor="middle" font-size="8" fill="#263238">record #</text>
+  <rect x="406" y="332" width="80" height="40" fill="#ede7f6" stroke="#5e35b1"/>
+  <text x="446" y="350" text-anchor="middle" font-size="7.5" fill="#263238">#data</text>
+  <text x="446" y="362" text-anchor="middle" font-size="7.5" fill="#263238">identifiers</text>
+
+  <text x="712" y="326" text-anchor="middle" font-size="9" fill="#90a4ae">repeats once per dataIdentifier in the record</text>
+  <rect x="494" y="332" width="436" height="40" fill="#ffffff" stroke="#90a4ae" stroke-dasharray="3 3"/>
+  <rect x="502" y="338" width="150" height="28" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="577" y="356" text-anchor="middle" font-size="8" fill="#263238">dataIdentifier</text>
+  <rect x="660" y="338" width="262" height="28" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="791" y="356" text-anchor="middle" font-size="8" fill="#263238">snapshotData bytes</text>
+
+  <rect x="20" y="384" width="920" height="24" fill="#f7f9fb" stroke="#cfd8dc"/>
+  <text x="28" y="400" font-size="9" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">Example (11.3.5.6): 19 04 12 34 56 02  →  59 04 | 12 34 56 24 | 02 | 01 | 47 11 | A6 66 07 50 20</text>
+
+  <text x="20" y="426" font-size="9.5" fill="#607d8b">One DTC's record: status + record# + repeating (dataIdentifier, snapshotData). Record #2 of DTC 0x123456 (status 0x24), DID 0x4711, 5 data bytes.</text>
+  <text x="20" y="444" font-size="9.5" fill="#607d8b">0x03 never carries statusOfDTC or data; 0x04 always targets exactly one DTC and, unless 0xFF, exactly one record.</text>
+</svg>

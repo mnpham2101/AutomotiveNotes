@@ -1,0 +1,34 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-rdtci-extdata-structure" id="uds-rdtci-extdata-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="ReadDTCInformation 0x06 — reportDTCExtDataRecordByDTCNumber (Clause 11.3.2 / 11.3.3, Table 276)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="One DTC in (DTCMaskRecord); DTC+status echoed once, then a record repeats per DTCExtDataRecordNumber returned."><mxGeometry x="20" y="32" width="920" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#f26f21;fontFamily=DejaVu Sans;fontStyle=1;" value="Request (Table 259) — names one DTC and one record (or 0xFE/0xFF for all)"><mxGeometry x="20" y="54" width="700" height="14" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="0x19"><mxGeometry x="20" y="74" width="70" height="38" as="geometry" /></mxCell>
+        <mxCell id="e5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="reportType 0x06"><mxGeometry x="96" y="74" width="110" height="38" as="geometry" /></mxCell>
+        <mxCell id="e6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=8.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="DTCMaskRecord [ HB, MB, LB ]"><mxGeometry x="212" y="74" width="180" height="38" as="geometry" /></mxCell>
+        <mxCell id="e7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f7fa;strokeColor=#00838f;fontSize=8;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="DTCExtDataRecordNumber&#10;0xFE = all OBD, 0xFF = all"><mxGeometry x="398" y="74" width="200" height="38" as="geometry" /></mxCell>
+
+        <mxCell id="e8" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;" value="Positive response (Table 276)"><mxGeometry x="20" y="128" width="300" height="14" as="geometry" /></mxCell>
+        <mxCell id="e9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="0x59"><mxGeometry x="20" y="146" width="60" height="40" as="geometry" /></mxCell>
+        <mxCell id="e10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="0x06"><mxGeometry x="84" y="146" width="80" height="40" as="geometry" /></mxCell>
+        <mxCell id="e11" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=8;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="DTC +&#10;statusOfDTC"><mxGeometry x="168" y="146" width="150" height="40" as="geometry" /></mxCell>
+
+        <mxCell id="e12" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="repeats once per DTCExtDataRecordNumber returned — 1 unless 0xFE/0xFF requested"><mxGeometry x="322" y="128" width="608" height="14" as="geometry" /></mxCell>
+        <mxCell id="e13" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#90a4ae;dashed=1;" value=""><mxGeometry x="322" y="146" width="608" height="40" as="geometry" /></mxCell>
+        <mxCell id="e14" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f7fa;strokeColor=#00838f;fontSize=8;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="DTCExtDataRecordNumber"><mxGeometry x="330" y="152" width="150" height="28" as="geometry" /></mxCell>
+        <mxCell id="e15" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=8;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="extendedData bytes — manufacturer-defined, not part of ISO 14229-1"><mxGeometry x="488" y="152" width="434" height="28" as="geometry" /></mxCell>
+
+        <mxCell id="e16" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7f9fb;strokeColor=#cfd8dc;fontSize=9;align=left;verticalAlign=middle;spacingLeft=8;fontColor=#263238;fontFamily=DejaVu Sans Mono;" value="Example (11.3.5.8): 19 06 12 34 56 FF  →  59 06 | 12 34 56 24 | 05 17 | 10 79"><mxGeometry x="20" y="200" width="920" height="24" as="geometry" /></mxCell>
+
+        <mxCell id="e17" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="DTC 0x123456, status 0x24, client asked for all records (0xFF): record 0x05 (warm-up counter) = 0x17, record 0x10 (fault-detection counter) = 0x79."><mxGeometry x="20" y="232" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="e18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Unlike a DTCSnapshot record, there's no dataIdentifier here — the DTCExtDataRecordNumber itself is the label, defined manufacturer to manufacturer."><mxGeometry x="20" y="250" width="920" height="16" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

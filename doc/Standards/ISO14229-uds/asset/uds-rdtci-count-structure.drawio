@@ -1,0 +1,30 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-rdtci-count-structure" id="uds-rdtci-count-structure">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="ReadDTCInformation 0x01 — reportNumberOfDTCByStatusMask (Clause 11.3.2 / 11.3.3, Table 271)"><mxGeometry x="0" y="10" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="&quot;Count&quot; shape — shared with 0x07, 0x11, 0x12 (reportNumberOf... variants): the response never lists DTCs, only how many match."><mxGeometry x="20" y="40" width="920" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#f26f21;fontFamily=DejaVu Sans;fontStyle=1;" value="Request — client → server (Table 256)"><mxGeometry x="40" y="66" width="540" height="14" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="SID&#10;0x19&#10;RDTCI"><mxGeometry x="40" y="82" width="90" height="46" as="geometry" /></mxCell>
+        <mxCell id="e5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="reportType&#10;0x01&#10;LEV_ · RNODTCBSM"><mxGeometry x="140" y="82" width="150" height="46" as="geometry" /></mxCell>
+        <mxCell id="e6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCStatusMask&#10;0x00 – 0xFF&#10;DTCSM · M"><mxGeometry x="300" y="82" width="150" height="46" as="geometry" /></mxCell>
+
+        <mxCell id="e7" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;" value="Positive response — server → client (Table 271)"><mxGeometry x="40" y="148" width="540" height="14" as="geometry" /></mxCell>
+        <mxCell id="e8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="SID&#10;0x59&#10;RDTCIPR"><mxGeometry x="40" y="164" width="90" height="46" as="geometry" /></mxCell>
+        <mxCell id="e9" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f26f21;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="reportType echo&#10;0x01"><mxGeometry x="140" y="164" width="110" height="46" as="geometry" /></mxCell>
+        <mxCell id="e10" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#5e35b1;fontSize=8.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCStatusAvailabilityMask&#10;0x00 – 0xFF&#10;DTCSAM · M"><mxGeometry x="260" y="164" width="180" height="46" as="geometry" /></mxCell>
+        <mxCell id="e11" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f7fa;strokeColor=#00838f;fontSize=8.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCFormatIdentifier&#10;0x00 – 0x04&#10;DTCFID_ · M"><mxGeometry x="450" y="164" width="150" height="46" as="geometry" /></mxCell>
+        <mxCell id="e12" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c2185b;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCCount&#10;2 bytes (HB, LB)&#10;DTCC_ · M"><mxGeometry x="610" y="164" width="150" height="46" as="geometry" /></mxCell>
+
+        <mxCell id="e13" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCFormatIdentifier values (Table 271):"><mxGeometry x="20" y="228" width="400" height="16" as="geometry" /></mxCell>
+        <mxCell id="e14" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="0x00 SAE_J2012-DA_00   0x01 ISO_14229-1 (vehicle-manufacturer defined coding)   0x02 SAE_J1939-73   0x03 ISO_11992-4   0x04 SAE_J2012-DA_04"><mxGeometry x="20" y="244" width="920" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e15" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#263238;fontFamily=DejaVu Sans;" value="Example (Clause 11.3.5.2, Tables 290–291): request 19 01 08 → response 59 01 2F 01 00 01 — one DTC (of three stored) matches mask 0x08."><mxGeometry x="20" y="268" width="920" height="16" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

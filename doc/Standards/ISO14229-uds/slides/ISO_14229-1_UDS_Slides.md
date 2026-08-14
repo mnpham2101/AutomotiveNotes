@@ -56,6 +56,7 @@
 - Each functional unit may provide one or several services.
 - refer to [DCM presentation](UDS_DCM_functional_unit.html) for details on Diagnostic and Communication Management
 - refer to [Data Transmission presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
+- refer to [Stored Data Transmission presentation](UDS_StoredDataTransmission_functional_unit.html) for details on Stored Data Transmission.
 
 
 
@@ -92,6 +93,13 @@
 
 - the functional unit grouping the services that reads/writes *dataRecord* values between client and server (ECU). 
 - refer to [Data Transmission presentation](UDS_DataTransmission_functional_unit.html) for details on Data Transmission.
+
+### Stored Data Transmission function unit
+
+- the functional unit grouping the two services that read and clear server-resident DTC (fault) information — `ReadDTCInformation` (0x19) and `ClearDiagnosticInformation` (0x14)
+- **Provides to the client** — DTC counts and lists filtered by status, freeze-frame (snapshot) data, extended data (counters/timers), and the ability to clear all of it for a chosen group of DTCs
+- `ReadDTCInformation` is the largest service in the standard — one SID, 27 sub-functions
+- refer to [Stored Data Transmission presentation](UDS_StoredDataTransmission_functional_unit.html) for details on Stored Data Transmission.
 
 ### Routine Control function unit
 

@@ -1,0 +1,77 @@
+<svg viewBox="0 0 960 340" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="960" height="340" fill="#ffffff"/>
+
+  <text x="480" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">statusOfDTC / DTCStatusMask — the 8-bit DTC status byte (Annex D.2, Table 270)</text>
+  <text x="20" y="48" font-size="10.5" fill="#607d8b">Same byte layout for both directions: DTCStatusMask filters a request, statusOfDTC reports a DTC's actual state. A match occurs if (mask AND status) ≠ 0.</text>
+
+  <!-- 8 bit boxes -->
+  <!-- bit7 -->
+  <text x="74" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 7</text>
+  <rect x="20" y="76" width="108" height="56" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="74" y="94" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">warningIndicator</text>
+  <text x="74" y="105" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">Requested</text>
+  <text x="74" y="119" text-anchor="middle" font-size="8" fill="#607d8b">WIR</text>
+
+  <!-- bit6 -->
+  <text x="188" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 6</text>
+  <rect x="134" y="76" width="108" height="56" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="188" y="94" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">testNotCompleted</text>
+  <text x="188" y="105" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">ThisOperationCycle</text>
+  <text x="188" y="119" text-anchor="middle" font-size="8" fill="#607d8b">TNCTOC</text>
+
+  <!-- bit5 -->
+  <text x="302" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 5</text>
+  <rect x="248" y="76" width="108" height="56" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="302" y="94" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">testFailed</text>
+  <text x="302" y="105" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">SinceLastClear</text>
+  <text x="302" y="119" text-anchor="middle" font-size="8" fill="#607d8b">TFSLC</text>
+
+  <!-- bit4 -->
+  <text x="416" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 4</text>
+  <rect x="362" y="76" width="108" height="56" fill="#fff3e0" stroke="#f26f21"/>
+  <text x="416" y="94" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">testNotCompleted</text>
+  <text x="416" y="105" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">SinceLastClear</text>
+  <text x="416" y="119" text-anchor="middle" font-size="8" fill="#607d8b">TNCSLC</text>
+
+  <!-- bit3 -->
+  <text x="530" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 3</text>
+  <rect x="476" y="76" width="108" height="56" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="530" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">confirmedDTC</text>
+  <text x="530" y="119" text-anchor="middle" font-size="8" fill="#607d8b">CDTC</text>
+
+  <!-- bit2 -->
+  <text x="644" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 2</text>
+  <rect x="590" y="76" width="108" height="56" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="644" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">pendingDTC</text>
+  <text x="644" y="119" text-anchor="middle" font-size="8" fill="#607d8b">PDTC</text>
+
+  <!-- bit1 -->
+  <text x="758" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 1</text>
+  <rect x="704" y="76" width="108" height="56" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="758" y="94" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">testFailedThis</text>
+  <text x="758" y="105" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">OperationCycle</text>
+  <text x="758" y="119" text-anchor="middle" font-size="8" fill="#607d8b">TFTOC</text>
+
+  <!-- bit0 -->
+  <text x="872" y="70" text-anchor="middle" font-size="9.5" fill="#90a4ae">bit 0</text>
+  <rect x="818" y="76" width="108" height="56" fill="#e3f2fd" stroke="#1565c0"/>
+  <text x="872" y="99" text-anchor="middle" font-size="9" font-weight="bold" fill="#263238">testFailed</text>
+  <text x="872" y="119" text-anchor="middle" font-size="8" fill="#607d8b">TF</text>
+
+  <text x="20" y="152" font-size="10" fill="#263238">If the client's DTCStatusMask requests bits the server does not support, the server evaluates the match using only the bits it supports (Table 270).</text>
+  <text x="20" y="168" font-size="10" fill="#263238">Every count/list response also carries DTCStatusAvailabilityMask — which of these 8 bits this server actually implements (Tables 271–272).</text>
+
+  <!-- Worked example: 0x2F -->
+  <text x="20" y="200" font-size="11" font-weight="bold" fill="#263238">Example (11.3.5.2, Table 289)</text>
+  <text x="280" y="200" font-size="10.5" fill="#607d8b">DTC P2522-1F "A/C Request B — circuit intermittent", statusOfDTC = 0x2F</text>
+
+  <rect x="20" y="210" width="150" height="28" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="95" y="228" text-anchor="middle" font-size="11" font-weight="bold" font-family="DejaVu Sans Mono, Consolas, monospace" fill="#263238">0010 1111</text>
+  <text x="190" y="228" font-size="10.5" fill="#263238">= 0x2F → bits 5,3,2,1,0 set: TFSLC, CDTC, PDTC, TFTOC, TF all "1" — a confirmed, currently-failing DTC</text>
+
+  <text x="20" y="256" font-size="10.5" fill="#263238">A client mask of 0x08 (confirmedDTC only) matches this DTC: (0x08 AND 0x2F) = 0x08 ≠ 0.</text>
+  <text x="20" y="272" font-size="10.5" fill="#263238">A client mask of 0x84 (warningIndicatorRequested OR confirmedDTC) also matches: (0x84 AND 0x2F) = 0x04 ≠ 0.</text>
+
+  <text x="20" y="304" font-size="10" fill="#607d8b">Bit-state definitions and reset conditions for each bit are given individually in Annex D.2.3 (Table D.3 – D.10, Figures D.1 – D.8).</text>
+  <text x="20" y="320" font-size="10" fill="#607d8b">DTCSeverityMask / DTCSeverity is a separate 1-byte field (bits 7-5 severity, bits 4-0 class) — see Annex D.3.</text>
+</svg>

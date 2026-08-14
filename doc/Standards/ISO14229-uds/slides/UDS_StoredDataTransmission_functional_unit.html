@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stored Data Transmission functional unit</title>
+<style>
+:root{
+  --ink:#263238; --ink-2:#37474f; --muted:#607d8b; --faint:#90a4ae;
+  --rule:#b0bec5; --rule-soft:#cfd8dc; --wash:#eceff1; --page:#f7f9fb;
+  --navy:#14337a; --blue:#1565c0; --blue-wash:#e3f2fd;
+  --accent:#f26f21; --accent-dark:#e65100; --accent-wash:#fff3e0;
+  --green:#2e7d32; --green-wash:#e8f5e9; --red:#c62828;
+  --font:"DejaVu Sans",Verdana,Geneva,sans-serif;
+  --mono:"DejaVu Sans Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* sidebar links are plain anchors; without this they jump instead of gliding */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--wash);color:var(--ink);font-family:var(--font);
+     font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ---------------------------------------------------------------- shell */
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+nav{background:var(--ink);color:#fff;padding:26px 0 40px;position:sticky;top:0;
+    height:100vh;overflow-y:auto}
+nav .brand{padding:0 22px 18px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:14px}
+nav .brand b{display:block;font-size:15px;line-height:1.35}
+nav .brand span{display:block;color:var(--faint);font-size:11.5px;margin-top:6px}
+nav .grp{color:var(--accent);font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;
+         padding:16px 22px 6px;font-weight:700}
+nav a{display:block;color:#cfd8dc;text-decoration:none;font-size:13px;
+      padding:6px 22px 6px 26px;border-left:3px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav a.on{color:#fff;border-left-color:var(--accent);background:rgba(242,111,33,.14)}
+
+main{padding:0}
+.rail{position:fixed;top:0;left:264px;right:0;height:3px;background:transparent;z-index:20}
+.rail i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* ---------------------------------------------------------------- slides */
+.slide{min-height:100vh;padding:64px 76px 92px;display:flex;flex-direction:column;
+       justify-content:center;background:var(--page);border-bottom:1px solid var(--rule-soft);
+       position:relative;scroll-margin-top:0}
+.slide-inner{max-width:1080px;width:100%;margin:0 auto}
+.slide h2{margin:0 0 30px;font-size:34px;line-height:1.2;color:var(--navy);font-weight:700;
+          letter-spacing:-.01em}
+.slide h2::after{content:"";display:block;width:64px;height:4px;background:var(--accent);
+                 margin-top:16px;border-radius:2px}
+
+.slide ul{margin:0;padding-left:0;list-style:none}
+.slide li{position:relative;padding:0 0 0 30px;margin:0 0 14px;font-size:19px;line-height:1.5}
+.slide li::before{content:"";position:absolute;left:6px;top:.62em;width:8px;height:8px;
+                  background:var(--accent);border-radius:50%}
+/* nested levels: indent, shrink, and fade the marker so hierarchy reads on a projector */
+.slide li ul{margin:12px 0 0;padding-left:14px}
+.slide li li{font-size:16.5px;margin-bottom:9px}
+.slide li li::before{width:6px;height:6px;background:var(--faint)}
+.slide li li li::before{background:transparent;border:1.5px solid var(--faint)}
+.slide li blockquote{margin:12px 0 0;padding:2px 0 2px 16px;border-left:3px solid var(--rule-soft)}
+.slide li blockquote p{font-size:17px;margin:0;color:var(--ink-2)}
+.slide li strong{color:var(--navy)}
+.slide p{font-size:18px}
+.slide code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
+            color:var(--blue);padding:2px 6px;border-radius:3px}
+.slide a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--accent);
+         padding-bottom:1px}
+.slide a:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark)}
+
+figure{margin:0 0 26px;text-align:center}
+figure img{max-width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:4px;
+           background:#fff}
+
+table{border-collapse:collapse;width:100%;margin:0 0 22px;font-size:16px;background:#fff}
+th{background:var(--ink);color:#fff;text-align:left;padding:11px 14px;font-weight:700;font-size:14px}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:nth-child(even) td{background:var(--page)}
+td strong{color:var(--accent-dark)}
+
+.ref{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.ref::before{content:"▸ ";color:var(--accent)}
+.note{display:none}
+
+/* ---------------------------------------------------------------- maths */
+/* $…$ inline and $$…$$ display, rendered at build time to HTML+CSS.
+   No KaTeX, no MathJax, no webfont: the deck must stay a single offline file. */
+.math{font-family:"DejaVu Serif",Cambria,Georgia,"Times New Roman",serif;
+      font-style:normal;line-height:1.3;white-space:nowrap;color:var(--ink)}
+.math i{font-style:italic}
+.math .mo{margin:0 .2em}
+.math .mo.un{margin:0 .02em 0 0}       /* unary sign: hugs its operand */
+.math sub,.math sup{font-size:.64em;line-height:0}
+.math sub{vertical-align:-.3em}
+.math sup{vertical-align:.52em}
+.math .msp{display:inline-block;width:.24em}
+.math .mtxt{font-family:var(--font);font-size:.84em;font-style:normal}
+.math .frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 .2em}
+.math .frac .fn{display:block;padding:0 .45em .16em}
+.math .frac .fd{display:block;padding:.16em .45em 0;border-top:1.7px solid currentColor}
+/* radical: flex so the vinculum meets the top of the sign at any radicand height */
+.math .sqrt{display:inline-flex;align-items:stretch;white-space:nowrap;
+            vertical-align:middle}
+.math .sqrt .sr{display:flex;align-items:center;font-size:1.25em;line-height:.85;
+                margin-right:-.04em}
+.math .sqrt.tall .sr{font-size:2.5em;line-height:.78}
+.math .sqrt .rad{display:flex;align-items:center;align-self:stretch;
+                 border-top:1.6px solid currentColor;padding:0 .3em 0 .06em}
+.math-display{display:block;text-align:center;font-size:30px;margin:26px 0 24px;
+              color:var(--navy)}
+.slide li .math-display{font-size:25px;margin:15px 0 13px}
+th .math,td .math{font-size:.95em}
+
+.foot{position:absolute;left:76px;right:76px;bottom:26px;display:flex;
+      justify-content:space-between;align-items:center;font-size:11.5px;color:var(--faint);
+      border-top:1px solid var(--rule-soft);padding-top:10px}
+.foot .n{font-family:var(--mono)}
+
+/* ------------------------------------------------------- title & divider */
+.slide.title{background:var(--ink);color:#fff;text-align:center}
+.slide.title h1{margin:0;font-size:50px;line-height:1.15;color:#fff;font-weight:700;
+                letter-spacing:-.02em}
+.slide.title .bar{width:96px;height:5px;background:var(--accent);margin:26px auto;border-radius:3px}
+.slide.title .sub{font-size:21px;color:var(--rule)}
+.slide.title .meta{margin-top:44px;font-size:12.5px;color:var(--faint);font-family:var(--mono)}
+.slide.title .foot{display:none}
+
+.slide.divider{background:var(--navy);color:#fff}
+.slide.divider .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+                       color:var(--accent);font-weight:700;margin-bottom:14px}
+.slide.divider h2{color:#fff;font-size:42px}
+.slide.divider h2::after{background:var(--accent)}
+.slide.divider ol{margin:26px 0 0;padding-left:20px;color:var(--rule);font-size:17px}
+.slide.divider li{font-size:17px}
+.slide.divider li::before{background:var(--rule)}
+
+/* ---------------------------------------------------------------- print */
+@media print{
+  nav,.rail{display:none}
+  .shell{display:block}
+  body{background:#fff}
+  .slide{min-height:auto;height:19.0cm;page-break-after:always;break-after:page;
+         padding:36px 44px 60px;border:0}
+  .slide h2{font-size:26px}.slide li{font-size:15px;margin-bottom:9px}
+  .slide.title h1{font-size:38px}
+  .math-display{font-size:21px;margin:16px 0 14px}
+  .slide li .math-display{font-size:18px;margin:10px 0 9px}
+  .note{display:block;margin-top:18px;padding:10px 14px;background:var(--wash);
+        border-left:3px solid var(--faint);font-size:12px;color:var(--ink-2)}
+  .foot{left:44px;right:44px;bottom:16px}
+  @page{size:A4 landscape;margin:8mm}
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav{position:static;height:auto}
+  .rail{left:0}
+  .slide{padding:44px 26px 80px;min-height:auto}
+  .slide h2{font-size:26px}.slide li{font-size:16px}
+  .foot{left:26px;right:26px}
+}
+</style>
+</head><body>
+<div class="rail"><i></i></div>
+<div class="shell">
+<nav><div class="brand"><b>Stored Data Transmission functional unit</b><span>ISO 14229-1:2013 — Clause 11, Services 0x14 / 0x19</span></div><a href="#s0" data-i="0">Title</a>
+<a href="#s1" data-i="1">The Stored Data Transmission functional unit</a>
+<div class="grp">Section 1 — DTC &amp; Status Concepts</div>
+<a href="#s2" data-i="2">Overview</a>
+<a href="#s3" data-i="3">The DTC number and DTCFormatIdentifier</a>
+<a href="#s4" data-i="4">statusOfDTC / DTCStatusMask — the 8-bit status byte</a>
+<a href="#s5" data-i="5">groupOfDTC — addressing a group instead of one DTC</a>
+<div class="grp">Section 2 — ClearDiagnosticInformation (0x14) service</div>
+<a href="#s6" data-i="6">Overview</a>
+<a href="#s7" data-i="7">Introduction</a>
+<a href="#s8" data-i="8">ClearDiagnosticInformation UDS Message</a>
+<a href="#s9" data-i="9">ClearDiagnosticInformation UDS Message (Cont)</a>
+<a href="#s10" data-i="10">ClearDiagnosticInformation — Negative Responses</a>
+<a href="#s11" data-i="11">ClearDiagnosticInformation Example</a>
+<div class="grp">Section 3 — ReadDTCInformation (0x19) service — General info</div>
+<a href="#s12" data-i="12">Overview</a>
+<a href="#s13" data-i="13">Introduction</a>
+<a href="#s14" data-i="14">The 27 report types — count and list shapes</a>
+<a href="#s15" data-i="15">The 27 report types — snapshot, stored data, extended data</a>
+<a href="#s16" data-i="16">The 27 report types — remaining families</a>
+<div class="grp">Section 4 — Report Number Of DTCs — count DTC report</div>
+<a href="#s17" data-i="17">Overview</a>
+<a href="#s18" data-i="18">reportNumberOfDTCByStatusMask (0x01)</a>
+<a href="#s19" data-i="19">reportNumberOfDTCByStatusMask (0x01) — Message Structure</a>
+<a href="#s20" data-i="20">reportNumberOfDTCByStatusMask (0x01) — Example</a>
+<a href="#s21" data-i="21">DTC labels — the "Pxxxx-YY" notation</a>
+<div class="grp">Section 5 — Report List of DTC</div>
+<a href="#s22" data-i="22">Overview</a>
+<a href="#s23" data-i="23">reportDTCByStatusMask (0x02)</a>
+<a href="#s24" data-i="24">reportDTCByStatusMask (0x02) — Example</a>
+<div class="grp">Section 6 — Report DTC Snapshot Record</div>
+<a href="#s25" data-i="25">Overview</a>
+<a href="#s26" data-i="26">reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report</a>
+<a href="#s27" data-i="27">DTCMaskRecord — addressing one specific DTC</a>
+<a href="#s28" data-i="28">reportDTCSnapshotIdentification (0x03) vs reportDTCSnapshotByDTCNumber (0x04)</a>
+<a href="#s29" data-i="29">ReadDTCInformation Snapshot family — Message Structure</a>
+<a href="#s30" data-i="30">reportDTCSnapshotIdentification (0x03) — Example</a>
+<a href="#s31" data-i="31">reportDTCSnapshotRecordByDTCNumber (0x04) — Example</a>
+<div class="grp">Section 7 — DTCExtendedData Record</div>
+<a href="#s32" data-i="32">Overview</a>
+<a href="#s33" data-i="33">reportDTCExtDataRecordByDTCNumber (0x06) — Purpose</a>
+<a href="#s34" data-i="34">reportDTCExtDataRecordByDTCNumber (0x06) — Message Structure</a>
+<a href="#s35" data-i="35">reportDTCExtDataRecordByDTCNumber (0x06) — Example</a>
+<div class="grp">Section 8 — Severity, mirror memory report</div>
+<a href="#s36" data-i="36">Overview</a>
+<a href="#s37" data-i="37">Severity, mirror memory, and the rest</a>
+<a href="#s38" data-i="38">ReadDTCInformation — Negative Responses</a>
+<a href="#s39" data-i="39">Takeaways</a></nav>
+<main><section class="slide title" id="s0"><div class="slide-inner">
+<h1>Stored Data Transmission functional unit</h1>
+<div class="bar"></div>
+<div class="sub">ISO 14229-1:2013 — Clause 11, Services 0x14 / 0x19</div>
+</div></section>
+<section class="slide" id="s1"><div class="slide-inner"><h2>The Stored Data Transmission functional unit</h2>
+<ul>
+<li><strong>What it is:</strong> the functional unit grouping the two services that read and clear server-resident DTC (fault) information [Clause 11.1, Table 249]</li>
+<li><strong>ClearDiagnosticInformation (0x14)</strong> — clears DTC status, snapshot data, extended data and related counters for a client-chosen group of DTCs</li>
+<li><strong>ReadDTCInformation (0x19)</strong> — by far the largest service in ISO 14229-1: one SID, <strong>27 sub-functions</strong>, covering counts, lists, snapshots, extended data and severity</li>
+</ul>
+<blockquote>
+<p>Note: reading/writing a <em>dataRecord</em> by identifier lives in <strong>Data Transmission</strong> (Clause 10), not here — see the <a href="UDS_DataTransmission_functional_unit.html">Data Transmission presentation</a>.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>SID</th>
+<th>Service</th>
+<th>What the client asks for</th>
+<th style="text-align: center;">In these slides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>0x14</code></strong></td>
+<td><strong>ClearDiagnosticInformation</strong></td>
+<td>clear DTCs and their associated stored data for a groupOfDTC</td>
+<td style="text-align: center;"><strong>Section 2</strong></td>
+</tr>
+<tr>
+<td><strong><code>0x19</code></strong></td>
+<td><strong>ReadDTCInformation</strong></td>
+<td>read DTC status, counts, snapshots or extended data</td>
+<td style="text-align: center;"><strong>Section 3</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="ref">Clause 11.1, Table 249</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">1 / 39</span></div></section>
+<section class="slide divider" id="s2"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 1 — DTC &amp; Status Concepts</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">2 / 39</span></div></section>
+<section class="slide" id="s3"><div class="slide-inner"><h2>The DTC number and DTCFormatIdentifier</h2>
+<ul>
+<li>A <strong>DTC</strong> is a <strong>3-byte value</strong> (DTCHighByte, DTCMiddleByte, DTCLowByte) uniquely identifying a diagnostic trouble code supported by the server [Clause 11.3.2.3, Table 270]</li>
+<li>ISO 14229-1 does <strong>not</strong> define how those 3 bytes decode — that is flagged per response by <strong>DTCFormatIdentifier</strong>: <code>0x00</code> SAE J2012-DA_00, <code>0x01</code> ISO 14229-1 (vehicle-manufacturer defined), <code>0x02</code> SAE J1939-73, <code>0x03</code> ISO 11992-4, <code>0x04</code> SAE J2012-DA_04 [Table 271]</li>
+<li>A given DTC value <strong>shall never be reported twice</strong> in one positive response — the one exception is <code>DTCSnapshotRecord</code>, which may repeat the same DTC across several snapshot records [Clause 11.3.1.1]</li>
+</ul>
+<div class="ref">Clause 11.3.2.3, Table 270; Clause 11.3.3.1, Table 271</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">3 / 39</span></div></section>
+<section class="slide" id="s4"><div class="slide-inner"><h2>statusOfDTC / DTCStatusMask — the 8-bit status byte</h2>
+<figure><img alt="statusOfDTC / DTCStatusMask 8-bit layout with a worked masking example" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgMzQwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iMzQwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5zdGF0dXNPZkRUQyAvIERUQ1N0YXR1c01hc2sg4oCUIHRoZSA4LWJpdCBEVEMgc3RhdHVzIGJ5dGUgKEFubmV4IEQuMiwgVGFibGUgMjcwKTwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iNDgiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzYwN2Q4YiI+U2FtZSBieXRlIGxheW91dCBmb3IgYm90aCBkaXJlY3Rpb25zOiBEVENTdGF0dXNNYXNrIGZpbHRlcnMgYSByZXF1ZXN0LCBzdGF0dXNPZkRUQyByZXBvcnRzIGEgRFRDJ3MgYWN0dWFsIHN0YXRlLiBBIG1hdGNoIG9jY3VycyBpZiAobWFzayBBTkQgc3RhdHVzKSDiiaAgMC48L3RleHQ+CgogIDwhLS0gOCBiaXQgYm94ZXMgLS0+CiAgPCEtLSBiaXQ3IC0tPgogIDx0ZXh0IHg9Ijc0IiB5PSI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPmJpdCA3PC90ZXh0PgogIDxyZWN0IHg9IjIwIiB5PSI3NiIgd2lkdGg9IjEwOCIgaGVpZ2h0PSI1NiIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIi8+CiAgPHRleHQgeD0iNzQiIHk9Ijk0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij53YXJuaW5nSW5kaWNhdG9yPC90ZXh0PgogIDx0ZXh0IHg9Ijc0IiB5PSIxMDUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPlJlcXVlc3RlZDwvdGV4dD4KICA8dGV4dCB4PSI3NCIgeT0iMTE5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPldJUjwvdGV4dD4KCiAgPCEtLSBiaXQ2IC0tPgogIDx0ZXh0IHg9IjE4OCIgeT0iNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj5iaXQgNjwvdGV4dD4KICA8cmVjdCB4PSIxMzQiIHk9Ijc2IiB3aWR0aD0iMTA4IiBoZWlnaHQ9IjU2IiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSIxODgiIHk9Ijk0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij50ZXN0Tm90Q29tcGxldGVkPC90ZXh0PgogIDx0ZXh0IHg9IjE4OCIgeT0iMTA1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5UaGlzT3BlcmF0aW9uQ3ljbGU8L3RleHQ+CiAgPHRleHQgeD0iMTg4IiB5PSIxMTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+VE5DVE9DPC90ZXh0PgoKICA8IS0tIGJpdDUgLS0+CiAgPHRleHQgeD0iMzAyIiB5PSI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPmJpdCA1PC90ZXh0PgogIDxyZWN0IHg9IjI0OCIgeT0iNzYiIHdpZHRoPSIxMDgiIGhlaWdodD0iNTYiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIvPgogIDx0ZXh0IHg9IjMwMiIgeT0iOTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPnRlc3RGYWlsZWQ8L3RleHQ+CiAgPHRleHQgeD0iMzAyIiB5PSIxMDUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPlNpbmNlTGFzdENsZWFyPC90ZXh0PgogIDx0ZXh0IHg9IjMwMiIgeT0iMTE5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPlRGU0xDPC90ZXh0PgoKICA8IS0tIGJpdDQgLS0+CiAgPHRleHQgeD0iNDE2IiB5PSI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPmJpdCA0PC90ZXh0PgogIDxyZWN0IHg9IjM2MiIgeT0iNzYiIHdpZHRoPSIxMDgiIGhlaWdodD0iNTYiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjQxNiIgeT0iOTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPnRlc3ROb3RDb21wbGV0ZWQ8L3RleHQ+CiAgPHRleHQgeD0iNDE2IiB5PSIxMDUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPlNpbmNlTGFzdENsZWFyPC90ZXh0PgogIDx0ZXh0IHg9IjQxNiIgeT0iMTE5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPlROQ1NMQzwvdGV4dD4KCiAgPCEtLSBiaXQzIC0tPgogIDx0ZXh0IHg9IjUzMCIgeT0iNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj5iaXQgMzwvdGV4dD4KICA8cmVjdCB4PSI0NzYiIHk9Ijc2IiB3aWR0aD0iMTA4IiBoZWlnaHQ9IjU2IiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSI1MzAiIHk9Ijk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5jb25maXJtZWREVEM8L3RleHQ+CiAgPHRleHQgeD0iNTMwIiB5PSIxMTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+Q0RUQzwvdGV4dD4KCiAgPCEtLSBiaXQyIC0tPgogIDx0ZXh0IHg9IjY0NCIgeT0iNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjOTBhNGFlIj5iaXQgMjwvdGV4dD4KICA8cmVjdCB4PSI1OTAiIHk9Ijc2IiB3aWR0aD0iMTA4IiBoZWlnaHQ9IjU2IiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSI2NDQiIHk9Ijk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5wZW5kaW5nRFRDPC90ZXh0PgogIDx0ZXh0IHg9IjY0NCIgeT0iMTE5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPlBEVEM8L3RleHQ+CgogIDwhLS0gYml0MSAtLT4KICA8dGV4dCB4PSI3NTgiIHk9IjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzkwYTRhZSI+Yml0IDE8L3RleHQ+CiAgPHJlY3QgeD0iNzA0IiB5PSI3NiIgd2lkdGg9IjEwOCIgaGVpZ2h0PSI1NiIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iNzU4IiB5PSI5NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+dGVzdEZhaWxlZFRoaXM8L3RleHQ+CiAgPHRleHQgeD0iNzU4IiB5PSIxMDUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPk9wZXJhdGlvbkN5Y2xlPC90ZXh0PgogIDx0ZXh0IHg9Ijc1OCIgeT0iMTE5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPlRGVE9DPC90ZXh0PgoKICA8IS0tIGJpdDAgLS0+CiAgPHRleHQgeD0iODcyIiB5PSI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM5MGE0YWUiPmJpdCAwPC90ZXh0PgogIDxyZWN0IHg9IjgxOCIgeT0iNzYiIHdpZHRoPSIxMDgiIGhlaWdodD0iNTYiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIvPgogIDx0ZXh0IHg9Ijg3MiIgeT0iOTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPnRlc3RGYWlsZWQ8L3RleHQ+CiAgPHRleHQgeD0iODcyIiB5PSIxMTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzYwN2Q4YiI+VEY8L3RleHQ+CgogIDx0ZXh0IHg9IjIwIiB5PSIxNTIiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMyNjMyMzgiPklmIHRoZSBjbGllbnQncyBEVENTdGF0dXNNYXNrIHJlcXVlc3RzIGJpdHMgdGhlIHNlcnZlciBkb2VzIG5vdCBzdXBwb3J0LCB0aGUgc2VydmVyIGV2YWx1YXRlcyB0aGUgbWF0Y2ggdXNpbmcgb25seSB0aGUgYml0cyBpdCBzdXBwb3J0cyAoVGFibGUgMjcwKS48L3RleHQ+CiAgPHRleHQgeD0iMjAiIHk9IjE2OCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+RXZlcnkgY291bnQvbGlzdCByZXNwb25zZSBhbHNvIGNhcnJpZXMgRFRDU3RhdHVzQXZhaWxhYmlsaXR5TWFzayDigJQgd2hpY2ggb2YgdGhlc2UgOCBiaXRzIHRoaXMgc2VydmVyIGFjdHVhbGx5IGltcGxlbWVudHMgKFRhYmxlcyAyNzHigJMyNzIpLjwvdGV4dD4KCiAgPCEtLSBXb3JrZWQgZXhhbXBsZTogMHgyRiAtLT4KICA8dGV4dCB4PSIyMCIgeT0iMjAwIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+RXhhbXBsZSAoMTEuMy41LjIsIFRhYmxlIDI4OSk8L3RleHQ+CiAgPHRleHQgeD0iMjgwIiB5PSIyMDAiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzYwN2Q4YiI+RFRDIFAyNTIyLTFGICZxdW90O0EvQyBSZXF1ZXN0IEIg4oCUIGNpcmN1aXQgaW50ZXJtaXR0ZW50JnF1b3Q7LCBzdGF0dXNPZkRUQyA9IDB4MkY8L3RleHQ+CgogIDxyZWN0IHg9IjIwIiB5PSIyMTAiIHdpZHRoPSIxNTAiIGhlaWdodD0iMjgiIGZpbGw9IiNlOGY1ZTkiIHN0cm9rZT0iIzJlN2QzMiIvPgogIDx0ZXh0IHg9Ijk1IiB5PSIyMjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgQ29uc29sYXMsIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+MDAxMCAxMTExPC90ZXh0PgogIDx0ZXh0IHg9IjE5MCIgeT0iMjI4IiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiMyNjMyMzgiPj0gMHgyRiDihpIgYml0cyA1LDMsMiwxLDAgc2V0OiBURlNMQywgQ0RUQywgUERUQywgVEZUT0MsIFRGIGFsbCAmcXVvdDsxJnF1b3Q7IOKAlCBhIGNvbmZpcm1lZCwgY3VycmVudGx5LWZhaWxpbmcgRFRDPC90ZXh0PgoKICA8dGV4dCB4PSIyMCIgeT0iMjU2IiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiMyNjMyMzgiPkEgY2xpZW50IG1hc2sgb2YgMHgwOCAoY29uZmlybWVkRFRDIG9ubHkpIG1hdGNoZXMgdGhpcyBEVEM6ICgweDA4IEFORCAweDJGKSA9IDB4MDgg4omgIDAuPC90ZXh0PgogIDx0ZXh0IHg9IjIwIiB5PSIyNzIiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzI2MzIzOCI+QSBjbGllbnQgbWFzayBvZiAweDg0ICh3YXJuaW5nSW5kaWNhdG9yUmVxdWVzdGVkIE9SIGNvbmZpcm1lZERUQykgYWxzbyBtYXRjaGVzOiAoMHg4NCBBTkQgMHgyRikgPSAweDA0IOKJoCAwLjwvdGV4dD4KCiAgPHRleHQgeD0iMjAiIHk9IjMwNCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzYwN2Q4YiI+Qml0LXN0YXRlIGRlZmluaXRpb25zIGFuZCByZXNldCBjb25kaXRpb25zIGZvciBlYWNoIGJpdCBhcmUgZ2l2ZW4gaW5kaXZpZHVhbGx5IGluIEFubmV4IEQuMi4zIChUYWJsZSBELjMg4oCTIEQuMTAsIEZpZ3VyZXMgRC4xIOKAkyBELjgpLjwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iMzIwIiBmb250LXNpemU9IjEwIiBmaWxsPSIjNjA3ZDhiIj5EVENTZXZlcml0eU1hc2sgLyBEVENTZXZlcml0eSBpcyBhIHNlcGFyYXRlIDEtYnl0ZSBmaWVsZCAoYml0cyA3LTUgc2V2ZXJpdHksIGJpdHMgNC0wIGNsYXNzKSDigJQgc2VlIEFubmV4IEQuMy48L3RleHQ+Cjwvc3ZnPg==" /></figure>
+<ul>
+<li>Same byte, two roles: <code>DTCStatusMask</code> filters a <strong>request</strong>, <code>statusOfDTC</code> reports a DTC's <strong>actual</strong> state</li>
+<li><strong>DTCStatusAvailabilityMask</strong> — carried in every count/list response — tells the client which of these 8 bits <em>this</em> server actually implements [Tables 271–272]</li>
+</ul>
+<div class="ref">Annex D.2, Table 270</div>
+<div class="note"><b>Note — </b>Each bit's exact set/reset pseudocode and state diagram is normative — Annex D.2.3, Tables D.3–D.10 and Figures D.1–D.8. The convention (bit meaning, mask semantics) is identical across every server; only the *triggering* conditions are manufacturer-specific per bit.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">4 / 39</span></div></section>
+<section class="slide" id="s5"><div class="slide-inner"><h2>groupOfDTC — addressing a group instead of one DTC</h2>
+<ul>
+<li>A <strong>3-byte</strong> value, used by <code>ClearDiagnosticInformation</code> and several <code>ReadDTCInformation</code> sub-functions to select a DTC group rather than a single code [Annex D.1, Table D.1]</li>
+<li>The <strong>Powertrain / Chassis / Body / Network Communication</strong> group byte ranges are <strong>vehicle-manufacturer defined</strong></li>
+<li>Two ranges are fixed by the standard: <code>0xFFFF33</code> = <em>Emissions</em> group, <code>0xFFFFD0</code> = <em>Safety</em> group (low byte = FunctionalGroupIdentifier, Annex D.5) — <code>0xFFFFFF</code> = <strong>all groups</strong> (every DTC)</li>
+</ul>
+<div class="ref">Annex D.1, Table D.1</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">5 / 39</span></div></section>
+<section class="slide divider" id="s6"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 2 — ClearDiagnosticInformation (0x14) service</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">6 / 39</span></div></section>
+<section class="slide" id="s7"><div class="slide-inner"><h2>Introduction</h2>
+<ul>
+<li><strong>Service:</strong> <code>ClearDiagnosticInformation</code> (SID <strong>0x14</strong>) [Clause 11.2]</li>
+<li><strong>Purpose:</strong> the client clears diagnostic information — status, DTCSnapshot data, DTCExtendedData, and other DTC-related counters/timers/flags — in one or multiple servers [Clause 11.2.1]</li>
+<li>The server <strong>answers positively even if no DTCs are stored</strong> — absence of a fault is not an error</li>
+<li>Clears the status copy used by <code>ReadDTCInformation</code> reporting; any optional backup copy (e.g. EEPROM) follows its own backup strategy</li>
+<li>Does <strong>not</strong> affect the optional DTC <strong>mirror memory</strong> (see 11.3) — that is a separate store</li>
+</ul>
+<div class="ref">Clause 11.2.1</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">7 / 39</span></div></section>
+<section class="slide" id="s8"><div class="slide-inner"><h2>ClearDiagnosticInformation UDS Message</h2>
+<figure><img alt="ClearDiagnosticInformation request and positive response A_Data structure" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgMjYwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iMjYwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5DbGVhckRpYWdub3N0aWNJbmZvcm1hdGlvbiAoMHgxNCkg4oCUIHJlcXVlc3QgYW5kIHBvc2l0aXZlIHJlc3BvbnNlIChDbGF1c2UgMTEuMiwgVGFibGVzIDI1MCwgMjUyKTwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iNDgiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzYwN2Q4YiI+UmVxdWVzdCA9IDB4MTQgcGx1cyBhIDMtYnl0ZSBncm91cE9mRFRDOyB0aGVyZSBpcyBubyBzdWItZnVuY3Rpb24gYnl0ZS4gVGhlIHBvc2l0aXZlIHJlc3BvbnNlIGlzIHRoZSBTSUQgYWxvbmUg4oCUIG5vIGRhdGEtcGFyYW1ldGVycyBhdCBhbGwuPC90ZXh0PgoKICA8IS0tIFJlcXVlc3QgLS0+CiAgPHRleHQgeD0iNDAiIHk9Ijc2IiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmMjZmMjEiPlJlcXVlc3Qg4oCUIGNsaWVudCDihpIgc2VydmVyIChUYWJsZSAyNTApPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSI4MiIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI1MCIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iMTEwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+Q2xlYXJEaWFnbm9zdGljSW5mb3JtYXRpb248L3RleHQ+CiAgPHRleHQgeD0iMTEwIiB5PSIxMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjMjYzMjM4Ij4weDE0PC90ZXh0PgogIDx0ZXh0IHg9IjExMCIgeT0iMTI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPkNEVENJIMK3IE0g4oCUIEFfRGF0YSBieXRlICMxPC90ZXh0PgoKICA8cmVjdCB4PSIyMDAiIHk9IjgyIiB3aWR0aD0iMzQwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSIzNzAiIHk9IjEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5ncm91cE9mRFRDIFsgSGlnaEJ5dGUsIE1pZGRsZUJ5dGUsIExvd0J5dGUgXTwvdGV4dD4KICA8dGV4dCB4PSIzNzAiIHk9IjExNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiMyNjMyMzgiPjB4MDAg4oCTIDB4RkYgZWFjaDwvdGV4dD4KICA8dGV4dCB4PSIzNzAiIHk9IjEyNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjNjA3ZDhiIj5HT0RUQ18gwrcgTSDigJQgQV9EYXRhIGJ5dGVzICMy4oCTIzQ8L3RleHQ+CgogIDwhLS0gUmVzcG9uc2UgLS0+CiAgPHRleHQgeD0iNDAiIHk9IjE1OCIgZm9udC1zaXplPSI5LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMmU3ZDMyIj5Qb3NpdGl2ZSByZXNwb25zZSDigJQgc2VydmVyIOKGkiBjbGllbnQgKFRhYmxlIDI1Mik8L3RleHQ+CiAgPHJlY3QgeD0iNDAiIHk9IjE2NCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI1MCIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iMTEwIiB5PSIxODIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+Q2xlYXJEaWFnbm9zdGljSW5mb3JtYXRpb248L3RleHQ+CiAgPHRleHQgeD0iMTEwIiB5PSIxOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjMjYzMjM4Ij4weDU0PC90ZXh0PgogIDx0ZXh0IHg9IjExMCIgeT0iMjA4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiM2MDdkOGIiPkNEVENJUFIgwrcgTSDigJQgQV9EYXRhIGJ5dGUgIzE8L3RleHQ+CgogIDxyZWN0IHg9IjIwMCIgeT0iMTY0IiB3aWR0aD0iMzQwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjZWNlZmYxIiBzdHJva2U9IiM5MGE0YWUiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPgogIDx0ZXh0IHg9IjM3MCIgeT0iMTg2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkuNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiM2MDdkOGIiPm5vIGRhdGEtcGFyYW1ldGVyczwvdGV4dD4KICA8dGV4dCB4PSIzNzAiIHk9IjIwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiM5MGE0YWUiPnRoZSBTSUQgYWxvbmUgaXMgdGhlIHdob2xlIHJlc3BvbnNlIOKAlCAxIGJ5dGUgdG90YWw8L3RleHQ+CgogIDwhLS0gRm9vdGVyIC0tPgogIDx0ZXh0IHg9IjIwIiB5PSIyMzgiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMyNjMyMzgiPlRoZSBzZXJ2ZXIgYW5zd2VycyBwb3NpdGl2ZWx5IGV2ZW4gd2hlbiBubyBEVENzIGFyZSBzdG9yZWQsIGFuZCBjbGVhcnMgb25seSB0aGUgc3RhdHVzIGNvcHkgdXNlZCBieSBSZWFkRFRDSW5mb3JtYXRpb24g4oCUIHRoZSBvcHRpb25hbCBEVEMgbWlycm9yIG1lbW9yeSAoMTEuMykgaXMgdW50b3VjaGVkIChDbGF1c2UgMTEuMi4xKS48L3RleHQ+CiAgPHRleHQgeD0iMjAiIHk9IjI1MiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+RXhhbXBsZSAoVGFibGVzIDI1NOKAkzI1NSk6IDE0IEZGIEZGIDMzIOKAlCBjbGVhciB0aGUgJnF1b3Q7RW1pc3Npb25zLXJlbGF0ZWQgc3lzdGVtcyZxdW90OyBncm91cCDihpIgcG9zaXRpdmUgcmVzcG9uc2UgNTQuPC90ZXh0Pgo8L3N2Zz4=" /></figure></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">8 / 39</span></div></section>
+<section class="slide" id="s9"><div class="slide-inner"><h2>ClearDiagnosticInformation UDS Message (Cont)</h2>
+<ul>
+<li><strong>A_Data byte #1</strong> — Service ID <code>0x14</code> (<code>CDTCI</code>), mandatory [Clause 11.2.2.1, Table 250]</li>
+<li><strong>A_Data bytes #2–#4</strong> — <code>groupOfDTC</code> (<code>GODTC_</code>), mandatory — the group or single DTC to clear (Annex D.1) [Table 250]</li>
+<li><strong>No sub-function byte</strong> — this service carries a data-parameter only [Clause 11.2.2.2]</li>
+<li><strong>Positive response</strong> — SID <code>0x54</code> (<code>CDTCIPR</code>) alone; <strong>no data-parameters at all</strong>, 1 byte total [Clause 11.2.3.1, Table 252]</li>
+</ul>
+<div class="ref">Clause 11.2.2–11.2.3, Tables 250–252</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">9 / 39</span></div></section>
+<section class="slide" id="s10"><div class="slide-inner"><h2>ClearDiagnosticInformation — Negative Responses</h2>
+<table>
+<thead>
+<tr>
+<th>NRC</th>
+<th>Mnemonic</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x13</code></td>
+<td>IMLOIF</td>
+<td>incorrectMessageLengthOrInvalidFormat — message is not 4 bytes</td>
+</tr>
+<tr>
+<td><code>0x22</code></td>
+<td>CNC</td>
+<td>conditionsNotCorrect — internal server conditions prevent clearing</td>
+</tr>
+<tr>
+<td><code>0x31</code></td>
+<td>ROOR</td>
+<td>requestOutOfRange — the specified <code>groupOfDTC</code> is not supported</td>
+</tr>
+<tr>
+<td><code>0x72</code></td>
+<td>GPF</td>
+<td>generalProgrammingFailure — server error writing to a memory location</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Evaluation order is Figure 23 — length check, then group support, then condition check, then the memory write itself</li>
+</ul>
+<div class="ref">Clause 11.2.4, Table 253, Figure 23</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">10 / 39</span></div></section>
+<section class="slide" id="s11"><div class="slide-inner"><h2>ClearDiagnosticInformation Example</h2>
+<ul>
+<li>worked example — clear the "Emissions-related systems" group <code>0xFFFF33</code> [Clause 11.2.5, Tables 254–255]:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>A_Data bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client → server</td>
+<td><code>14 FF FF 33</code></td>
+</tr>
+<tr>
+<td>server → client</td>
+<td><code>54</code></td>
+</tr>
+</tbody>
+</table>
+<div class="note"><b>Note — </b>This is the smallest positive response in the whole standard — one byte, the SID, nothing else.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">11 / 39</span></div></section>
+<section class="slide divider" id="s12"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 3 — ReadDTCInformation (0x19) service — General info</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">12 / 39</span></div></section>
+<section class="slide" id="s13"><div class="slide-inner"><h2>Introduction</h2>
+<ul>
+<li><strong>Service:</strong> <code>ReadDTCInformation</code> (SID <strong>0x19</strong>) [Clause 11.3]</li>
+<li><strong>Purpose:</strong> read server-resident DTC information — status, counts, snapshots, extended data, severity — from any server or group of servers [Clause 11.3.1.1]</li>
+<li>One sub-function byte, <code>reportType</code>, selects the report shape — <strong>27 defined values</strong> (<code>0x01–0x19</code>, plus <code>0x42</code> and <code>0x55</code> for WWH-OBD)</li>
+<li>Unless a sub-function restricts it, the server reports <strong>all</strong> DTCs (emissions- and non-emissions-related alike)</li>
+<li>Paged-buffer handling note: if the DTC count shrinks while the response is being built, the server pads with DTC <code>0x000000</code> / status <code>0x00</code>, which the client must treat as "not present"</li>
+</ul>
+<div class="ref">Clause 11.3.1.1</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">13 / 39</span></div></section>
+<section class="slide" id="s14"><div class="slide-inner"><h2>The 27 report types — count and list shapes</h2>
+<table>
+<thead>
+<tr>
+<th>reportType range</th>
+<th>Family</th>
+<th>What it returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x01, 0x07, 0x11, 0x12</code></td>
+<td><strong>Count</strong></td>
+<td>how many DTCs match a status/severity mask — no DTC list</td>
+</tr>
+<tr>
+<td><code>0x02, 0x0A–0x0E, 0x0F, 0x13, 0x15, 0x17</code></td>
+<td><strong>List</strong></td>
+<td>repeating <code>DTC + statusOfDTC</code> blocks</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>0x01</code> and <code>0x02</code> each get their own diagram and worked example next in this section — every other reportType in these two rows reuses one of those two shapes against a different mask, memory, or implicit selection</li>
+</ul>
+<div class="ref">Clause 11.3.2.2, Table 269</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">14 / 39</span></div></section>
+<section class="slide" id="s15"><div class="slide-inner"><h2>The 27 report types — snapshot, stored data, extended data</h2>
+<table>
+<thead>
+<tr>
+<th>reportType range</th>
+<th>Family</th>
+<th>What it returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x03, 0x04, 0x18</code></td>
+<td><strong>Snapshot</strong></td>
+<td>• <code>0x03</code> lists which DTCSnapshot records exist (DTC + record number, no data); <code>0x04</code>/<code>0x18</code> return the captured record itself — data "stored upon detection of a system malfunction" that acts as "a snapshot of data values from the time of the... malfunction occurrence" [11.3.1.1].<br>• A <strong>DTCSnapshot record</strong> holds one or more <code>dataIdentifier</code>/data pairs — parameters that "can be used to reconstruct the vehicle conditions (e.g. B+, RPM, time-stamp) at the time of the failure occurrence" [11.3.1.5].</td>
+</tr>
+<tr>
+<td><code>0x05</code></td>
+<td><strong>Stored data</strong></td>
+<td>• Addressed differently from a snapshot: the request carries only a <code>DTCStoredDataRecordNumber</code> — <strong>no DTC number at all</strong>. The server searches its own stored records for that number and reports which DTC it belongs to; "the DTCStoredDataRecordNumber does not share the same address space as the DTCSnapshotRecordNumber" [11.3.1.6].<br>• A <strong>DTCStoredData record</strong> holds the <em>same kind</em> of payload as a DTCSnapshot record — parameters that "can be used to reconstruct the vehicle conditions (e.g. B+, RPM, time-stamp) at the time of the failure occurrence" [11.3.1.6] — the distinction is purely in how the record is looked up, not what it contains.</td>
+</tr>
+<tr>
+<td><code>0x06, 0x10, 0x16, 0x19</code></td>
+<td><strong>Extended data</strong></td>
+<td>raw counters/timers associated with one DTC</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>0x04</code> and <code>0x06</code> each get their own diagram and worked example later in this section; <code>0x05</code> is placed here, next to Snapshot, because the two are easy to conflate — same record content, different addressing</li>
+</ul>
+<div class="ref">Clause 11.3.2.2, Table 269; Clause 11.3.1.6</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">15 / 39</span></div></section>
+<section class="slide" id="s16"><div class="slide-inner"><h2>The 27 report types — remaining families</h2>
+<table>
+<thead>
+<tr>
+<th>reportType range</th>
+<th>Family</th>
+<th>What it returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x08, 0x09</code></td>
+<td><strong>Severity</strong></td>
+<td>adds a <code>DTCSeverityMask</code> / severity byte to the list or single-DTC shape</td>
+</tr>
+<tr>
+<td><code>0x14</code></td>
+<td><strong>Fault detection counter</strong></td>
+<td>pre-failed DTCs not yet pending/confirmed</td>
+</tr>
+<tr>
+<td><code>0x42, 0x55</code></td>
+<td><strong>WWH-OBD</strong></td>
+<td>legislated report shapes scoped by <code>FunctionalGroupIdentifier</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>None of these are new shapes — each reuses the count, list, snapshot or extended-data layout from the previous slide, just against a different memory, filter, or mask. Covered together in "Severity, mirror memory, and the rest" later in this section</li>
+</ul>
+<div class="ref">Clause 11.3.2.2, Table 269</div>
+<div class="note"><b>Note — </b>Mirror-memory (0x0F–0x11), user-defined-memory (0x17–0x19) and emissions-only-OBD (0x12–0x13) sub-functions are not new shapes either — they run the count or list report against a different DTC store or a legislated subset.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">16 / 39</span></div></section>
+<section class="slide divider" id="s17"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 4 — Report Number Of DTCs — count DTC report</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">17 / 39</span></div></section>
+<section class="slide" id="s18"><div class="slide-inner"><h2>reportNumberOfDTCByStatusMask (0x01)</h2>
+<figure><img alt="ReadDTCInformation 0x01 request/response — count shape" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgMzAwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5SZWFkRFRDSW5mb3JtYXRpb24gMHgwMSDigJQgcmVwb3J0TnVtYmVyT2ZEVENCeVN0YXR1c01hc2sgKENsYXVzZSAxMS4zLjIgLyAxMS4zLjMsIFRhYmxlIDI3MSk8L3RleHQ+CiAgPHRleHQgeD0iMjAiIHk9IjQ4IiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiM2MDdkOGIiPiZxdW90O0NvdW50JnF1b3Q7IHNoYXBlIOKAlCBzaGFyZWQgd2l0aCAweDA3LCAweDExLCAweDEyIChyZXBvcnROdW1iZXJPZi4uLiB2YXJpYW50cyk6IHRoZSByZXNwb25zZSBuZXZlciBsaXN0cyBEVENzLCBvbmx5IGhvdyBtYW55IG1hdGNoLjwvdGV4dD4KCiAgPCEtLSBSZXF1ZXN0IC0tPgogIDx0ZXh0IHg9IjQwIiB5PSI3NiIgZm9udC1zaXplPSI5LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZjI2ZjIxIj5SZXF1ZXN0IOKAlCBjbGllbnQg4oaSIHNlcnZlciAoVGFibGUgMjU2KTwvdGV4dD4KICA8cmVjdCB4PSI0MCIgeT0iODIiIHdpZHRoPSI5MCIgaGVpZ2h0PSI0NiIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iODUiIHk9IjEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+U0lEPC90ZXh0PgogIDx0ZXh0IHg9Ijg1IiB5PSIxMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHgxOTwvdGV4dD4KICA8dGV4dCB4PSI4NSIgeT0iMTIzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcuNSIgZmlsbD0iIzYwN2Q4YiI+UkRUQ0k8L3RleHQ+CgogIDxyZWN0IHg9IjE0MCIgeT0iODIiIHdpZHRoPSIxNTAiIGhlaWdodD0iNDYiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjIxNSIgeT0iOTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPnJlcG9ydFR5cGU8L3RleHQ+CiAgPHRleHQgeD0iMjE1IiB5PSIxMTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHgwMTwvdGV4dD4KICA8dGV4dCB4PSIyMTUiIHk9IjEyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI3LjUiIGZpbGw9IiM2MDdkOGIiPkxFVl8gwrcgUk5PRFRDQlNNPC90ZXh0PgoKICA8cmVjdCB4PSIzMDAiIHk9IjgyIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjQ2IiBmaWxsPSIjZWRlN2Y2IiBzdHJva2U9IiM1ZTM1YjEiLz4KICA8dGV4dCB4PSIzNzUiIHk9Ijk3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5EVENTdGF0dXNNYXNrPC90ZXh0PgogIDx0ZXh0IHg9IjM3NSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPjB4MDAg4oCTIDB4RkY8L3RleHQ+CiAgPHRleHQgeD0iMzc1IiB5PSIxMjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iNy41IiBmaWxsPSIjNjA3ZDhiIj5EVENTTSDCtyBNPC90ZXh0PgoKICA8IS0tIFJlc3BvbnNlIC0tPgogIDx0ZXh0IHg9IjQwIiB5PSIxNTgiIGZvbnQtc2l6ZT0iOS41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzJlN2QzMiI+UG9zaXRpdmUgcmVzcG9uc2Ug4oCUIHNlcnZlciDihpIgY2xpZW50IChUYWJsZSAyNzEpPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIxNjQiIHdpZHRoPSI5MCIgaGVpZ2h0PSI0NiIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iODUiIHk9IjE4MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+U0lEPC90ZXh0PgogIDx0ZXh0IHg9Ijg1IiB5PSIxOTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHg1OTwvdGV4dD4KICA8dGV4dCB4PSI4NSIgeT0iMjA1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcuNSIgZmlsbD0iIzYwN2Q4YiI+UkRUQ0lQUjwvdGV4dD4KCiAgPHJlY3QgeD0iMTQwIiB5PSIxNjQiIHdpZHRoPSIxMTAiIGhlaWdodD0iNDYiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjE5NSIgeT0iMTgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPnJlcG9ydFR5cGUgZWNobzwvdGV4dD4KICA8dGV4dCB4PSIxOTUiIHk9IjE5NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjYzMjM4Ij4weDAxPC90ZXh0PgoKICA8cmVjdCB4PSIyNjAiIHk9IjE2NCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI0NiIgZmlsbD0iI2VkZTdmNiIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPHRleHQgeD0iMzUwIiB5PSIxNzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOC41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+RFRDU3RhdHVzQXZhaWxhYmlsaXR5TWFzazwvdGV4dD4KICA8dGV4dCB4PSIzNTAiIHk9IjE5MSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjYzMjM4Ij4weDAwIOKAkyAweEZGPC90ZXh0PgogIDx0ZXh0IHg9IjM1MCIgeT0iMjA0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcuNSIgZmlsbD0iIzYwN2Q4YiI+RFRDU0FNIMK3IE08L3RleHQ+CgogIDxyZWN0IHg9IjQ1MCIgeT0iMTY0IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjQ2IiBmaWxsPSIjZTBmN2ZhIiBzdHJva2U9IiMwMDgzOGYiLz4KICA8dGV4dCB4PSI1MjUiIHk9IjE3OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5EVENGb3JtYXRJZGVudGlmaWVyPC90ZXh0PgogIDx0ZXh0IHg9IjUyNSIgeT0iMTkxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPjB4MDAg4oCTIDB4MDQ8L3RleHQ+CiAgPHRleHQgeD0iNTI1IiB5PSIyMDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iNy41IiBmaWxsPSIjNjA3ZDhiIj5EVENGSURfIMK3IE08L3RleHQ+CgogIDxyZWN0IHg9IjYxMCIgeT0iMTY0IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjQ2IiBmaWxsPSIjZmNlNGVjIiBzdHJva2U9IiNjMjE4NWIiLz4KICA8dGV4dCB4PSI2ODUiIHk9IjE4MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+RFRDQ291bnQ8L3RleHQ+CiAgPHRleHQgeD0iNjg1IiB5PSIxOTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MiBieXRlcyAoSEIsIExCKTwvdGV4dD4KICA8dGV4dCB4PSI2ODUiIHk9IjIwNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI3LjUiIGZpbGw9IiM2MDdkOGIiPkRUQ0NfIMK3IE08L3RleHQ+CgogIDwhLS0gRFRDRm9ybWF0SWRlbnRpZmllciBsZWdlbmQgLS0+CiAgPHRleHQgeD0iMjAiIHk9IjI0MCIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPkRUQ0Zvcm1hdElkZW50aWZpZXIgdmFsdWVzIChUYWJsZSAyNzEpOjwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iMjU2IiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzI2MzIzOCI+MHgwMCBTQUVfSjIwMTItREFfMDAgICAweDAxIElTT18xNDIyOS0xICh2ZWhpY2xlLW1hbnVmYWN0dXJlciBkZWZpbmVkIGNvZGluZykgICAweDAyIFNBRV9KMTkzOS03MyAgIDB4MDMgSVNPXzExOTkyLTQgICAweDA0IFNBRV9KMjAxMi1EQV8wNDwvdGV4dD4KCiAgPHRleHQgeD0iMjAiIHk9IjI3OCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+RXhhbXBsZSAoQ2xhdXNlIDExLjMuNS4yLCBUYWJsZXMgMjkw4oCTMjkxKTogcmVxdWVzdCAxOSAwMSAwOCDihpIgcmVzcG9uc2UgNTkgMDEgMkYgMDEgMDAgMDEg4oCUIG9uZSBEVEMgKG9mIHRocmVlIHN0b3JlZCkgbWF0Y2hlcyBtYXNrIDB4MDguPC90ZXh0Pgo8L3N2Zz4=" /></figure>
+<ul>
+<li>Request = SID + <code>reportType</code> + <code>DTCStatusMask</code>; response = SID + <code>reportType</code> + <code>DTCStatusAvailabilityMask</code> + <code>DTCFormatIdentifier</code> + 2-byte <code>DTCCount</code> [Table 271]</li>
+<li>Shared shape with <code>0x07</code> (by severity), <code>0x11</code> (mirror memory), <code>0x12</code> (emissions-only OBD)</li>
+</ul>
+<div class="ref">Clause 11.3.1.2, Table 271</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">18 / 39</span></div></section>
+<section class="slide" id="s19"><div class="slide-inner"><h2>reportNumberOfDTCByStatusMask (0x01) — Message Structure</h2>
+<ul>
+<li><strong>Request</strong> — 3 bytes, every field mandatory [Table 256]:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A_Data byte</th>
+<th>Parameter</th>
+<th>Value</th>
+<th>Mnemonic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#1</td>
+<td>ReadDTCInformation Request SID</td>
+<td><code>0x19</code></td>
+<td>RDTCI</td>
+</tr>
+<tr>
+<td>#2</td>
+<td>sub-function <code>reportType</code></td>
+<td><code>0x01</code></td>
+<td>LEV_ · RNODTCBSM</td>
+</tr>
+<tr>
+<td>#3</td>
+<td><code>DTCStatusMask</code></td>
+<td><code>0x00 – 0xFF</code></td>
+<td>DTCSM</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Positive response</strong> — 6 bytes, every field mandatory [Table 271]:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A_Data byte</th>
+<th>Parameter</th>
+<th>Value</th>
+<th>Mnemonic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#1</td>
+<td>ReadDTCInformation Response SID</td>
+<td><code>0x59</code></td>
+<td>RDTCIPR</td>
+</tr>
+<tr>
+<td>#2</td>
+<td><code>reportType</code> — echo of the request</td>
+<td><code>0x01</code></td>
+<td>LEV_</td>
+</tr>
+<tr>
+<td>#3</td>
+<td><code>DTCStatusAvailabilityMask</code></td>
+<td><code>0x00 – 0xFF</code></td>
+<td>DTCSAM</td>
+</tr>
+<tr>
+<td>#4</td>
+<td><code>DTCFormatIdentifier</code></td>
+<td><code>0x00 – 0x04</code></td>
+<td>DTCFID_</td>
+</tr>
+<tr>
+<td>#5</td>
+<td><code>DTCCount</code> high byte</td>
+<td><code>0x00 – 0xFF</code></td>
+<td>DTCCHB</td>
+</tr>
+<tr>
+<td>#6</td>
+<td><code>DTCCount</code> low byte</td>
+<td><code>0x00 – 0xFF</code></td>
+<td>DTCCLB</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>No conditional/repeating bytes in this shape — contrast with the <strong>list</strong> shape next, whose <code>DTCAndStatusRecord</code> blocks repeat 0..n times</li>
+</ul>
+<div class="ref">Clause 11.3.2.1 / 11.3.3.1, Tables 256 and 271</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">19 / 39</span></div></section>
+<section class="slide" id="s20"><div class="slide-inner"><h2>reportNumberOfDTCByStatusMask (0x01) — Example</h2>
+<ul>
+<li>worked example — 3 stored DTCs, mask <code>0x08</code> (confirmedDTC), server's <code>DTCStatusAvailabilityMask = 0x2F</code> [Clause 11.3.5.2, Tables 290–291]:</li>
+</ul>
+<p><strong>Request</strong> <code>19 01 08</code></p>
+<table>
+<thead>
+<tr>
+<th>A_Data byte</th>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#1</td>
+<td><code>19</code></td>
+<td>SID</td>
+</tr>
+<tr>
+<td>#2</td>
+<td><code>01</code></td>
+<td>reportType = reportNumberOfDTCByStatusMask</td>
+</tr>
+<tr>
+<td>#3</td>
+<td><code>08</code></td>
+<td>DTCStatusMask — bit 3 (confirmedDTC)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong> <code>59 01 2F 01 00 01</code></p>
+<table>
+<thead>
+<tr>
+<th>A_Data byte</th>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#1</td>
+<td><code>59</code></td>
+<td>Response SID</td>
+</tr>
+<tr>
+<td>#2</td>
+<td><code>01</code></td>
+<td>reportType echo</td>
+</tr>
+<tr>
+<td>#3</td>
+<td><code>2F</code></td>
+<td>DTCStatusAvailabilityMask — bits this server implements</td>
+</tr>
+<tr>
+<td>#4</td>
+<td><code>01</code></td>
+<td>DTCFormatIdentifier = ISO_14229-1_DTCFormat</td>
+</tr>
+<tr>
+<td>#5–#6</td>
+<td><code>00 01</code></td>
+<td>DTCCount = 1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Only DTC P2522-1F (<code>statusOfDTC = 0x2F</code>) matches <code>0x08 AND 0x2F ≠ 0</code> → count = 1</li>
+</ul></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">20 / 39</span></div></section>
+<section class="slide" id="s21"><div class="slide-inner"><h2>DTC labels — the "Pxxxx-YY" notation</h2>
+<ul>
+<li>ISO 14229-1 only ever transmits the raw <strong>3-byte DTC</strong> (<code>0x080511</code>, <code>0x0A9B17</code>, <code>0x25221F</code>) — it never defines what a DTC number <em>means</em></li>
+<li>The standard's own worked examples label DTCs in the familiar <strong>SAE J2012 / ISO 15031-6</strong> scan-tool notation instead, purely for readability</li>
+<li><strong>Letter</strong> — functional group encoded in the DTC's top bits: <code>P</code> Powertrain, <code>C</code> Chassis, <code>B</code> Body, <code>U</code> Network Communication</li>
+<li><strong>4 hex digits</strong> — the specific fault, from DTC bytes 1–2</li>
+<li><strong><code>-YY</code> suffix</strong> — the failure-type byte, DTC byte 3 (the specific fault mode: short-to-ground, circuit-intermittent, etc.)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Raw DTC</th>
+<th>Byte breakdown</th>
+<th>Fault</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0805-11</td>
+<td><code>0x080511</code></td>
+<td><code>08 05</code> <code>·</code> <code>11</code></td>
+<td>Clutch Position Sensor — circuit short to ground</td>
+</tr>
+<tr>
+<td>P0A9B-17</td>
+<td><code>0x0A9B17</code></td>
+<td><code>0A 9B</code> <code>·</code> <code>17</code></td>
+<td>Hybrid Battery Temperature Sensor — circuit voltage above threshold</td>
+</tr>
+<tr>
+<td>P2522-1F</td>
+<td><code>0x25221F</code></td>
+<td><code>25 22</code> <code>·</code> <code>1F</code></td>
+<td>A/C Request "B" — circuit intermittent</td>
+</tr>
+</tbody>
+</table>
+<div class="ref">Clause 11.3.5.2, Tables 287–289</div>
+<div class="note"><b>Note — </b>These three are illustrative example DTCs chosen by the standard's authors to make the byte examples concrete — not a defined catalog. Actual DTC-to-fault mappings are vehicle-manufacturer (or SAE/ISO 15031 registry) specific; ISO 14229-1 itself is silent on the meaning of any DTC number.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">21 / 39</span></div></section>
+<section class="slide divider" id="s22"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 5 — Report List of DTC</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">22 / 39</span></div></section>
+<section class="slide" id="s23"><div class="slide-inner"><h2>reportDTCByStatusMask (0x02)</h2>
+<figure><img alt="ReadDTCInformation 0x02 request/response — list shape with repeating DTCAndStatusRecord" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgMzIwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iMzIwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5SZWFkRFRDSW5mb3JtYXRpb24gMHgwMiDigJQgcmVwb3J0RFRDQnlTdGF0dXNNYXNrIChDbGF1c2UgMTEuMy4yIC8gMTEuMy4zLCBUYWJsZSAyNzIpPC90ZXh0PgogIDx0ZXh0IHg9IjIwIiB5PSI0OCIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNjA3ZDhiIj4mcXVvdDtMaXN0JnF1b3Q7IHNoYXBlIOKAlCBzaGFyZWQgd2l0aCAweDBB4oCTMHgwRSwgMHgwRiwgMHgxMywgMHgxNTogc2FtZSByZXF1ZXN0IGFzIDB4MDEsIGJ1dCB0aGUgcmVzcG9uc2UgcmVwZWF0cyBvbmUgYmxvY2sgcGVyIG1hdGNoaW5nIERUQy48L3RleHQ+CgogIDwhLS0gUmVxdWVzdCAtLT4KICA8dGV4dCB4PSI0MCIgeT0iNzYiIGZvbnQtc2l6ZT0iOS41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2YyNmYyMSI+UmVxdWVzdCDigJQgY2xpZW50IOKGkiBzZXJ2ZXIgKFRhYmxlIDI1Nikg4oCUIGlkZW50aWNhbCBzaGFwZSB0byAweDAxPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSI4MiIgd2lkdGg9IjkwIiBoZWlnaHQ9IjQyIiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSI4NSIgeT0iOTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPlNJRDwvdGV4dD4KICA8dGV4dCB4PSI4NSIgeT0iMTExIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPjB4MTk8L3RleHQ+CgogIDxyZWN0IHg9IjE0MCIgeT0iODIiIHdpZHRoPSIxNTAiIGhlaWdodD0iNDIiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjIxNSIgeT0iOTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyNjMyMzgiPnJlcG9ydFR5cGU8L3RleHQ+CiAgPHRleHQgeD0iMjE1IiB5PSIxMTEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHgwMjwvdGV4dD4KCiAgPHJlY3QgeD0iMzAwIiB5PSI4MiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSI0MiIgZmlsbD0iI2VkZTdmNiIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPHRleHQgeD0iMzc1IiB5PSI5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+RFRDU3RhdHVzTWFzazwvdGV4dD4KICA8dGV4dCB4PSIzNzUiIHk9IjExMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjYzMjM4Ij4weDAwIOKAkyAweEZGPC90ZXh0PgoKICA8IS0tIFJlc3BvbnNlIC0tPgogIDx0ZXh0IHg9IjQwIiB5PSIxNTQiIGZvbnQtc2l6ZT0iOS41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzJlN2QzMiI+UG9zaXRpdmUgcmVzcG9uc2Ug4oCUIHNlcnZlciDihpIgY2xpZW50IChUYWJsZSAyNzIpPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIxNjAiIHdpZHRoPSI5MCIgaGVpZ2h0PSI0MiIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iODUiIHk9IjE3NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+U0lEPC90ZXh0PgogIDx0ZXh0IHg9Ijg1IiB5PSIxODkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHg1OTwvdGV4dD4KCiAgPHJlY3QgeD0iMTQwIiB5PSIxNjAiIHdpZHRoPSIxMTAiIGhlaWdodD0iNDIiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjE5NSIgeT0iMTc3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPnJlcG9ydFR5cGUgZWNobzwvdGV4dD4KICA8dGV4dCB4PSIxOTUiIHk9IjE4OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjYzMjM4Ij4weDAyPC90ZXh0PgoKICA8cmVjdCB4PSIyNjAiIHk9IjE2MCIgd2lkdGg9IjE3MCIgaGVpZ2h0PSI0MiIgZmlsbD0iI2VkZTdmNiIgc3Ryb2tlPSIjNWUzNWIxIi8+CiAgPHRleHQgeD0iMzQ1IiB5PSIxNzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOC41IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI2MzIzOCI+RFRDU3RhdHVzQXZhaWxhYmlsaXR5TWFzazwvdGV4dD4KICA8dGV4dCB4PSIzNDUiIHk9IjE4OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjYzMjM4Ij5EVENTQU0gwrcgTTwvdGV4dD4KCiAgPCEtLSBSZXBlYXRpbmcgYmxvY2sgLS0+CiAgPHJlY3QgeD0iNDUwIiB5PSIxNjAiIHdpZHRoPSI0NzAiIGhlaWdodD0iNDIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzkwYTRhZSIgc3Ryb2tlLWRhc2hhcnJheT0iMyAzIi8+CiAgPHRleHQgeD0iNjg1IiB5PSIxNTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzkwYTRhZSI+cmVwZWF0cyBvbmNlIHBlciBtYXRjaGluZyBEVEMg4oCUIDAgb3IgbW9yZSB0aW1lcyAoQzEvQzIsIFRhYmxlIDI3Mik8L3RleHQ+CgogIDxyZWN0IHg9IjQ1OCIgeT0iMTY2IiB3aWR0aD0iMjIwIiBoZWlnaHQ9IjMwIiBmaWxsPSIjZmNlNGVjIiBzdHJva2U9IiNjMjE4NWIiLz4KICA8dGV4dCB4PSI1NjgiIHk9IjE4NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiMyNjMyMzgiPkRUQyBbIEhpZ2hCeXRlLCBNaWRkbGVCeXRlLCBMb3dCeXRlIF08L3RleHQ+CgogIDxyZWN0IHg9IjY4NiIgeT0iMTY2IiB3aWR0aD0iMjIwIiBoZWlnaHQ9IjMwIiBmaWxsPSIjZTBmN2ZhIiBzdHJva2U9IiMwMDgzOGYiLz4KICA8dGV4dCB4PSI3OTYiIHk9IjE4NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiMyNjMyMzgiPnN0YXR1c09mRFRDIOKAlCBTT0RUQzwvdGV4dD4KCiAgPHRleHQgeD0iMjAiIHk9IjIzMiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzI2MzIzOCI+RWFjaCBEVENBbmRTdGF0dXNSZWNvcmQgaXMgZXhhY3RseSA0IGJ5dGVzOiB0aGUgMy1ieXRlIERUQyBudW1iZXIgcGx1cyBpdHMgMS1ieXRlIHN0YXR1c09mRFRDLiBBIGdpdmVuIERUQyBuZXZlciByZXBlYXRzIHdpdGhpbiBvbmUgcmVzcG9uc2UuPC90ZXh0PgoKICA8IS0tIFdvcmtlZCBleGFtcGxlIC0tPgogIDx0ZXh0IHg9IjIwIiB5PSIyNTgiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMjYzMjM4Ij5FeGFtcGxlIChDbGF1c2UgMTEuMy41LjMsIFRhYmxlcyAyOTXigJMyOTYpIOKAlCByZXF1ZXN0IDE5IDAyIDg0LCB0d28gb2YgdGhyZWUgc3RvcmVkIERUQ3MgbWF0Y2g6PC90ZXh0PgogIDxyZWN0IHg9IjIwIiB5PSIyNjYiIHdpZHRoPSI5MjAiIGhlaWdodD0iMjQiIGZpbGw9IiNmN2Y5ZmIiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjMwIiB5PSIyODIiIGZvbnQtc2l6ZT0iOS41IiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgQ29uc29sYXMsIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+NTkgMDIgN0YgfCAwQSA5QiAxNyAyNCB8IDA4IDA1IDExIDJGPC90ZXh0PgogIDx0ZXh0IHg9IjIwIiB5PSIzMDYiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjNjA3ZDhiIj5EVENTQU09MHg3RiwgdGhlbiBEVEMgMHgwQTlCMTcvc3RhdHVzIDB4MjQsIHRoZW4gRFRDIDB4MDgwNTExL3N0YXR1cyAweDJGLiBEVEMgMHgyNTIyMUYgKHN0YXR1cyAweDAwKSBpcyBkcm9wcGVkIOKAlCBpdCBkb2VzIG5vdCBtYXRjaCBtYXNrIDB4ODQuPC90ZXh0Pgo8L3N2Zz4=" /></figure>
+<ul>
+<li><strong>Identical request</strong> to 0x01 — same SID, <code>reportType</code>, <code>DTCStatusMask</code></li>
+<li>Response repeats a <strong>4-byte <code>DTCAndStatusRecord</code></strong> (3-byte DTC + 1-byte <code>statusOfDTC</code>) once per matching DTC, after the <code>DTCStatusAvailabilityMask</code> [Table 272]</li>
+<li>Shared shape with <code>reportSupportedDTC</code>, the four first/most-recent sub-functions (<code>0x0B–0x0E</code>), <code>reportMirrorMemoryDTCByStatusMask</code> (0x0F), emissions-only OBD (0x13), and <code>reportDTCWithPermanentStatus</code> (0x15)</li>
+</ul>
+<div class="ref">Clause 11.3.1.3, Table 272</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">23 / 39</span></div></section>
+<section class="slide" id="s24"><div class="slide-inner"><h2>reportDTCByStatusMask (0x02) — Example</h2>
+<ul>
+<li>worked example — same 3 DTCs, mask <code>0x84</code>; server supports all status bits except bit 7 (<code>DTCStatusAvailabilityMask = 0x7F</code>) [Clause 11.3.5.3, Tables 295–296]:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>A_Data bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client → server</td>
+<td><code>19 02 84</code></td>
+</tr>
+<tr>
+<td>server → client</td>
+<td><code>59 02 7F</code> + <code>0A 9B 17 24</code> + <code>08 05 11 2F</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>DTC <code>0x0A9B17</code> (status <code>0x24</code>) and DTC <code>0x080511</code> (status <code>0x2F</code>) match; DTC <code>0x25221F</code> (status <code>0x00</code>) does <strong>not</strong> — the server bypasses masking on status bits it doesn't support</li>
+</ul></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">24 / 39</span></div></section>
+<section class="slide divider" id="s25"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 6 — Report DTC Snapshot Record</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">25 / 39</span></div></section>
+<section class="slide" id="s26"><div class="slide-inner"><h2>reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report</h2>
+<ul>
+<li><strong>Purpose:</strong> returns the DTCSnapshot (freeze-frame) records captured for one client-defined DTC — data "stored upon detection of a system malfunction," acting as "a snapshot of data values from the time of the... malfunction occurrence," meant "to ease the fault isolation process by the technician" [Clause 11.3.1.1]</li>
+<li>Request adds a <code>DTCMaskRecord</code> (3-byte DTC) and a <code>DTCSnapshotRecordNumber</code> to the SID + sub-function [Table 257]</li>
+<li><strong><code>DTCSnapshotRecordNumber</code></strong> semantics: <code>0x00</code> reserved for legislated use, <code>0x01–0xFE</code> vehicle-manufacturer specific, <code>0xFF</code> = <em>report all stored records at once</em> [Table 270]</li>
+<li>Response repeats, per record: record number → number of data-identifiers in it → that many <code>(dataIdentifier, snapshotData)</code> pairs — the <strong>same DID catalog used by <code>ReadDataByIdentifier</code> (0x22)</strong> [Table 274]</li>
+</ul>
+<div class="ref">Clause 11.3.1.5, Tables 257, 274</div>
+<div class="note"><b>Note — </b>This is the one case where the same DTC value may legitimately repeat in a response — once per snapshot record — because a DTC can have multiple stored freeze frames.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">26 / 39</span></div></section>
+<section class="slide" id="s27"><div class="slide-inner"><h2>DTCMaskRecord — addressing one specific DTC</h2>
+<ul>
+<li>A <strong>3-byte value</strong> — DTCHighByte, DTCMiddleByte, DTCLowByte — "which together represent a unique identification number for a specific diagnostic trouble code supported by a server" [Table 270]</li>
+<li>It's the <strong>same 3 bytes</strong> as the raw DTC number from Section 1 — <code>DTCMaskRecord</code> is just the request-side parameter name for "the one DTC I mean"</li>
+<li>Used by every <strong>"...ByDTCNumber"</strong> sub-function — <code>0x04</code>, <code>0x06</code>, <code>0x09</code>, <code>0x10</code>, <code>0x18</code>, <code>0x19</code> — to pick exactly one DTC, unlike <code>DTCStatusMask</code> (Section 1), which filters <em>many</em> DTCs at once by their status bits</li>
+</ul>
+<div class="ref">Clause 11.3.2.3, Table 270</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">27 / 39</span></div></section>
+<section class="slide" id="s28"><div class="slide-inner"><h2>reportDTCSnapshotIdentification (0x03) vs reportDTCSnapshotByDTCNumber (0x04)</h2>
+<ul>
+<li><strong>0x03 is a catalog.</strong> No <code>DTCMaskRecord</code> in the request — the client hasn't picked a DTC yet. The server returns "the list of DTCSnapshot record identification information for all stored DTCSnapshot records": DTC + record number pairs only — <strong>no status, no captured data</strong> [Clause 11.3.1.4]</li>
+<li><strong>0x04 is a fetch.</strong> Request supplies a <code>DTCMaskRecord</code> + a <code>DTCSnapshotRecordNumber</code> (or <code>0xFF</code> for <em>all</em> records of that DTC). The server returns the actual <code>dataIdentifier</code>/<code>snapshotData</code> pairs for that one DTC's record [Clause 11.3.1.5]</li>
+<li>The standard states the intended workflow directly: "It is recommended that the client first requests the identification of DTCSnapshot records stored using the sub-function parameter <code>reportDTCSnapshotIdentification</code> before requesting a specific <code>DTCSnapshotRecordNumber</code> via the <code>reportDTCSnapshotRecordByDTCNumber</code> request" [Clause 11.3.1.5]</li>
+</ul>
+<div class="ref">Clause 11.3.1.4–11.3.1.5</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">28 / 39</span></div></section>
+<section class="slide" id="s29"><div class="slide-inner"><h2>ReadDTCInformation Snapshot family — Message Structure</h2>
+<figure><img alt="ReadDTCInformation 0x03 vs 0x04 request/response structure" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgNDYwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iNDYwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5SZWFkRFRDSW5mb3JtYXRpb24g4oCUIHNuYXBzaG90IGZhbWlseTogMHgwMyBjYXRhbG9nIHZzIDB4MDQgcmVjb3JkIGRhdGEgKFRhYmxlcyAyNTcsIDI3MywgMjc0KTwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iNDQiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzYwN2Q4YiI+MHgwMyB0ZWxscyB0aGUgY2xpZW50IFdISUNIIERUQ1NuYXBzaG90IHJlY29yZHMgZXhpc3Q7IDB4MDQgZmV0Y2hlcyB0aGUgREFUQSBmb3IgT05FIG9mIHRoZW0uIFJlY29tbWVuZGVkOiBjYWxsIDB4MDMgZmlyc3QsIHRoZW4gMHgwNCBwZXIgcmVjb3JkLjwvdGV4dD4KCiAgPCEtLSBQYW5lbCAxOiAweDAzIC0tPgogIDx0ZXh0IHg9IjIwIiB5PSI2NiIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmMjZmMjEiPnJlcG9ydERUQ1NuYXBzaG90SWRlbnRpZmljYXRpb24gKDB4MDMpIOKAlCBSZXF1ZXN0IChUYWJsZSAyNTcpIOKAlCAyIGJ5dGVzLCBubyBEVEMgZmlsdGVyPC90ZXh0PgogIDxyZWN0IHg9IjIwIiB5PSI3MiIgd2lkdGg9IjgwIiBoZWlnaHQ9IjM2IiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSI2MCIgeT0iOTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+U0lEIDB4MTk8L3RleHQ+CiAgPHJlY3QgeD0iMTEwIiB5PSI3MiIgd2lkdGg9IjEzMCIgaGVpZ2h0PSIzNiIgZmlsbD0iI2ZmZjNlMCIgc3Ryb2tlPSIjZjI2ZjIxIi8+CiAgPHRleHQgeD0iMTc1IiB5PSI5NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjYzMjM4Ij5yZXBvcnRUeXBlIDB4MDM8L3RleHQ+CgogIDx0ZXh0IHg9IjIwIiB5PSIxMjYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMmU3ZDMyIj5Qb3NpdGl2ZSByZXNwb25zZSAoVGFibGUgMjczKTwvdGV4dD4KICA8cmVjdCB4PSIyMCIgeT0iMTMyIiB3aWR0aD0iNzAiIGhlaWdodD0iMzYiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIvPgogIDx0ZXh0IHg9IjU1IiB5PSIxNTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHg1OTwvdGV4dD4KICA8cmVjdCB4PSI5NiIgeT0iMTMyIiB3aWR0aD0iOTAiIGhlaWdodD0iMzYiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjE0MSIgeT0iMTU0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPjB4MDMgZWNobzwvdGV4dD4KCiAgPHRleHQgeD0iNDIyIiB5PSIxMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzkwYTRhZSI+cmVwZWF0cyBvbmNlIHBlciBzdG9yZWQgc25hcHNob3QgcmVjb3JkIOKAlCAwLi5uIHRpbWVzPC90ZXh0PgogIDxyZWN0IHg9IjE5MiIgeT0iMTMyIiB3aWR0aD0iNDQwIiBoZWlnaHQ9IjM2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiM5MGE0YWUiIHN0cm9rZS1kYXNoYXJyYXk9IjMgMyIvPgogIDxyZWN0IHg9IjIwMCIgeT0iMTM4IiB3aWR0aD0iMjEwIiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmNlNGVjIiBzdHJva2U9IiNjMjE4NWIiLz4KICA8dGV4dCB4PSIzMDUiIHk9IjE1NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiMyNjMyMzgiPkRUQyBbIEhpZ2hCeXRlLCBNaWRkbGVCeXRlLCBMb3dCeXRlIF08L3RleHQ+CiAgPHJlY3QgeD0iNDE4IiB5PSIxMzgiIHdpZHRoPSIyMDYiIGhlaWdodD0iMjQiIGZpbGw9IiNlMGY3ZmEiIHN0cm9rZT0iIzAwODM4ZiIvPgogIDx0ZXh0IHg9IjUyMSIgeT0iMTU0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjguNSIgZmlsbD0iIzI2MzIzOCI+RFRDU25hcHNob3RSZWNvcmROdW1iZXI8L3RleHQ+CgogIDxyZWN0IHg9IjIwIiB5PSIxODAiIHdpZHRoPSI5MjAiIGhlaWdodD0iMjQiIGZpbGw9IiNmN2Y5ZmIiIHN0cm9rZT0iI2NmZDhkYyIvPgogIDx0ZXh0IHg9IjI4IiB5PSIxOTYiIGZvbnQtc2l6ZT0iOSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zIE1vbm8sIENvbnNvbGFzLCBtb25vc3BhY2UiIGZpbGw9IiMyNjMyMzgiPkV4YW1wbGUgKDExLjMuNS41KTogMTkgMDMgIOKGkiAgNTkgMDMgfCAxMiAzNCA1NiAwMSB8IDEyIDM0IDU2IDAyIHwgNzggOUEgQkMgMDE8L3RleHQ+CgogIDx0ZXh0IHg9IjIwIiB5PSIyMjIiIGZvbnQtc2l6ZT0iOS41IiBmaWxsPSIjNjA3ZDhiIj5EVEMgKyByZWNvcmQgbnVtYmVyIE9OTFkg4oCUIG5vIHN0YXR1cywgbm8gZGF0YS4gVGhyZWUgcmVjb3JkcyBoZXJlOiBEVEMgMHgxMjM0NTYgaGFzIHR3byAoIzEsICMyKSwgRFRDIDB4Nzg5QUJDIGhhcyBvbmUgKCMxKS48L3RleHQ+CgogIDxsaW5lIHgxPSIyMCIgeTE9IjIzOCIgeDI9Ijk0MCIgeTI9IjIzOCIgc3Ryb2tlPSIjY2ZkOGRjIiBzdHJva2Utd2lkdGg9IjEiLz4KCiAgPCEtLSBQYW5lbCAyOiAweDA0IC0tPgogIDx0ZXh0IHg9IjIwIiB5PSIyNjAiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZjI2ZjIxIj5yZXBvcnREVENTbmFwc2hvdFJlY29yZEJ5RFRDTnVtYmVyICgweDA0KSDigJQgUmVxdWVzdCAoVGFibGUgMjU3KSDigJQgdGFyZ2V0cyBvbmUgRFRDICsgb25lIHJlY29yZDwvdGV4dD4KICA8cmVjdCB4PSIyMCIgeT0iMjY2IiB3aWR0aD0iNzAiIGhlaWdodD0iMzYiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIvPgogIDx0ZXh0IHg9IjU1IiB5PSIyODgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHgxOTwvdGV4dD4KICA8cmVjdCB4PSI5NiIgeT0iMjY2IiB3aWR0aD0iOTAiIGhlaWdodD0iMzYiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjE0MSIgeT0iMjg4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPnJlcG9ydFR5cGUgMHgwNDwvdGV4dD4KICA8cmVjdCB4PSIxOTIiIHk9IjI2NiIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIzNiIgZmlsbD0iI2ZjZTRlYyIgc3Ryb2tlPSIjYzIxODViIi8+CiAgPHRleHQgeD0iMjgyIiB5PSIyODgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOC41IiBmaWxsPSIjMjYzMjM4Ij5EVENNYXNrUmVjb3JkIFsgSEIsIE1CLCBMQiBdPC90ZXh0PgogIDxyZWN0IHg9IjM3OCIgeT0iMjY2IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjM2IiBmaWxsPSIjZTBmN2ZhIiBzdHJva2U9IiMwMDgzOGYiLz4KICA8dGV4dCB4PSI0NzgiIHk9IjI4MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjMjYzMjM4Ij5EVENTbmFwc2hvdFJlY29yZE51bWJlcjwvdGV4dD4KICA8dGV4dCB4PSI0NzgiIHk9IjI5NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI3LjUiIGZpbGw9IiM2MDdkOGIiPjB4RkYgPSBhbGwgcmVjb3JkcyBmb3IgdGhpcyBEVEM8L3RleHQ+CgogIDx0ZXh0IHg9IjIwIiB5PSIzMjYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMmU3ZDMyIj5Qb3NpdGl2ZSByZXNwb25zZSAoVGFibGUgMjc0KTwvdGV4dD4KICA8cmVjdCB4PSIyMCIgeT0iMzMyIiB3aWR0aD0iNjAiIGhlaWdodD0iNDAiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzE1NjVjMCIvPgogIDx0ZXh0IHg9IjUwIiB5PSIzNTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzI2MzIzOCI+MHg1OTwvdGV4dD4KICA8cmVjdCB4PSI4NCIgeT0iMzMyIiB3aWR0aD0iODAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZmYzZTAiIHN0cm9rZT0iI2YyNmYyMSIvPgogIDx0ZXh0IHg9IjEyNCIgeT0iMzU0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPjB4MDQ8L3RleHQ+CiAgPHJlY3QgeD0iMTY4IiB5PSIzMzIiIHdpZHRoPSIxNTAiIGhlaWdodD0iNDAiIGZpbGw9IiNmY2U0ZWMiIHN0cm9rZT0iI2MyMTg1YiIvPgogIDx0ZXh0IHg9IjI0MyIgeT0iMzUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiMyNjMyMzgiPkRUQyArPC90ZXh0PgogIDx0ZXh0IHg9IjI0MyIgeT0iMzYyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiMyNjMyMzgiPnN0YXR1c09mRFRDPC90ZXh0PgogIDxyZWN0IHg9IjMyMiIgeT0iMzMyIiB3aWR0aD0iODAiIGhlaWdodD0iNDAiIGZpbGw9IiNlMGY3ZmEiIHN0cm9rZT0iIzAwODM4ZiIvPgogIDx0ZXh0IHg9IjM2MiIgeT0iMzU0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiMyNjMyMzgiPnJlY29yZCAjPC90ZXh0PgogIDxyZWN0IHg9IjQwNiIgeT0iMzMyIiB3aWR0aD0iODAiIGhlaWdodD0iNDAiIGZpbGw9IiNlZGU3ZjYiIHN0cm9rZT0iIzVlMzViMSIvPgogIDx0ZXh0IHg9IjQ0NiIgeT0iMzUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcuNSIgZmlsbD0iIzI2MzIzOCI+I2RhdGE8L3RleHQ+CiAgPHRleHQgeD0iNDQ2IiB5PSIzNjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iNy41IiBmaWxsPSIjMjYzMjM4Ij5pZGVudGlmaWVyczwvdGV4dD4KCiAgPHRleHQgeD0iNzEyIiB5PSIzMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzkwYTRhZSI+cmVwZWF0cyBvbmNlIHBlciBkYXRhSWRlbnRpZmllciBpbiB0aGUgcmVjb3JkPC90ZXh0PgogIDxyZWN0IHg9IjQ5NCIgeT0iMzMyIiB3aWR0aD0iNDM2IiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiM5MGE0YWUiIHN0cm9rZS1kYXNoYXJyYXk9IjMgMyIvPgogIDxyZWN0IHg9IjUwMiIgeT0iMzM4IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSI1NzciIHk9IjM1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjMjYzMjM4Ij5kYXRhSWRlbnRpZmllcjwvdGV4dD4KICA8cmVjdCB4PSI2NjAiIHk9IjMzOCIgd2lkdGg9IjI2MiIgaGVpZ2h0PSIyOCIgZmlsbD0iI2U4ZjVlOSIgc3Ryb2tlPSIjMmU3ZDMyIi8+CiAgPHRleHQgeD0iNzkxIiB5PSIzNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzI2MzIzOCI+c25hcHNob3REYXRhIGJ5dGVzPC90ZXh0PgoKICA8cmVjdCB4PSIyMCIgeT0iMzg0IiB3aWR0aD0iOTIwIiBoZWlnaHQ9IjI0IiBmaWxsPSIjZjdmOWZiIiBzdHJva2U9IiNjZmQ4ZGMiLz4KICA8dGV4dCB4PSIyOCIgeT0iNDAwIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyBNb25vLCBDb25zb2xhcywgbW9ub3NwYWNlIiBmaWxsPSIjMjYzMjM4Ij5FeGFtcGxlICgxMS4zLjUuNik6IDE5IDA0IDEyIDM0IDU2IDAyICDihpIgIDU5IDA0IHwgMTIgMzQgNTYgMjQgfCAwMiB8IDAxIHwgNDcgMTEgfCBBNiA2NiAwNyA1MCAyMDwvdGV4dD4KCiAgPHRleHQgeD0iMjAiIHk9IjQyNiIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM2MDdkOGIiPk9uZSBEVEMncyByZWNvcmQ6IHN0YXR1cyArIHJlY29yZCMgKyByZXBlYXRpbmcgKGRhdGFJZGVudGlmaWVyLCBzbmFwc2hvdERhdGEpLiBSZWNvcmQgIzIgb2YgRFRDIDB4MTIzNDU2IChzdGF0dXMgMHgyNCksIERJRCAweDQ3MTEsIDUgZGF0YSBieXRlcy48L3RleHQ+CiAgPHRleHQgeD0iMjAiIHk9IjQ0NCIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM2MDdkOGIiPjB4MDMgbmV2ZXIgY2FycmllcyBzdGF0dXNPZkRUQyBvciBkYXRhOyAweDA0IGFsd2F5cyB0YXJnZXRzIGV4YWN0bHkgb25lIERUQyBhbmQsIHVubGVzcyAweEZGLCBleGFjdGx5IG9uZSByZWNvcmQuPC90ZXh0Pgo8L3N2Zz4=" /></figure>
+<ul>
+<li>Same <code>reportType</code> byte position, wildly different payload — <code>0x03</code>'s response never grows past 4 bytes per DTC; <code>0x04</code>'s grows with however many <code>dataIdentifier</code> pairs the record holds</li>
+</ul>
+<div class="ref">Clause 11.3.2.1 / 11.3.3.1, Tables 257, 273, 274</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">29 / 39</span></div></section>
+<section class="slide" id="s30"><div class="slide-inner"><h2>reportDTCSnapshotIdentification (0x03) — Example</h2>
+<ul>
+<li>DTC <code>0x123456</code> has 2 stored snapshot records, <code>0x789ABC</code> has 1 [Clause 11.3.5.5]</li>
+<li><strong>Request</strong> <code>19 03</code> — SID + <code>reportType</code> only, no DTC filter</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>59 03</code></td>
+<td>SID + reportType echo</td>
+<td></td>
+</tr>
+<tr>
+<td><code>12 34 56 01</code></td>
+<td>DTC + record#</td>
+<td><code>0x123456</code>, record <code>#1</code></td>
+</tr>
+<tr>
+<td><code>12 34 56 02</code></td>
+<td>DTC + record#</td>
+<td><code>0x123456</code> <strong>again</strong>, record <code>#2</code></td>
+</tr>
+<tr>
+<td><code>78 9A BC 01</code></td>
+<td>DTC + record#</td>
+<td><code>0x789ABC</code>, record <code>#1</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Same DTC repeats once per stored record — the one place a DTC may appear twice [Clause 11.3.1.1]</li>
+<li>No <code>statusOfDTC</code>, no data — <code>0x03</code> is a catalog only, never the payload</li>
+</ul>
+<div class="note"><b>Note — </b>This response is the client's shopping list — the next slide fetches record `#2` of `0x123456` with `0x04`.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">30 / 39</span></div></section>
+<section class="slide" id="s31"><div class="slide-inner"><h2>reportDTCSnapshotRecordByDTCNumber (0x04) — Example</h2>
+<ul>
+<li>continuation of the previous slide — fetch record <code>#2</code> of DTC <code>0x123456</code> [Clause 11.3.5.6]</li>
+<li><strong>Request</strong> <code>19 04 12 34 56 02</code> — same DTC + record# the <code>0x03</code> catalog just revealed</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>59 04</code></td>
+<td>SID + reportType echo</td>
+<td></td>
+</tr>
+<tr>
+<td><code>12 34 56 24</code></td>
+<td>DTC + statusOfDTC</td>
+<td><code>0x123456</code>, status <code>0x24</code> — new vs <code>0x03</code></td>
+</tr>
+<tr>
+<td><code>02</code></td>
+<td>record# echo</td>
+<td></td>
+</tr>
+<tr>
+<td><code>01</code></td>
+<td>#dataIdentifiers</td>
+<td>1 follows</td>
+</tr>
+<tr>
+<td><code>47 11</code></td>
+<td>dataIdentifier</td>
+<td><code>0x4711</code></td>
+</tr>
+<tr>
+<td><code>A6 66 07 50 20</code></td>
+<td>snapshotData</td>
+<td>ECT, TP, RPM (2B), MAP [Table 303]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Data-byte decoding (ECT/TP/RPM/MAP) is vehicle-manufacturer defined, not part of ISO 14229-1</li>
+</ul>
+<div class="note"><b>Note — </b>`0x03`'s block was 4 bytes (DTC + record#); `0x04` adds status, echoes the record#, then delivers the data `0x03` only promised existed.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">31 / 39</span></div></section>
+<section class="slide divider" id="s32"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 7 — DTCExtendedData Record</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">32 / 39</span></div></section>
+<section class="slide" id="s33"><div class="slide-inner"><h2>reportDTCExtDataRecordByDTCNumber (0x06) — Purpose</h2>
+<ul>
+<li><strong>Purpose:</strong> retrieve <code>DTCExtendedData</code> for one client-defined DTC + one record number — raw counters/timers the manufacturer attaches to a DTC: occurrence counters, aging counters, time-of-last-occurrence, fault-detection counters [Clause 11.3.1.7]</li>
+<li><strong><code>DTCExtDataRecordNumber</code></strong> selects <em>which</em> record: <code>0x00</code> reserved, <code>0x01–0x8F</code> OEM-specific, <code>0x90–0xEF</code> legislated OBD, <code>0xFE</code> = all OBD records in one response, <code>0xFF</code> = all records in one response [Table 270]</li>
+<li>Server returns <strong>one</strong> record normally — only <code>0xFE</code>/<code>0xFF</code> trigger multiple records in a single response [Clause 11.3.1.7]</li>
+<li><strong>Content is manufacturer-defined</strong>: "the structure of the data reported in the DTCExtDataRecord is defined by the DTCExtDataRecordNumber in a similar way to the definition of data within a record DataIdentifier" — ISO 14229-1 never specifies the bytes [Clause 11.3.1.7]</li>
+<li>Negative-response nuance: requesting <code>0xFE</code> when the server supports <strong>no</strong> OBD extended-data records (<code>0x90–0xEF</code>) is itself a negative response, not an empty positive one [Clause 11.3.1.7]</li>
+</ul>
+<div class="ref">Clause 11.3.1.7</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">33 / 39</span></div></section>
+<section class="slide" id="s34"><div class="slide-inner"><h2>reportDTCExtDataRecordByDTCNumber (0x06) — Message Structure</h2>
+<figure><img alt="ReadDTCInformation 0x06 request/response structure" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgMzAwIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsIFZlcmRhbmEsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI5NjAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZmZmZmZmIi8+CgogIDx0ZXh0IHg9IjQ4MCIgeT0iMjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTQzMzdhIj5SZWFkRFRDSW5mb3JtYXRpb24gMHgwNiDigJQgcmVwb3J0RFRDRXh0RGF0YVJlY29yZEJ5RFRDTnVtYmVyIChDbGF1c2UgMTEuMy4yIC8gMTEuMy4zLCBUYWJsZSAyNzYpPC90ZXh0PgogIDx0ZXh0IHg9IjIwIiB5PSI0NiIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNjA3ZDhiIj5PbmUgRFRDIGluIChEVENNYXNrUmVjb3JkKTsgRFRDK3N0YXR1cyBlY2hvZWQgb25jZSwgdGhlbiBhIHJlY29yZCByZXBlYXRzIHBlciBEVENFeHREYXRhUmVjb3JkTnVtYmVyIHJldHVybmVkLjwvdGV4dD4KCiAgPCEtLSBSZXF1ZXN0IC0tPgogIDx0ZXh0IHg9IjIwIiB5PSI2OCIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmMjZmMjEiPlJlcXVlc3QgKFRhYmxlIDI1OSkg4oCUIG5hbWVzIG9uZSBEVEMgYW5kIG9uZSByZWNvcmQgKG9yIDB4RkUvMHhGRiBmb3IgYWxsKTwvdGV4dD4KICA8cmVjdCB4PSIyMCIgeT0iNzQiIHdpZHRoPSI3MCIgaGVpZ2h0PSIzOCIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMTU2NWMwIi8+CiAgPHRleHQgeD0iNTUiIHk9Ijk3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPjB4MTk8L3RleHQ+CiAgPHJlY3QgeD0iOTYiIHk9Ijc0IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjM4IiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSIxNTEiIHk9Ijk3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPnJlcG9ydFR5cGUgMHgwNjwvdGV4dD4KICA8cmVjdCB4PSIyMTIiIHk9Ijc0IiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjM4IiBmaWxsPSIjZmNlNGVjIiBzdHJva2U9IiNjMjE4NWIiLz4KICA8dGV4dCB4PSIzMDIiIHk9Ijk3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjguNSIgZmlsbD0iIzI2MzIzOCI+RFRDTWFza1JlY29yZCBbIEhCLCBNQiwgTEIgXTwvdGV4dD4KICA8cmVjdCB4PSIzOTgiIHk9Ijc0IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjM4IiBmaWxsPSIjZTBmN2ZhIiBzdHJva2U9IiMwMDgzOGYiLz4KICA8dGV4dCB4PSI0OTgiIHk9IjkwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjgiIGZpbGw9IiMyNjMyMzgiPkRUQ0V4dERhdGFSZWNvcmROdW1iZXI8L3RleHQ+CiAgPHRleHQgeD0iNDk4IiB5PSIxMDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iNy41IiBmaWxsPSIjNjA3ZDhiIj4weEZFID0gYWxsIE9CRCwgMHhGRiA9IGFsbDwvdGV4dD4KCiAgPCEtLSBSZXNwb25zZSAtLT4KICA8dGV4dCB4PSIyMCIgeT0iMTQwIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzJlN2QzMiI+UG9zaXRpdmUgcmVzcG9uc2UgKFRhYmxlIDI3Nik8L3RleHQ+CiAgPHJlY3QgeD0iMjAiIHk9IjE0NiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZTNmMmZkIiBzdHJva2U9IiMxNTY1YzAiLz4KICA8dGV4dCB4PSI1MCIgeT0iMTY5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNjMyMzgiPjB4NTk8L3RleHQ+CiAgPHJlY3QgeD0iODQiIHk9IjE0NiIgd2lkdGg9IjgwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmM2UwIiBzdHJva2U9IiNmMjZmMjEiLz4KICA8dGV4dCB4PSIxMjQiIHk9IjE2OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjYzMjM4Ij4weDA2PC90ZXh0PgogIDxyZWN0IHg9IjE2OCIgeT0iMTQ2IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmNlNGVjIiBzdHJva2U9IiNjMjE4NWIiLz4KICA8dGV4dCB4PSIyNDMiIHk9IjE2MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjMjYzMjM4Ij5EVEMgKzwvdGV4dD4KICA8dGV4dCB4PSIyNDMiIHk9IjE3NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjMjYzMjM4Ij5zdGF0dXNPZkRUQzwvdGV4dD4KCiAgPHRleHQgeD0iNjc0IiB5PSIxNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzkwYTRhZSI+cmVwZWF0cyBvbmNlIHBlciBEVENFeHREYXRhUmVjb3JkTnVtYmVyIHJldHVybmVkIOKAlCAxIHVubGVzcyAweEZFLzB4RkYgcmVxdWVzdGVkPC90ZXh0PgogIDxyZWN0IHg9IjMyMiIgeT0iMTQ2IiB3aWR0aD0iNjA4IiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiM5MGE0YWUiIHN0cm9rZS1kYXNoYXJyYXk9IjMgMyIvPgogIDxyZWN0IHg9IjMzMCIgeT0iMTUyIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjI4IiBmaWxsPSIjZTBmN2ZhIiBzdHJva2U9IiMwMDgzOGYiLz4KICA8dGV4dCB4PSI0MDUiIHk9IjE3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjMjYzMjM4Ij5EVENFeHREYXRhUmVjb3JkTnVtYmVyPC90ZXh0PgogIDxyZWN0IHg9IjQ4OCIgeT0iMTUyIiB3aWR0aD0iNDM0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZWRlN2Y2IiBzdHJva2U9IiM1ZTM1YjEiLz4KICA8dGV4dCB4PSI3MDUiIHk9IjE3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjMjYzMjM4Ij5leHRlbmRlZERhdGEgYnl0ZXMg4oCUIG1hbnVmYWN0dXJlci1kZWZpbmVkLCBub3QgcGFydCBvZiBJU08gMTQyMjktMTwvdGV4dD4KCiAgPHJlY3QgeD0iMjAiIHk9IjIwMCIgd2lkdGg9IjkyMCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2Y3ZjlmYiIgc3Ryb2tlPSIjY2ZkOGRjIi8+CiAgPHRleHQgeD0iMjgiIHk9IjIxNiIgZm9udC1zaXplPSI5IiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMgTW9ubywgQ29uc29sYXMsIG1vbm9zcGFjZSIgZmlsbD0iIzI2MzIzOCI+RXhhbXBsZSAoMTEuMy41LjgpOiAxOSAwNiAxMiAzNCA1NiBGRiAg4oaSICA1OSAwNiB8IDEyIDM0IDU2IDI0IHwgMDUgMTcgfCAxMCA3OTwvdGV4dD4KCiAgPHRleHQgeD0iMjAiIHk9IjI0MiIgZm9udC1zaXplPSI5LjUiIGZpbGw9IiM2MDdkOGIiPkRUQyAweDEyMzQ1Niwgc3RhdHVzIDB4MjQsIGNsaWVudCBhc2tlZCBmb3IgYWxsIHJlY29yZHMgKDB4RkYpOiByZWNvcmQgMHgwNSAod2FybS11cCBjb3VudGVyKSA9IDB4MTcsIHJlY29yZCAweDEwIChmYXVsdC1kZXRlY3Rpb24gY291bnRlcikgPSAweDc5LjwvdGV4dD4KICA8dGV4dCB4PSIyMCIgeT0iMjYwIiBmb250LXNpemU9IjkuNSIgZmlsbD0iIzYwN2Q4YiI+VW5saWtlIGEgRFRDU25hcHNob3QgcmVjb3JkLCB0aGVyZSdzIG5vIGRhdGFJZGVudGlmaWVyIGhlcmUg4oCUIHRoZSBEVENFeHREYXRhUmVjb3JkTnVtYmVyIGl0c2VsZiBpcyB0aGUgbGFiZWwsIGRlZmluZWQgbWFudWZhY3R1cmVyIHRvIG1hbnVmYWN0dXJlci48L3RleHQ+Cjwvc3ZnPg==" /></figure>
+<ul>
+<li>Request always names one DTC (<code>DTCMaskRecord</code>); response always echoes that DTC + <code>statusOfDTC</code> once, then repeats <code>(recordNumber, extendedData)</code> per record returned</li>
+</ul>
+<div class="ref">Clause 11.3.2.1 / 11.3.3.1, Tables 259, 276</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">34 / 39</span></div></section>
+<section class="slide" id="s35"><div class="slide-inner"><h2>reportDTCExtDataRecordByDTCNumber (0x06) — Example</h2>
+<ul>
+<li>DTC <code>0x123456</code>, status <code>0x24</code>, client requests <strong>all</strong> records (<code>0xFF</code>) [Clause 11.3.5.8]</li>
+<li><strong>Request</strong> <code>19 06 12 34 56 FF</code> — <code>19</code>: SID; <code>06</code>: reportType; <code>12 34 56</code>: DTCMaskRecord (the DTC, <code>0x123456</code>); <code>FF</code>: DTCExtDataRecordNumber = <em>all records</em></li>
+<li><strong>positive response</strong>: explained in table below</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>59 06</code></td>
+<td>SID + reportType echo</td>
+<td></td>
+</tr>
+<tr>
+<td><code>12 34 56 24</code></td>
+<td>DTC + statusOfDTC</td>
+<td>echo of <code>0x123456</code>, status <code>0x24</code></td>
+</tr>
+<tr>
+<td><code>05 17</code></td>
+<td>record# + data</td>
+<td>record <code>0x05</code> = warm-up-cycle counter, value <code>0x17</code></td>
+</tr>
+<tr>
+<td><code>10 79</code></td>
+<td>record# + data</td>
+<td>record <code>0x10</code> = fault-detection counter, value <code>0x79</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Two records returned because the request used <code>0xFF</code> — here each record happens to hold 1 data byte, but a server may pack many bytes per record</li>
+<li>Contrast with Snapshot (<code>0x04</code>): that shape labels each value with a <code>dataIdentifier</code>; here the <code>DTCExtDataRecordNumber</code> itself <em>is</em> the label, defined manufacturer to manufacturer</li>
+</ul>
+<div class="ref">Clause 11.3.5.8, Tables 311–312</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">35 / 39</span></div></section>
+<section class="slide divider" id="s36"><div class="slide-inner"><div class="kicker">Section</div>
+<h2>Section 8 — Severity, mirror memory report</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">36 / 39</span></div></section>
+<section class="slide" id="s37"><div class="slide-inner"><h2>Severity, mirror memory, and the rest</h2>
+<ul>
+<li><strong>Severity family (0x07–0x09)</strong> — adds a <code>DTCSeverityMask</code> byte to the request: bits 7–5 are the optional severity flags <code>checkImmediately</code> / <code>checkAtNextHalt</code> / <code>maintenanceOnly</code>, bits 4–0 are the mandatory WWH-OBD <strong>class</strong> (A/B1/B2/C) [Annex D.3]</li>
+<li><strong>Mirror memory (0x0F, 0x10, 0x11)</strong> and <strong>user-defined memory (0x17, 0x18, 0x19)</strong> sub-functions reuse the exact count/list/snapshot/extended-data shapes above — they just read a different store instead of primary DTC memory</li>
+<li><strong>Emissions-only OBD (0x12, 0x13)</strong> filter to legislated emissions-related DTCs only, using the same count/list shapes</li>
+<li><strong>WWH-OBD (0x42, 0x55)</strong> add a <code>FunctionalGroupIdentifier</code> byte so the client can scope the request to one functional group (e.g. Emissions) in a multi-ECU architecture</li>
+<li><strong>Single-DTC pointer sub-functions (0x0A–0x0E)</strong>, <code>reportDTCFaultDetectionCounter</code> (0x14) and <code>reportDTCWithPermanentStatus</code> (0x15) reuse the list shape with an implicit, server-chosen selection instead of a client-supplied mask</li>
+</ul>
+<div class="ref">Clause 11.3.1.8–11.3.1.26; Annex D.3</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">37 / 39</span></div></section>
+<section class="slide" id="s38"><div class="slide-inner"><h2>ReadDTCInformation — Negative Responses</h2>
+<table>
+<thead>
+<tr>
+<th>NRC</th>
+<th>Mnemonic</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x12</code></td>
+<td>SFNS</td>
+<td>sub-functionNotSupported — the <code>reportType</code> value isn't supported</td>
+</tr>
+<tr>
+<td><code>0x13</code></td>
+<td>IMLOIF</td>
+<td>incorrectMessageLengthOrInvalidFormat — message length is wrong</td>
+</tr>
+<tr>
+<td><code>0x31</code></td>
+<td>ROOR</td>
+<td>requestOutOfRange — unrecognized <code>DTCMaskRecord</code>, snapshot/extended-data record number, <code>FunctionalGroupIdentifier</code>, or <code>MemorySelection</code></td>
+</tr>
+</tbody>
+</table>
+<div class="ref">Clause 11.3.4, Table 286</div>
+<div class="note"><b>Note — </b>ROOR is explicitly *not* used when a record number is supported but currently has no data — that case gets a positive response with an empty record, not a negative response.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">38 / 39</span></div></section>
+<section class="slide" id="s39"><div class="slide-inner"><h2>Takeaways</h2>
+<ul>
+<li><code>ReadDTCInformation</code> is <strong>one service parameterized 27 ways</strong> — but only a handful of message shapes: count, list, snapshot, extended data, severity.</li>
+<li>Three payload primitives to remember: the <strong>3-byte DTC</strong>, the <strong>1-byte statusOfDTC</strong>, and <strong>DTCStatusAvailabilityMask</strong> — what the server supports, versus what's currently true.</li>
+<li><code>ClearDiagnosticInformation</code> is the one service that <strong>always</strong> answers positively — absence of DTCs is not an error condition.</li>
+<li>Mirror memory, user-defined memory, and emissions-only-OBD sub-functions don't introduce new concepts — they re-run an existing report shape against a different store or filter.</li>
+</ul></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">39 / 39</span></div></section></main>
+</div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var bar=document.querySelector('.rail i');
+  function current(){
+    var best=0,bd=1e9;
+    slides.forEach(function(s,i){var d=Math.abs(s.getBoundingClientRect().top);
+      if(d<bd){bd=d;best=i}});
+    return best;
+  }
+  function sync(){
+    var i=current();
+    links.forEach(function(a){a.classList.toggle('on',a.dataset.i===String(i))});
+    if(bar)bar.style.width=(slides.length<2?100:(i/(slides.length-1))*100)+'%';
+  }
+  addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync);
+  addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    var i=current(),t=null;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')t=i+1;
+    if(e.key==='ArrowUp'||e.key==='ArrowLeft'||e.key==='PageUp')t=i-1;
+    if(e.key==='Home')t=0;
+    if(e.key==='End')t=slides.length-1;
+    if(t===null)return;
+    e.preventDefault();
+    slides[Math.max(0,Math.min(slides.length-1,t))].scrollIntoView({behavior:'smooth'});
+  });
+  sync();
+})();
+</script>
+</body></html>
