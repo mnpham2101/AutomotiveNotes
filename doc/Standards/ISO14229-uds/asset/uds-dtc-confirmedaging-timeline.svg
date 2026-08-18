@@ -1,5 +1,5 @@
-<svg viewBox="0 0 980 560" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
-  <rect x="0" y="0" width="980" height="560" fill="#ffffff"/>
+<svg viewBox="0 0 980 640" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Verdana, sans-serif">
+  <rect x="0" y="0" width="980" height="640" fill="#ffffff"/>
 
   <text x="490" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#14337a">confirmedDTC &amp; DTCAgingCounter — adapted from Annex D.2.1, Table D.6, Figure D.4 and D.7 / Figure D.11</text>
   <text x="20" y="42" font-size="10.5" fill="#607d8b">Confirmation threshold = 3 failed cycles and aging threshold = 5 clean cycles are illustrative — the standard's own worked example uses 40 warm-up cycles.</text>
@@ -28,75 +28,89 @@
   <line x1="150" y1="150" x2="950" y2="150" stroke="#eceff1"/>
   <polyline points="150,150 192,150 192,120 230,120 230,150 300,150 300,120 340,120 340,150 410,150 410,120 450,120 450,150 950,150" fill="none" stroke="#c2185b" stroke-width="2.5"/>
 
+  <!-- TripCounter -->
+  <text x="20" y="188" font-size="9" font-weight="bold" fill="#6a1b9a">Trip</text>
+  <text x="20" y="199" font-size="9" font-weight="bold" fill="#6a1b9a">Counter</text>
+  <text x="140" y="173" text-anchor="end" font-size="8" fill="#90a4ae">3</text>
+  <text x="140" y="218" text-anchor="end" font-size="8" fill="#90a4ae">0</text>
+  <line x1="150" y1="215" x2="950" y2="215" stroke="#eceff1"/>
+  <polyline points="150,215 192,215 192,200 300,200 300,185 410,185 410,170 412,170 412,215 950,215" fill="none" stroke="#6a1b9a" stroke-width="2.5"/>
+  <circle cx="192" cy="200" r="3" fill="#6a1b9a"/>
+  <circle cx="300" cy="185" r="3" fill="#6a1b9a"/>
+  <circle cx="410" cy="170" r="3" fill="#6a1b9a"/>
+  <text x="192" y="196" text-anchor="middle" font-size="7" fill="#6a1b9a">1</text>
+  <text x="300" y="181" text-anchor="middle" font-size="7" fill="#6a1b9a">2</text>
+  <text x="426" y="166" text-anchor="middle" font-size="7" fill="#6a1b9a">3, resets to 0</text>
+
   <!-- bit 3 -->
-  <text x="20" y="176" font-size="9" font-weight="bold" fill="#1565c0">bit 3</text>
-  <text x="20" y="187" font-size="8" fill="#1565c0">confirmedDTC</text>
-  <line x1="150" y1="195" x2="950" y2="195" stroke="#eceff1"/>
-  <polyline points="150,195 410,195 410,165 860,165 860,195 950,195" fill="none" stroke="#1565c0" stroke-width="2.5"/>
+  <text x="20" y="266" font-size="9" font-weight="bold" fill="#1565c0">bit 3</text>
+  <text x="20" y="277" font-size="8" fill="#1565c0">confirmedDTC</text>
+  <line x1="150" y1="280" x2="950" y2="280" stroke="#eceff1"/>
+  <polyline points="150,280 410,280 410,250 860,250 860,280 950,280" fill="none" stroke="#1565c0" stroke-width="2.5"/>
 
   <!-- DTCAgingCounter -->
-  <text x="20" y="270" font-size="9" font-weight="bold" fill="#00838f">DTCAging</text>
-  <text x="20" y="281" font-size="9" font-weight="bold" fill="#00838f">Counter</text>
-  <line x1="150" y1="250" x2="950" y2="250" stroke="#cfd8dc" stroke-dasharray="3 3"/>
-  <text x="140" y="253" text-anchor="end" font-size="8" fill="#90a4ae">threshold = 5</text>
-  <line x1="150" y1="310" x2="950" y2="310" stroke="#cfd8dc" stroke-dasharray="3 3"/>
-  <text x="140" y="313" text-anchor="end" font-size="8" fill="#90a4ae">0</text>
-  <polyline points="150,310 480,310 545,310 545,298 610,298 610,286 675,286 675,274 740,274 740,262 860,262 860,250 950,250" fill="none" stroke="#00838f" stroke-width="2.5"/>
-  <circle cx="545" cy="298" r="3" fill="#00838f"/>
-  <circle cx="610" cy="286" r="3" fill="#00838f"/>
-  <circle cx="675" cy="274" r="3" fill="#00838f"/>
-  <circle cx="740" cy="262" r="3" fill="#00838f"/>
-  <circle cx="860" cy="250" r="3" fill="#00838f"/>
-  <text x="545" y="293" text-anchor="middle" font-size="7" fill="#00838f">1</text>
-  <text x="610" y="281" text-anchor="middle" font-size="7" fill="#00838f">2</text>
-  <text x="675" y="269" text-anchor="middle" font-size="7" fill="#00838f">3</text>
-  <text x="740" y="257" text-anchor="middle" font-size="7" fill="#00838f">4</text>
-  <text x="820" y="245" text-anchor="middle" font-size="7" fill="#00838f">+1 per clean cycle</text>
+  <text x="20" y="345" font-size="9" font-weight="bold" fill="#00838f">DTCAging</text>
+  <text x="20" y="356" font-size="9" font-weight="bold" fill="#00838f">Counter</text>
+  <line x1="150" y1="325" x2="950" y2="325" stroke="#cfd8dc" stroke-dasharray="3 3"/>
+  <text x="140" y="328" text-anchor="end" font-size="8" fill="#90a4ae">threshold = 5</text>
+  <line x1="150" y1="385" x2="950" y2="385" stroke="#cfd8dc" stroke-dasharray="3 3"/>
+  <text x="140" y="388" text-anchor="end" font-size="8" fill="#90a4ae">0</text>
+  <polyline points="150,385 480,385 545,385 545,373 610,373 610,361 675,361 675,349 740,349 740,337 860,337 860,325 950,325" fill="none" stroke="#00838f" stroke-width="2.5"/>
+  <circle cx="545" cy="373" r="3" fill="#00838f"/>
+  <circle cx="610" cy="361" r="3" fill="#00838f"/>
+  <circle cx="675" cy="349" r="3" fill="#00838f"/>
+  <circle cx="740" cy="337" r="3" fill="#00838f"/>
+  <circle cx="860" cy="325" r="3" fill="#00838f"/>
+  <text x="545" y="368" text-anchor="middle" font-size="7" fill="#00838f">1</text>
+  <text x="610" y="356" text-anchor="middle" font-size="7" fill="#00838f">2</text>
+  <text x="675" y="344" text-anchor="middle" font-size="7" fill="#00838f">3</text>
+  <text x="740" y="332" text-anchor="middle" font-size="7" fill="#00838f">4</text>
+  <text x="820" y="320" text-anchor="middle" font-size="7" fill="#00838f">+1 per clean cycle</text>
 
   <!-- bit 5 -->
-  <text x="20" y="331" font-size="9" font-weight="bold" fill="#2e7d32">bit 5</text>
-  <text x="20" y="342" font-size="7" fill="#2e7d32">testFailedSince</text>
-  <text x="20" y="351" font-size="7" fill="#2e7d32">LastClear</text>
-  <line x1="150" y1="360" x2="950" y2="360" stroke="#eceff1"/>
-  <polyline points="150,360 192,360 192,330 860,330" fill="none" stroke="#2e7d32" stroke-width="2.5"/>
-  <polyline points="860,330 950,330" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4 3" opacity="0.55"/>
-  <text x="905" y="322" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e7d32" opacity="0.7">?</text>
+  <text x="20" y="411" font-size="9" font-weight="bold" fill="#2e7d32">bit 5</text>
+  <text x="20" y="422" font-size="7" fill="#2e7d32">testFailedSince</text>
+  <text x="20" y="431" font-size="7" fill="#2e7d32">LastClear</text>
+  <line x1="150" y1="440" x2="950" y2="440" stroke="#eceff1"/>
+  <polyline points="150,440 192,440 192,410 860,410" fill="none" stroke="#2e7d32" stroke-width="2.5"/>
+  <polyline points="860,410 950,410" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4 3" opacity="0.55"/>
+  <text x="905" y="402" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e7d32" opacity="0.7">?</text>
 
   <!-- markers -->
-  <line x1="192" y1="108" x2="192" y2="360" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
+  <line x1="192" y1="108" x2="192" y2="440" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
   <circle cx="192" cy="108" r="9" fill="#f26f21"/>
   <text x="192" y="111" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">1</text>
 
-  <line x1="300" y1="108" x2="300" y2="360" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
+  <line x1="300" y1="108" x2="300" y2="440" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
   <circle cx="300" cy="108" r="9" fill="#f26f21"/>
   <text x="300" y="111" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">2</text>
 
-  <line x1="410" y1="108" x2="410" y2="360" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
+  <line x1="410" y1="108" x2="410" y2="440" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
   <circle cx="410" cy="108" r="9" fill="#f26f21"/>
   <text x="410" y="111" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">3</text>
 
-  <line x1="860" y1="108" x2="860" y2="360" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
+  <line x1="860" y1="108" x2="860" y2="440" stroke="#f26f21" stroke-dasharray="2 3" stroke-width="1"/>
   <circle cx="860" cy="108" r="9" fill="#f26f21"/>
   <text x="860" y="111" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">4</text>
 
   <!-- legend -->
-  <circle cx="28" cy="396" r="8" fill="#f26f21"/>
-  <text x="28" y="399" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">1</text>
-  <text x="44" y="400" font-size="9.5" fill="#263238">Test fails the 1st time — bit 0 pulses 0→1→0; bit 5 latches 0→1 in the same instant and never resets on its own</text>
+  <circle cx="28" cy="476" r="8" fill="#f26f21"/>
+  <text x="28" y="479" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">1</text>
+  <text x="44" y="480" font-size="9.5" fill="#263238">Test fails the 1st time — bit 0 pulses 0→1→0; TripCounter increments 0→1; bit 5 latches 0→1 and never resets on its own</text>
 
-  <circle cx="28" cy="418" r="8" fill="#f26f21"/>
-  <text x="28" y="421" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">2</text>
-  <text x="44" y="422" font-size="9.5" fill="#263238">Test fails a 2nd time — bit 0 pulses again; confirmation threshold (3) not yet met, so bit 3 stays 0</text>
+  <circle cx="28" cy="498" r="8" fill="#f26f21"/>
+  <text x="28" y="501" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">2</text>
+  <text x="44" y="502" font-size="9.5" fill="#263238">Test fails a 2nd time — bit 0 pulses again; TripCounter increments 1→2; confirmation threshold (3) not yet met, so bit 3 stays 0</text>
 
-  <circle cx="28" cy="440" r="8" fill="#f26f21"/>
-  <text x="28" y="443" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">3</text>
-  <text x="44" y="444" font-size="9.5" fill="#263238">Test fails a 3rd time — confirmation threshold reached: bit 3 sets 0→1 in the same instant, and DTCAgingCounter resets to 0</text>
+  <circle cx="28" cy="520" r="8" fill="#f26f21"/>
+  <text x="28" y="523" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">3</text>
+  <text x="44" y="524" font-size="9.5" fill="#263238">Test fails a 3rd time — TripCounter reaches the confirmation threshold: bit 3 sets 0→1 and TripCounter resets to 0, in the same instant</text>
 
-  <circle cx="28" cy="462" r="8" fill="#f26f21"/>
-  <text x="28" y="465" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">4</text>
-  <text x="44" y="466" font-size="9.5" fill="#263238">DTCAgingCounter increments +1 at the end of each subsequent clean cycle; on reaching its threshold, bit 3 resets 1→0</text>
+  <circle cx="28" cy="542" r="8" fill="#f26f21"/>
+  <text x="28" y="545" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">4</text>
+  <text x="44" y="546" font-size="9.5" fill="#263238">DTCAgingCounter increments +1 at the end of each subsequent clean cycle; on reaching its threshold, bit 3 resets 1→0</text>
 
-  <text x="20" y="492" font-size="9.5" fill="#607d8b">confirmedDTC does not require testFailed to still be 1 — a DTC stays confirmed while the fault is currently absent [Table D.6].</text>
-  <text x="20" y="508" font-size="9.5" fill="#607d8b">Whether testFailedSinceLastClear resets when the aging threshold is met is unspecified — "the responsibility of the vehicle manufacturer" [Table D.8; Figure D.11, key 7].</text>
-  <text x="20" y="530" font-size="8.5" fill="#90a4ae">Simplified from Figure D.11 (Annex D.7) — the real figure also tracks bits 1, 2, 4 and 6, and uses a confirmation threshold of 1 with a 40-cycle aging threshold.</text>
+  <text x="20" y="572" font-size="9.5" fill="#607d8b">confirmedDTC does not require testFailed to still be 1 — a DTC stays confirmed while the fault is currently absent [Table D.6].</text>
+  <text x="20" y="588" font-size="9.5" fill="#607d8b">Whether testFailedSinceLastClear resets when the aging threshold is met is unspecified — "the responsibility of the vehicle manufacturer" [Table D.8; Figure D.11, key 7].</text>
+  <text x="20" y="610" font-size="8.5" fill="#90a4ae">Simplified from Figure D.11 (Annex D.7) — the real figure also tracks bits 1, 2, 4 and 6, and uses a confirmation threshold of 1 with a 40-cycle aging threshold.</text>
 </svg>
