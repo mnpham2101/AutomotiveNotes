@@ -1,0 +1,75 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-dtc-faultdetectioncounter-timeline" id="uds-dtc-faultdetectioncounter-timeline">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="480" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCFaultDetectionCounter ↔ status bits — simplified from Annex D.6, Figure D.10"><mxGeometry x="0" y="8" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="One test's counter trace against bits 0 (testFailed), 1 (testFailedThisOperationCycle) and 5 (testFailedSinceLastClear) across two operation cycles."><mxGeometry x="20" y="30" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Operation Cycle row -->
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Operation&#10;Cycle"><mxGeometry x="20" y="70" width="120" height="26" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Operation Cycle 1"><mxGeometry x="150" y="65" width="500" height="32" as="geometry" /></mxCell>
+        <mxCell id="e5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8eaf6;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Operation Cycle 2"><mxGeometry x="650" y="65" width="270" height="32" as="geometry" /></mxCell>
+        <mxCell id="e6" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="start"><mxGeometry x="120" y="50" width="60" height="12" as="geometry" /></mxCell>
+        <mxCell id="e7" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="stop / start"><mxGeometry x="600" y="50" width="100" height="12" as="geometry" /></mxCell>
+
+        <!-- Fault Detection Counter row -->
+        <mxCell id="e8" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Fault&#10;Detection&#10;Counter"><mxGeometry x="20" y="150" width="120" height="42" as="geometry" /></mxCell>
+
+        <mxCell id="e9" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#cfd8dc;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="150" y="125" as="sourcePoint" /><mxPoint x="920" y="125" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e10" parent="1" vertex="1" style="text;html=1;align=right;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="+127 (max)"><mxGeometry x="40" y="118" width="100" height="14" as="geometry" /></mxCell>
+        <mxCell id="e11" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#cfd8dc;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="150" y="170" as="sourcePoint" /><mxPoint x="920" y="170" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e12" parent="1" vertex="1" style="text;html=1;align=right;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="0"><mxGeometry x="40" y="163" width="100" height="14" as="geometry" /></mxCell>
+        <mxCell id="e13" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#cfd8dc;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="150" y="215" as="sourcePoint" /><mxPoint x="920" y="215" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e14" parent="1" vertex="1" style="text;html=1;align=right;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="minimum"><mxGeometry x="40" y="208" width="100" height="14" as="geometry" /></mxCell>
+
+        <mxCell id="e15" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#00838f;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="170" /><mxPoint x="190" y="170" /><mxPoint x="190" y="158" /><mxPoint x="230" y="158" /><mxPoint x="230" y="146" /><mxPoint x="270" y="146" /><mxPoint x="270" y="136" /><mxPoint x="310" y="136" /><mxPoint x="310" y="128" /><mxPoint x="350" y="128" /></Array><mxPoint x="150" y="170" as="sourcePoint" /><mxPoint x="350" y="125" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e15x" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#00838f;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="350" y="125" /><mxPoint x="390" y="125" /><mxPoint x="390" y="140" /><mxPoint x="430" y="140" /><mxPoint x="430" y="158" /><mxPoint x="470" y="158" /><mxPoint x="470" y="178" /><mxPoint x="510" y="178" /><mxPoint x="510" y="198" /><mxPoint x="550" y="198" /></Array><mxPoint x="350" y="125" as="sourcePoint" /><mxPoint x="550" y="215" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e15y" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#00838f;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="550" y="215" as="sourcePoint" /><mxPoint x="900" y="215" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e15b" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00838f;strokeColor=none;" value=""><mxGeometry x="346" y="121" width="8" height="8" as="geometry" /></mxCell>
+        <mxCell id="e15c" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00838f;strokeColor=none;" value=""><mxGeometry x="546" y="211" width="8" height="8" as="geometry" /></mxCell>
+        <mxCell id="e15d" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=7.5;fontColor=#00838f;fontFamily=DejaVu Sans;" value="each failed test sample increments the counter"><mxGeometry x="140" y="216" width="200" height="12" as="geometry" /></mxCell>
+        <mxCell id="e15e" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=7.5;fontColor=#00838f;fontFamily=DejaVu Sans;" value="each passed test sample decrements it"><mxGeometry x="350" y="216" width="200" height="12" as="geometry" /></mxCell>
+
+        <!-- bit 0 -->
+        <mxCell id="e16" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#c2185b;fontFamily=DejaVu Sans;fontStyle=1;" value="bit 0&#10;testFailed"><mxGeometry x="20" y="240" width="120" height="26" as="geometry" /></mxCell>
+        <mxCell id="e17" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#c2185b;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="265" /><mxPoint x="350" y="265" /><mxPoint x="350" y="235" /><mxPoint x="550" y="235" /><mxPoint x="550" y="265" /></Array><mxPoint x="150" y="265" as="sourcePoint" /><mxPoint x="900" y="265" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- bit 1 -->
+        <mxCell id="e18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#5e35b1;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 1"><mxGeometry x="20" y="282" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e18b" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=7;fontColor=#5e35b1;fontFamily=DejaVu Sans;" value="testFailedThis&#10;OperationCycle"><mxGeometry x="20" y="294" width="120" height="18" as="geometry" /></mxCell>
+        <mxCell id="e19" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#5e35b1;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="310" /><mxPoint x="350" y="310" /><mxPoint x="350" y="280" /><mxPoint x="650" y="280" /><mxPoint x="650" y="310" /></Array><mxPoint x="150" y="310" as="sourcePoint" /><mxPoint x="900" y="310" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- bit 5 -->
+        <mxCell id="e20" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 5"><mxGeometry x="20" y="327" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e20b" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=7;fontColor=#2e7d32;fontFamily=DejaVu Sans;" value="testFailedSince&#10;LastClear"><mxGeometry x="20" y="339" width="120" height="18" as="geometry" /></mxCell>
+        <mxCell id="e21" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#2e7d32;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="355" /><mxPoint x="350" y="355" /><mxPoint x="350" y="325" /></Array><mxPoint x="150" y="355" as="sourcePoint" /><mxPoint x="900" y="325" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- markers -->
+        <mxCell id="e22" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="350" y="108" as="sourcePoint" /><mxPoint x="350" y="355" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e23" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="1"><mxGeometry x="341" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e24" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="550" y="108" as="sourcePoint" /><mxPoint x="550" y="355" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e25" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="2"><mxGeometry x="541" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e26" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="650" y="108" as="sourcePoint" /><mxPoint x="650" y="355" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e27" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="3"><mxGeometry x="641" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <!-- legend -->
+        <mxCell id="e28" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="1"><mxGeometry x="20" y="373" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e29" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Counter reaches +127 (max) — fault fully matured — bits 0, 1 and 5 all set 0 → 1 together"><mxGeometry x="44" y="373" width="880" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e30" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="2"><mxGeometry x="20" y="393" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e31" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Counter falls back to its minimum — only bit 0 resets 1 → 0; bits 1 and 5 are untouched"><mxGeometry x="44" y="393" width="880" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e32" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="3"><mxGeometry x="20" y="413" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e33" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 1 stops / Cycle 2 starts — bit 1 resets 1 → 0 because its scope is &quot;this operation cycle&quot;; bit 0 is already 0"><mxGeometry x="44" y="413" width="880" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e34" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="bit 5 (testFailedSinceLastClear) never resets on its own — only ClearDiagnosticInformation (0x14) clears it [Annex D.2]."><mxGeometry x="20" y="444" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="e35" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="Simplified from Figure D.10 (Annex D.6) — the real figure also tracks Test, Test Sample, pendingDTC, confirmedDTC and two more status bits."><mxGeometry x="20" y="460" width="920" height="14" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

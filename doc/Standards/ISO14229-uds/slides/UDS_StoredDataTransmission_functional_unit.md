@@ -26,16 +26,61 @@
 
 `[Clause 11.3.2.3, Table 270; Clause 11.3.3.1, Table 271]`
 
+### DTCFaultDetectionCounter — a threshold-crossing signal
+
+- **Purpose:** `reportDTCFaultDetectionCounter` (sub-function `0x14`) lists current "prefailed" DTCs — a way to see a fault *maturing* before any `statusOfDTC` bit would show it [Table 269]
+- Reported as a **scaled 1-byte signed value**: `+127` (`0x7F`) = test result "failed"; any other non-zero positive value = "prefailed" [Table 269]
+- "A reported DTCFaultDetectionCounter value greater than zero and less than +127 (i.e., `0x01`–`0x7E`) indicates that the DTC enable criteria was met and that a non completed test result prefailed at least in one condition or threshold" — **only DTCs in that range are reported**; `0x7F` itself is excluded, since that DTC is now failed, not prefailed [Table 269]
+- "If the DTCFaultDetectionCounter is decremented to zero or below the DTC shall no longer be reported in the positive response message" — a passing test run decrements the counter until it drops out of the reportable range [Table 269]
+
+`[Clause 11.3.2.2, Table 269]`
+
 ### statusOfDTC / DTCStatusMask — the 8-bit status byte
 
 ![statusOfDTC / DTCStatusMask 8-bit layout with a worked masking example](../asset/uds-dtc-status-byte.svg)
 
-- Same byte, two roles: `DTCStatusMask` filters a **request**, `statusOfDTC` reports a DTC's **actual** state
-- **DTCStatusAvailabilityMask** — carried in every count/list response — tells the client which of these 8 bits *this* server actually implements [Tables 271–272]
+> note: The bit convention (meaning, mask semantics) is identical across every server — only the *triggering* conditions per bit are manufacturer-specific; each bit's exact set/reset pseudocode is normative (Annex D.2.3, Tables D.3–D.10, Figures D.1–D.8).
 
 `[Annex D.2, Table 270]`
 
-> note: Each bit's exact set/reset pseudocode and state diagram is normative — Annex D.2.3, Tables D.3–D.10 and Figures D.1–D.8. The convention (bit meaning, mask semantics) is identical across every server; only the *triggering* conditions are manufacturer-specific per bit.
+### DTCFaultDetectionCounter ↔ testFailed bit (bit 0)
+
+![DTCFaultDetectionCounter timeline against bits 0, 1 and 5](../asset/uds-dtc-faultdetectioncounter-timeline.svg)
+
+`[Annex D.6, Figure D.10 — simplified]`
+
+### pendingDTC (bit 2)
+
+- `pendingDTC` and `testFailedThisOperationCycle` (bit 1) share the same set condition — a failed test sets both
+- `testFailedThisOperationCycle` clears at the start of every operation cycle; `pendingDTC` stays latched until an entire cycle completes with the test run and never failing — `testNotCompletedThisOperationCycle == 0 AND testFailedThisOperationCycle == 0` at cycle stop, a **fully clean** cycle, not just "the fault went away"
+
+`[Annex D.2.3, Table D.5, Figure D.3]`
+
+### pendingDTC vs testFailedSinceLastClear
+
+![pendingDTC and testFailedSinceLastClear timeline against bits 0 and 1](../asset/uds-dtc-pendingdtc-timeline.svg)
+
+- Practically: after a one-off glitch, `pendingDTC` self-heals on its own within a cycle or two; `testFailedSinceLastClear` is the one bit a technician trusts to mean "this has failed at some point since we last cleared codes," however long ago
+
+`[Annex D.2.3, Tables D.5, D.8 — simplified]`
+
+### confirmedDTC (bit 3) — confirmation threshold
+
+- **Confirmation Threshold:** `confirmedDTC` only sets after the test has failed and run to completion for a set number of operation cycles — not on the first failure alone
+- A **Trip Counter** tracks progress toward that threshold and resets to 0 the instant `confirmedDTC` sets to 1
+- `confirmedDTC` means the fault was seen enough times to be worth long-term storage — it does **not** mean the fault is present right now, that's what `testFailed` (bit 0) is for
+- **Aging status and DTCAgingCounter:** once confirmed, a `DTCAgingCounter` counts consecutive clean operation cycles to track how long the fault has stayed dormant
+  - **Increases** by one at the end of every operation cycle where the test ran and passed
+  - **Resets to zero** whenever `confirmedDTC` newly sets, or whenever the test fails again while aging is in progress
+- Once `DTCAgingCounter` reaches its threshold (40 warm-up cycles in the standard's example), `confirmedDTC` resets **1 → 0** and the DTC becomes eligible for erasure — the same reset also happens on `ClearDiagnosticInformation` or fault-memory overflow
+
+`[Annex D.2.1, Table D.6, Figure D.4]`
+
+### confirmedDTC & DTCAgingCounter
+
+![confirmedDTC and DTCAgingCounter timeline against bits 0 and 5](../asset/uds-dtc-confirmedaging-timeline.svg)
+
+`[Annex D.7, Figure D.11 — simplified, confirmation/aging thresholds illustrative]`
 
 ### groupOfDTC — addressing a group instead of one DTC
 

@@ -1,0 +1,71 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-dtc-pendingdtc-timeline" id="uds-dtc-pendingdtc-timeline">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="430" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="pendingDTC vs testFailedSinceLastClear — simplified from Annex D.2.3, Table D.5"><mxGeometry x="0" y="8" width="960" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Same 4 bits share a set trigger, but bit 2 self-clears after one clean cycle while bit 5 never does."><mxGeometry x="20" y="30" width="920" height="16" as="geometry" /></mxCell>
+
+        <!-- Operation Cycle row -->
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Operation&#10;Cycle"><mxGeometry x="20" y="63" width="120" height="26" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Operation Cycle 1"><mxGeometry x="150" y="65" width="370" height="32" as="geometry" /></mxCell>
+        <mxCell id="e5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8eaf6;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Operation Cycle 2"><mxGeometry x="520" y="65" width="260" height="32" as="geometry" /></mxCell>
+        <mxCell id="e5b" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 3"><mxGeometry x="780" y="65" width="140" height="32" as="geometry" /></mxCell>
+        <mxCell id="e6" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="start"><mxGeometry x="120" y="48" width="60" height="12" as="geometry" /></mxCell>
+        <mxCell id="e7" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="stop / start"><mxGeometry x="470" y="48" width="100" height="12" as="geometry" /></mxCell>
+        <mxCell id="e7b" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="stop / start"><mxGeometry x="730" y="48" width="100" height="12" as="geometry" /></mxCell>
+
+        <!-- bit 0 -->
+        <mxCell id="e8" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#c2185b;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 0"><mxGeometry x="20" y="122" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e8b" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8;fontColor=#c2185b;fontFamily=DejaVu Sans;" value="testFailed"><mxGeometry x="20" y="134" width="120" height="12" as="geometry" /></mxCell>
+        <mxCell id="e9" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#c2185b;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="150" /><mxPoint x="280" y="150" /><mxPoint x="280" y="120" /><mxPoint x="360" y="120" /><mxPoint x="360" y="150" /></Array><mxPoint x="150" y="150" as="sourcePoint" /><mxPoint x="920" y="150" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- bit 1 -->
+        <mxCell id="e10" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#5e35b1;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 1"><mxGeometry x="20" y="163" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e10b" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=7;fontColor=#5e35b1;fontFamily=DejaVu Sans;" value="testFailedThis&#10;OperationCycle"><mxGeometry x="20" y="175" width="120" height="18" as="geometry" /></mxCell>
+        <mxCell id="e11" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#5e35b1;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="195" /><mxPoint x="280" y="195" /><mxPoint x="280" y="165" /><mxPoint x="520" y="165" /><mxPoint x="520" y="195" /></Array><mxPoint x="150" y="195" as="sourcePoint" /><mxPoint x="920" y="195" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- bit 2 -->
+        <mxCell id="e12" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#1565c0;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 2"><mxGeometry x="20" y="213" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e12b" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8;fontColor=#1565c0;fontFamily=DejaVu Sans;" value="pendingDTC"><mxGeometry x="20" y="225" width="120" height="12" as="geometry" /></mxCell>
+        <mxCell id="e13" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#1565c0;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="240" /><mxPoint x="280" y="240" /><mxPoint x="280" y="210" /><mxPoint x="780" y="210" /><mxPoint x="780" y="240" /></Array><mxPoint x="150" y="240" as="sourcePoint" /><mxPoint x="920" y="240" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- bit 5 -->
+        <mxCell id="e14" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 5"><mxGeometry x="20" y="254" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e14b" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=7;fontColor=#2e7d32;fontFamily=DejaVu Sans;" value="testFailedSince&#10;LastClear"><mxGeometry x="20" y="266" width="120" height="18" as="geometry" /></mxCell>
+        <mxCell id="e15" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#2e7d32;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="285" /><mxPoint x="280" y="285" /><mxPoint x="280" y="255" /></Array><mxPoint x="150" y="285" as="sourcePoint" /><mxPoint x="920" y="255" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- markers -->
+        <mxCell id="e16" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="280" y="108" as="sourcePoint" /><mxPoint x="280" y="285" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e17" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="1"><mxGeometry x="271" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e18" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="360" y="108" as="sourcePoint" /><mxPoint x="360" y="285" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e19" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="2"><mxGeometry x="351" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e20" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="108" as="sourcePoint" /><mxPoint x="520" y="285" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e21" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="3"><mxGeometry x="511" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e22" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="780" y="108" as="sourcePoint" /><mxPoint x="780" y="285" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e23" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="4"><mxGeometry x="771" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <!-- legend -->
+        <mxCell id="e24" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="1"><mxGeometry x="20" y="303" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e25" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Test fails — bits 0, 1, 2 and 5 all set 0 → 1: pendingDTC and testFailedThisOperationCycle share the same set condition"><mxGeometry x="44" y="303" width="880" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e26" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="2"><mxGeometry x="20" y="323" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e27" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Test passes — bit 0 resets 1 → 0 immediately; bits 1, 2 and 5 are untouched"><mxGeometry x="44" y="323" width="880" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e28" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="3"><mxGeometry x="20" y="343" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e29" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 1 stops — bit 1 resets 1 → 0 (cycle-scoped), but bit 2 stays 1: that cycle wasn't clean"><mxGeometry x="44" y="343" width="880" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e30" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="4"><mxGeometry x="20" y="363" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e31" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 2 stops with zero failures (bit 1 stayed 0 throughout) — only now does bit 2 reset 1 → 0"><mxGeometry x="44" y="363" width="880" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e32" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="bit 5 never resets on its own; bit 2 resets automatically, but only after one full clean operation cycle [Annex D.2.3, Table D.5]."><mxGeometry x="20" y="394" width="920" height="16" as="geometry" /></mxCell>
+        <mxCell id="e33" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="Simplified — the real Table D.5 pseudocode also requires testNotCompletedThisOperationCycle == 0 (the test actually ran to completion)."><mxGeometry x="20" y="410" width="920" height="14" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

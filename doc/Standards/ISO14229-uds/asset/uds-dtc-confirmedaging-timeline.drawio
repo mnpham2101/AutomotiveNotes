@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.17">
+  <diagram name="uds-dtc-confirmedaging-timeline" id="uds-dtc-confirmedaging-timeline">
+    <mxGraphModel dx="985" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="e1" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#14337a;fontFamily=DejaVu Sans;fontStyle=1;" value="confirmedDTC &amp; DTCAgingCounter — adapted from Annex D.2.1, Table D.6, Figure D.4 and D.7 / Figure D.11"><mxGeometry x="0" y="8" width="980" height="22" as="geometry" /></mxCell>
+        <mxCell id="e2" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Confirmation threshold = 3 failed cycles and aging threshold = 5 clean cycles are illustrative — the standard's own worked example uses 40 warm-up cycles."><mxGeometry x="20" y="30" width="940" height="16" as="geometry" /></mxCell>
+
+        <!-- Operation Cycle row -->
+        <mxCell id="e3" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#263238;fontFamily=DejaVu Sans;fontStyle=1;" value="Operation&#10;Cycle"><mxGeometry x="20" y="63" width="120" height="26" as="geometry" /></mxCell>
+        <mxCell id="e4" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 1"><mxGeometry x="150" y="65" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="e5" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8eaf6;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 2"><mxGeometry x="260" y="65" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="e6" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 3"><mxGeometry x="370" y="65" width="110" height="32" as="geometry" /></mxCell>
+        <mxCell id="e7" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8eaf6;strokeColor=#1565c0;fontSize=8.5;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycles 4–7 — no failures (aging)"><mxGeometry x="480" y="65" width="260" height="32" as="geometry" /></mxCell>
+        <mxCell id="e8" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=9;align=center;verticalAlign=middle;fontColor=#263238;fontFamily=DejaVu Sans;" value="Cycle 8&#10;(aging threshold met)"><mxGeometry x="740" y="65" width="120" height="32" as="geometry" /></mxCell>
+        <mxCell id="e9" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="start"><mxGeometry x="120" y="48" width="60" height="12" as="geometry" /></mxCell>
+        <mxCell id="e10" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="stop / start"><mxGeometry x="690" y="48" width="100" height="12" as="geometry" /></mxCell>
+        <mxCell id="e11" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="…"><mxGeometry x="915" y="48" width="60" height="12" as="geometry" /></mxCell>
+
+        <!-- bit 0 -->
+        <mxCell id="e12" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#c2185b;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 0"><mxGeometry x="20" y="122" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e13" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8;fontColor=#c2185b;fontFamily=DejaVu Sans;" value="testFailed"><mxGeometry x="20" y="134" width="120" height="12" as="geometry" /></mxCell>
+        <mxCell id="e14" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#c2185b;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="150" /><mxPoint x="192" y="150" /><mxPoint x="192" y="120" /><mxPoint x="230" y="120" /><mxPoint x="230" y="150" /><mxPoint x="300" y="150" /><mxPoint x="300" y="120" /><mxPoint x="340" y="120" /><mxPoint x="340" y="150" /><mxPoint x="410" y="150" /><mxPoint x="410" y="120" /><mxPoint x="450" y="120" /><mxPoint x="450" y="150" /></Array><mxPoint x="150" y="150" as="sourcePoint" /><mxPoint x="950" y="150" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- bit 3 -->
+        <mxCell id="e15" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#1565c0;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 3"><mxGeometry x="20" y="167" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e16" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8;fontColor=#1565c0;fontFamily=DejaVu Sans;" value="confirmedDTC"><mxGeometry x="20" y="179" width="120" height="12" as="geometry" /></mxCell>
+        <mxCell id="e17" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#1565c0;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="195" /><mxPoint x="410" y="195" /><mxPoint x="410" y="165" /><mxPoint x="860" y="165" /><mxPoint x="860" y="195" /></Array><mxPoint x="150" y="195" as="sourcePoint" /><mxPoint x="950" y="195" as="targetPoint" /></mxGeometry></mxCell>
+
+        <!-- DTCAgingCounter -->
+        <mxCell id="e18" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#00838f;fontFamily=DejaVu Sans;fontStyle=1;" value="DTCAging&#10;Counter"><mxGeometry x="20" y="258" width="120" height="26" as="geometry" /></mxCell>
+        <mxCell id="e19" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#cfd8dc;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="150" y="250" as="sourcePoint" /><mxPoint x="950" y="250" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e20" parent="1" vertex="1" style="text;html=1;align=right;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="threshold = 5"><mxGeometry x="40" y="244" width="100" height="12" as="geometry" /></mxCell>
+        <mxCell id="e21" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#cfd8dc;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="150" y="310" as="sourcePoint" /><mxPoint x="950" y="310" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e22" parent="1" vertex="1" style="text;html=1;align=right;verticalAlign=middle;fontSize=8;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="0"><mxGeometry x="40" y="304" width="100" height="12" as="geometry" /></mxCell>
+        <mxCell id="e23" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#00838f;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="310" /><mxPoint x="480" y="310" /><mxPoint x="545" y="310" /><mxPoint x="545" y="298" /><mxPoint x="610" y="298" /><mxPoint x="610" y="286" /><mxPoint x="675" y="286" /><mxPoint x="675" y="274" /><mxPoint x="740" y="274" /><mxPoint x="740" y="262" /><mxPoint x="860" y="262" /><mxPoint x="860" y="250" /></Array><mxPoint x="150" y="310" as="sourcePoint" /><mxPoint x="950" y="250" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e24" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00838f;strokeColor=none;" value=""><mxGeometry x="542" y="295" width="6" height="6" as="geometry" /></mxCell>
+        <mxCell id="e25" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00838f;strokeColor=none;" value=""><mxGeometry x="607" y="283" width="6" height="6" as="geometry" /></mxCell>
+        <mxCell id="e26" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00838f;strokeColor=none;" value=""><mxGeometry x="672" y="271" width="6" height="6" as="geometry" /></mxCell>
+        <mxCell id="e27" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00838f;strokeColor=none;" value=""><mxGeometry x="737" y="259" width="6" height="6" as="geometry" /></mxCell>
+        <mxCell id="e28" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00838f;strokeColor=none;" value=""><mxGeometry x="857" y="247" width="6" height="6" as="geometry" /></mxCell>
+        <mxCell id="e29" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=7;fontColor=#00838f;fontFamily=DejaVu Sans;" value="1"><mxGeometry x="535" y="286" width="20" height="10" as="geometry" /></mxCell>
+        <mxCell id="e30" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=7;fontColor=#00838f;fontFamily=DejaVu Sans;" value="2"><mxGeometry x="600" y="274" width="20" height="10" as="geometry" /></mxCell>
+        <mxCell id="e31" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=7;fontColor=#00838f;fontFamily=DejaVu Sans;" value="3"><mxGeometry x="665" y="262" width="20" height="10" as="geometry" /></mxCell>
+        <mxCell id="e32" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=7;fontColor=#00838f;fontFamily=DejaVu Sans;" value="4"><mxGeometry x="730" y="250" width="20" height="10" as="geometry" /></mxCell>
+        <mxCell id="e33" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=7;fontColor=#00838f;fontFamily=DejaVu Sans;" value="+1 per clean cycle"><mxGeometry x="770" y="238" width="100" height="10" as="geometry" /></mxCell>
+
+        <!-- bit 5 -->
+        <mxCell id="e34" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;spacing=0;" value="bit 5"><mxGeometry x="20" y="323" width="120" height="14" as="geometry" /></mxCell>
+        <mxCell id="e35" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=7;fontColor=#2e7d32;fontFamily=DejaVu Sans;" value="testFailedSince&#10;LastClear"><mxGeometry x="20" y="335" width="120" height="18" as="geometry" /></mxCell>
+        <mxCell id="e36" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#2e7d32;strokeWidth=2.5;curved=0;" value=""><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="360" /><mxPoint x="192" y="360" /><mxPoint x="192" y="330" /></Array><mxPoint x="150" y="360" as="sourcePoint" /><mxPoint x="860" y="330" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e37" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#2e7d32;strokeWidth=2;dashed=1;opacity=55;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="860" y="330" as="sourcePoint" /><mxPoint x="950" y="330" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e38" parent="1" vertex="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#2e7d32;fontFamily=DejaVu Sans;fontStyle=1;opacity=70;" value="?"><mxGeometry x="895" y="313" width="20" height="14" as="geometry" /></mxCell>
+
+        <!-- markers -->
+        <mxCell id="e39" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="192" y="108" as="sourcePoint" /><mxPoint x="192" y="360" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e40" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="1"><mxGeometry x="183" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e41" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="300" y="108" as="sourcePoint" /><mxPoint x="300" y="360" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e42" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="2"><mxGeometry x="291" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e43" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="410" y="108" as="sourcePoint" /><mxPoint x="410" y="360" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e44" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="3"><mxGeometry x="401" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <mxCell id="e45" parent="1" edge="1" style="endArrow=none;html=1;strokeColor=#f26f21;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="860" y="108" as="sourcePoint" /><mxPoint x="860" y="360" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="e46" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" value="4"><mxGeometry x="851" y="99" width="18" height="18" as="geometry" /></mxCell>
+
+        <!-- legend -->
+        <mxCell id="e47" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="1"><mxGeometry x="20" y="388" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e48" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Test fails the 1st time — bit 0 pulses 0→1→0; bit 5 latches 0→1 in the same instant and never resets on its own"><mxGeometry x="44" y="388" width="900" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e49" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="2"><mxGeometry x="20" y="410" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e50" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Test fails a 2nd time — bit 0 pulses again; confirmation threshold (3) not yet met, so bit 3 stays 0"><mxGeometry x="44" y="410" width="900" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e51" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="3"><mxGeometry x="20" y="432" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e52" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="Test fails a 3rd time — confirmation threshold reached: bit 3 sets 0→1 in the same instant, and DTCAgingCounter resets to 0"><mxGeometry x="44" y="432" width="900" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e53" parent="1" vertex="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f26f21;strokeColor=none;fontColor=#ffffff;fontSize=8;fontStyle=1;align=center;verticalAlign=middle;" value="4"><mxGeometry x="20" y="454" width="16" height="16" as="geometry" /></mxCell>
+        <mxCell id="e54" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#263238;fontFamily=DejaVu Sans;" value="DTCAgingCounter increments +1 at the end of each subsequent clean cycle; on reaching its threshold, bit 3 resets 1→0"><mxGeometry x="44" y="454" width="900" height="16" as="geometry" /></mxCell>
+
+        <mxCell id="e55" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="confirmedDTC does not require testFailed to still be 1 — a DTC stays confirmed while the fault is currently absent [Table D.6]."><mxGeometry x="20" y="484" width="940" height="16" as="geometry" /></mxCell>
+        <mxCell id="e56" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=9.5;fontColor=#607d8b;fontFamily=DejaVu Sans;" value="Whether testFailedSinceLastClear resets when the aging threshold is met is unspecified — &quot;the responsibility of the vehicle manufacturer&quot; [Table D.8; Figure D.11, key 7]."><mxGeometry x="20" y="500" width="940" height="16" as="geometry" /></mxCell>
+        <mxCell id="e57" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=8.5;fontColor=#90a4ae;fontFamily=DejaVu Sans;" value="Simplified from Figure D.11 (Annex D.7) — the real figure also tracks bits 1, 2, 4 and 6, and uses a confirmation threshold of 1 with a 40-cycle aging threshold."><mxGeometry x="20" y="522" width="940" height="14" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
