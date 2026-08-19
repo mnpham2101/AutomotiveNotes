@@ -105,6 +105,15 @@
 
 `[Annex D.1, Table D.1]`
 
+### DTCStatusAvailabilityMask
+
+- **Purpose:** reports which `statusOfDTC` bits the server implements — "provides an indication of DTC status bits that are supported by the server for masking purposes" [Clause 11.3.1.2]
+- **Placement:** returned in every count/list `ReadDTCInformation` response, immediately after the `reportType` echo — same 8-bit layout as `statusOfDTC` (Section 1)
+- **Effect on matching:** bits the client's `DTCStatusMask` sets but the server doesn't implement are dropped from the AND, not rejected — "If the client specifies a status mask that contains bits that the server does not support, then the server shall process the DTC information using only the bits that it does support" [Clause 11.3.1.3]
+- **Not `DTCStatusMask`:** `DTCStatusMask` is a **request** parameter — the client-supplied filter; `DTCStatusAvailabilityMask` is a **response** parameter — the server-reported capability. Same bit positions, opposite direction, never both present in one message
+
+`[Clause 11.3.1.2–11.3.1.3, Tables 271–272]`
+
 ## Section 2 — ClearDiagnosticInformation (0x14) service
 
 ### Introduction
@@ -205,7 +214,7 @@
 
 ## Section 4 — Report Number Of DTCs — count DTC report
 
-### reportNumberOfDTCByStatusMask (0x01)
+### reportNumberOfDTCByStatusMask (0x01) - Message Structure
 
 ![ReadDTCInformation 0x01 request/response — count shape](../asset/uds-rdtci-count-structure.svg)
 
@@ -213,31 +222,6 @@
 - Shared shape with `0x07` (by severity), `0x11` (mirror memory), `0x12` (emissions-only OBD)
 
 `[Clause 11.3.1.2, Table 271]`
-
-### reportNumberOfDTCByStatusMask (0x01) — Message Structure
-
-- **Request** — 3 bytes, every field mandatory [Table 256]:
-
-| A_Data byte | Parameter | Value | Mnemonic |
-|---|---|---|---|
-| #1 | ReadDTCInformation Request SID | `0x19` | RDTCI |
-| #2 | sub-function `reportType` | `0x01` | LEV_ · RNODTCBSM |
-| #3 | `DTCStatusMask` | `0x00 – 0xFF` | DTCSM |
-
-- **Positive response** — 6 bytes, every field mandatory [Table 271]:
-
-| A_Data byte | Parameter | Value | Mnemonic |
-|---|---|---|---|
-| #1 | ReadDTCInformation Response SID | `0x59` | RDTCIPR |
-| #2 | `reportType` — echo of the request | `0x01` | LEV_ |
-| #3 | `DTCStatusAvailabilityMask` | `0x00 – 0xFF` | DTCSAM |
-| #4 | `DTCFormatIdentifier` | `0x00 – 0x04` | DTCFID_ |
-| #5 | `DTCCount` high byte | `0x00 – 0xFF` | DTCCHB |
-| #6 | `DTCCount` low byte | `0x00 – 0xFF` | DTCCLB |
-
-- No conditional/repeating bytes in this shape — contrast with the **list** shape next, whose `DTCAndStatusRecord` blocks repeat 0..n times
-
-`[Clause 11.3.2.1 / 11.3.3.1, Tables 256 and 271]`
 
 ### reportNumberOfDTCByStatusMask (0x01) — Example
 
@@ -288,7 +272,7 @@
 ![ReadDTCInformation 0x02 request/response — list shape with repeating DTCAndStatusRecord](../asset/uds-rdtci-list-structure.svg)
 
 - **Identical request** to 0x01 — same SID, `reportType`, `DTCStatusMask`
-- Response repeats a **4-byte `DTCAndStatusRecord`** (3-byte DTC + 1-byte `statusOfDTC`) once per matching DTC, after the `DTCStatusAvailabilityMask` [Table 272]
+- Response repeats a **4-byte `DTCAndStatusRecord`** once per matching DTC, after the `DTCStatusAvailabilityMask` — a composite block, **not** the same as `statusOfDTC` alone: 3-byte DTC + 1-byte `statusOfDTC` [Table 272]
 - Shared shape with `reportSupportedDTC`, the four first/most-recent sub-functions (`0x0B–0x0E`), `reportMirrorMemoryDTCByStatusMask` (0x0F), emissions-only OBD (0x13), and `reportDTCWithPermanentStatus` (0x15)
 
 `[Clause 11.3.1.3, Table 272]`
@@ -320,10 +304,23 @@
 ### DTCMaskRecord — addressing one specific DTC
 
 - A **3-byte value** — DTCHighByte, DTCMiddleByte, DTCLowByte — "which together represent a unique identification number for a specific diagnostic trouble code supported by a server" [Table 270]
-- It's the **same 3 bytes** as the raw DTC number from Section 1 — `DTCMaskRecord` is just the request-side parameter name for "the one DTC I mean"
+- It's the **same 3 bytes** as the raw DTC number
 - Used by every **"...ByDTCNumber"** sub-function — `0x04`, `0x06`, `0x09`, `0x10`, `0x18`, `0x19` — to pick exactly one DTC, unlike `DTCStatusMask` (Section 1), which filters *many* DTCs at once by their status bits
 
 `[Clause 11.3.2.3, Table 270]`
+
+### Snapshot vocabulary
+
+| Term | Role | Meaning |
+|---|---|---|
+| `DTCSnapshot` | concept | data "stored upon detection of a system malfunction" — "a snapshot of data values from the time of the... malfunction occurrence" [Clause 11.3.1.1] |
+| `DTCSnapshotRecord` | payload | one captured instance of that snapshot for one DTC — "holds one or more `dataIdentifier`/data pairs" [Clause 11.3.1.5]; a DTC can have several |
+| `DTCSnapshotRecordNumber` | request field | which stored `DTCSnapshotRecord` to fetch — `0x00` reserved, `0x01–0xFE` vehicle-manufacturer specific, `0xFF` = all records [Table 270] |
+| `DTCMaskRecord` | request field | which DTC (3-byte DTC number) — previous slide [Table 270] |
+
+- `DTCMaskRecord` + `DTCSnapshotRecordNumber` together address one `DTCSnapshotRecord` of one DTC's `DTCSnapshot` data — that's the full request for `0x04`
+
+`[Clause 11.3.1.1, 11.3.1.5; Tables 270, 274]`
 
 ### reportDTCSnapshotIdentification (0x03) vs reportDTCSnapshotByDTCNumber (0x04)
 
