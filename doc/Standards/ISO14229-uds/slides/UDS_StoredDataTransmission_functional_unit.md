@@ -26,15 +26,6 @@
 
 `[Clause 11.3.2.3, Table 270; Clause 11.3.3.1, Table 271]`
 
-### DTCFaultDetectionCounter — a threshold-crossing signal
-
-- **Purpose:** `reportDTCFaultDetectionCounter` (sub-function `0x14`) lists current "prefailed" DTCs — a way to see a fault *maturing* before any `statusOfDTC` bit would show it [Table 269]
-- Reported as a **scaled 1-byte signed value**: `+127` (`0x7F`) = test result "failed"; any other non-zero positive value = "prefailed" [Table 269]
-- "A reported DTCFaultDetectionCounter value greater than zero and less than +127 (i.e., `0x01`–`0x7E`) indicates that the DTC enable criteria was met and that a non completed test result prefailed at least in one condition or threshold" — **only DTCs in that range are reported**; `0x7F` itself is excluded, since that DTC is now failed, not prefailed [Table 269]
-- "If the DTCFaultDetectionCounter is decremented to zero or below the DTC shall no longer be reported in the positive response message" — a passing test run decrements the counter until it drops out of the reportable range [Table 269]
-
-`[Clause 11.3.2.2, Table 269]`
-
 ### statusOfDTC / DTCStatusMask — the 8-bit status byte
 
 ![statusOfDTC / DTCStatusMask 8-bit layout with a worked masking example](../asset/uds-dtc-status-byte.svg)
@@ -47,7 +38,17 @@
 
 ![DTCFaultDetectionCounter timeline against bits 0, 1 and 5](../asset/uds-dtc-faultdetectioncounter-timeline.svg)
 
-`[Annex D.6, Figure D.10 — simplified]`
+`[Annex D.6, Figure D.10 — keys 2, 3, 7, 8; simplified]`
+
+### DTCFaultDetectionCounter — a threshold-crossing signal
+
+- **Purpose:** `reportDTCFaultDetectionCounter` (sub-function `0x14`) lists current "prefailed" DTCs — a way to see a fault *maturing* before any `statusOfDTC` bit would show it [Table 269]
+- Reported as a **scaled 1-byte signed value**: `+127` (`0x7F`) = test result "failed"; any other non-zero positive value = "prefailed" [Table 269]
+- "A reported DTCFaultDetectionCounter value greater than zero and less than +127 (i.e., `0x01`–`0x7E`) indicates that the DTC enable criteria was met and that a non completed test result prefailed at least in one condition or threshold" — **only DTCs in that range are reported**; `0x7F` itself is excluded, since that DTC is now failed, not prefailed [Table 269]
+- "If the DTCFaultDetectionCounter is decremented to zero or below the DTC shall no longer be reported in the positive response message" — a passing test run decrements the counter until it drops out of the reportable range [Table 269]
+
+`[Clause 11.3.2.2, Table 269]`
+
 
 ### pendingDTC (bit 2) and testFailedThisOperationCycle (bit 1)
 
@@ -82,14 +83,6 @@
 
 `[Annex D.7, Figure D.11 — simplified, confirmation/aging thresholds illustrative]`
 
-### groupOfDTC — addressing a group instead of one DTC
-
-- A **3-byte** value, used by `ClearDiagnosticInformation` and several `ReadDTCInformation` sub-functions to select a DTC group rather than a single code [Annex D.1, Table D.1]
-- The **Powertrain / Chassis / Body / Network Communication** group byte ranges are **vehicle-manufacturer defined**
-- Two ranges are fixed by the standard: `0xFFFF33` = *Emissions* group, `0xFFFFD0` = *Safety* group (low byte = FunctionalGroupIdentifier, Annex D.5) — `0xFFFFFF` = **all groups** (every DTC)
-
-`[Annex D.1, Table D.1]`
-
 ### testNotCompletedThisOperationCycle (bit 6)
 
 - Bit 6 latches to 0 the moment the test first runs to completion — passed or failed — during the current operation cycle; it only cares that a result exists, not what it was
@@ -102,7 +95,15 @@
 
 ![testNotCompletedThisOperationCycle timeline against the fault detection counter and testFailed](../asset/uds-dtc-testnotcompleted-timeline.svg)
 
-`[Annex D.6, Figure D.10 — keys 1, 3, 9; Annex D.2.4, Figure D.9 — keys 9–12; simplified]`
+`[Annex D.6, Figure D.10 — keys 1, 3, 8, 9; Annex D.2.4, Figure D.9 — keys 9–12; simplified]`
+
+### groupOfDTC — addressing a group instead of one DTC
+
+- A **3-byte** value, used by `ClearDiagnosticInformation` and several `ReadDTCInformation` sub-functions to select a DTC group rather than a single code [Annex D.1, Table D.1]
+- The **Powertrain / Chassis / Body / Network Communication** group byte ranges are **vehicle-manufacturer defined**
+- Two ranges are fixed by the standard: `0xFFFF33` = *Emissions* group, `0xFFFFD0` = *Safety* group (low byte = FunctionalGroupIdentifier, Annex D.5) — `0xFFFFFF` = **all groups** (every DTC)
+
+`[Annex D.1, Table D.1]`
 
 ## Section 2 — ClearDiagnosticInformation (0x14) service
 

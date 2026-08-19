@@ -27,8 +27,9 @@
   <line x1="150" y1="205" x2="920" y2="205" stroke="#cfd8dc" stroke-dasharray="3 3"/>
   <text x="140" y="208" text-anchor="end" font-size="8" fill="#90a4ae">minimum</text>
 
-  <polyline points="150,160 220,160 220,145 290,145 290,130 360,130 360,115 468,115 468,140 575,140 575,160 683,160 683,180 790,180 790,205 920,205" fill="none" stroke="#00838f" stroke-width="2.5"/>
+  <polyline points="150,160 220,160 220,145 290,145 290,130 360,130 360,115 430,115 430,130 500,130 500,145 580,145 580,160 650,160 650,175 720,175 720,190 790,190 790,205 920,205" fill="none" stroke="#00838f" stroke-width="2.5"/>
   <circle cx="360" cy="115" r="4" fill="#00838f"/>
+  <circle cx="580" cy="160" r="4" fill="#00838f"/>
   <circle cx="790" cy="205" r="4" fill="#00838f"/>
 
   <!-- testFailed bit 0 -->
@@ -64,7 +65,7 @@
 
   <circle cx="28" cy="380" r="8" fill="#f26f21"/>
   <text x="28" y="383" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">2</text>
-  <text x="44" y="384" font-size="9.5" fill="#263238">Cycle 1 stops / Cycle 2 starts — bit 6 resets 0→1 for the new cycle's not-yet-completed test; bit 0 stays retained across the boundary</text>
+  <text x="44" y="384" font-size="9.5" fill="#263238">Cycle 1 stops / Cycle 2 starts — the counter also resets to 0, same as bit 6 → 1, for the new cycle's not-yet-run test [key 8]; bit 0 stays retained</text>
 
   <circle cx="28" cy="402" r="8" fill="#f26f21"/>
   <text x="28" y="405" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">3</text>
