@@ -202,9 +202,9 @@ th .math,td .math{font-size:.95em}
 <a href="#s32" data-i="32">reportDTCByStatusMask (0x02) — Example</a>
 <div class="grp">Section 6 — Report DTC Snapshot Record</div>
 <a href="#s33" data-i="33">Overview</a>
-<a href="#s34" data-i="34">reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report</a>
-<a href="#s35" data-i="35">DTCMaskRecord — addressing one specific DTC</a>
-<a href="#s36" data-i="36">Snapshot vocabulary</a>
+<a href="#s34" data-i="34">DTCMaskRecord — addressing one specific DTC</a>
+<a href="#s35" data-i="35">Snapshot vocabulary</a>
+<a href="#s36" data-i="36">reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report</a>
 <a href="#s37" data-i="37">reportDTCSnapshotIdentification (0x03) vs reportDTCSnapshotByDTCNumber (0x04)</a>
 <a href="#s38" data-i="38">ReadDTCInformation Snapshot family — Message Structure</a>
 <a href="#s39" data-i="39">reportDTCSnapshotIdentification (0x03) — Example</a>
@@ -670,23 +670,14 @@ th .math,td .math{font-size:.95em}
 </ul></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">32 / 48</span></div></section>
 <section class="slide divider" id="s33"><div class="slide-inner"><div class="kicker">Section</div>
 <h2>Section 6 — Report DTC Snapshot Record</h2></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">33 / 48</span></div></section>
-<section class="slide" id="s34"><div class="slide-inner"><h2>reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report</h2>
-<ul>
-<li><strong>Purpose:</strong> returns the DTCSnapshot (freeze-frame) records captured for one client-defined DTC — data "stored upon detection of a system malfunction," acting as "a snapshot of data values from the time of the... malfunction occurrence," meant "to ease the fault isolation process by the technician" [Clause 11.3.1.1]</li>
-<li>Request adds a <code>DTCMaskRecord</code> (3-byte DTC) and a <code>DTCSnapshotRecordNumber</code> to the SID + sub-function [Table 257]</li>
-<li><strong><code>DTCSnapshotRecordNumber</code></strong> semantics: <code>0x00</code> reserved for legislated use, <code>0x01–0xFE</code> vehicle-manufacturer specific, <code>0xFF</code> = <em>report all stored records at once</em> [Table 270]</li>
-<li>Response repeats, per record: record number → number of data-identifiers in it → that many <code>(dataIdentifier, snapshotData)</code> pairs — the <strong>same DID catalog used by <code>ReadDataByIdentifier</code> (0x22)</strong> [Table 274]</li>
-</ul>
-<div class="ref">Clause 11.3.1.5, Tables 257, 274</div>
-<div class="note"><b>Note — </b>This is the one case where the same DTC value may legitimately repeat in a response — once per snapshot record — because a DTC can have multiple stored freeze frames.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">34 / 48</span></div></section>
-<section class="slide" id="s35"><div class="slide-inner"><h2>DTCMaskRecord — addressing one specific DTC</h2>
+<section class="slide" id="s34"><div class="slide-inner"><h2>DTCMaskRecord — addressing one specific DTC</h2>
 <ul>
 <li>A <strong>3-byte value</strong> — DTCHighByte, DTCMiddleByte, DTCLowByte — "which together represent a unique identification number for a specific diagnostic trouble code supported by a server" [Table 270]</li>
 <li>It's the <strong>same 3 bytes</strong> as the raw DTC number</li>
 <li>Used by every <strong>"...ByDTCNumber"</strong> sub-function — <code>0x04</code>, <code>0x06</code>, <code>0x09</code>, <code>0x10</code>, <code>0x18</code>, <code>0x19</code> — to pick exactly one DTC, unlike <code>DTCStatusMask</code> (Section 1), which filters <em>many</em> DTCs at once by their status bits</li>
 </ul>
-<div class="ref">Clause 11.3.2.3, Table 270</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">35 / 48</span></div></section>
-<section class="slide" id="s36"><div class="slide-inner"><h2>Snapshot vocabulary</h2>
+<div class="ref">Clause 11.3.2.3, Table 270</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">34 / 48</span></div></section>
+<section class="slide" id="s35"><div class="slide-inner"><h2>Snapshot vocabulary</h2>
 <table>
 <thead>
 <tr>
@@ -721,7 +712,16 @@ th .math,td .math{font-size:.95em}
 <ul>
 <li><code>DTCMaskRecord</code> + <code>DTCSnapshotRecordNumber</code> together address one <code>DTCSnapshotRecord</code> of one DTC's <code>DTCSnapshot</code> data — that's the full request for <code>0x04</code></li>
 </ul>
-<div class="ref">Clause 11.3.1.1, 11.3.1.5; Tables 270, 274</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">36 / 48</span></div></section>
+<div class="ref">Clause 11.3.1.1, 11.3.1.5; Tables 270, 274</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">35 / 48</span></div></section>
+<section class="slide" id="s36"><div class="slide-inner"><h2>reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report</h2>
+<ul>
+<li><strong>Purpose:</strong> returns the DTCSnapshot (freeze-frame) records captured for one client-defined DTC — data "stored upon detection of a system malfunction," acting as "a snapshot of data values from the time of the... malfunction occurrence," meant "to ease the fault isolation process by the technician" [Clause 11.3.1.1]</li>
+<li>Request adds a <code>DTCMaskRecord</code> (3-byte DTC) and a <code>DTCSnapshotRecordNumber</code> to the SID + sub-function [Table 257]</li>
+<li><strong><code>DTCSnapshotRecordNumber</code></strong> semantics: <code>0x00</code> reserved for legislated use, <code>0x01–0xFE</code> vehicle-manufacturer specific, <code>0xFF</code> = <em>report all stored records at once</em> [Table 270]</li>
+<li>Response repeats, per record: record number → number of data-identifiers in it → that many <code>(dataIdentifier, snapshotData)</code> pairs — the <strong>same DID catalog used by <code>ReadDataByIdentifier</code> (0x22)</strong> [Table 274]</li>
+</ul>
+<div class="ref">Clause 11.3.1.5, Tables 257, 274</div>
+<div class="note"><b>Note — </b>This is the one case where the same DTC value may legitimately repeat in a response — once per snapshot record — because a DTC can have multiple stored freeze frames.</div></div><div class="foot"><span>Stored Data Transmission functional unit</span><span class="n">36 / 48</span></div></section>
 <section class="slide" id="s37"><div class="slide-inner"><h2>reportDTCSnapshotIdentification (0x03) vs reportDTCSnapshotByDTCNumber (0x04)</h2>
 <ul>
 <li><strong>0x03 is a catalog.</strong> No <code>DTCMaskRecord</code> in the request — the client hasn't picked a DTC yet. The server returns "the list of DTCSnapshot record identification information for all stored DTCSnapshot records": DTC + record number pairs only — <strong>no status, no captured data</strong> [Clause 11.3.1.4]</li>

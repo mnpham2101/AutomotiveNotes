@@ -290,17 +290,6 @@
 
 ## Section 6 — Report DTC Snapshot Record
 
-### reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report
-
-- **Purpose:** returns the DTCSnapshot (freeze-frame) records captured for one client-defined DTC — data "stored upon detection of a system malfunction," acting as "a snapshot of data values from the time of the... malfunction occurrence," meant "to ease the fault isolation process by the technician" [Clause 11.3.1.1]
-- Request adds a `DTCMaskRecord` (3-byte DTC) and a `DTCSnapshotRecordNumber` to the SID + sub-function [Table 257]
-- **`DTCSnapshotRecordNumber`** semantics: `0x00` reserved for legislated use, `0x01–0xFE` vehicle-manufacturer specific, `0xFF` = *report all stored records at once* [Table 270]
-- Response repeats, per record: record number → number of data-identifiers in it → that many `(dataIdentifier, snapshotData)` pairs — the **same DID catalog used by `ReadDataByIdentifier` (0x22)** [Table 274]
-
-`[Clause 11.3.1.5, Tables 257, 274]`
-
-> note: This is the one case where the same DTC value may legitimately repeat in a response — once per snapshot record — because a DTC can have multiple stored freeze frames.
-
 ### DTCMaskRecord — addressing one specific DTC
 
 - A **3-byte value** — DTCHighByte, DTCMiddleByte, DTCLowByte — "which together represent a unique identification number for a specific diagnostic trouble code supported by a server" [Table 270]
@@ -321,6 +310,17 @@
 - `DTCMaskRecord` + `DTCSnapshotRecordNumber` together address one `DTCSnapshotRecord` of one DTC's `DTCSnapshot` data — that's the full request for `0x04`
 
 `[Clause 11.3.1.1, 11.3.1.5; Tables 270, 274]`
+
+### reportDTCSnapshotRecordByDTCNumber (0x04) — Snapshot report
+
+- **Purpose:** returns the DTCSnapshot (freeze-frame) records captured for one client-defined DTC — data "stored upon detection of a system malfunction," acting as "a snapshot of data values from the time of the... malfunction occurrence," meant "to ease the fault isolation process by the technician" [Clause 11.3.1.1]
+- Request adds a `DTCMaskRecord` (3-byte DTC) and a `DTCSnapshotRecordNumber` to the SID + sub-function [Table 257]
+- **`DTCSnapshotRecordNumber`** semantics: `0x00` reserved for legislated use, `0x01–0xFE` vehicle-manufacturer specific, `0xFF` = *report all stored records at once* [Table 270]
+- Response repeats, per record: record number → number of data-identifiers in it → that many `(dataIdentifier, snapshotData)` pairs — the **same DID catalog used by `ReadDataByIdentifier` (0x22)** [Table 274]
+
+`[Clause 11.3.1.5, Tables 257, 274]`
+
+> note: This is the one case where the same DTC value may legitimately repeat in a response — once per snapshot record — because a DTC can have multiple stored freeze frames.
 
 ### reportDTCSnapshotIdentification (0x03) vs reportDTCSnapshotByDTCNumber (0x04)
 
