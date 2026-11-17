@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .col-title { font-size: 12.5px; font-weight: 700; fill: #1a2332; }
+    .clause-tag { font-size: 10.5px; fill: #6b7a99; font-style: italic; }
+    .item-text { font-size: 11px; fill: #33415c; }
+    .col-box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .header { font-size: 10.3px; font-weight: 600; }
+    .sub { font-size: 9.2px; fill: #45526b; }
+    .arrow { stroke: #33415c; stroke-width: 2; marker-end: url(#arrowhead); fill: none; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="420" fill="#ffffff"/>
+  <text x="20" y="26" font-size="16" font-weight="700" fill="#1a2332">Product Development at the Hardware Level (ISO 26262-5:2018)</text>
+  <text x="20" y="45" font-size="11.5" fill="#6b7a99">Six clauses; uniquely among Parts 4-6, two of them (8 and 9) are dedicated to quantitative evaluation of the overall hardware architecture</text>
+
+  <!-- Column 1: General topics -->
+  <rect x="20" y="65" width="240" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="140" y="92" text-anchor="middle" class="col-title">General Topics</text>
+  <text x="140" y="108" text-anchor="middle" class="clause-tag">Clause 5 (5-5)</text>
+
+  <rect x="28" y="120" width="224" height="30" rx="4" class="col-box"/>
+  <text x="140" y="139" text-anchor="middle" class="header" fill="#1a2332">HW implementation of the TSC</text>
+
+  <rect x="28" y="154" width="224" height="30" rx="4" class="col-box"/>
+  <text x="140" y="173" text-anchor="middle" class="header" fill="#1a2332">Analysis of potential HW faults</text>
+
+  <rect x="28" y="188" width="224" height="30" rx="4" class="col-box"/>
+  <text x="140" y="207" text-anchor="middle" class="header" fill="#1a2332">Coordination with SW dev.</text>
+
+  <text x="28" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: scope the HW-level</text>
+  <text x="28" y="345" class="item-text" font-style="italic" fill="#45526b">activities before Clauses 6-10</text>
+  <text x="28" y="372" class="clause-tag">No dedicated work product</text>
+
+  <line x1="260" y1="225" x2="278" y2="225" class="arrow"/>
+
+  <!-- Column 2: HW Safety Requirements -->
+  <rect x="284" y="65" width="240" height="320" rx="8" fill="#f3f7f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="404" y="92" text-anchor="middle" class="col-title">HW Safety Requirements</text>
+  <text x="404" y="108" text-anchor="middle" class="clause-tag">Clause 6 (5-6)</text>
+
+  <rect x="292" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="404" y="136" text-anchor="middle" class="header" fill="#1a2332">Derive HW safety reqs from the</text>
+  <text x="404" y="149" text-anchor="middle" class="sub">TSC + system design spec</text>
+
+  <rect x="292" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="404" y="179" text-anchor="middle" class="header" fill="#1a2332">Refine HSI (ISO 26262-4, 6.4.7)</text>
+
+  <rect x="292" y="194" width="224" height="36" rx="4" class="col-box"/>
+  <text x="404" y="210" text-anchor="middle" class="header" fill="#1a2332">SMs: internal faults, external</text>
+  <text x="404" y="223" text-anchor="middle" class="sub">tolerance, anti-latency signalling</text>
+
+  <rect x="292" y="234" width="224" height="30" rx="4" class="col-box"/>
+  <text x="404" y="253" text-anchor="middle" class="header" fill="#1a2332">Applies to ASIL B, C and D</text>
+
+  <text x="292" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: specify &amp; verify HW</text>
+  <text x="292" y="345" class="item-text" font-style="italic" fill="#45526b">safety reqs consistent with TSC</text>
+  <text x="292" y="372" class="clause-tag">Work products: HW safety req.</text>
+  <text x="292" y="385" class="clause-tag">spec, refined HSI spec</text>
+
+  <line x1="524" y1="225" x2="542" y2="225" class="arrow"/>
+
+  <!-- Column 3: Hardware Design -->
+  <rect x="548" y="65" width="240" height="320" rx="8" fill="#f7f1f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="668" y="92" text-anchor="middle" class="col-title">Hardware Design</text>
+  <text x="668" y="108" text-anchor="middle" class="clause-tag">Clause 7 (5-7)</text>
+
+  <rect x="556" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="668" y="136" text-anchor="middle" class="header" fill="#1a2332">Architectural (components +</text>
+  <text x="668" y="149" text-anchor="middle" class="sub">interactions) &amp; detailed (schematics)</text>
+
+  <rect x="556" y="160" width="224" height="36" rx="4" class="col-box"/>
+  <text x="668" y="176" text-anchor="middle" class="header" fill="#1a2332">Modular, well-trusted; non-</text>
+  <text x="668" y="189" text-anchor="middle" class="sub">functional causes (EMI, temp) considered</text>
+
+  <rect x="556" y="200" width="224" height="30" rx="4" class="col-box"/>
+  <text x="668" y="219" text-anchor="middle" class="header" fill="#1a2332">ID safe / single- / dual-point faults</text>
+
+  <rect x="556" y="234" width="224" height="36" rx="4" class="col-box"/>
+  <text x="668" y="250" text-anchor="middle" class="header" fill="#1a2332">Verify vs HW safety reqs, HSI,</text>
+  <text x="668" y="263" text-anchor="middle" class="sub">SEooC assumptions</text>
+
+  <text x="556" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: a verified HW design</text>
+  <text x="556" y="345" class="item-text" font-style="italic" fill="#45526b">that fulfils HW safety reqs &amp; HSI</text>
+  <text x="556" y="372" class="clause-tag">Work products: HW design spec,</text>
+  <text x="556" y="385" class="clause-tag">safety analysis &amp; verification reports</text>
+
+  <line x1="788" y1="225" x2="806" y2="225" class="arrow"/>
+
+  <!-- Column 4: HW Architectural Metrics -->
+  <rect x="812" y="65" width="240" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="932" y="92" text-anchor="middle" class="col-title">HW Architectural Metrics</text>
+  <text x="932" y="108" text-anchor="middle" class="clause-tag">Clause 8 (5-8)</text>
+
+  <rect x="820" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="932" y="136" text-anchor="middle" class="header" fill="#1a2332">SPFM: coverage vs single-point</text>
+  <text x="932" y="149" text-anchor="middle" class="sub">/ residual faults (ASIL B, C, D)</text>
+
+  <rect x="820" y="160" width="224" height="36" rx="4" class="col-box"/>
+  <text x="932" y="176" text-anchor="middle" class="header" fill="#1a2332">LFM: coverage vs latent multi-</text>
+  <text x="932" y="189" text-anchor="middle" class="sub">point faults (ASIL (B), (C), D)</text>
+
+  <rect x="820" y="200" width="224" height="30" rx="4" class="col-box"/>
+  <text x="932" y="219" text-anchor="middle" class="header" fill="#1a2332">Targets: SPFM 90/97/99%</text>
+
+  <rect x="820" y="234" width="224" height="30" rx="4" class="col-box"/>
+  <text x="932" y="253" text-anchor="middle" class="header" fill="#1a2332">DC (Annex D): Low/Med/High</text>
+
+  <text x="820" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: evidence the arch.'s</text>
+  <text x="820" y="345" class="item-text" font-style="italic" fill="#45526b">coverage of random HW failures</text>
+  <text x="820" y="372" class="clause-tag">Work product: architectural</text>
+  <text x="820" y="385" class="clause-tag">metrics requirements/report</text>
+
+  <line x1="1052" y1="225" x2="1070" y2="225" class="arrow"/>
+
+  <!-- Column 5: Random-Failure Evaluation -->
+  <rect x="1076" y="65" width="240" height="320" rx="8" fill="#f3f7f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="1196" y="92" text-anchor="middle" class="col-title">Random-Failure Evaluation</text>
+  <text x="1196" y="108" text-anchor="middle" class="clause-tag">Clause 9 (5-9)</text>
+
+  <rect x="1084" y="120" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1196" y="139" text-anchor="middle" class="header" fill="#1a2332">PMHF: quantified FTA vs target</text>
+
+  <rect x="1084" y="154" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1196" y="173" text-anchor="middle" class="header" fill="#1a2332">EEC: per-part contribution</text>
+
+  <rect x="1084" y="188" width="224" height="36" rx="4" class="col-box"/>
+  <text x="1196" y="204" text-anchor="middle" class="header" fill="#1a2332">Targets: D &lt;10⁻⁸/h,</text>
+  <text x="1196" y="217" text-anchor="middle" class="sub">C/B &lt;10⁻⁷/h</text>
+
+  <rect x="1084" y="228" width="224" height="36" rx="4" class="col-box"/>
+  <text x="1196" y="244" text-anchor="middle" class="header" fill="#1a2332">Shortfall needs dedicated</text>
+  <text x="1196" y="257" text-anchor="middle" class="sub">measures (9.4.1.2) in the safety case</text>
+
+  <text x="1084" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: residual SG-violation</text>
+  <text x="1084" y="345" class="item-text" font-style="italic" fill="#45526b">risk from random HW failure is low</text>
+  <text x="1084" y="372" class="clause-tag">Work product: random HW</text>
+  <text x="1084" y="385" class="clause-tag">failure evaluation report</text>
+
+  <line x1="1316" y1="225" x2="1334" y2="225" class="arrow"/>
+
+  <!-- Column 6: HW Integration and Verification -->
+  <rect x="1340" y="65" width="240" height="320" rx="8" fill="#f7f1f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="1460" y="92" text-anchor="middle" class="col-title">HW Integration &amp; Verification</text>
+  <text x="1460" y="108" text-anchor="middle" class="clause-tag">Clause 10 (5-10)</text>
+
+  <rect x="1348" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="1460" y="136" text-anchor="middle" class="header" fill="#1a2332">Coordinated with the 4-7.4.1</text>
+  <text x="1460" y="149" text-anchor="middle" class="sub">integration &amp; test strategy</text>
+
+  <rect x="1348" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1460" y="179" text-anchor="middle" class="header" fill="#1a2332">Qualify parts: ISO 16750, AEC-Q</text>
+
+  <rect x="1348" y="194" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1460" y="213" text-anchor="middle" class="header" fill="#1a2332">Functional, fault-injection, elec.</text>
+
+  <rect x="1348" y="228" width="224" height="36" rx="4" class="col-box"/>
+  <text x="1460" y="244" text-anchor="middle" class="header" fill="#1a2332">Environmental, EMC/ESD,</text>
+  <text x="1460" y="257" text-anchor="middle" class="sub">durability &amp; robustness testing</text>
+
+  <text x="1348" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: verify the built HW</text>
+  <text x="1348" y="345" class="item-text" font-style="italic" fill="#45526b">complies with HW safety reqs</text>
+  <text x="1348" y="372" class="clause-tag">Work product: HW integration</text>
+  <text x="1348" y="385" class="clause-tag">and verification report</text>
+</svg>

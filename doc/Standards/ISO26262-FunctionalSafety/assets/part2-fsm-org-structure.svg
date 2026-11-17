@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #1a2332; }
+    .band-label { font-size: 16px; font-weight: 600; fill: #33415c; }
+    .box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .box-title { font-size: 16px; font-weight: 600; fill: #1a2332; text-anchor: middle; }
+    .footnote { font-size: 14px; fill: #8592ab; font-style: italic; }
+    .arrow { stroke: #33415c; stroke-width: 1.6; marker-end: url(#arrowhead); fill: none; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="430" fill="#ffffff"/>
+  <text x="20" y="28" class="title">Possible FSM Structure Across an Organization</text>
+
+  <!-- Project-independent tier -->
+  <rect x="20" y="45" width="1160" height="180" rx="6" fill="#eef1f7" stroke="#33415c" stroke-width="1.2"/>
+  <text x="34" y="65" class="band-label">Project-Independent FSM (Clause 5)</text>
+
+  <rect x="500" y="80" width="200" height="50" rx="6" class="box"/>
+  <text x="600" y="110" class="box-title">Company FSM</text>
+
+  <rect x="90" y="170" width="220" height="50" rx="6" class="box"/>
+  <text x="200" y="200" class="box-title">Business Unit 1 FSM</text>
+
+  <rect x="490" y="170" width="220" height="50" rx="6" class="box"/>
+  <text x="600" y="200" class="box-title">Business Unit 2 FSM</text>
+
+  <rect x="890" y="170" width="220" height="50" rx="6" class="box"/>
+  <text x="1000" y="200" class="box-title">Business Unit n FSM</text>
+
+  <line x1="600" y1="130" x2="215" y2="168" class="arrow"/>
+  <line x1="600" y1="130" x2="600" y2="168" class="arrow"/>
+  <line x1="600" y1="130" x2="985" y2="168" class="arrow"/>
+
+  <!-- Project-specific tier -->
+  <rect x="20" y="245" width="1160" height="150" rx="6" fill="#f3f7f0" stroke="#33415c" stroke-width="1.2"/>
+  <text x="34" y="265" class="band-label">Project-Specific FSM (Clause 6, one instance per item development)</text>
+
+  <rect x="60" y="290" width="180" height="50" rx="6" class="box"/>
+  <text x="150" y="320" class="box-title">Project 1 FSM</text>
+
+  <rect x="270" y="290" width="180" height="50" rx="6" class="box"/>
+  <text x="360" y="320" class="box-title">Project 2 FSM</text>
+
+  <rect x="480" y="290" width="180" height="50" rx="6" class="box"/>
+  <text x="570" y="320" class="box-title">Project 3 FSM</text>
+
+  <rect x="880" y="290" width="220" height="50" rx="6" class="box"/>
+  <text x="990" y="315" class="box-title">Project-Specific FSM</text>
+  <text x="990" y="333" font-size="12.5" fill="#45526b" text-anchor="middle">(not tied to one business unit)</text>
+
+  <line x1="200" y1="220" x2="160" y2="288" class="arrow"/>
+  <line x1="200" y1="220" x2="355" y2="288" class="arrow"/>
+  <line x1="200" y1="220" x2="560" y2="288" class="arrow"/>
+
+  <text x="20" y="415" class="footnote">Bands line up with the Clause 5 / Clause 6 split used throughout this doc - see 2-5 and 2-6 below.</text>
+</svg>

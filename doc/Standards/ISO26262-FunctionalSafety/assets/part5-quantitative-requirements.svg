@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 760" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .link { stroke: #33415c; stroke-width: 1.6; fill: none; }
+    .blue-box { fill: #5b8fd4; stroke: #2f5fa8; stroke-width: 1.4; }
+    .blue-txt { font-size: 13px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .orange-box { fill: #f0923c; stroke: #c8681a; stroke-width: 1.4; }
+    .orange-txt { font-size: 12px; font-weight: 700; fill: #402400; text-anchor: middle; }
+    .cream-box { fill: #f5e6a0; stroke: #c9a83a; stroke-width: 1.4; }
+    .cream-txt { font-size: 11.5px; font-weight: 700; fill: #4a3c00; text-anchor: middle; }
+    .gate-lbl { font-size: 16px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .gate-lbl-dark { font-size: 15px; font-weight: 700; fill: #4a3c00; text-anchor: middle; }
+  </style>
+
+  <rect x="0" y="0" width="950" height="760" fill="#ffffff"/>
+  <text x="20" y="26" font-size="16" font-weight="700" fill="#1a2332">Quantitative Requirements for the Hardware Design</text>
+  <text x="20" y="44" font-size="11.5" fill="#6b7a99">How Clauses 8 (architectural metrics) and 9 (random-failure evaluation) combine as quantitative gates on the hardware design</text>
+
+  <!-- Box A -->
+  <rect x="375" y="70" width="200" height="60" rx="4" class="blue-box"/>
+  <text x="475" y="94" class="blue-txt">Quantitative Analysis</text>
+  <text x="475" y="111" class="blue-txt">for Hardware Design</text>
+
+  <path d="M475,130 L475,138" class="link"/>
+
+  <!-- AND gate -->
+  <path d="M420,175 L420,155 A55,20 0 1 1 530,155 L530,175 Z" class="blue-box"/>
+  <text x="475" y="169" class="gate-lbl">&amp;</text>
+
+  <path d="M475,175 L475,183" class="link"/>
+
+  <!-- Box B -->
+  <rect x="385" y="183" width="180" height="45" rx="4" class="blue-box"/>
+  <text x="475" y="210" class="blue-txt">HW DESIGN</text>
+
+  <!-- branch to C and D -->
+  <path d="M475,228 L475,250 L200,250 L200,270" class="link"/>
+  <path d="M475,228 L475,250 L660,250 L660,270" class="link"/>
+
+  <!-- Box C: 8. Evaluation of Hardware Architectural Metrics -->
+  <rect x="60" y="270" width="280" height="80" rx="4" class="orange-box"/>
+  <text x="200" y="300" class="orange-txt">8. Evaluation of Hardware</text>
+  <text x="200" y="317" class="orange-txt">Architectural Metrics</text>
+
+  <path d="M200,350 L200,398" class="link"/>
+
+  <!-- METRICS oval -->
+  <ellipse cx="200" cy="430" rx="100" ry="32" class="orange-box"/>
+  <text x="200" y="437" class="orange-txt">METRICS</text>
+
+  <!-- Box D: 9. Evaluation of Safety Goal Violation due to random Hardware Failure -->
+  <rect x="460" y="270" width="400" height="80" rx="4" class="orange-box"/>
+  <text x="660" y="300" class="orange-txt">9. Evaluation of Safety Goal Violation due to</text>
+  <text x="660" y="317" class="orange-txt">random Hardware Failure</text>
+
+  <path d="M660,350 L660,398" class="link"/>
+
+  <!-- OR gate -->
+  <path d="M605,398 L715,398 L715,418 A55,20 0 1 1 605,418 Z" class="cream-box"/>
+  <text x="660" y="415" class="gate-lbl-dark">&#8805;1</text>
+
+  <path d="M660,438 L660,450" class="link"/>
+
+  <!-- SG EVALUATION -->
+  <rect x="570" y="450" width="180" height="45" rx="4" class="cream-box"/>
+  <text x="660" y="477" class="cream-txt">SG EVALUATION</text>
+
+  <!-- branch to E and F -->
+  <path d="M660,495 L660,517 L545,517 L545,540" class="link"/>
+  <path d="M660,495 L660,517 L790,517 L790,540" class="link"/>
+
+  <!-- Box E: 9.4.2 -->
+  <rect x="405" y="540" width="280" height="90" rx="4" class="cream-box"/>
+  <text x="545" y="565" class="cream-txt">9.4.2 Evaluation of Probabilistic</text>
+  <text x="545" y="581" class="cream-txt">Metrics for Random Hardware</text>
+  <text x="545" y="597" class="cream-txt">Failures (PMHF)</text>
+
+  <path d="M545,630 L545,658" class="link"/>
+
+  <!-- PMHF oval -->
+  <ellipse cx="545" cy="690" rx="90" ry="30" class="cream-box"/>
+  <text x="545" y="696" class="cream-txt">PMHF</text>
+
+  <!-- Box F: 9.4.3 -->
+  <rect x="650" y="540" width="280" height="90" rx="4" class="cream-box"/>
+  <text x="790" y="565" class="cream-txt">9.4.3 Evaluation of Each</text>
+  <text x="790" y="581" class="cream-txt">Cause of Safety Goal</text>
+  <text x="790" y="597" class="cream-txt">Violation</text>
+
+  <path d="M790,630 L790,658" class="link"/>
+
+  <!-- SG METHOD oval -->
+  <ellipse cx="790" cy="690" rx="100" ry="30" class="cream-box"/>
+  <text x="790" y="696" class="cream-txt">SG METHOD</text>
+</svg>

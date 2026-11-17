@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 420" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .col-title { font-size: 13.5px; font-weight: 700; fill: #1a2332; }
+    .clause-tag { font-size: 11px; fill: #6b7a99; font-style: italic; }
+    .item-text { font-size: 11.5px; fill: #33415c; }
+    .col-box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .header { font-size: 11px; font-weight: 600; }
+    .sub { font-size: 9.5px; fill: #45526b; }
+    .arrow { stroke: #33415c; stroke-width: 2; marker-end: url(#arrowhead); fill: none; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1300" height="420" fill="#ffffff"/>
+  <text x="20" y="26" font-size="16" font-weight="700" fill="#1a2332">Product Development at the System Level (ISO 26262-4:2018)</text>
+  <text x="20" y="45" font-size="11.5" fill="#6b7a99">Four stages, run in sequence from the functional safety concept down to vehicle-level validation</text>
+
+  <!-- Column 1: General topics -->
+  <rect x="20" y="65" width="290" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="165" y="92" text-anchor="middle" class="col-title">General Topics</text>
+  <text x="165" y="110" text-anchor="middle" class="clause-tag">Clause 5 (4-5)</text>
+
+  <rect x="36" y="122" width="258" height="36" rx="4" class="col-box"/>
+  <text x="165" y="138" text-anchor="middle" class="header" fill="#1a2332">Reference phase model for</text>
+  <text x="165" y="151" text-anchor="middle" class="header" fill="#1a2332">system-level development</text>
+
+  <rect x="36" y="166" width="258" height="36" rx="4" class="col-box"/>
+  <text x="165" y="182" text-anchor="middle" class="header" fill="#1a2332">Worked example of a system-</text>
+  <text x="165" y="195" text-anchor="middle" class="header" fill="#1a2332">level product development</text>
+
+  <text x="36" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: set the phase model</text>
+  <text x="36" y="346" class="item-text" font-style="italic" fill="#45526b">that Clauses 6-8 instantiate</text>
+  <text x="36" y="372" class="clause-tag">No dedicated work product</text>
+
+  <line x1="310" y1="225" x2="338" y2="225" class="arrow"/>
+
+  <!-- Column 2: Technical Safety Concept -->
+  <rect x="338" y="65" width="290" height="320" rx="8" fill="#f3f7f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="483" y="92" text-anchor="middle" class="col-title">Technical Safety Concept</text>
+  <text x="483" y="108" text-anchor="middle" class="clause-tag">TSR + System Design (Clause 6, 4-6)</text>
+
+  <rect x="354" y="120" width="258" height="30" rx="4" class="col-box"/>
+  <text x="483" y="139" text-anchor="middle" class="header" fill="#1a2332">Derive TSRs from FSRs + prelim. arch.</text>
+
+  <rect x="354" y="154" width="258" height="36" rx="4" class="col-box"/>
+  <text x="483" y="170" text-anchor="middle" class="header" fill="#1a2332">Safety mechanisms: detect/control,</text>
+  <text x="483" y="183" text-anchor="middle" class="sub">safe state, FTTI/EOTI, degradation</text>
+
+  <rect x="354" y="194" width="258" height="30" rx="4" class="col-box"/>
+  <text x="483" y="213" text-anchor="middle" class="header" fill="#1a2332">Avoidance of latent multiple-point faults</text>
+
+  <rect x="354" y="228" width="258" height="30" rx="4" class="col-box"/>
+  <text x="483" y="247" text-anchor="middle" class="header" fill="#1a2332">System architecture implements TSRs</text>
+
+  <rect x="354" y="262" width="258" height="30" rx="4" class="col-box"/>
+  <text x="483" y="281" text-anchor="middle" class="header" fill="#1a2332">HW/SW interface (HSI) spec</text>
+
+  <rect x="354" y="296" width="258" height="30" rx="4" class="col-box"/>
+  <text x="483" y="315" text-anchor="middle" class="header" fill="#1a2332">System safety analysis (FMEA/FTA)</text>
+
+  <text x="354" y="345" class="item-text" font-style="italic" fill="#45526b">Objective: architecture + rationale for</text>
+  <text x="354" y="360" class="item-text" font-style="italic" fill="#45526b">why it fulfils the safety requirements</text>
+  <text x="354" y="378" class="clause-tag">Work products: TSR spec, TSC, system</text>
+  <text x="354" y="391" class="clause-tag">design spec, HSI spec, safety analyses</text>
+
+  <line x1="628" y1="225" x2="656" y2="225" class="arrow"/>
+
+  <!-- Column 3: Item & System Integration and Testing -->
+  <rect x="656" y="65" width="290" height="320" rx="8" fill="#f7f1f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="801" y="92" text-anchor="middle" class="col-title">Item &amp; System Integration</text>
+  <text x="801" y="108" text-anchor="middle" class="clause-tag">Clause 7 (4-7)</text>
+
+  <rect x="672" y="120" width="258" height="36" rx="4" class="col-box"/>
+  <text x="801" y="136" text-anchor="middle" class="header" fill="#1a2332">HW/SW &#8594; System &#8594; Vehicle</text>
+  <text x="801" y="149" text-anchor="middle" class="sub">integration, nested and sequential</text>
+
+  <rect x="672" y="160" width="258" height="30" rx="4" class="col-box"/>
+  <text x="801" y="179" text-anchor="middle" class="header" fill="#1a2332">Correct implementation of TSR/FSR</text>
+
+  <rect x="672" y="194" width="258" height="30" rx="4" class="col-box"/>
+  <text x="801" y="213" text-anchor="middle" class="header" fill="#1a2332">Functional performance, accuracy, timing</text>
+
+  <rect x="672" y="228" width="258" height="30" rx="4" class="col-box"/>
+  <text x="801" y="247" text-anchor="middle" class="header" fill="#1a2332">Interface consistency &amp; correctness</text>
+
+  <rect x="672" y="262" width="258" height="30" rx="4" class="col-box"/>
+  <text x="801" y="281" text-anchor="middle" class="header" fill="#1a2332">Safety-mechanism effectiveness</text>
+
+  <rect x="672" y="296" width="258" height="30" rx="4" class="col-box"/>
+  <text x="801" y="315" text-anchor="middle" class="header" fill="#1a2332">Robustness (stress / fault injection)</text>
+
+  <text x="672" y="345" class="item-text" font-style="italic" fill="#45526b">Objective: evidence integrated elements</text>
+  <text x="672" y="360" class="item-text" font-style="italic" fill="#45526b">fulfil their safety requirements</text>
+  <text x="672" y="378" class="clause-tag">Work products: integration &amp; test</text>
+  <text x="672" y="391" class="clause-tag">strategy, integration &amp; test results</text>
+
+  <line x1="946" y1="225" x2="974" y2="225" class="arrow"/>
+
+  <!-- Column 4: Safety Validation -->
+  <rect x="974" y="65" width="290" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="1119" y="92" text-anchor="middle" class="col-title">Safety Validation</text>
+  <text x="1119" y="108" text-anchor="middle" class="clause-tag">Clause 8 (4-8)</text>
+
+  <rect x="990" y="120" width="258" height="30" rx="4" class="col-box"/>
+  <text x="1119" y="139" text-anchor="middle" class="header" fill="#1a2332">Safety goals correct &amp; complete</text>
+
+  <rect x="990" y="154" width="258" height="30" rx="4" class="col-box"/>
+  <text x="1119" y="173" text-anchor="middle" class="header" fill="#1a2332">Fully achieved at vehicle level</text>
+
+  <rect x="990" y="188" width="258" height="36" rx="4" class="col-box"/>
+  <text x="1119" y="204" text-anchor="middle" class="header" fill="#1a2332">Validate assumptions: controllability,</text>
+  <text x="1119" y="217" text-anchor="middle" class="sub">FTTI, safe state, external measures</text>
+
+  <rect x="990" y="228" width="258" height="30" rx="4" class="col-box"/>
+  <text x="1119" y="247" text-anchor="middle" class="header" fill="#1a2332">Demonstrate safety measures work</text>
+
+  <rect x="990" y="262" width="258" height="30" rx="4" class="col-box"/>
+  <text x="1119" y="281" text-anchor="middle" class="header" fill="#1a2332">Vehicle tests: fault injection, long-term</text>
+
+  <text x="990" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: confirm the safety concepts</text>
+  <text x="990" y="345" class="item-text" font-style="italic" fill="#45526b">implemented are appropriate</text>
+  <text x="990" y="371" class="clause-tag">Work products: safety validation spec,</text>
+  <text x="990" y="384" class="clause-tag">safety validation report</text>
+</svg>

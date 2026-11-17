@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 800" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .hsi-box { fill: #eef1f7; stroke: #33415c; stroke-width: 1.6; }
+    .lbl { font-size: 10.6px; fill: #1a2332; text-anchor: middle; }
+    .hsi-lbl { font-size: 11.5px; font-weight: 700; fill: #1a2332; text-anchor: middle; }
+    .top-lbl { font-size: 12.5px; font-weight: 700; fill: #1a2332; text-anchor: middle; }
+    .flow { stroke: #33415c; stroke-width: 1.6; fill: none; marker-end: url(#arrowhead); }
+    .hsi-link { stroke: #2f5fa8; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead-blue); }
+    .hsi-link-back { stroke: #2f5fa8; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead-blue); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#33415c"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#2f5fa8"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1150" height="800" fill="#ffffff"/>
+  <text x="20" y="28" font-size="18" font-weight="700" fill="#1a2332">Requirements of HSI</text>
+  <text x="20" y="48" font-size="11.5" fill="#6b7a99">The hardware track (5-5 .. 5-10) and software track (6-5 .. 6-11) both refine and consume the same</text>
+  <text x="20" y="63" font-size="11.5" fill="#6b7a99">hardware-software interface (HSI) specification as they run in parallel from system design to item integration</text>
+  <line x1="20" y1="72" x2="1130" y2="72" stroke="#2f5fa8" stroke-width="2"/>
+
+  <!-- 4-7 System Design -->
+  <rect x="470" y="90" width="210" height="50" class="box"/>
+  <text x="575" y="120" class="top-lbl">4-7 System Design</text>
+
+  <path d="M470,115 L185,115 L185,160" class="flow"/>
+  <path d="M680,115 L965,115 L965,160" class="flow"/>
+  <path d="M575,140 L575,310" class="flow"/>
+
+  <!-- Hardware track (left column) -->
+  <rect x="20" y="160" width="330" height="60" class="box"/>
+  <text x="185" y="184" class="lbl">5-5 Initiation of product</text>
+  <text x="185" y="198" class="lbl">development at the hardware level</text>
+
+  <path d="M185,220 L185,245" class="flow"/>
+
+  <rect x="20" y="245" width="330" height="55" class="box"/>
+  <text x="185" y="269" class="lbl">5-6 Specification of hardware</text>
+  <text x="185" y="283" class="lbl">safety requirements</text>
+
+  <path d="M185,300 L185,325" class="flow"/>
+
+  <rect x="20" y="325" width="330" height="45" class="box"/>
+  <text x="185" y="352" class="lbl">5-7 Hardware design</text>
+
+  <path d="M185,370 L185,395" class="flow"/>
+
+  <rect x="20" y="395" width="330" height="60" class="box"/>
+  <text x="185" y="419" class="lbl">5-8 Evaluation of the hardware</text>
+  <text x="185" y="433" class="lbl">architectural metrics</text>
+
+  <path d="M185,455 L185,480" class="flow"/>
+
+  <rect x="20" y="480" width="330" height="70" class="box"/>
+  <text x="185" y="503" class="lbl">5-9 Evaluation of safety goal</text>
+  <text x="185" y="517" class="lbl">violations due to random hardware</text>
+  <text x="185" y="531" class="lbl">failures</text>
+
+  <path d="M185,550 L185,575" class="flow"/>
+
+  <rect x="20" y="575" width="330" height="55" class="box"/>
+  <text x="185" y="599" class="lbl">5-10 Hardware integration and</text>
+  <text x="185" y="613" class="lbl">testing</text>
+
+  <path d="M350,602 L450,602 L450,735 L470,735" class="flow"/>
+
+  <!-- Software track (right column) -->
+  <rect x="800" y="160" width="330" height="60" class="box"/>
+  <text x="965" y="184" class="lbl">6-5 Initiation of product</text>
+  <text x="965" y="198" class="lbl">development at the software level</text>
+
+  <path d="M965,220 L965,245" class="flow"/>
+
+  <rect x="800" y="245" width="330" height="55" class="box"/>
+  <text x="965" y="269" class="lbl">6-6 Specification of software</text>
+  <text x="965" y="283" class="lbl">safety requirements</text>
+
+  <path d="M965,300 L965,325" class="flow"/>
+
+  <rect x="800" y="325" width="330" height="50" class="box"/>
+  <text x="965" y="354" class="lbl">6-7 Software architectural design</text>
+
+  <path d="M965,375 L965,400" class="flow"/>
+
+  <rect x="800" y="400" width="330" height="55" class="box"/>
+  <text x="965" y="424" class="lbl">6-8 Software unit design and</text>
+  <text x="965" y="438" class="lbl">implementation</text>
+
+  <path d="M965,455 L965,480" class="flow"/>
+
+  <rect x="800" y="480" width="330" height="45" class="box"/>
+  <text x="965" y="507" class="lbl">6-9 Software unit testing</text>
+
+  <path d="M965,525 L965,550" class="flow"/>
+
+  <rect x="800" y="550" width="330" height="55" class="box"/>
+  <text x="965" y="574" class="lbl">6-10 Software integration and</text>
+  <text x="965" y="588" class="lbl">testing</text>
+
+  <path d="M965,605 L965,630" class="flow"/>
+
+  <rect x="800" y="630" width="330" height="55" class="box"/>
+  <text x="965" y="654" class="lbl">6-11 Verification of software</text>
+  <text x="965" y="668" class="lbl">safety requirements</text>
+
+  <path d="M800,657 L700,657 L700,735 L680,735" class="flow"/>
+
+  <!-- 4-7-3 HSI (center) -->
+  <rect x="400" y="300" width="350" height="150" class="hsi-box"/>
+  <text x="575" y="368" class="hsi-lbl">4-7-3 Hardware software</text>
+  <text x="575" y="386" class="hsi-lbl">interface specification (HSI)</text>
+
+  <path d="M575,450 L575,735" class="flow"/>
+
+  <!-- HSI links: hardware track -->
+  <path d="M350,272 L375,272 L375,330 L400,330" class="hsi-link"/>
+  <path d="M400,345 L375,345 L375,272 L350,272" class="hsi-link-back"/>
+
+  <path d="M350,347 L400,362" class="hsi-link"/>
+  <path d="M400,375 L350,360" class="hsi-link-back"/>
+
+  <path d="M350,425 L375,425 L375,405 L400,405" class="hsi-link"/>
+  <path d="M400,418 L375,418 L375,438 L350,438" class="hsi-link-back"/>
+
+  <!-- HSI links: software track -->
+  <path d="M800,272 L775,272 L775,330 L750,330" class="hsi-link"/>
+  <path d="M750,345 L775,345 L775,272 L800,272" class="hsi-link-back"/>
+
+  <path d="M800,347 L750,362" class="hsi-link"/>
+  <path d="M750,375 L800,360" class="hsi-link-back"/>
+
+  <path d="M800,427 L775,427 L775,405 L750,405" class="hsi-link"/>
+  <path d="M750,418 L775,418 L775,440 L800,440" class="hsi-link-back"/>
+
+  <!-- 4-8 Item integration and testing -->
+  <rect x="470" y="735" width="210" height="50" class="box"/>
+  <text x="575" y="765" class="top-lbl">4-8 Item integration and testing</text>
+</svg>

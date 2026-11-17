@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 620" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .col-title { font-size: 13px; font-weight: 700; fill: #1a2332; }
+    .grp-title { font-size: 11px; font-weight: 700; fill: #1a2332; }
+    .item { font-size: 12px; fill: #33415c; }
+    .col-box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .grp-box { fill: #ffffff; stroke: #6b7a99; stroke-width: 1.1; }
+    .arrow { stroke: #33415c; stroke-width: 1.6; marker-end: url(#arrowhead); fill: none; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1150" height="620" fill="#ffffff"/>
+  <text x="20" y="26" font-size="16" font-weight="700" fill="#1a2332">Freedom from Interference Between SW Elements of Different ASILs</text>
+  <text x="20" y="45" font-size="11.5" fill="#6b7a99">Absence of cascading failures across three interference domains, each with its own manifestations and mitigations (ISO 26262-6:2018, 7-7 / ISO 26262-9:2018, Clause 6)</text>
+
+  <!-- Column 1: Timing & Execution -->
+  <rect x="20" y="65" width="360" height="530" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="200" y="92" text-anchor="middle" class="col-title">Timing &amp; Execution</text>
+
+  <rect x="32" y="108" width="336" height="160" rx="4" class="grp-box"/>
+  <text x="200" y="128" text-anchor="middle" class="grp-title">Manifestations</text>
+  <text x="48" y="149" class="item">- Blocking of execution</text>
+  <text x="48" y="169" class="item">- Deadlocks</text>
+  <text x="48" y="189" class="item">- Livelocks</text>
+  <text x="48" y="209" class="item">- Incorrect allocation of execution time</text>
+  <text x="48" y="229" class="item">- Incorrect synchronization between</text>
+  <text x="58" y="247" class="item">SW elements</text>
+
+  <line x1="200" y1="268" x2="200" y2="286" class="arrow"/>
+
+  <rect x="32" y="290" width="336" height="115" rx="4" class="grp-box"/>
+  <text x="200" y="310" text-anchor="middle" class="grp-title">Mitigations</text>
+  <text x="48" y="331" class="item">- Alive supervision</text>
+  <text x="48" y="351" class="item">- Deadline monitoring</text>
+  <text x="48" y="371" class="item">- Control-flow monitoring</text>
+
+  <text x="32" y="560" class="item" font-style="italic" fill="#45526b">Example: a watchdog that expects a</text>
+  <text x="32" y="578" class="item" font-style="italic" fill="#45526b">periodic "alive" signal within a deadline</text>
+
+  <!-- Column 2: Memory -->
+  <rect x="395" y="65" width="360" height="530" rx="8" fill="#f3f7f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="575" y="92" text-anchor="middle" class="col-title">Memory</text>
+
+  <rect x="407" y="108" width="336" height="115" rx="4" class="grp-box"/>
+  <text x="575" y="128" text-anchor="middle" class="grp-title">Manifestations</text>
+  <text x="423" y="149" class="item">- Corruption of content</text>
+  <text x="423" y="169" class="item">- Read/write access to memory</text>
+  <text x="433" y="187" class="item">allocated to another SW element</text>
+  <text x="423" y="207" class="item">- Stack overflow or underflow</text>
+
+  <line x1="575" y1="227" x2="575" y2="245" class="arrow"/>
+
+  <rect x="407" y="249" width="336" height="240" rx="4" class="grp-box"/>
+  <text x="575" y="269" text-anchor="middle" class="grp-title">Mitigations</text>
+  <text x="423" y="290" class="item">- Memory protection (HW / MPU)</text>
+  <text x="423" y="310" class="item">- Parity bits</text>
+  <text x="423" y="330" class="item">- Error-correction code (ECC)</text>
+  <text x="423" y="350" class="item">- Cyclic redundancy check (CRC)</text>
+  <text x="423" y="370" class="item">- Redundant storage</text>
+  <text x="423" y="390" class="item">- Restricted access to memory</text>
+  <text x="423" y="410" class="item">- Static analysis of memory-accessing SW</text>
+  <text x="423" y="430" class="item">- Static allocation</text>
+
+  <text x="407" y="560" class="item" font-style="italic" fill="#45526b">Example: an MPU that traps one</text>
+  <text x="407" y="578" class="item" font-style="italic" fill="#45526b">partition's writes into another's RAM</text>
+
+  <!-- Column 3: Exchange of Information -->
+  <rect x="770" y="65" width="360" height="530" rx="8" fill="#f7f1f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="950" y="92" text-anchor="middle" class="col-title">Exchange of Information</text>
+
+  <rect x="782" y="108" width="336" height="250" rx="4" class="grp-box"/>
+  <text x="950" y="128" text-anchor="middle" class="grp-title">Manifestations</text>
+  <text x="798" y="149" class="item">- Repetition, loss or delay of information</text>
+  <text x="798" y="169" class="item">- Insertion of information</text>
+  <text x="798" y="189" class="item">- Masquerade or incorrect addressing</text>
+  <text x="798" y="209" class="item">- Incorrect sequence of information</text>
+  <text x="798" y="229" class="item">- Corruption of information</text>
+  <text x="798" y="249" class="item">- Asymmetric info sent to multiple</text>
+  <text x="808" y="267" class="item">receivers, or received by only a subset</text>
+  <text x="798" y="287" class="item">- Blocking access to a comms channel</text>
+
+  <line x1="950" y1="358" x2="950" y2="376" class="arrow"/>
+
+  <rect x="782" y="380" width="336" height="135" rx="4" class="grp-box"/>
+  <text x="950" y="400" text-anchor="middle" class="grp-title">Mitigations</text>
+  <text x="798" y="421" class="item">- Communication protocols</text>
+  <text x="798" y="441" class="item">- Identifiers, sequence numbers</text>
+  <text x="798" y="461" class="item">- Keep-alive messages, alive counters</text>
+  <text x="798" y="481" class="item">- Error detection / correction codes</text>
+
+  <text x="782" y="560" class="item" font-style="italic" fill="#45526b">Example: a rolling counter that catches</text>
+  <text x="782" y="578" class="item" font-style="italic" fill="#45526b">a dropped or replayed CAN frame</text>
+</svg>

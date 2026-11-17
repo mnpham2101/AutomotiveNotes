@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 645" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #1a2332; }
+    .box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .divider { stroke: #33415c; stroke-width: 1; }
+    .tag-text { font-size: 16px; font-weight: 600; fill: #33415c; text-anchor: middle; }
+    .content-text { font-size: 16px; fill: #1a2332; text-anchor: middle; }
+    .dots { font-size: 22px; font-weight: 700; fill: #33415c; text-anchor: middle; }
+    .arrow { stroke: #33415c; stroke-width: 1.6; marker-end: url(#arrowhead); fill: none; }
+    .footnote { font-size: 14px; fill: #8592ab; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="645" fill="#ffffff"/>
+  <text x="20" y="28" class="title">Safety-Requirement Hierarchy: Safety Goals to Functional Safety Requirements</text>
+
+  <!-- Results of HARA -->
+  <rect x="560" y="55" width="380" height="70" class="box"/>
+  <line x1="620" y1="55" x2="620" y2="125" class="divider"/>
+  <text x="590" y="95" class="tag-text">3-6</text>
+  <text x="780" y="85" class="content-text">Results of hazard analysis</text>
+  <text x="780" y="107" class="content-text">and risk assessment</text>
+
+  <!-- branch from HARA to the three safety goals -->
+  <line x1="750" y1="125" x2="750" y2="165" class="arrow" marker-end="none"/>
+  <polyline points="170,165 750,165 1150,165" fill="none" stroke="#33415c" stroke-width="1.6"/>
+  <line x1="170" y1="165" x2="170" y2="213" class="arrow"/>
+  <line x1="650" y1="165" x2="650" y2="213" class="arrow"/>
+  <line x1="1150" y1="165" x2="1150" y2="213" class="arrow"/>
+
+  <!-- Safety goal A -->
+  <rect x="20" y="215" width="300" height="80" class="box"/>
+  <line x1="80" y1="215" x2="80" y2="295" class="divider"/>
+  <line x1="80" y1="255" x2="320" y2="255" class="divider"/>
+  <text x="50" y="259" class="tag-text">3-6</text>
+  <text x="200" y="240" class="content-text">Safety goal A</text>
+  <text x="200" y="280" class="content-text">Assigned ASIL</text>
+
+  <!-- Safety goal B -->
+  <rect x="500" y="215" width="300" height="80" class="box"/>
+  <line x1="560" y1="215" x2="560" y2="295" class="divider"/>
+  <line x1="560" y1="255" x2="800" y2="255" class="divider"/>
+  <text x="530" y="259" class="tag-text">3-6</text>
+  <text x="680" y="240" class="content-text">Safety goal B</text>
+  <text x="680" y="280" class="content-text">Assigned ASIL</text>
+
+  <text x="900" y="262" class="dots">...</text>
+
+  <!-- Safety goal N -->
+  <rect x="1000" y="215" width="300" height="80" class="box"/>
+  <line x1="1060" y1="215" x2="1060" y2="295" class="divider"/>
+  <line x1="1060" y1="255" x2="1300" y2="255" class="divider"/>
+  <text x="1030" y="259" class="tag-text">3-6</text>
+  <text x="1180" y="240" class="content-text">Safety goal N</text>
+  <text x="1180" y="280" class="content-text">Assigned ASIL</text>
+
+  <!-- Safety goal A -> FSR1 -->
+  <line x1="170" y1="295" x2="150" y2="453" class="arrow"/>
+
+  <!-- Safety goal B -> FSR1 and FSR2 -->
+  <line x1="650" y1="295" x2="650" y2="335" stroke="#33415c" stroke-width="1.6" fill="none"/>
+  <polyline points="150,335 650,335" fill="none" stroke="#33415c" stroke-width="1.6"/>
+  <line x1="150" y1="335" x2="150" y2="453" class="arrow"/>
+  <line x1="650" y1="335" x2="680" y2="453" class="arrow"/>
+
+  <!-- Safety goal N -> FSR3 -->
+  <line x1="1150" y1="295" x2="1180" y2="453" class="arrow"/>
+
+  <!-- Functional safety requirement 1 -->
+  <rect x="20" y="455" width="320" height="110" class="box"/>
+  <line x1="80" y1="455" x2="80" y2="565" class="divider"/>
+  <line x1="80" y1="505" x2="340" y2="505" class="divider"/>
+  <line x1="210" y1="505" x2="210" y2="565" class="divider"/>
+  <text x="50" y="515" class="tag-text">3-7</text>
+  <text x="210" y="485" class="content-text">Functional safety requirement</text>
+  <text x="145" y="540" class="content-text">Assigned ASIL</text>
+  <text x="275" y="530" class="content-text">Allocated</text>
+  <text x="275" y="550" class="content-text">to element</text>
+
+  <!-- Functional safety requirement 2 -->
+  <rect x="520" y="455" width="320" height="110" class="box"/>
+  <line x1="580" y1="455" x2="580" y2="565" class="divider"/>
+  <line x1="580" y1="505" x2="840" y2="505" class="divider"/>
+  <line x1="710" y1="505" x2="710" y2="565" class="divider"/>
+  <text x="550" y="515" class="tag-text">3-7</text>
+  <text x="710" y="485" class="content-text">Functional safety requirement</text>
+  <text x="645" y="540" class="content-text">Assigned ASIL</text>
+  <text x="775" y="530" class="content-text">Allocated</text>
+  <text x="775" y="550" class="content-text">to element</text>
+
+  <!-- Functional safety requirement 3 -->
+  <rect x="1020" y="455" width="320" height="110" class="box"/>
+  <line x1="1080" y1="455" x2="1080" y2="565" class="divider"/>
+  <line x1="1080" y1="505" x2="1340" y2="505" class="divider"/>
+  <line x1="1210" y1="505" x2="1210" y2="565" class="divider"/>
+  <text x="1050" y="515" class="tag-text">3-7</text>
+  <text x="1210" y="485" class="content-text">Functional safety requirement</text>
+  <text x="1145" y="540" class="content-text">Assigned ASIL</text>
+  <text x="1275" y="530" class="content-text">Allocated</text>
+  <text x="1275" y="550" class="content-text">to element</text>
+
+  <text x="20" y="600" class="footnote">Adapted from ISO 26262-8:2018, Clause 6.2, Figure 2 - one FSR can satisfy several safety goals (goals A+B into FSR1),</text>
+  <text x="20" y="618" class="footnote">and one safety goal can spawn several FSRs (goal B into FSR1 and FSR2); each FSR inherits an ASIL and an allocation.</text>
+</svg>

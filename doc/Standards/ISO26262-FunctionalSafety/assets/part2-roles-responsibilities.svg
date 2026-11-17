@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .title { font-size: 20px; font-weight: 700; fill: #1a2332; }
+    .role-box { fill: #eaf7ef; stroke: #2f5d3a; stroke-width: 1.4; }
+    .role-title { font-size: 16px; font-weight: 600; fill: #1a2332; text-anchor: middle; }
+    .callout-box { fill: #fbeaf7; stroke: #7a2f5d; stroke-width: 1.2; }
+    .callout-heading { font-size: 15px; font-weight: 700; fill: #5d2f47; }
+    .callout-item { font-size: 14px; fill: #33202b; }
+    .arrow { stroke: #33415c; stroke-width: 1.8; marker-end: url(#arrowhead); fill: none; }
+    .arrow-both { stroke: #33415c; stroke-width: 1.8; marker-end: url(#arrowhead); marker-start: url(#arrowhead-rev); fill: none; }
+    .annot-arrow { stroke: #7a2f5d; stroke-width: 1.4; marker-end: url(#arrowhead-pink); fill: none; }
+    .footnote { font-size: 14px; fill: #8592ab; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#33415c"/>
+    </marker>
+    <marker id="arrowhead-rev" markerWidth="10" markerHeight="10" refX="3" refY="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#33415c"/>
+    </marker>
+    <marker id="arrowhead-pink" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#7a2f5d"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1500" height="500" fill="#ffffff"/>
+  <text x="20" y="28" class="title">Roles and Responsibilities in Safety Management (Clause 6.4.2)</text>
+
+  <!-- central chain -->
+  <rect x="640" y="55" width="220" height="50" rx="6" class="role-box"/>
+  <text x="750" y="86" class="role-title">Project Manager</text>
+
+  <line x1="750" y1="105" x2="750" y2="158" class="arrow-both"/>
+
+  <rect x="640" y="160" width="220" height="50" rx="6" class="role-box"/>
+  <text x="750" y="191" class="role-title">Safety Manager</text>
+
+  <line x1="750" y1="210" x2="750" y2="263" class="arrow-both"/>
+
+  <rect x="640" y="265" width="220" height="50" rx="6" class="role-box"/>
+  <text x="750" y="296" class="role-title">Safety Team</text>
+
+  <!-- fan to engineers -->
+  <line x1="750" y1="315" x2="500" y2="398" class="arrow"/>
+  <line x1="750" y1="315" x2="750" y2="398" class="arrow"/>
+  <line x1="750" y1="315" x2="1000" y2="398" class="arrow"/>
+
+  <rect x="390" y="400" width="220" height="50" rx="6" class="role-box"/>
+  <text x="500" y="431" class="role-title">Safety Engineer</text>
+
+  <rect x="640" y="400" width="220" height="50" rx="6" class="role-box"/>
+  <text x="750" y="431" class="role-title">Safety Engineer</text>
+
+  <rect x="890" y="400" width="220" height="50" rx="6" class="role-box"/>
+  <text x="1000" y="431" class="role-title">Safety Engineer</text>
+
+  <!-- Project Manager responsibilities -->
+  <line x1="860" y1="80" x2="915" y2="80" class="annot-arrow"/>
+  <rect x="920" y="40" width="480" height="150" rx="6" class="callout-box"/>
+  <text x="936" y="64" class="callout-heading">Project Manager - responsibilities</text>
+  <text x="936" y="88" class="callout-item">• Ensures safety activities are performed</text>
+  <text x="936" y="108" class="callout-item">• Ensures ISO 26262 compliance is achieved</text>
+  <text x="936" y="128" class="callout-item">• Ensures resources are allocated</text>
+  <text x="952" y="148" class="callout-item">for safety activities</text>
+  <text x="936" y="168" class="callout-item">• Appoints the Safety Manager</text>
+
+  <!-- Safety Manager responsibilities -->
+  <line x1="380" y1="300" x2="638" y2="188" class="annot-arrow"/>
+  <rect x="20" y="100" width="360" height="260" rx="6" class="callout-box"/>
+  <text x="36" y="124" class="callout-heading">Safety Manager - responsibilities</text>
+  <text x="36" y="148" class="callout-item">• Owns functional safety management (FSM)</text>
+  <text x="36" y="168" class="callout-item">• Creates, maintains and tracks</text>
+  <text x="52" y="188" class="callout-item">the safety plan</text>
+  <text x="36" y="208" class="callout-item">• Plans safety activities per</text>
+  <text x="52" y="228" class="callout-item">lifecycle sub-phase</text>
+  <text x="36" y="248" class="callout-item">• Monitors progress of safety activities</text>
+  <text x="36" y="268" class="callout-item">• Maintains safety records</text>
+  <text x="36" y="288" class="callout-item">• Ensures timely, professional</text>
+  <text x="52" y="308" class="callout-item">safety deliverables</text>
+  <text x="36" y="328" class="callout-item">• Assigns safety activities to the team</text>
+
+  <text x="20" y="470" class="footnote">Safety Team / Safety Engineer are an illustrative breakdown - only Project Manager and Safety Manager</text>
+  <text x="20" y="490" class="footnote">are named roles in the clause text itself (Clause 6.4.2.1-6.4.2.4).</text>
+</svg>

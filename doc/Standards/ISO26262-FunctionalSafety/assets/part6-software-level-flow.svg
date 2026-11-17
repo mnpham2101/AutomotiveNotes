@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1864 420" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .col-title { font-size: 12.5px; font-weight: 700; fill: #1a2332; }
+    .clause-tag { font-size: 10.5px; fill: #6b7a99; font-style: italic; }
+    .item-text { font-size: 11px; fill: #33415c; }
+    .col-box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .header { font-size: 10.3px; font-weight: 600; }
+    .sub { font-size: 9.2px; fill: #45526b; }
+    .arrow { stroke: #33415c; stroke-width: 2; marker-end: url(#arrowhead); fill: none; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1864" height="420" fill="#ffffff"/>
+  <text x="20" y="26" font-size="16" font-weight="700" fill="#1a2332">Product Development at the Software Level (ISO 26262-6:2018)</text>
+  <text x="20" y="45" font-size="11.5" fill="#6b7a99">Seven clauses; unlike Part 5, none are dedicated to quantitative evaluation - software failures are treated as systematic, not random</text>
+
+  <!-- Column 1: General topics -->
+  <rect x="20" y="65" width="240" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="140" y="92" text-anchor="middle" class="col-title">General Topics</text>
+  <text x="140" y="108" text-anchor="middle" class="clause-tag">Clause 5 (6-5)</text>
+
+  <rect x="28" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="140" y="136" text-anchor="middle" class="header" fill="#1a2332">Define SW dev. lifecycle,</text>
+  <text x="140" y="149" text-anchor="middle" class="sub">coding/modelling guidelines</text>
+
+  <rect x="28" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="140" y="179" text-anchor="middle" class="header" fill="#1a2332">Select language, tools, paradigm</text>
+
+  <rect x="28" y="194" width="224" height="30" rx="4" class="col-box"/>
+  <text x="140" y="213" text-anchor="middle" class="header" fill="#1a2332">Plan requirement analysis</text>
+
+  <text x="28" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: scope the SW-level</text>
+  <text x="28" y="345" class="item-text" font-style="italic" fill="#45526b">activities before Clauses 6-11</text>
+  <text x="28" y="372" class="clause-tag">Work product: SW dev.</text>
+  <text x="28" y="385" class="clause-tag">environment documentation</text>
+
+  <line x1="260" y1="225" x2="278" y2="225" class="arrow"/>
+
+  <!-- Column 2: SW Safety Requirements -->
+  <rect x="284" y="65" width="240" height="320" rx="8" fill="#f3f7f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="404" y="92" text-anchor="middle" class="col-title">SW Safety Requirements</text>
+  <text x="404" y="108" text-anchor="middle" class="clause-tag">Clause 6 (6-6)</text>
+
+  <rect x="292" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="404" y="136" text-anchor="middle" class="header" fill="#1a2332">Derived from TSRs allocated</text>
+  <text x="404" y="149" text-anchor="middle" class="sub">to software, or their enablers</text>
+
+  <rect x="292" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="404" y="179" text-anchor="middle" class="header" fill="#1a2332">7 functional categories</text>
+
+  <rect x="292" y="194" width="224" height="36" rx="4" class="col-box"/>
+  <text x="404" y="210" text-anchor="middle" class="header" fill="#1a2332">Attributes: ASIL, modes, timing,</text>
+  <text x="404" y="223" text-anchor="middle" class="sub">interfaces, self-monitoring</text>
+
+  <rect x="292" y="234" width="224" height="30" rx="4" class="col-box"/>
+  <text x="404" y="253" text-anchor="middle" class="header" fill="#1a2332">Hierarchical, traceable, complete</text>
+
+  <text x="292" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: specify &amp; verify SW</text>
+  <text x="292" y="345" class="item-text" font-style="italic" fill="#45526b">safety reqs consistent with TSC</text>
+  <text x="292" y="372" class="clause-tag">Work product: SW safety</text>
+  <text x="292" y="385" class="clause-tag">requirements specification</text>
+
+  <line x1="524" y1="225" x2="542" y2="225" class="arrow"/>
+
+  <!-- Column 3: SW Architectural Design -->
+  <rect x="548" y="65" width="240" height="320" rx="8" fill="#f7f1f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="668" y="92" text-anchor="middle" class="col-title">SW Architectural Design</text>
+  <text x="668" y="108" text-anchor="middle" class="clause-tag">Clause 7 (6-7)</text>
+
+  <rect x="556" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="668" y="136" text-anchor="middle" class="header" fill="#1a2332">Hierarchical structure: static +</text>
+  <text x="668" y="149" text-anchor="middle" class="sub">dynamic aspects, unit-level down</text>
+
+  <rect x="556" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="668" y="179" text-anchor="middle" class="header" fill="#1a2332">Modularity, encapsulation</text>
+
+  <rect x="556" y="194" width="224" height="36" rx="4" class="col-box"/>
+  <text x="668" y="210" text-anchor="middle" class="header" fill="#1a2332">Freedom from interference /</text>
+  <text x="668" y="223" text-anchor="middle" class="sub">SW partitioning (ASIL D: HW-backed)</text>
+
+  <rect x="556" y="234" width="224" height="30" rx="4" class="col-box"/>
+  <text x="668" y="253" text-anchor="middle" class="header" fill="#1a2332">Error-handling safety mechanisms</text>
+
+  <text x="556" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: an architecture that</text>
+  <text x="556" y="345" class="item-text" font-style="italic" fill="#45526b">satisfies SW safety reqs at ASIL</text>
+  <text x="556" y="372" class="clause-tag">Work product: SW architectural</text>
+  <text x="556" y="385" class="clause-tag">design specification</text>
+
+  <line x1="788" y1="225" x2="806" y2="225" class="arrow"/>
+
+  <!-- Column 4: SW Unit Design and Implementation -->
+  <rect x="812" y="65" width="240" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="932" y="92" text-anchor="middle" class="col-title">SW Unit Design &amp; Impl.</text>
+  <text x="932" y="108" text-anchor="middle" class="clause-tag">Clause 8 (6-8)</text>
+
+  <rect x="820" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="932" y="136" text-anchor="middle" class="header" fill="#1a2332">Unit design per arch. design +</text>
+  <text x="932" y="149" text-anchor="middle" class="sub">allocated SW safety reqs</text>
+
+  <rect x="820" y="160" width="224" height="36" rx="4" class="col-box"/>
+  <text x="932" y="176" text-anchor="middle" class="header" fill="#1a2332">Design principles: 1 entry/exit,</text>
+  <text x="932" y="189" text-anchor="middle" class="sub">no recursion, strong typing</text>
+
+  <rect x="820" y="200" width="224" height="36" rx="4" class="col-box"/>
+  <text x="932" y="216" text-anchor="middle" class="header" fill="#1a2332">Resource ctrl, scheduling,</text>
+  <text x="932" y="229" text-anchor="middle" class="sub">plausibility checks</text>
+
+  <text x="820" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: a unit design and</text>
+  <text x="820" y="345" class="item-text" font-style="italic" fill="#45526b">implementation supporting verification</text>
+  <text x="820" y="372" class="clause-tag">Work products: SW unit design</text>
+  <text x="820" y="385" class="clause-tag">spec, unit implementation</text>
+
+  <line x1="1052" y1="225" x2="1070" y2="225" class="arrow"/>
+
+  <!-- Column 5: SW Unit Verification -->
+  <rect x="1076" y="65" width="240" height="320" rx="8" fill="#f3f7f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="1196" y="92" text-anchor="middle" class="col-title">SW Unit Verification</text>
+  <text x="1196" y="108" text-anchor="middle" class="clause-tag">Clause 9 (6-9)</text>
+
+  <rect x="1084" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="1196" y="136" text-anchor="middle" class="header" fill="#1a2332">Walk-through, control/data-flow,</text>
+  <text x="1196" y="149" text-anchor="middle" class="sub">static code analysis</text>
+
+  <rect x="1084" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1196" y="179" text-anchor="middle" class="header" fill="#1a2332">Requirements-based, fault-injection test</text>
+
+  <rect x="1084" y="194" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1196" y="213" text-anchor="middle" class="header" fill="#1a2332">Statement/branch/MC-DC coverage</text>
+
+  <text x="1084" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: unit design/impl.</text>
+  <text x="1084" y="345" class="item-text" font-style="italic" fill="#45526b">fulfils allocated SW reqs at ASIL</text>
+  <text x="1084" y="372" class="clause-tag">Work product: SW unit</text>
+  <text x="1084" y="385" class="clause-tag">verification report</text>
+
+  <line x1="1316" y1="225" x2="1334" y2="225" class="arrow"/>
+
+  <!-- Column 6: SW Integration and Verification -->
+  <rect x="1340" y="65" width="240" height="320" rx="8" fill="#f7f1f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="1460" y="92" text-anchor="middle" class="col-title">SW Integration &amp; Verification</text>
+  <text x="1460" y="108" text-anchor="middle" class="clause-tag">Clause 10 (6-10)</text>
+
+  <rect x="1348" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="1460" y="136" text-anchor="middle" class="header" fill="#1a2332">Integrate SW elements into</text>
+  <text x="1460" y="149" text-anchor="middle" class="sub">the fully-integrated embedded SW</text>
+
+  <rect x="1348" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1460" y="179" text-anchor="middle" class="header" fill="#1a2332">Compliance vs. arch. design &amp; HSI</text>
+
+  <rect x="1348" y="194" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1460" y="213" text-anchor="middle" class="header" fill="#1a2332">Function &amp; call coverage</text>
+
+  <text x="1348" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: integrated SW fulfils</text>
+  <text x="1348" y="345" class="item-text" font-style="italic" fill="#45526b">its reqs per the arch. design</text>
+  <text x="1348" y="372" class="clause-tag">Work product: SW integration</text>
+  <text x="1348" y="385" class="clause-tag">verification report</text>
+
+  <line x1="1580" y1="225" x2="1598" y2="225" class="arrow"/>
+
+  <!-- Column 7: Verification of SW Safety Requirements -->
+  <rect x="1604" y="65" width="240" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="1724" y="92" text-anchor="middle" class="col-title">Verif. of SW Safety Reqs</text>
+  <text x="1724" y="108" text-anchor="middle" class="clause-tag">Clause 11 (6-11)</text>
+
+  <rect x="1612" y="120" width="224" height="36" rx="4" class="col-box"/>
+  <text x="1724" y="136" text-anchor="middle" class="header" fill="#1a2332">Executed on target HW: HIL,</text>
+  <text x="1724" y="149" text-anchor="middle" class="sub">ECU networks, lab-car, vehicle</text>
+
+  <rect x="1612" y="160" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1724" y="179" text-anchor="middle" class="header" fill="#1a2332">Coverage of SW safety reqs</text>
+
+  <rect x="1612" y="194" width="224" height="30" rx="4" class="col-box"/>
+  <text x="1724" y="213" text-anchor="middle" class="header" fill="#1a2332">Compliance vs. expected results</text>
+
+  <text x="1612" y="330" class="item-text" font-style="italic" fill="#45526b">Objective: embedded SW fulfils</text>
+  <text x="1612" y="345" class="item-text" font-style="italic" fill="#45526b">SW safety reqs in the target env.</text>
+  <text x="1612" y="372" class="clause-tag">Work product: SW safety reqs</text>
+  <text x="1612" y="385" class="clause-tag">verification report</text>
+</svg>

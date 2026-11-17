@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 420" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .col-title { font-size: 14px; font-weight: 700; fill: #1a2332; }
+    .clause-tag { font-size: 11px; fill: #6b7a99; font-style: italic; }
+    .item-text { font-size: 11.5px; fill: #33415c; }
+    .col-box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .header { font-size: 12px; font-weight: 600; }
+    .arrow { stroke: #33415c; stroke-width: 2; marker-end: url(#arrowhead); fill: none; }
+    .bullet { fill: #6b7a99; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1040" height="420" fill="#ffffff"/>
+  <text x="20" y="26" font-size="16" font-weight="700" fill="#1a2332">The Concept Phase (ISO 26262-3:2018)</text>
+  <text x="20" y="45" font-size="11.5" fill="#6b7a99">Three sub-phases, run strictly in sequence — each is the direct input to the next</text>
+
+  <!-- Column 1: Item Definition -->
+  <rect x="20" y="65" width="300" height="320" rx="8" fill="#eef1f7" stroke="#33415c" stroke-width="1.4"/>
+  <text x="170" y="92" text-anchor="middle" class="col-title">Item Definition</text>
+  <text x="170" y="110" text-anchor="middle" class="clause-tag">Clause 5 (3-5)</text>
+
+  <rect x="36" y="122" width="268" height="30" rx="4" class="col-box"/>
+  <text x="170" y="141" text-anchor="middle" class="header" fill="#1a2332">Scope: elements &amp; item boundary</text>
+
+  <rect x="36" y="158" width="268" height="30" rx="4" class="col-box"/>
+  <text x="170" y="177" text-anchor="middle" class="header" fill="#1a2332">Functional &amp; legal requirements</text>
+
+  <rect x="36" y="194" width="268" height="30" rx="4" class="col-box"/>
+  <text x="170" y="213" text-anchor="middle" class="header" fill="#1a2332">Operating conditions / modes</text>
+
+  <rect x="36" y="230" width="268" height="30" rx="4" class="col-box"/>
+  <text x="170" y="249" text-anchor="middle" class="header" fill="#1a2332">Requirements to/from other items</text>
+
+  <rect x="36" y="266" width="268" height="30" rx="4" class="col-box"/>
+  <text x="170" y="285" text-anchor="middle" class="header" fill="#1a2332">Actuator capabilities</text>
+
+  <text x="36" y="325" class="item-text" font-style="italic" fill="#45526b">Objective: enough detail for HARA and</text>
+  <text x="36" y="341" class="item-text" font-style="italic" fill="#45526b">the functional safety concept to proceed</text>
+  <text x="36" y="367" class="clause-tag">Work product: item definition (5.5.1)</text>
+
+  <line x1="320" y1="225" x2="358" y2="225" class="arrow"/>
+
+  <!-- Column 2: HARA -->
+  <rect x="358" y="65" width="300" height="320" rx="8" fill="#f3f7f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="508" y="92" text-anchor="middle" class="col-title">Hazard Analysis &amp;</text>
+  <text x="508" y="108" text-anchor="middle" class="col-title">Risk Assessment</text>
+  <text x="508" y="126" text-anchor="middle" class="clause-tag">Clause 6 (3-6)</text>
+
+  <rect x="374" y="138" width="268" height="30" rx="4" class="col-box"/>
+  <text x="508" y="157" text-anchor="middle" class="header" fill="#1a2332">Situation analysis &amp; hazard ID</text>
+
+  <rect x="374" y="174" width="268" height="40" rx="4" class="col-box"/>
+  <text x="508" y="192" text-anchor="middle" class="header" fill="#1a2332">Classify: Severity × Exposure ×</text>
+  <text x="508" y="205" text-anchor="middle" font-size="10" fill="#45526b">Controllability</text>
+
+  <rect x="374" y="222" width="268" height="30" rx="4" class="col-box"/>
+  <text x="508" y="241" text-anchor="middle" class="header" fill="#1a2332">ASIL determination (Table 4)</text>
+
+  <rect x="374" y="258" width="268" height="30" rx="4" class="col-box"/>
+  <text x="508" y="277" text-anchor="middle" class="header" fill="#1a2332">Safety goal determination</text>
+
+  <rect x="374" y="294" width="268" height="30" rx="4" class="col-box"/>
+  <text x="508" y="313" text-anchor="middle" class="header" fill="#1a2332">Verification (per Part 8, Cl. 9)</text>
+
+  <text x="374" y="342" class="item-text" font-style="italic" fill="#45526b">Objective: safety goals + ASILs that</text>
+  <text x="374" y="357" class="item-text" font-style="italic" fill="#45526b">avoid unreasonable risk</text>
+  <text x="374" y="373" class="clause-tag">Work products: HARA report (6.5.1),</text>
+  <text x="374" y="387" class="clause-tag">verification report (6.5.2)</text>
+
+  <line x1="658" y1="225" x2="696" y2="225" class="arrow"/>
+
+  <!-- Column 3: FSC -->
+  <rect x="696" y="65" width="324" height="320" rx="8" fill="#f7f1f0" stroke="#33415c" stroke-width="1.4"/>
+  <text x="858" y="92" text-anchor="middle" class="col-title">Functional Safety Concept</text>
+  <text x="858" y="110" text-anchor="middle" class="clause-tag">Clause 7 (3-7)</text>
+
+  <rect x="712" y="122" width="292" height="30" rx="4" class="col-box"/>
+  <text x="858" y="141" text-anchor="middle" class="header" fill="#1a2332">Derive functional safety requirements</text>
+
+  <rect x="712" y="158" width="292" height="40" rx="4" class="col-box"/>
+  <text x="858" y="176" text-anchor="middle" class="header" fill="#1a2332">Strategies: avoidance, detection, safe</text>
+  <text x="858" y="189" text-anchor="middle" font-size="9.5" fill="#45526b">state, tolerance, degradation, warnings</text>
+
+  <rect x="712" y="206" width="292" height="30" rx="4" class="col-box"/>
+  <text x="858" y="225" text-anchor="middle" class="header" fill="#1a2332">FTTI / safe state / EOTI parameters</text>
+
+  <rect x="712" y="242" width="292" height="30" rx="4" class="col-box"/>
+  <text x="858" y="261" text-anchor="middle" class="header" fill="#1a2332">Allocate FSRs to architecture</text>
+
+  <rect x="712" y="278" width="292" height="30" rx="4" class="col-box"/>
+  <text x="858" y="297" text-anchor="middle" class="header" fill="#1a2332">Safety validation criteria</text>
+
+  <rect x="712" y="314" width="292" height="30" rx="4" class="col-box"/>
+  <text x="858" y="333" text-anchor="middle" class="header" fill="#1a2332">Verification (per Part 8, Cl. 9)</text>
+
+  <text x="712" y="358" class="item-text" font-style="italic" fill="#45526b">Objective: FSRs that achieve the safety</text>
+  <text x="712" y="373" class="item-text" font-style="italic" fill="#45526b">goals, allocated to preliminary architecture</text>
+  <text x="712" y="389" class="clause-tag">Work products: FSC (7.5.1), verification report (7.5.2)</text>
+</svg>

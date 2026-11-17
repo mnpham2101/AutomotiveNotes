@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 460" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .band-label { font-size: 13px; font-weight: 600; fill: #33415c; }
+    .box { fill: #ffffff; stroke: #33415c; stroke-width: 1.2; }
+    .box-title { font-size: 12.5px; font-weight: 600; fill: #1a2332; }
+    .box-sub { font-size: 10.5px; fill: #45526b; }
+    .clause-tag { font-size: 10px; fill: #6b7a99; font-style: italic; }
+    .arrow { stroke: #33415c; stroke-width: 1.6; marker-end: url(#arrowhead); fill: none; }
+    .feedback { stroke: #b5482a; stroke-width: 1.4; stroke-dasharray: 5 3; marker-end: url(#arrowhead-red); fill: none; }
+    .feedback-label { font-size: 10.5px; fill: #b5482a; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#33415c"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#b5482a"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1040" height="460" fill="#ffffff"/>
+  <text x="20" y="24" font-size="15" font-weight="700" fill="#1a2332">Functional Safety Management across the Safety Lifecycle (ISO 26262-2:2018)</text>
+
+  <!-- Clause 5 band: Overall safety management, project-independent, spans everything -->
+  <rect x="20" y="45" width="1000" height="60" rx="6" fill="#eef1f7" stroke="#33415c" stroke-width="1.2"/>
+  <text x="34" y="63" class="band-label">Clause 5 — Overall Safety Management (project-independent)</text>
+  <text x="34" y="80" class="box-sub">Safety culture · anomaly management · competence management · QMS (IATF 16949 + ISO 9001) · project-independent tailoring</text>
+  <text x="34" y="95" class="box-sub">Applies continuously — not tied to any one item development</text>
+
+  <!-- Clause 6 band -->
+  <rect x="20" y="120" width="700" height="215" rx="6" fill="#f3f7f0" stroke="#33415c" stroke-width="1.2"/>
+  <text x="34" y="138" class="band-label">Clause 6 — Project-Dependent Safety Management</text>
+
+  <!-- Concept phase boxes -->
+  <rect x="34" y="155" width="130" height="60" rx="4" class="box"/>
+  <text x="99" y="173" text-anchor="middle" class="box-title">Item Definition</text>
+  <text x="99" y="188" text-anchor="middle" class="clause-tag">3-5</text>
+  <text x="99" y="203" text-anchor="middle" class="box-sub">(concept phase)</text>
+
+  <line x1="164" y1="185" x2="188" y2="185" class="arrow"/>
+
+  <rect x="188" y="155" width="130" height="60" rx="4" class="box"/>
+  <text x="253" y="173" text-anchor="middle" class="box-title">Hazard Analysis</text>
+  <text x="253" y="187" text-anchor="middle" class="box-title">&amp; Risk Assessment</text>
+  <text x="253" y="202" text-anchor="middle" class="clause-tag">3-6</text>
+
+  <line x1="318" y1="185" x2="342" y2="185" class="arrow"/>
+
+  <rect x="342" y="155" width="130" height="60" rx="4" class="box"/>
+  <text x="407" y="173" text-anchor="middle" class="box-title">Functional Safety</text>
+  <text x="407" y="187" text-anchor="middle" class="box-title">Concept</text>
+  <text x="407" y="202" text-anchor="middle" class="clause-tag">3-7</text>
+
+  <line x1="472" y1="185" x2="496" y2="185" class="arrow"/>
+
+  <rect x="496" y="155" width="208" height="60" rx="4" class="box"/>
+  <text x="600" y="171" text-anchor="middle" class="box-title">Product Development</text>
+  <text x="600" y="185" text-anchor="middle" class="box-sub">System (4) · Hardware (5) · Software (6)</text>
+  <text x="600" y="200" text-anchor="middle" class="clause-tag">Parts 4-6</text>
+
+  <line x1="600" y1="215" x2="600" y2="240" stroke="#33415c" stroke-width="1.2" fill="none"/>
+  <line x1="600" y1="240" x2="169" y2="240" stroke="#33415c" stroke-width="1.2" fill="none"/>
+  <line x1="169" y1="240" x2="169" y2="255" class="arrow"/>
+
+  <!-- Confirmation + release -->
+  <rect x="34" y="255" width="270" height="60" rx="4" class="box"/>
+  <text x="169" y="273" text-anchor="middle" class="box-title">Confirmation Measures</text>
+  <text x="169" y="288" text-anchor="middle" class="box-sub">Confirmation reviews · FS audit · FS assessment</text>
+  <text x="169" y="303" text-anchor="middle" class="clause-tag">6.4.9 - 6.4.12</text>
+
+  <line x1="304" y1="285" x2="330" y2="285" class="arrow"/>
+
+  <rect x="330" y="255" width="180" height="60" rx="4" class="box"/>
+  <text x="420" y="273" text-anchor="middle" class="box-title">Release for</text>
+  <text x="420" y="288" text-anchor="middle" class="box-title">Production</text>
+  <text x="420" y="303" text-anchor="middle" class="clause-tag">6.4.13</text>
+
+  <text x="34" y="335" class="box-sub" font-style="italic">Safety plan · safety case · progression of the lifecycle (6.4.6 - 6.4.8) run underneath all of the above</text>
+
+  <!-- Clause 7 band -->
+  <rect x="730" y="120" width="290" height="215" rx="6" fill="#f7f1f0" stroke="#33415c" stroke-width="1.2"/>
+  <text x="744" y="138" class="band-label">Clause 7 — Production, Operation,</text>
+  <text x="744" y="153" class="band-label">Service &amp; Decommissioning</text>
+
+  <rect x="744" y="168" width="262" height="45" rx="4" class="box"/>
+  <text x="875" y="186" text-anchor="middle" class="box-title">7-5 Planning</text>
+  <text x="875" y="200" text-anchor="middle" class="box-sub">for production, operation, service, decommissioning</text>
+
+  <line x1="875" y1="213" x2="875" y2="228" class="arrow"/>
+
+  <rect x="744" y="228" width="262" height="40" rx="4" class="box"/>
+  <text x="875" y="252" text-anchor="middle" class="box-title">7-6 Production</text>
+
+  <line x1="875" y1="268" x2="875" y2="283" class="arrow"/>
+
+  <rect x="744" y="283" width="262" height="40" rx="4" class="box"/>
+  <text x="875" y="307" text-anchor="middle" class="box-title">7-7 Operation, Service, Decommissioning</text>
+
+  <line x1="420" y1="315" x2="420" y2="330" stroke="#33415c" stroke-width="1.2" fill="none"/>
+  <line x1="420" y1="330" x2="875" y2="330" stroke="#33415c" stroke-width="1.2" fill="none"/>
+  <line x1="875" y1="330" x2="875" y2="323" class="arrow"/>
+
+  <!-- feedback loop: routed below the diagram, well clear of every box and label -->
+  <path d="M 875 323 L 875 365 L 99 365 L 99 335" class="feedback"/>
+  <text x="487" y="381" text-anchor="middle" class="feedback-label">In case of a modification, go back to the appropriate lifecycle phase</text>
+
+  <text x="20" y="410" font-size="10" fill="#8592ab">Labels "m-n" = ISO 26262 Part m, Clause n (these notes' convention, e.g. "3-6" = ISO 26262-3:2018, Clause 6)</text>
+</svg>

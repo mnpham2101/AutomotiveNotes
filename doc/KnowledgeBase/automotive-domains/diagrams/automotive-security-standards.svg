@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" width="760" height="240" font-family="Arial, sans-serif">
+
+  <!-- ISO/SAE 21434 -->
+  <rect x="20" y="20" width="220" height="200" rx="8" fill="#0d2a40" stroke="#3a7fc1" stroke-width="2"/>
+  <rect x="20" y="20" width="220" height="44" rx="8" fill="#1a4a72"/>
+  <rect x="20" y="52" width="220" height="12" fill="#1a4a72"/>
+  <text x="130" y="47" font-size="13" font-weight="bold" fill="#7bbfea" text-anchor="middle">ISO/SAE 21434</text>
+  <text x="130" y="80" font-size="11" fill="#c0d8f0" text-anchor="middle">Cybersecurity Risk Management</text>
+  <line x1="40" y1="98" x2="220" y2="98" stroke="#3a7fc1" stroke-width="1" opacity="0.5"/>
+  <text x="130" y="118" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Full vehicle lifecycle</text>
+  <text x="130" y="140" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Concept → Decommission</text>
+  <text x="130" y="162" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ OEM responsibility</text>
+  <text x="130" y="184" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ TARA threat analysis</text>
+  <text x="130" y="206" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Supplier alignment</text>
+
+  <!-- UNECE WP.29 -->
+  <rect x="270" y="20" width="220" height="200" rx="8" fill="#0d2a40" stroke="#3a7fc1" stroke-width="2"/>
+  <rect x="270" y="20" width="220" height="44" rx="8" fill="#1a4a72"/>
+  <rect x="270" y="52" width="220" height="12" fill="#1a4a72"/>
+  <text x="380" y="47" font-size="13" font-weight="bold" fill="#7bbfea" text-anchor="middle">UNECE WP.29</text>
+  <text x="380" y="80" font-size="11" fill="#c0d8f0" text-anchor="middle">Regulatory Framework</text>
+  <line x1="290" y1="98" x2="470" y2="98" stroke="#3a7fc1" stroke-width="1" opacity="0.5"/>
+  <text x="380" y="118" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ CSMS requirement</text>
+  <text x="380" y="140" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Secure OTA regulations</text>
+  <text x="380" y="162" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Type approval gating</text>
+  <text x="380" y="184" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Post-production updates</text>
+  <text x="380" y="206" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Market access control</text>
+
+  <!-- AUTOSAR -->
+  <rect x="520" y="20" width="220" height="200" rx="8" fill="#0d2a40" stroke="#3a7fc1" stroke-width="2"/>
+  <rect x="520" y="20" width="220" height="44" rx="8" fill="#1a4a72"/>
+  <rect x="520" y="52" width="220" height="12" fill="#1a4a72"/>
+  <text x="630" y="47" font-size="13" font-weight="bold" fill="#7bbfea" text-anchor="middle">AUTOSAR</text>
+  <text x="630" y="80" font-size="11" fill="#c0d8f0" text-anchor="middle">Standardized SW Architecture</text>
+  <line x1="540" y1="98" x2="720" y2="98" stroke="#3a7fc1" stroke-width="1" opacity="0.5"/>
+  <text x="630" y="118" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ SecOC module</text>
+  <text x="630" y="140" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Crypto Stack (CSM)</text>
+  <text x="630" y="162" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Key Management (KeyM)</text>
+  <text x="630" y="184" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Secure inter-ECU comm.</text>
+  <text x="630" y="206" font-size="10" fill="#a0c4e0" text-anchor="middle">▸ Hardware Security Module</text>
+
+</svg>

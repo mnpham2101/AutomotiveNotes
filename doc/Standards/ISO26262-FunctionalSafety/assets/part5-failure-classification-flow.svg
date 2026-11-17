@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2600 1520" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .box { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .diamond { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .ellipse { fill: #ffffff; stroke: #33415c; stroke-width: 1.4; }
+    .txt { font-size: 11px; fill: #1a2332; text-anchor: middle; }
+    .leaf-txt { font-size: 13px; font-weight: 700; fill: #1a2332; text-anchor: middle; }
+    .branch-lbl { font-size: 10.5px; font-style: italic; fill: #45526b; }
+    .link { stroke: #33415c; stroke-width: 1.4; fill: none; marker-end: url(#arrowhead); }
+    .link-dashed { stroke: #33415c; stroke-width: 1.2; fill: none; stroke-dasharray: 5 4; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#33415c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="2600" height="1520" fill="#ffffff"/>
+  <g transform="scale(2)">
+  <text x="20" y="24" font-size="16" font-weight="700" fill="#1a2332">Flow Diagram of Failure Mode Classification</text>
+  <text x="20" y="42" font-size="11.5" fill="#6b7a99">How a hardware element's failure modes sort into safe / single-point / residual / multiple-point (latent or detected) faults</text>
+
+  <!-- HW element rect -->
+  <rect x="40" y="60" width="140" height="50" class="box"/>
+  <text x="110" y="90" class="txt">HW element, &#955;</text>
+  <path d="M110,110 L110,135" class="link"/>
+
+  <!-- Diamond: Safety-related HW element? -->
+  <polygon points="110,135 205,215 110,295 15,215" class="diamond"/>
+  <text x="110" y="205" class="txt">Safety-related</text>
+  <text x="110" y="220" class="txt">HW element?</text>
+  <text x="220" y="208" class="branch-lbl">yes</text>
+  <text x="120" y="320" class="branch-lbl">no</text>
+
+  <path d="M205,215 L245,215" class="link-dashed"/>
+  <path d="M245,215 L275,107" class="link-dashed"/>
+  <path d="M245,215 L275,167" class="link-dashed"/>
+  <path d="M245,215 L275,227" class="link-dashed"/>
+
+  <path d="M110,295 L110,705" class="link"/>
+
+  <!-- Failure mode boxes -->
+  <rect x="275" y="82" width="130" height="50" class="box"/>
+  <text x="340" y="102" class="txt">Failure mode,</text>
+  <text x="340" y="117" class="txt">&#955;mode_i</text>
+
+  <rect x="275" y="142" width="130" height="50" class="box"/>
+  <text x="340" y="162" class="txt">Failure mode,</text>
+  <text x="340" y="177" class="txt">&#955;mode_i+1</text>
+
+  <rect x="275" y="202" width="130" height="50" class="box"/>
+  <text x="340" y="222" class="txt">Failure mode,</text>
+  <text x="340" y="237" class="txt">&#955;mode_i+2</text>
+
+  <text x="340" y="270" class="txt">.</text>
+  <text x="340" y="280" class="txt">.</text>
+
+  <path d="M405,107 L465,215" class="link"/>
+  <path d="M405,167 L465,215" class="link"/>
+  <path d="M405,227 L465,215" class="link"/>
+
+  <!-- Diamond: Potential to violate a SG, in absence of safety mechanism? -->
+  <polygon points="610,120 750,215 610,310 470,215" class="diamond"/>
+  <text x="610" y="190" class="txt">Potential to violate a SG,</text>
+  <text x="610" y="205" class="txt">in absence of safety</text>
+  <text x="610" y="220" class="txt">mechanism?</text>
+  <text x="765" y="208" class="branch-lbl">no</text>
+  <text x="620" y="325" class="branch-lbl">yes</text>
+
+  <path d="M750,215 L800,215" class="link"/>
+  <path d="M610,310 L610,335" class="link"/>
+
+  <!-- Diamond: Is there any safety mechanism in place to control failure modes? -->
+  <polygon points="610,335 750,425 610,515 470,425" class="diamond"/>
+  <text x="610" y="400" class="txt">Is there any safety</text>
+  <text x="610" y="415" class="txt">mechanism in place to</text>
+  <text x="610" y="430" class="txt">control failure modes of</text>
+  <text x="610" y="445" class="txt">the HW element?</text>
+  <text x="390" y="405" class="branch-lbl">no</text>
+  <text x="620" y="530" class="branch-lbl">yes</text>
+
+  <path d="M470,425 L440,425 L440,705 L580,705" class="link"/>
+  <path d="M610,515 L610,540" class="link"/>
+
+  <!-- Ellipse: How much coverage residual -->
+  <ellipse cx="610" cy="610" rx="140" ry="70" class="ellipse"/>
+  <text x="610" y="590" class="txt">How much coverage is</text>
+  <text x="610" y="605" class="txt">provided by the safety</text>
+  <text x="610" y="620" class="txt">mechanism, w.r.t. residual</text>
+  <text x="610" y="635" class="txt">faults?</text>
+  <text x="815" y="265" text-anchor="middle" class="branch-lbl">% covered by</text>
+  <text x="815" y="278" text-anchor="middle" class="branch-lbl">safety mechanism</text>
+  <text x="620" y="662" class="branch-lbl">% not covered by</text>
+  <text x="620" y="676" class="branch-lbl">safety mechanism</text>
+
+  <path d="M750,595 L780,595 L780,250 L850,250" class="link"/>
+
+  <!-- leaf: SPF -->
+  <rect x="580" y="705" width="60" height="45" class="box"/>
+  <text x="610" y="732" class="leaf-txt">&#955;<tspan font-size="9" baseline-shift="sub">SPF</tspan></text>
+
+  <!-- leaf: RF -->
+  <rect x="680" y="705" width="60" height="45" class="box"/>
+  <text x="710" y="732" class="leaf-txt">&#955;<tspan font-size="9" baseline-shift="sub">RF</tspan></text>
+
+  <path d="M610,680 L610,692 L710,692 L710,705" class="link"/>
+
+  <!-- Diamond: Potential to violate a SG, in combination w/ one other independent fault? -->
+  <polygon points="950,120 1110,215 950,310 790,215" class="diamond"/>
+  <text x="950" y="180" class="txt">Potential to violate a SG, in</text>
+  <text x="950" y="195" class="txt">combination w/ one other</text>
+  <text x="950" y="210" class="txt">independent fault (see</text>
+  <text x="950" y="225" class="txt">NOTE 1)?</text>
+  <text x="1125" y="208" class="branch-lbl">no</text>
+  <text x="960" y="325" class="branch-lbl">yes</text>
+
+  <path d="M1110,215 L1175,215 L1175,705" class="link"/>
+  <path d="M950,310 L950,335" class="link"/>
+
+  <!-- Diamond: Are mechanisms in place to prevent latent faults or can the driver perceive? -->
+  <polygon points="950,335 1110,425 950,515 790,425" class="diamond"/>
+  <text x="950" y="400" class="txt">Are mechanisms in place to</text>
+  <text x="950" y="415" class="txt">prevent latent faults or can</text>
+  <text x="950" y="430" class="txt">the driver perceive the</text>
+  <text x="950" y="445" class="txt">effects?</text>
+  <text x="730" y="405" class="branch-lbl">no</text>
+  <text x="960" y="530" class="branch-lbl">yes</text>
+
+  <path d="M790,425 L760,425 L760,705 L840,705" class="link"/>
+  <path d="M950,515 L950,540" class="link"/>
+
+  <!-- Ellipse: How much coverage offered latent -->
+  <ellipse cx="950" cy="610" rx="145" ry="70" class="ellipse"/>
+  <text x="950" y="590" class="txt">How much coverage is</text>
+  <text x="950" y="605" class="txt">offered by safety mechanism,</text>
+  <text x="950" y="620" class="txt">or driver perception,</text>
+  <text x="950" y="635" class="txt">w.r.t. latent faults?</text>
+  <text x="855" y="662" class="branch-lbl">% not covered</text>
+  <text x="1000" y="662" class="branch-lbl">% covered</text>
+
+  <path d="M805,610 L760,610 L760,705 L840,705" class="link"/>
+  <path d="M950,680 L950,692 L1010,692 L1010,705" class="link"/>
+
+  <!-- leaf: MPF,L -->
+  <rect x="840" y="705" width="90" height="45" class="box"/>
+  <text x="885" y="732" class="leaf-txt">&#955;<tspan font-size="9" baseline-shift="sub">MPF, L</tspan></text>
+
+  <!-- leaf: MPF,DP -->
+  <rect x="960" y="705" width="100" height="45" class="box"/>
+  <text x="1010" y="732" class="leaf-txt">&#955;<tspan font-size="9" baseline-shift="sub">MPF, DP</tspan></text>
+
+  <!-- leaf: non-safety-related -->
+  <rect x="20" y="705" width="200" height="45" class="box"/>
+  <text x="120" y="723" class="txt">Non safety-related</text>
+  <text x="120" y="737" class="txt">faults - not included in the analysis</text>
+
+  <!-- leaf: lambda S -->
+  <rect x="1140" y="705" width="120" height="45" class="box"/>
+  <text x="1200" y="722" class="leaf-txt">&#955;<tspan font-size="9" baseline-shift="sub">S</tspan></text>
+  <text x="1200" y="737" class="txt" font-size="9">(included in the analysis)</text>
+  </g>
+</svg>
