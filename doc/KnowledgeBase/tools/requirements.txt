@@ -1,3 +1,0 @@
-markdown==3.10.2
-pymdown-extensions==11.0
-pygments==2.19.2
