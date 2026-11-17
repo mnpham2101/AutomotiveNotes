@@ -85,7 +85,7 @@ Python 3 and the `markdown` package. Nothing else — no Node, no network, no dr
 From this folder:
 
 ```
-python tools/build_slides.py slides/ISO_14229-1_UDS_Slides.md slides/SLIDE_TEMPLATE.md
+python tools/slides-generator/build_slides.py --path doc/Standards/ISO14229-UDS
 ```
 
 Output goes to `slides/`, one `.html` per input `.md`. Then just **open the `.html` file** —
@@ -96,18 +96,16 @@ Each build is a **single self-contained file**: CSS, JavaScript and every diagra
 fetched from the network. That makes the UDS slides ~3 MB. If you would rather keep it small, use:
 
 ```
-python tools/build_slides.py slides/ISO_14229-1_UDS_Slides.md --no-inline
+python tools/slides-generator/build_slides.py --path doc/Standards/ISO14229-UDS --no-inline
 ```
 
 which copies the SVGs beside the HTML instead — still no server needed, but the folder must then
 travel as a unit.
 
-Other options: `-o OUTDIR` to write somewhere else.
-
 ### Editing a presentation
 
-Start from `slides/SLIDE_TEMPLATE.md`, which documents the conventions inline and builds on its
-own so you can see the styling before writing content.
+Start from `tools/slides-generator/SLIDE_TEMPLATE.md`, which documents the conventions inline and
+builds on its own so you can see the styling before writing content.
 
 | Markdown                     | Becomes                                                                   |
 | ---------------------------- | ------------------------------------------------------------------------- |

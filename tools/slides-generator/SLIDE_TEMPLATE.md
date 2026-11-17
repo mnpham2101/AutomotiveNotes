@@ -5,7 +5,7 @@
 
 <!--
   SLIDE TEMPLATE
-  Build:  python tools/build_slides.py <this-file.md> [more.md ...]
+  Build:  python tools/slides-generator/build_slides.py --path <deck-dir>
   Style:  colours and fonts derived from BTC_phan_hoi_V2X_team.pdf
 
   CONVENTIONS

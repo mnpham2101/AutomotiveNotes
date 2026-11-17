@@ -80,19 +80,16 @@ Python 3 and the `markdown` package. Nothing else — no Node, no network, no dr
 From this folder:
 
 ```
-python tools/build_slides.py slides/CAN_Protocol_Slides.md
+python tools/slides-generator/build_slides.py --path doc/Standards/ISO11898-CAN
 ```
 
 Then just **open the `.html`** — double-click it, or drag it into a browser. No server needed.
 
 The build is a **single self-contained file**: CSS, JavaScript and every diagram are embedded
 (images as base64 `data:` URIs), so nothing is fetched from the network and there are no sibling
-assets to keep together. Use `--no-inline` to copy the SVGs beside the HTML instead, and
-`-o OUTDIR` to write somewhere else.
+assets to keep together. Use `--no-inline` to copy the SVGs beside the HTML instead.
 
-`tools/build_slides.py` is the same builder as `../ISO14229-UDS/tools/`, vendored here so this
-folder builds on its own — keep the two copies identical. `slides/SLIDE_TEMPLATE.md` documents
-the markdown conventions inline.
+`tools/slides-generator/SLIDE_TEMPLATE.md` documents the markdown conventions inline.
 
 ### Maths
 
