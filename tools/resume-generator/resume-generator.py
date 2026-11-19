@@ -370,8 +370,20 @@ def create_chips(items: list) -> str:
     return f'<div class="chips">\n    {chips}</div>\n'
 
 
+def render_inline_links(text: str) -> str:
+    """Escape text, converting Markdown [label](url) links into anchors."""
+    out = []
+    pos = 0
+    for m in re.finditer(r"\[([^\]]+)\]\(([^)]+)\)", text):
+        out.append(esc(text[pos:m.start()]))
+        out.append(f'<a href="{esc(m.group(2))}">{esc(m.group(1))}</a>')
+        pos = m.end()
+    out.append(esc(text[pos:]))
+    return "".join(out)
+
+
 def create_bullet_list(items: list) -> str:
-    lis = "".join(f"    <li>{esc(i)}</li>\n" for i in items)
+    lis = "".join(f"    <li>{render_inline_links(i)}</li>\n" for i in items)
     return f"  <ul>\n{lis}  </ul>\n"
 
 
@@ -689,7 +701,7 @@ def render_fpt_slide(data: ResumeData, logo_b64: str, colors: dict) -> str:
         proj_html = create_bullet_list(data.projects)
         slides.append(
             '<section class="slide" id="projects" data-title="Projects &amp; Awards">\n'
-            f"{create_section('Individual Projects &amp; Award', proj_html)}"
+            f"{create_section('Individual Projects & Award', proj_html)}"
             "</section>\n"
         )
 
@@ -765,7 +777,7 @@ def fpt_pdf_css(colors: dict) -> str:
     border-top: 1px solid var(--fpt-border);
     margin-top: 2.5rem; padding-top: 0.8rem;
     font-size: 0.85rem; color: var(--fpt-gray);
-    display: flex; justify-content: space-between;
+    display: flex; justify-content: flex-end;
     align-items: center; gap: 1rem;
   }
   footer img { width: 54px; height: auto; }
@@ -794,7 +806,7 @@ def render_fpt_pdf(data: ResumeData, logo_b64: str, colors: dict) -> str:
 
     if data.projects:
         sections.append(
-            create_section("Individual Projects &amp; Award", create_bullet_list(data.projects))
+            create_section("Individual Projects & Award", create_bullet_list(data.projects))
         )
 
     bg_items = "".join(
@@ -842,7 +854,7 @@ def render_fpt_pdf(data: ResumeData, logo_b64: str, colors: dict) -> str:
         + f'    <img class="logo" src="{logo_b64}" alt="FPT logo">\n'
         + f"  </header>\n\n"
         + "".join(f"  {s}" for s in sections)
-        + f'\n  <footer>\n    <span>Generated from Minh_Resume_for_web.md</span>\n'
+        + f'\n  <footer>\n'
         + f'    <img src="{logo_b64}" alt="FPT logo">\n  </footer>\n\n'
         + "</div>\n"
     )
